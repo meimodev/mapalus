@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(_) {
+  Widget build(context) {
     return ScreenUtilInit(
       designSize: const Size(360, 800),
       minTextAdapt: true,
@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       builder: () => MaterialApp(
         title: 'Mapalus',
         theme: appThemeData,
+        debugShowCheckedModeBanner: false,
         home: const HomeScreen(),
         builder: (context, widget) {
           ScreenUtil.setContext(context);
@@ -33,32 +34,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// class MyHomePage extends StatelessWidget {
-//   const MyHomePage({
-//     Key? key,
-//     required this.title,
-//   }) : super(key: key);
-//
-//   final String title;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(title),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             const Text(
-//               'Something Should',
-//               textAlign: TextAlign.center,
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

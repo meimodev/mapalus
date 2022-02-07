@@ -31,7 +31,7 @@ final ThemeData appThemeData = ThemeData.light().copyWith(
   textTheme: TextTheme(
     headline1: TextStyle(
       fontFamily: fontFamily,
-      fontSize: 27.sp,
+      fontSize: 36.sp,
       fontWeight: FontWeight.w400,
       color: Palette.textPrimary,
     ),
@@ -67,16 +67,22 @@ final ThemeData appThemeData = ThemeData.light().copyWith(
     ),
     bodyText1: TextStyle(
       fontFamily: fontFamily,
-      fontSize: 10.sp,
+      fontSize: 14.sp,
       fontWeight: FontWeight.w500,
       color: Palette.textPrimary,
     ),
     bodyText2: TextStyle(
       fontFamily: fontFamily,
-      fontSize: 10.sp,
+      fontSize: 14.sp,
       fontWeight: FontWeight.w500,
       color: Palette.textPrimary,
     ),
+    // bodySmall: TextStyle(
+    //   fontFamily: fontFamily,
+    //   fontSize: 12.sp,
+    //   fontWeight: FontWeight.w400,
+    //   color: Palette.textPrimary,
+    // ),
     caption: TextStyle(
       fontFamily: fontFamily,
       fontSize: 9.sp,
@@ -87,26 +93,29 @@ final ThemeData appThemeData = ThemeData.light().copyWith(
 );
 
 class Palette {
-  static const Color primary = Color(0xFF1E1F1C);
-  static const Color accent = Color(0xFFFBFAF7);
+  static const Color primary = Color(0xFFffb600);
+  static const Color accent = Color(0xFF2B2E33);
 
-  static const Color cardForeground = Color(0xFFEBEAEB);
-  static const Color scaffold = Color(0xFFF9F6F5);
+  static const Color cardForeground = Color(0xFFFFFFFF);
+  static const Color scaffold = Color(0xFFF8FAFC);
 
   static const Color positive = Color(0xFF38C672);
   static const Color negative = Color(0xFFC63849);
 
+  static const Color editable = Color(0xFFE7EAF0);
+
   //textColor
-  static const Color textPrimary = primary;
+  static const Color textPrimary = accent;
   static const Color textAccent = accent;
 }
 
 class Insets {
-  static const double small = 15.0;
-  static const double medium = 27.0;
+  static const double small = 12.0;
+  static const double medium = 21.0;
   static const double large = 39.0;
 }
 
-class Radius {
+class Roundness {
   static const double small = 12.0;
+  static const double large = 30.0;
 }
