@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mapalus/app/modules/home/home_screen.dart';
+import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/theme.dart';
 
 void main() {
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
         title: 'Mapalus',
         theme: appThemeData,
         debugShowCheckedModeBanner: false,
-        home: const HomeScreen(),
+        onGenerateRoute: Routes.generateRoute,
+        initialRoute: Routes.home,
         builder: (context, widget) {
           ScreenUtil.setContext(context);
           return MediaQuery(

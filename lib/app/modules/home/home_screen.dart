@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mapalus/app/modules/account_settings/account_settings_screen.dart';
 import 'package:mapalus/app/widgets/card_category.dart';
 import 'package:mapalus/app/widgets/card_order_peak.dart';
 import 'package:mapalus/app/widgets/card_product.dart';
 import 'package:mapalus/app/widgets/card_cart_peak.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
 import 'package:mapalus/app/widgets/search_view.dart';
+import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -22,7 +24,9 @@ class HomeScreen extends StatelessWidget {
               SliverAppBar(
                 title: SearchView(
                   onSubmitted: (String value) {},
-                  onLogoPressed: () {},
+                  onLogoPressed: () {
+                    Navigator.pushNamed(context, Routes.accountSetting);
+                  },
                 ),
                 collapsedHeight: 75.h,
                 expandedHeight: 300.h,
