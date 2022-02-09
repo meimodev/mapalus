@@ -104,6 +104,8 @@ class Palette {
 
   static const Color editable = Color(0xFFE7EAF0);
 
+  static const Color notification = Color(0xFFFF0000);
+
   //textColor
   static const Color textPrimary = accent;
   static const Color textAccent = accent;

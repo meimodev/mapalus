@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mapalus/shared/theme.dart';
 
 class CardProduct extends StatelessWidget {
@@ -33,9 +34,10 @@ class CardProduct extends StatelessWidget {
               ? const SizedBox()
               : Row(
                   children: [
-                    Icon(
-                      Icons.add_alarm_outlined,
-                      size: 15.sp,
+                    SvgPicture.asset(
+                      'assets/vectors/min.svg',
+                      height: 15.sp,
+                      width: 15.sp,
                       color: Colors.grey,
                     ),
                     SizedBox(width: Insets.small.w * .5),
