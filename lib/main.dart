@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mapalus/app/modules/home/home_screen.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/theme.dart';
 

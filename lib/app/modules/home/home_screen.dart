@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mapalus/app/modules/account_settings/account_settings_screen.dart';
 import 'package:mapalus/app/widgets/card_category.dart';
 import 'package:mapalus/app/widgets/card_order_peak.dart';
 import 'package:mapalus/app/widgets/card_product.dart';
@@ -117,7 +116,9 @@ class HomeScreen extends StatelessWidget {
             bottom: 110.h,
             right: 12.w,
             child: CardOrdersPeak(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.orders);
+              },
             ),
           ),
           Positioned(
@@ -126,10 +127,9 @@ class HomeScreen extends StatelessWidget {
             right: 12.w,
             child: CardCartPeak(
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Test'),
-                  ),
+                Navigator.pushNamed(
+                  context,
+                  Routes.cart,
                 );
               },
             ),

@@ -85,9 +85,9 @@ final ThemeData appThemeData = ThemeData.light().copyWith(
     // ),
     caption: TextStyle(
       fontFamily: fontFamily,
-      fontSize: 9.sp,
+      fontSize: 11.sp,
       fontWeight: FontWeight.w400,
-      color: Colors.grey.shade600,
+      color: Palette.textPrimary,
     ),
   ),
 );

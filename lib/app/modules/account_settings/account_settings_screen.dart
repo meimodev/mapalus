@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mapalus/app/widgets/badge_notification.dart';
+import 'package:mapalus/app/widgets/card_navigation.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
 import 'package:mapalus/shared/theme.dart';
 
@@ -14,82 +14,63 @@ class AccountSettingsScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: Insets.medium.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () => Navigator.pop(context),
-                    child: SizedBox(
-                      height: 60.h,
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: SvgPicture.asset(
-                              'assets/vectors/back.svg',
-                              height: 24.sp,
-                              width: 24.sp,
-                            ),
-                          ),
-                          const Center(
-                            child: Text('Tentang Akun'),
-                          ),
-                        ],
-                      ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const CardNavigation(title: 'Tentang Akun'),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: Insets.medium.h),
+                  Container(
+                    width: 120.w,
+                    height: 120.h,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Palette.accent,
                     ),
                   ),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  SizedBox(height: Insets.small.h),
+                  Text('Jhon Manembo'),
+                  Text('+62 812 1234 1234'),
+                ],
+              ),
+              SizedBox(height: Insets.medium.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: Insets.medium.w),
+                child: Column(
                   children: [
-                    SizedBox(height: Insets.medium.h),
-                    Container(
-                      width: 120.w,
-                      height: 120.h,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Palette.accent,
-                      ),
+                    _buildItemRow(
+                      assetLocation: 'assets/vectors/edit.svg',
+                      text: 'Sunting Informasi Akun',
+                      context: context,
+                      onPressed: () {},
                     ),
-                    SizedBox(height: Insets.small.h),
-                    Text('Jhon Manembo'),
-                    Text('+62 812 1234 1234'),
+                    _buildItemRow(
+                      assetLocation: 'assets/vectors/bag.svg',
+                      text: 'Pesanan Anda',
+                      context: context,
+                      onPressed: () {},
+                    ),
+                    _buildItemRow(
+                      assetLocation: 'assets/vectors/exit.svg',
+                      text: 'Keluar',
+                      context: context,
+                      onPressed: () {},
+                    ),
                   ],
                 ),
-                SizedBox(height: Insets.medium.h),
-                _buildItemRow(
-                  assetLocation: 'assets/vectors/edit.svg',
-                  text: 'Sunting Informasi Akun',
-                  context: context,
-                  onPressed: () {},
+              ),
+              SizedBox(height: Insets.small.h),
+              Container(
+                height: 2.h,
+                width: 100.w,
+                margin: EdgeInsets.symmetric(
+                  horizontal: Insets.medium.w,
                 ),
-                _buildItemRow(
-                  assetLocation: 'assets/vectors/bag.svg',
-                  text: 'Pesanan Anda',
-                  context: context,
-                  onPressed: () {},
-                ),
-                _buildItemRow(
-                  assetLocation: 'assets/vectors/exit.svg',
-                  text: 'Keluar',
-                  context: context,
-                  onPressed: () {},
-                ),
-                SizedBox(height: Insets.small.h),
-                Container(
-                  height: 2.h,
-                  width: 100.w,
-                  margin: EdgeInsets.symmetric(
-                    horizontal: Insets.medium.w,
-                  ),
-                  color: Palette.accent,
-                ),
-              ],
-            ),
+                color: Palette.accent,
+              ),
+            ],
           ),
           Expanded(
             child: Container(
