@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
+import 'package:mapalus/app/widgets/card_order_detail_item.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
 import 'package:mapalus/shared/theme.dart';
 
@@ -125,7 +128,14 @@ class OrderDetailScreen extends StatelessWidget {
                         clipBehavior: Clip.hardEdge,
                         borderRadius: BorderRadius.circular(9.sp),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return DialogRating();
+                              },
+                            );
+                          },
                           child: Padding(
                             padding: EdgeInsets.symmetric(
                               vertical: Insets.small.h,
@@ -233,94 +243,114 @@ class OrderDetailScreen extends StatelessWidget {
       );
 }
 
-class CardOrderDetailItem extends StatelessWidget {
-  const CardOrderDetailItem({
-    Key? key,
-    required this.index,
-    required this.productName,
-    required this.productPrice,
-    required this.productWeight,
-  }) : super(key: key);
-
-  final String index;
-  final String productName;
-  final String productPrice;
-  final String productWeight;
+class DialogRating extends StatelessWidget {
+  const DialogRating({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 6.w,
-        vertical: Insets.small.h,
-      ),
-      margin: EdgeInsets.symmetric(vertical: 6.h),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(9.sp),
-        color: Palette.cardForeground,
-      ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 30.w,
-            child: Center(
-              child: Text(
-                index,
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
+    return Dialog(
+      clipBehavior: Clip.hardEdge,
+      backgroundColor: Colors.transparent,
+      child: Container(
+        alignment: Alignment.center,
+        height: 420.h,
+        width: 300.w,
+        clipBehavior: Clip.hardEdge,
+        padding: EdgeInsets.all(12.sp),
+        decoration: BoxDecoration(
+          color: Palette.cardForeground,
+          borderRadius: BorderRadius.circular(9.sp),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'Masukkan & Penilaian anda\nakan sangat membantu layanan ini',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    fontSize: 14.sp,
+                  ),
+            ),
+            SizedBox(height: Insets.medium.h),
+            Container(
+              height: 210.h,
+              margin: EdgeInsets.symmetric(horizontal: Insets.small.w),
+              padding: EdgeInsets.symmetric(
+                horizontal: 9.w,
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(9.sp),
+                color: Palette.editable,
+              ),
+              child: TextField(
+                maxLines: 100,
+                textAlign: TextAlign.start,
+                enableSuggestions: false,
+                scrollPhysics: const BouncingScrollPhysics(),
+                autocorrect: false,
+                style: TextStyle(
+                  color: Palette.accent,
+                  fontFamily: fontFamily,
+                  fontSize: 14.sp,
+                ),
+                cursorColor: Palette.primary,
+                decoration: InputDecoration(
+                  hintStyle: TextStyle(
+                    fontFamily: fontFamily,
+                    fontSize: 12.sp,
+                  ),
+                  isDense: true,
+                  border: InputBorder.none,
+                  hintText: "Layanan ini akan lebih baik jika ...",
+                ),
               ),
             ),
-          ),
-          SizedBox(width: 6.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  productName,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 11.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+            SizedBox(height: Insets.small.h),
+            SizedBox(
+              width: 50.w,
+              height: 50.h,
+              child: Center(
+                child: RatingBar.builder(
+                  initialRating: 3,
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  itemCount: 5,
+                  glowColor: Palette.editable.withOpacity(.25),
+                  itemSize: 27.sp,
+                  itemPadding: EdgeInsets.symmetric(horizontal: 6.w),
+                  onRatingUpdate: (rating) {},
+                  itemBuilder: (BuildContext context, int index) =>
+                      SvgPicture.asset(
+                    'assets/vectors/star.svg',
+                    color: Palette.primary,
+                  ),
                 ),
-                SizedBox(height: 3.h),
-                Row(
-                  children: [
-                    _buildWeightAndPriceCard(context, productName),
-                    SizedBox(width: 6.w),
-                    _buildWeightAndPriceCard(context, productPrice),
-                  ],
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+            SizedBox(height: Insets.small.h),
+            Material(
+              color: Palette.primary,
+              borderRadius: BorderRadius.circular(9.sp),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Insets.small.w,
+                    vertical: Insets.small.h,
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Nilai',
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
-
-  _buildWeightAndPriceCard(
-    BuildContext context,
-    String text,
-  ) =>
-      Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 6.w,
-          vertical: 3.h,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(3.sp),
-          color: Palette.editable,
-        ),
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                fontSize: 10.sp,
-                fontWeight: FontWeight.w300,
-              ),
-        ),
-      );
 }

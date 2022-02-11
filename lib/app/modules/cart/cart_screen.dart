@@ -70,7 +70,7 @@ class CartScreen extends StatelessWidget {
                           'Atur Pengantaran',
                           style:
                               Theme.of(context).textTheme.bodyText1?.copyWith(
-                                    fontSize: 16.sp,
+                                    fontSize: 14.sp,
                                   ),
                         ),
                       ),
