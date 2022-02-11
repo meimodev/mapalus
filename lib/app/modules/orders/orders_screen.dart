@@ -9,6 +9,7 @@ import 'package:mapalus/data/models/order.dart';
 import 'package:mapalus/data/models/product.dart';
 import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/shared/enums.dart';
+import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/theme.dart';
 
 class OrdersScreen extends StatelessWidget {
@@ -51,7 +52,9 @@ class OrdersScreen extends StatelessWidget {
                     status: OrderStatus
                         .values[Random().nextInt(OrderStatus.values.length)],
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, Routes.orderDetail);
+                  },
                 ),
               ),
             ),

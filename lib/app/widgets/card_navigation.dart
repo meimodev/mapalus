@@ -7,16 +7,18 @@ class CardNavigation extends StatelessWidget {
   const CardNavigation({
     Key? key,
     required this.title,
+    this.isInverted = false,
   }) : super(key: key);
 
   final String title;
+  final bool isInverted;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Palette.cardForeground,
-      elevation: 6,
-      shadowColor: Colors.grey.withOpacity(.125),
+      color: isInverted ? Palette.accent : Palette.cardForeground,
+      elevation: isInverted ? 0 : 6,
+      shadowColor: isInverted ? null : Colors.grey.withOpacity(.125),
       child: InkWell(
         onTap: () => Navigator.pop(context),
         child: Container(
@@ -30,10 +32,17 @@ class CardNavigation extends StatelessWidget {
                   'assets/vectors/back.svg',
                   height: 24.sp,
                   width: 24.sp,
+                  color: isInverted ? Palette.editable : Palette.textPrimary,
                 ),
               ),
               Center(
-                child: Text(title),
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        color:
+                            isInverted ? Palette.editable : Palette.textPrimary,
+                      ),
+                ),
               ),
             ],
           ),

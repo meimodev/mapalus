@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mapalus/app/widgets/card_cart_item.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
+import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/theme.dart';
 
 class CartScreen extends StatelessWidget {
@@ -56,7 +57,9 @@ class CartScreen extends StatelessWidget {
                   color: Palette.primary,
                   elevation: 4,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, Routes.location);
+                    },
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: Insets.medium.w,
