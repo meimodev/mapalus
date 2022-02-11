@@ -169,7 +169,7 @@ class LocationScreen extends StatelessWidget {
                           vertical: Insets.small.h,
                           horizontal: Insets.medium.w,
                         ),
-                        child: Center(
+                        child: const Center(
                           child: Text('Buat Pesanan'),
                         ),
                       ),

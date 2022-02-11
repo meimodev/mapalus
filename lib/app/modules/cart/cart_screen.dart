@@ -25,7 +25,7 @@ class CartScreen extends StatelessWidget {
               child: ListView.builder(
                 itemCount: 6,
                 physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) => CardCartItem(),
+                itemBuilder: (context, index) => const CardCartItem(),
               ),
             ),
           ),

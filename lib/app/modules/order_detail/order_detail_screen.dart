@@ -21,9 +21,7 @@ class OrderDetailScreen extends StatelessWidget {
             top: 0,
             bottom: 0,
             child: Container(
-              decoration: BoxDecoration(
-                color: Palette.accent,
-              ),
+              color: Palette.accent,
             ),
           ),
           Positioned(
@@ -132,7 +130,7 @@ class OrderDetailScreen extends StatelessWidget {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return DialogRating();
+                                return const DialogRating();
                               },
                             );
                           },
@@ -141,7 +139,7 @@ class OrderDetailScreen extends StatelessWidget {
                               vertical: Insets.small.h,
                               horizontal: Insets.medium.w,
                             ),
-                            child: Center(
+                            child: const Center(
                               child: Text(
                                 'Selesaikan',
                               ),
@@ -340,7 +338,7 @@ class DialogRating extends StatelessWidget {
                     horizontal: Insets.small.w,
                     vertical: Insets.small.h,
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'Nilai',
                     ),
