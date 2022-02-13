@@ -1,8 +1,10 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
+import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/theme.dart';
 
 class AccountSettingsScreen extends StatelessWidget {
@@ -46,17 +48,33 @@ class AccountSettingsScreen extends StatelessWidget {
                       context: context,
                       onPressed: () {},
                     ),
-                    _buildItemRow(
-                      assetLocation: 'assets/vectors/bag.svg',
-                      text: 'Pesanan Anda',
-                      context: context,
-                      onPressed: () {},
+                    Badge(
+                      padding: EdgeInsets.all(3.sp),
+                      badgeContent: Text(
+                        '99',
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              fontSize: 10.sp,
+                              color: Palette.editable,
+                            ),
+                      ),
+                      position: BadgePosition.topStart(),
+                      child: _buildItemRow(
+                        assetLocation: 'assets/vectors/bag.svg',
+                        text: 'Pesanan Anda',
+                        context: context,
+                        onPressed: () {
+                          Navigator.pushNamed(context, Routes.orders);
+                        },
+                      ),
                     ),
                     _buildItemRow(
                       assetLocation: 'assets/vectors/exit.svg',
                       text: 'Keluar',
                       context: context,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, Routes.signing, (_) => false);
+                      },
                     ),
                   ],
                 ),

@@ -1,10 +1,11 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mapalus/shared/theme.dart';
 
-class SearchView extends StatelessWidget {
-  const SearchView({
+class CardSearchBar extends StatelessWidget {
+  const CardSearchBar({
     Key? key,
     required this.onSubmitted,
     required this.onLogoPressed,
@@ -68,20 +69,31 @@ class SearchView extends StatelessWidget {
               ),
             ),
             SizedBox(width: Insets.small.w * .5),
-            Material(
-              shape: const CircleBorder(),
-              color: Palette.accent,
-              child: InkWell(
-                onTap: onLogoPressed,
-                child: Container(
-                  padding: EdgeInsets.all(6.sp),
-                  height: 33.sp,
-                  width: 33.sp,
-                  child: SvgPicture.asset(
-                    'assets/images/mapalus_logo.svg',
-                    height: 12.sp,
-                    width: 12.sp,
-                    color: Palette.primary,
+            Badge(
+              elevation: 0,
+              badgeContent: Text(
+                '99',
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      fontSize: 10.sp,
+                      color: Palette.editable,
+                    ),
+              ),
+              padding: EdgeInsets.all(3.sp),
+              child: Material(
+                shape: const CircleBorder(),
+                color: Palette.accent,
+                child: InkWell(
+                  onTap: onLogoPressed,
+                  child: Container(
+                    padding: EdgeInsets.all(6.sp),
+                    height: 33.sp,
+                    width: 33.sp,
+                    child: SvgPicture.asset(
+                      'assets/images/mapalus_logo.svg',
+                      height: 12.sp,
+                      width: 12.sp,
+                      color: Palette.primary,
+                    ),
                   ),
                 ),
               ),

@@ -17,6 +17,8 @@ dependencies:
   flutter_svg: ^1.0.3
   cupertino_icons: ^1.0.4
   flutter_rating_bar: ^4.0.0
+  badges: ^2.0.2
+  carousel_slider: ^4.0.0
 
 dev_dependencies:
   flutter_test:

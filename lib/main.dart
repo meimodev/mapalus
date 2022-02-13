@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         theme: appThemeData,
         debugShowCheckedModeBanner: false,
         onGenerateRoute: Routes.generateRoute,
-        initialRoute: Routes.home,
+        initialRoute: Routes.splash,
         builder: (context, widget) {
           ScreenUtil.setContext(context);
           return MediaQuery(

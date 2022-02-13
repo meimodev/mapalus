@@ -4,7 +4,7 @@ import 'package:mapalus/app/widgets/card_order_peak.dart';
 import 'package:mapalus/app/widgets/card_product.dart';
 import 'package:mapalus/app/widgets/card_cart_peak.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
-import 'package:mapalus/app/widgets/search_view.dart';
+import 'package:mapalus/app/widgets/card_search_bar.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
             slivers: [
               // _buildUpperSection(context),
               SliverAppBar(
-                title: SearchView(
+                title: CardSearchBar(
                   onSubmitted: (String value) {},
                   onLogoPressed: () {
                     Navigator.pushNamed(context, Routes.accountSetting);
@@ -117,7 +117,7 @@ class HomeScreen extends StatelessWidget {
             right: 12.w,
             child: CardOrdersPeak(
               onPressed: () {
-                Navigator.pushNamed(context, Routes.orders);
+                Navigator.pushNamed(context, Routes.orderDetail);
               },
             ),
           ),
