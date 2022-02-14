@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
 import 'package:mapalus/shared/enums.dart';
 import 'package:mapalus/shared/routes.dart';
@@ -12,17 +13,30 @@ class SigningScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
+      backgroundColor: Palette.accent,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: Container(
-              color: Colors.grey,
+              color: Palette.accent,
               child: CarouselSlider(
                   items: [
-                    _buildGraphicHolderCard(context, Text('Slide 1')),
                     _buildGraphicHolderCard(
-                        context, Container(color: Colors.red)),
-                    _buildGraphicHolderCard(context, Text('Slide 3')),
+                      context: context,
+                      assetName: 'assets/vectors/phone.svg',
+                      text: 'Pesan dirumah, harga pasar',
+                    ),
+                    _buildGraphicHolderCard(
+                      context: context,
+                      assetName: 'assets/vectors/bike.svg',
+                      text: 'Tinggal tunggu, kami antar',
+                    ),
+                    _buildGraphicHolderCard(
+                      context: context,
+                      assetName: 'assets/vectors/packet.svg',
+                      text: 'Tidak sesuai, kami ganti',
+                    ),
                   ],
                   options: CarouselOptions(
                     pauseAutoPlayOnTouch: true,
@@ -46,13 +60,38 @@ class SigningScreen extends StatelessWidget {
     );
   }
 
-  _buildGraphicHolderCard(BuildContext context, Widget child) {
+  _buildGraphicHolderCard({
+    required BuildContext context,
+    required String assetName,
+    required String text,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Expanded(
           child: Center(
-            child: child,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Insets.small.w,
+                    vertical: Insets.small.h,
+                  ),
+                  child: SvgPicture.asset(
+                    assetName,
+                    height: 300.w,
+                  ),
+                ),
+                SizedBox(height: Insets.medium.h),
+                Text(
+                  text,
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        color: Palette.editable,
+                      ),
+                ),
+              ],
+            ),
           ),
         ),
       ],
@@ -72,7 +111,7 @@ class _CardSigningState extends State<CardSigning> {
 
   generateSigningButton() {
     String _buttonText;
-    late var _onPressed;
+    Null Function() _onPressed;
 
     switch (signingState) {
       case CardSigningState.oneTimePassword:
@@ -129,7 +168,7 @@ class _CardSigningState extends State<CardSigning> {
       decoration: BoxDecoration(
         color: Palette.cardForeground,
         borderRadius: BorderRadius.vertical(
-          top: Radius.circular(12.sp),
+          top: Radius.circular(30.sp),
         ),
       ),
       child: Column(
