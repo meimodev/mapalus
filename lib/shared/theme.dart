@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 const String fontFamily = 'Poppins';
 final ThemeData appThemeData = ThemeData.light().copyWith(
-  primaryColor: Palette.primary,
+  primaryColor: Palette.accent,
   scaffoldBackgroundColor: Palette.scaffold,
   inputDecorationTheme: InputDecorationTheme(
     labelStyle: TextStyle(

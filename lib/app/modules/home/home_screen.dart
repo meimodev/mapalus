@@ -18,6 +18,7 @@ class HomeScreen extends StatelessWidget {
       child: Stack(
         children: [
           CustomScrollView(
+            physics: const BouncingScrollPhysics(),
             slivers: [
               // _buildUpperSection(context),
               SliverAppBar(
@@ -65,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                                   ),
                             ),
                             Text(
-                              "Antar ke Rumah",
+                              "Antar di rumah",
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme
@@ -109,7 +110,9 @@ class HomeScreen extends StatelessWidget {
                   childCount: 20,
                 ),
               ),
-              SliverPadding(padding: EdgeInsets.all(Insets.small.sp * 1.5)),
+              SliverPadding(
+                  padding:
+                      EdgeInsets.symmetric(vertical: Insets.medium.sp * 2.5)),
             ],
           ),
           Positioned(
