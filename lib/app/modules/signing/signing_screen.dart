@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
 import 'package:mapalus/shared/enums.dart';
 import 'package:mapalus/shared/routes.dart';
@@ -11,16 +11,8 @@ import 'package:mapalus/shared/theme.dart';
 class SigningScreen extends StatelessWidget {
   const SigningScreen({Key? key}) : super(key: key);
 
-  void testFirestore() async {
-    CollectionReference users = FirebaseFirestore.instance.collection("users");
-    DocumentSnapshot snap = await users.doc("12345").get();
-    Map<String, dynamic> data = snap.data()! as Map<String, dynamic>;
-    print(data.toString());
-  }
-
   @override
   Widget build(BuildContext context) {
-    testFirestore();
     return ScreenWrapper(
       backgroundColor: Palette.accent,
       child: Column(
@@ -89,10 +81,9 @@ class SigningScreen extends StatelessWidget {
                   ),
                   child: SvgPicture.asset(
                     assetName,
-                    height: 300.w,
+                    height: 260.h,
                   ),
                 ),
-                SizedBox(height: Insets.medium.h),
                 Text(
                   text,
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
@@ -142,8 +133,9 @@ class _CardSigningState extends State<CardSigning> {
         break;
       default:
         _onPressed = () {
-          Navigator.pushNamedAndRemoveUntil(
-              context, Routes.home, (route) => false);
+          // Navigator.pushNamedAndRemoveUntil(
+          //     context, Routes.home, (route) => false);
+          Get.offNamed(Routes.home);
         };
         _buttonText = "Daftar & Masuk";
     }

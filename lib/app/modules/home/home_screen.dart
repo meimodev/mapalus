@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mapalus/app/modules/home/home_controller.dart';
 import 'package:mapalus/app/widgets/card_category.dart';
 import 'package:mapalus/app/widgets/card_order_peak.dart';
 import 'package:mapalus/app/widgets/card_product.dart';
 import 'package:mapalus/app/widgets/card_cart_peak.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
 import 'package:mapalus/app/widgets/card_search_bar.dart';
-import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends GetView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -24,9 +25,7 @@ class HomeScreen extends StatelessWidget {
               SliverAppBar(
                 title: CardSearchBar(
                   onSubmitted: (String value) {},
-                  onLogoPressed: () {
-                    Navigator.pushNamed(context, Routes.accountSetting);
-                  },
+                  onLogoPressed: controller.onPressedLogo,
                 ),
                 collapsedHeight: 75.h,
                 expandedHeight: 300.h,
@@ -119,9 +118,7 @@ class HomeScreen extends StatelessWidget {
             bottom: 110.h,
             right: 12.w,
             child: CardOrdersPeak(
-              onPressed: () {
-                Navigator.pushNamed(context, Routes.orderDetail);
-              },
+              onPressed: controller.onPressedLatestOrder,
             ),
           ),
           Positioned(
@@ -129,12 +126,7 @@ class HomeScreen extends StatelessWidget {
             left: 12.w,
             right: 12.w,
             child: CardCartPeak(
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  Routes.cart,
-                );
-              },
+              onPressed: controller.onPressedCart,
             ),
           ),
         ],

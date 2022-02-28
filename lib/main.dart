@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:mapalus/data/services/firebase_services.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/theme.dart';
 
@@ -23,12 +25,12 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 800),
       minTextAdapt: true,
       splitScreenMode: false,
-      builder: () => MaterialApp(
+      builder: () => GetMaterialApp(
         title: 'Mapalus',
         theme: appThemeData,
         debugShowCheckedModeBanner: false,
-        onGenerateRoute: Routes.generateRoute,
         initialRoute: Routes.splash,
+        getPages: Routes.getRoutes(),
         builder: (context, widget) {
           ScreenUtil.setContext(context);
           return MediaQuery(
