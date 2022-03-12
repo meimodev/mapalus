@@ -1,13 +1,14 @@
 import 'package:mapalus/shared/enums.dart';
 
 class Product {
-  late int id;
-  late String name;
-  late String description;
-  late String imageUrl;
-  late String price;
-  late String unit;
-  late ProductStatus status;
+  int id;
+  String name;
+  String description;
+  String imageUrl;
+  int price;
+  String unit;
+  ProductStatus status;
+  bool isCustomPrice;
 
   Product({
     required this.id,
@@ -15,7 +16,17 @@ class Product {
     required this.description,
     required this.imageUrl,
     required this.price,
-    required this.unit,
+    this.unit = 'gram',
+    this.isCustomPrice = false,
     required this.status,
   });
+
+  bool get isAvailable => status == ProductStatus.available;
+
+  String get priceFormatted => "Rp. " + price.toString();
+
+  @override
+  String toString() {
+    return 'Product{id: $id, name: $name, description: $description, imageUrl: $imageUrl, price: $price, unit: $unit, status: $status, isCustomPrice: $isCustomPrice}';
+  }
 }

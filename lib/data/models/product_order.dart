@@ -2,7 +2,7 @@ import 'package:mapalus/data/models/product.dart';
 
 class ProductOrder {
   late Product product;
-  late int quantity;
+  late double quantity;
   late int totalPrice;
 
   ProductOrder({
@@ -10,4 +10,9 @@ class ProductOrder {
     required this.quantity,
     required this.totalPrice,
   });
+
+  @override
+  String toString() {
+    return 'ProductOrder{product: ${product.toString()}, quantity: $quantity, totalPrice: $totalPrice}';
+  }
 }

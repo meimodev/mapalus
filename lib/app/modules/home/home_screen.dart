@@ -5,8 +5,11 @@ import 'package:mapalus/app/widgets/card_category.dart';
 import 'package:mapalus/app/widgets/card_order_peak.dart';
 import 'package:mapalus/app/widgets/card_product.dart';
 import 'package:mapalus/app/widgets/card_cart_peak.dart';
+import 'package:mapalus/app/widgets/dialog_item_detail.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
 import 'package:mapalus/app/widgets/card_search_bar.dart';
+import 'package:mapalus/data/models/product.dart';
+import 'package:mapalus/shared/enums.dart';
 import 'package:mapalus/shared/theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -94,18 +97,7 @@ class HomeScreen extends GetView<HomeController> {
                   mainAxisExtent: 250.h,
                 ),
                 delegate: SliverChildBuilderDelegate(
-                  (context, index) => Padding(
-                    padding: EdgeInsets.only(
-                      left: index % 2 == 0 ? Insets.medium.w : 0,
-                      right: index % 2 == 0 ? 0 : Insets.medium.w,
-                    ),
-                    child: CardProduct(
-                      name: 'Product Name ${index.toString()}',
-                      image: 'image url',
-                      price: 'Rp. 1.000.000 / gram',
-                      isAvailable: index % 2 == 0,
-                    ),
-                  ),
+                  (context, index) => _buildProductCard(index),
                   childCount: 20,
                 ),
               ),
@@ -114,19 +106,31 @@ class HomeScreen extends GetView<HomeController> {
                       EdgeInsets.symmetric(vertical: Insets.medium.sp * 2.5)),
             ],
           ),
-          Positioned(
-            bottom: 110.h,
-            right: 12.w,
-            child: CardOrdersPeak(
-              onPressed: controller.onPressedLatestOrder,
+          Obx(
+            () => Visibility(
+              visible: controller.isCardOrderVisible.value,
+              child: Positioned(
+                bottom: 110.h,
+                right: 12.w,
+                child: CardOrdersPeak(
+                  onPressed: controller.onPressedLatestOrder,
+                ),
+              ),
             ),
           ),
-          Positioned(
-            bottom: 20.h,
-            left: 12.w,
-            right: 12.w,
-            child: CardCartPeak(
-              onPressed: controller.onPressedCart,
+          Obx(
+            () => Visibility(
+              visible: controller.isCardCartVisible.value,
+              child: Positioned(
+                bottom: 20.h,
+                left: 0.w,
+                right: 0.w,
+                child: Center(
+                  child: CardCartPeak(
+                    onPressed: controller.onPressedCart,
+                  ),
+                ),
+              ),
             ),
           ),
         ],
@@ -178,6 +182,36 @@ class HomeScreen extends GetView<HomeController> {
             onPressed: () {},
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildProductCard(int index) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: index % 2 == 0 ? Insets.medium.w : 0,
+        right: index % 2 == 0 ? 0 : Insets.medium.w,
+      ),
+      child: CardProduct(
+        product: Product(
+          id: index,
+          name: 'Product Name ${(index + 1).toString()}',
+          description: 'This is Product ${(index + 1).toString()} Descriotion',
+          imageUrl: 'imageurl',
+          price: 5000 * (index + 1),
+          status: index % 2 == 0
+              ? ProductStatus.available
+              : ProductStatus.unavailable,
+          isCustomPrice: index == 2,
+        ),
+        onPressed: (product) {
+          Get.dialog(
+            DialogItemDetail(
+              product: product,
+              onPressedAddToCart: controller.onPressedAddToCart,
+            ),
+          );
+        },
       ),
     );
   }

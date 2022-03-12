@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mapalus/data/models/product.dart';
 import 'package:mapalus/shared/theme.dart';
-
-import 'dialog_item_detail.dart';
 
 class CardProduct extends StatelessWidget {
   const CardProduct({
     Key? key,
-    required this.name,
-    required this.price,
-    required this.image,
-    this.isAvailable = true,
-    this.onPressed,
+    required this.onPressed,
+    required this.product,
   }) : super(key: key);
 
-  final String name;
-  final String price;
-  final String image;
-  final bool isAvailable;
-  final VoidCallback? onPressed;
+  final Product product;
+  final Function(Product product) onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +23,15 @@ class CardProduct extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       color: Palette.cardForeground,
       child: InkWell(
-        onTap: onPressed ??
-            () {
-              showDialog(
-                context: context,
-                builder: (_) => DialogItemDetail(isAvailable: isAvailable),
-              );
-            },
+        onTap: () {
+          onPressed(product);
+        },
         child: Padding(
           padding: EdgeInsets.all(Insets.small.sp * 1.75),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              isAvailable
+              product.isAvailable
                   ? Text(
                       "Tidak Tersedia",
                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
@@ -81,12 +70,20 @@ class CardProduct extends StatelessWidget {
                       BoxShadow(
                         spreadRadius: .25,
                         blurRadius: 10,
-                        color: isAvailable
+                        color: product.isAvailable
                             ? Palette.primary.withOpacity(.125)
                             : Colors.grey.withOpacity(.125),
                         offset: const Offset(3, 3),
                       ),
                     ],
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Image',
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            color: Palette.primary,
+                          ),
+                    ),
                   ),
                 ),
               ),
@@ -95,22 +92,24 @@ class CardProduct extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name,
+                    product.name,
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontWeight: FontWeight.w500,
                           fontSize: 14.sp,
-                          color:
-                              isAvailable ? Palette.textPrimary : Colors.grey,
+                          color: product.isAvailable
+                              ? Palette.textPrimary
+                              : Colors.grey,
                         ),
                   ),
                   SizedBox(height: 3.h),
                   Text(
-                    price,
+                    product.priceFormatted,
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontWeight: FontWeight.w300,
                           fontSize: 11.sp,
-                          color:
-                              isAvailable ? Palette.textPrimary : Colors.grey,
+                          color: product.isAvailable
+                              ? Palette.textPrimary
+                              : Colors.grey,
                         ),
                   ),
                 ],

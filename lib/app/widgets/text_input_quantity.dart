@@ -3,16 +3,25 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mapalus/shared/theme.dart';
 
 class TextInputQuantity extends StatelessWidget {
-  const TextInputQuantity({Key? key, this.icon, this.onTextChanged})
-      : super(key: key);
+  const TextInputQuantity({
+    Key? key,
+    this.icon,
+    this.onTextChanged,
+    required this.textEditingController,
+    this.isReadOnly = false,
+    this.trailingWidget,
+  }) : super(key: key);
 
   final Widget? icon;
-  final Function(String text)? onTextChanged;
+  final Function(String)? onTextChanged;
+  final TextEditingController textEditingController;
+  final bool isReadOnly;
+  final Widget? trailingWidget;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100.w,
+      width: 147.w,
       height: 45.h,
       decoration: BoxDecoration(
         color: Palette.editable,
@@ -29,12 +38,15 @@ class TextInputQuantity extends StatelessWidget {
                   child: icon,
                 )
               : const SizedBox(),
-          SizedBox(width: Insets.small.w * .75),
+          SizedBox(width: Insets.small.w * .5),
           Expanded(
             child: TextField(
+              controller: textEditingController,
               onChanged: onTextChanged,
+              keyboardType: TextInputType.number,
               maxLines: 1,
               autocorrect: false,
+              readOnly: isReadOnly,
               style: TextStyle(
                 color: Palette.accent,
                 fontFamily: fontFamily,
@@ -48,10 +60,11 @@ class TextInputQuantity extends StatelessWidget {
                 ),
                 isDense: true,
                 border: InputBorder.none,
-                hintText: "...",
+                hintText: "_",
               ),
             ),
           ),
+          trailingWidget ?? const SizedBox(),
         ],
       ),
     );

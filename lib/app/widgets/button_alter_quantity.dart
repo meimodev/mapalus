@@ -4,20 +4,24 @@ import 'package:mapalus/shared/theme.dart';
 
 class ButtonAlterQuantity extends StatelessWidget {
   const ButtonAlterQuantity(
-      {Key? key, required this.onPressed, required this.label})
+      {Key? key,
+      required this.onPressed,
+      required this.label,
+      this.isEnabled = true})
       : super(key: key);
 
   final VoidCallback onPressed;
   final String label;
+  final bool isEnabled;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Palette.primary,
+      color: isEnabled ? Palette.primary : Colors.grey.shade300,
       shape: const CircleBorder(),
       clipBehavior: Clip.hardEdge,
       child: InkWell(
-        onTap: onPressed,
+        onTap: isEnabled ? onPressed : null,
         child: SizedBox(
           width: 45.w,
           height: 45.h,
@@ -26,6 +30,8 @@ class ButtonAlterQuantity extends StatelessWidget {
               label,
               style: Theme.of(context).textTheme.bodyText1?.copyWith(
                     fontSize: 19.sp,
+                    color:
+                        isEnabled ? Palette.textPrimary : Colors.grey.shade400,
                     fontWeight: FontWeight.w400,
                   ),
             ),

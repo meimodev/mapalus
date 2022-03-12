@@ -41,7 +41,7 @@ class OrdersScreen extends StatelessWidget {
                           name: "product $index",
                           description: 'description $index',
                           imageUrl: 'image $index',
-                          price: 'Rp. 5.000',
+                          price: 5000,
                           unit: 'gram',
                           status: ProductStatus.available,
                         ),
