@@ -8,8 +8,8 @@ import 'package:mapalus/app/widgets/card_cart_peak.dart';
 import 'package:mapalus/app/widgets/dialog_item_detail.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
 import 'package:mapalus/app/widgets/card_search_bar.dart';
+import 'package:mapalus/data/models/data_mock.dart';
 import 'package:mapalus/data/models/product.dart';
-import 'package:mapalus/shared/enums.dart';
 import 'package:mapalus/shared/theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -97,8 +97,9 @@ class HomeScreen extends GetView<HomeController> {
                   mainAxisExtent: 250.h,
                 ),
                 delegate: SliverChildBuilderDelegate(
-                  (context, index) => _buildProductCard(index),
-                  childCount: 20,
+                  (context, index) =>
+                      _buildProductCard(index, DataMock.products),
+                  childCount: DataMock.products.length,
                 ),
               ),
               SliverPadding(
@@ -126,8 +127,13 @@ class HomeScreen extends GetView<HomeController> {
                 left: 0.w,
                 right: 0.w,
                 child: Center(
-                  child: CardCartPeak(
-                    onPressed: controller.onPressedCart,
+                  child: Obx(
+                    () => CardCartPeak(
+                      // productOrders: controller.productOrders.value,
+                      onPressed: controller.onPressedCart,
+                      totalPrice: controller.totalPrice.value,
+                      cartOverview: controller.cartOverview.value,
+                    ),
                   ),
                 ),
               ),
@@ -186,24 +192,14 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  Widget _buildProductCard(int index) {
+  Widget _buildProductCard(int index, List<Map<String, dynamic>> productsJSON) {
     return Padding(
       padding: EdgeInsets.only(
         left: index % 2 == 0 ? Insets.medium.w : 0,
         right: index % 2 == 0 ? 0 : Insets.medium.w,
       ),
       child: CardProduct(
-        product: Product(
-          id: index,
-          name: 'Product Name ${(index + 1).toString()}',
-          description: 'This is Product ${(index + 1).toString()} Descriotion',
-          imageUrl: 'imageurl',
-          price: 5000 * (index + 1),
-          status: index % 2 == 0
-              ? ProductStatus.available
-              : ProductStatus.unavailable,
-          isCustomPrice: index == 2,
-        ),
+        product: Product.fromJson(productsJSON[index]),
         onPressed: (product) {
           Get.dialog(
             DialogItemDetail(

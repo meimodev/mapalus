@@ -153,12 +153,11 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                               ProductOrder(
                                 product: widget.product,
                                 quantity: double.parse(tecGram.text),
-                                totalPrice: int.parse(tecPrice.text),
+                                totalPrice: double.parse(tecPrice.text),
                               ),
                             );
-                          } else {
-                            Navigator.pop(context);
                           }
+                          Navigator.pop(context);
                         },
                         child: Container(
                           padding:

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:mapalus/app/modules/location/location_controller.dart';
 import 'package:mapalus/app/widgets/card_delivery_fee.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/theme.dart';
 
-class LocationScreen extends StatelessWidget {
+class LocationScreen extends GetView<LocationController> {
   const LocationScreen({Key? key}) : super(key: key);
 
   @override

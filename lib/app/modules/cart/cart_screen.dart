@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:mapalus/app/widgets/card_cart_item.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
-import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/theme.dart';
 
-class CartScreen extends StatelessWidget {
+import 'cart_controller.dart';
+
+class CartScreen extends GetView<CartController> {
   const CartScreen({Key? key}) : super(key: key);
 
   @override
@@ -22,10 +24,18 @@ class CartScreen extends StatelessWidget {
                   bottom: Radius.circular(15.w),
                 ),
               ),
-              child: ListView.builder(
-                itemCount: 6,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) => const CardCartItem(),
+              child: Obx(
+                () => ListView.builder(
+                  itemCount: controller.productOrders.value.length,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) => Obx(
+                    () => CardCartItem(
+                      index: index,
+                      productOrder: controller.productOrders.value[index],
+                      onPressedDelete: controller.onPressedItemDelete,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
@@ -38,12 +48,26 @@ class CartScreen extends StatelessWidget {
                   top: Insets.medium.h,
                   bottom: Insets.small.h,
                 ),
-                child: Column(
-                  children: [
-                    _buildRowItem(context, "Jumlah produk", "999.999 Produk"),
-                    _buildRowItem(context, "Jumlah berat", "999.999 Gram"),
-                    _buildRowItem(context, "Total harga", "Rp. 999.999.999"),
-                  ],
+                child: Obx(
+                  () => Column(
+                    children: [
+                      _buildRowItem(
+                        context,
+                        "Jumlah produk",
+                        controller.count.value,
+                      ),
+                      _buildRowItem(
+                        context,
+                        "Jumlah berat",
+                        controller.weight.value,
+                      ),
+                      _buildRowItem(
+                        context,
+                        "Total harga",
+                        controller.price.value,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Padding(
@@ -57,9 +81,7 @@ class CartScreen extends StatelessWidget {
                   color: Palette.primary,
                   elevation: 4,
                   child: InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, Routes.location);
-                    },
+                    onTap: controller.onPressedSetDelivery,
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: Insets.medium.w,
@@ -85,37 +107,40 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  _buildRowItem(BuildContext context, String title, String value) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SizedBox(
-          width: 120.w,
-          child: Text(
-            title,
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w300,
-                ),
-          ),
-        ),
-        Row(
-          children: [
-            const Text(":"),
-            SizedBox(width: 6.w),
-            SizedBox(
-              width: 120.w,
-              child: Text(
-                value,
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
-              ),
+  _buildRowItem(
+    BuildContext context,
+    String title,
+    String value,
+  ) =>
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(
+            width: 120.w,
+            child: Text(
+              title,
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w300,
+                  ),
             ),
-          ],
-        ),
-      ],
-    );
-  }
+          ),
+          Row(
+            children: [
+              const Text(":"),
+              SizedBox(width: 6.w),
+              SizedBox(
+                width: 120.w,
+                child: Text(
+                  value,
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
 }

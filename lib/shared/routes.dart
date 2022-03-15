@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/account_settings/account_settings_screen.dart';
+import 'package:mapalus/app/modules/cart/cart_binding.dart';
 import 'package:mapalus/app/modules/cart/cart_screen.dart';
 import 'package:mapalus/app/modules/home/home_binding.dart';
 import 'package:mapalus/app/modules/home/home_screen.dart';
@@ -58,6 +58,7 @@ class Routes {
         page: () => const HomeScreen(),
         binding: HomeBinding(),
         transition: Transition.fade,
+        maintainState: false,
       ),
       GetPage(
         name: accountSetting,
@@ -77,6 +78,7 @@ class Routes {
       GetPage(
         name: cart,
         page: () => const CartScreen(),
+        binding: CartBinding(),
         transition: Transition.fade,
       ),
       GetPage(

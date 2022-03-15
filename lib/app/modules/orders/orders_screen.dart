@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
 import 'package:mapalus/app/widgets/card_order.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
+import 'package:mapalus/data/models/data_mock.dart';
 import 'package:mapalus/data/models/order.dart';
 import 'package:mapalus/data/models/product.dart';
 import 'package:mapalus/data/models/product_order.dart';
@@ -36,15 +37,7 @@ class OrdersScreen extends StatelessWidget {
                       ProductOrder(
                         quantity: 2,
                         totalPrice: 600000,
-                        product: Product(
-                          id: index,
-                          name: "product $index",
-                          description: 'description $index',
-                          imageUrl: 'image $index',
-                          price: 5000,
-                          unit: 'gram',
-                          status: ProductStatus.available,
-                        ),
+                        product: Product.fromJson(DataMock.products[index]),
                       )
                     ],
                     id: index,

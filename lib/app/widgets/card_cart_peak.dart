@@ -7,12 +7,39 @@ class CardCartPeak extends StatelessWidget {
   const CardCartPeak({
     Key? key,
     required this.onPressed,
+    // required this.productOrders,
+    required this.totalPrice,
+    required this.cartOverview,
   }) : super(key: key);
 
   final VoidCallback onPressed;
+  // final List<ProductOrder> productOrders;
+  final String totalPrice;
+  final String cartOverview;
 
   @override
   Widget build(BuildContext context) {
+    // print('cart card');
+    // String _calculateTotalPrice() {
+    //   double total = 0;
+    //   for (var element in productOrders) {
+    //     total += element.totalPrice;
+    //   }
+    //   return Utils.formatNumberToCurrency(total);
+    // }
+    //
+    // String _calculateProductTotalUnitAndWeight() {
+    //   int tProduct = 0;
+    //   double tWeight = 0;
+    //   for (var element in productOrders) {
+    //     tProduct++;
+    //     tWeight += element.quantity;
+    //   }
+    //
+    //   return "$tProduct produk, ${tWeight.toStringAsFixed(2)} kilogram"
+    //       .replaceFirst(".00", '');
+    // }
+
     return Material(
       clipBehavior: Clip.hardEdge,
       elevation: 9,
@@ -58,7 +85,7 @@ class CardCartPeak extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Rp. 999.000.000',
+                      totalPrice,
                       maxLines: 1,
                       overflow: TextOverflow.fade,
                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
@@ -68,7 +95,7 @@ class CardCartPeak extends StatelessWidget {
                           ),
                     ),
                     Text(
-                      '999 produk, 999.000 gram',
+                      cartOverview,
                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             color: Colors.grey,
                             fontWeight: FontWeight.w300,
