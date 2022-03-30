@@ -16,8 +16,9 @@ class Product {
   final String description;
   final String imageUrl;
   final int price;
-  final String unit;
+  final String _unit;
   final String _status;
+  final String _weight;
   final bool isCustomPrice;
 
   Product.fromJson(Map<String, dynamic> json)
@@ -26,8 +27,9 @@ class Product {
         description = json["description"],
         imageUrl = json["imageUrl"],
         price = json["price"],
-        unit = json["unit"],
+        _unit = json["unit"],
         _status = json["status"],
+        _weight = json["weight"],
         isCustomPrice = json["isCustomPrice"];
 
   @override
@@ -44,7 +46,11 @@ class Product {
 
   bool get isAvailable => status == ProductStatus.available;
 
-  String get priceFormatted => Utils.formatNumberToCurrency(price);
+  String get priceF => Utils.formatNumberToCurrency(price);
+
+  double get weight => double.parse(_weight);
+
+  String get unit => _unit.toLowerCase().contains("kilogram") ? "Kg" : _unit;
 
   @override
   String toString() {

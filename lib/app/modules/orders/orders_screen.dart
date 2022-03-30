@@ -2,10 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
 import 'package:mapalus/app/widgets/card_order.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
 import 'package:mapalus/data/models/data_mock.dart';
+import 'package:mapalus/data/models/delivery_info.dart';
 import 'package:mapalus/data/models/order.dart';
 import 'package:mapalus/data/models/product.dart';
 import 'package:mapalus/data/models/product_order.dart';
@@ -32,7 +34,7 @@ class OrdersScreen extends StatelessWidget {
                     horizontal: Insets.medium.w * .5, vertical: 9.h),
                 child: CardOrder(
                   order: Order(
-                    finishTimeStamp: 'Besok, 10:00 - 11:00',
+                    finishTimeStamp: Jiffy(),
                     products: [
                       ProductOrder(
                         quantity: 2,
@@ -41,9 +43,11 @@ class OrdersScreen extends StatelessWidget {
                       )
                     ],
                     id: index,
-                    orderTimeStamp: '10/01/2021 10:00',
+                    orderTimeStamp: Jiffy(),
                     status: OrderStatus
                         .values[Random().nextInt(OrderStatus.values.length)],
+                    deliveryInfo: DeliveryInfo.fromJSON(DataMock.deliveries[0]),
+                    orderingUser: null,
                   ),
                   onPressed: () {
                     Navigator.pushNamed(context, Routes.orderDetail);

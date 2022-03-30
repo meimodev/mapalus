@@ -103,7 +103,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                                 ),
                                 SizedBox(height: Insets.small.h),
                                 Text(
-                                  '${widget.product.priceFormatted} / ${widget.product.unit}',
+                                  '${widget.product.priceF} / ${widget.product.unit}',
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context)
                                       .textTheme

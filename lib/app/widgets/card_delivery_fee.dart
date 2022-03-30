@@ -9,18 +9,26 @@ class CardDeliveryFee extends StatelessWidget {
     required this.deliveryTime,
     required this.price,
     this.isActive = false,
+    this.isTomorrow = false,
     required this.onPressed,
   }) : super(key: key);
 
   final String deliveryTime;
   final String price;
   final bool isActive;
+  final bool isTomorrow;
   final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      borderRadius: BorderRadius.circular(9.sp),
+      shape: ContinuousRectangleBorder(
+        borderRadius: BorderRadius.circular(9.sp),
+        side: BorderSide(
+          width: 1.5,
+          color: isActive ? Palette.primary : Colors.transparent,
+        ),
+      ),
       color: Colors.grey.shade200,
       clipBehavior: Clip.hardEdge,
       child: InkWell(
@@ -47,17 +55,39 @@ class CardDeliveryFee extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      deliveryTime,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontSize: 12.sp,
-                          ),
+                    Row(
+                      children: [
+                        Text(
+                          deliveryTime,
+                          style:
+                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                                    fontSize: 12.sp,
+                                    color: isTomorrow
+                                        ? Colors.grey
+                                        : Palette.textPrimary,
+                                  ),
+                        ),
+                        SizedBox(width: Insets.small.w),
+                        isTomorrow
+                            ? Text(
+                                'BESOK, 16 Feb',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(
+                                      color: Colors.grey,
+                                      fontSize: 12.sp,
+                                    ),
+                              )
+                            : const SizedBox(),
+                      ],
                     ),
                     Text(
                       price,
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w300,
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey,
                           ),
                     ),
                   ],

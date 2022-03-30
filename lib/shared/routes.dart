@@ -4,8 +4,10 @@ import 'package:mapalus/app/modules/cart/cart_binding.dart';
 import 'package:mapalus/app/modules/cart/cart_screen.dart';
 import 'package:mapalus/app/modules/home/home_binding.dart';
 import 'package:mapalus/app/modules/home/home_screen.dart';
+import 'package:mapalus/app/modules/location/location_binding.dart';
 import 'package:mapalus/app/modules/location/location_screen.dart';
 import 'package:mapalus/app/modules/order_detail/order_detail_screen.dart';
+import 'package:mapalus/app/modules/ordering/ordering_binding.dart';
 import 'package:mapalus/app/modules/ordering/ordering_screen.dart';
 import 'package:mapalus/app/modules/orders/orders_screen.dart';
 import 'package:mapalus/app/modules/signing/signing_screen.dart';
@@ -84,11 +86,13 @@ class Routes {
       GetPage(
         name: location,
         page: () => const LocationScreen(),
+        binding: LocationBinding(),
         transition: Transition.fade,
       ),
       GetPage(
         name: ordering,
         page: () => const OrderingScreen(),
+        binding: OrderingBinding(),
         transition: Transition.fade,
       ),
       GetPage(

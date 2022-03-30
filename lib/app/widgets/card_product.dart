@@ -103,7 +103,7 @@ class CardProduct extends StatelessWidget {
                   ),
                   SizedBox(height: 3.h),
                   Text(
-                    product.priceFormatted,
+                    '${product.priceF} / ${product.unit}',
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontWeight: FontWeight.w300,
                           fontSize: 11.sp,

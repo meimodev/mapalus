@@ -3,12 +3,13 @@ import 'package:intl/intl.dart';
 class Utils {
   static String formatNumberToCurrency(dynamic number) {
     var f = NumberFormat('#,###');
-    return "Rp. ${f.format(number)}".replaceAll(",", ".");
+    var s = "Rp. ${f.format(number)}".replaceAll(",", ".");
+    return s;
   }
 
-  static int formatCurrencyToNumber(String currencyNumber) {
+  static double formatCurrencyToNumber(String currencyNumber) {
     var string = currencyNumber.replaceAll("Rp. ", "");
     var safe = string.replaceAll(".", "");
-    return int.parse(safe);
+    return double.parse(safe);
   }
 }

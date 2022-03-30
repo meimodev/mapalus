@@ -13,13 +13,16 @@ class CartController extends GetxController {
   var weight = "".obs;
   var price = "".obs;
 
+  int _count = 0;
+  double _weight = 0;
+  double _price = 0;
+
   @override
   void onInit() {
     super.onInit();
     productOrders = RxList.of(homeController.productOrders);
     isCardCartVisible = homeController.isCardCartVisible;
     _calculateInfo();
-    print("onInit : $productOrders");
   }
 
   // @override
@@ -31,21 +34,23 @@ class CartController extends GetxController {
   // }
 
   void onPressedSetDelivery() {
-    Get.toNamed(Routes.location);
+    Get.toNamed(Routes.location, arguments: {
+      'products_count': _count,
+      'products_price': _price,
+      'products_weight': _weight,
+      'product_orders': productOrders,
+    });
   }
 
   _calculateInfo() {
-    int _count = 0;
-    double _weight = 0;
-    double _price = 0;
     for (var element in productOrders) {
       _count++;
-      _weight += element.quantity;
+      _weight += element.quantity * element.product.weight;
       _price += element.totalPrice;
     }
     count.value = "$_count Produk";
     weight.value =
-        "${_weight.toStringAsFixed(2).replaceFirst('.00', '')} Kilogram";
+        "${(_weight / 1000).toStringAsFixed(2).replaceFirst('.00', '')} Kg";
     price.value = Utils.formatNumberToCurrency(_price);
   }
 
