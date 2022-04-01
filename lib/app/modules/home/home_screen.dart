@@ -108,35 +108,40 @@ class HomeScreen extends GetView<HomeController> {
             ],
           ),
           Obx(
-            () => Visibility(
-              visible: controller.isCardOrderVisible.value,
-              child: Positioned(
-                bottom: 110.h,
-                right: 12.w,
-                child: CardOrdersPeak(
-                  onPressed: controller.onPressedLatestOrder,
-                ),
-              ),
+            () => AnimatedSwitcher(
+              duration: 300.milliseconds,
+              child: controller.isCardOrderVisible.value
+                  ? Positioned(
+                      bottom: 110.h,
+                      right: 12.w,
+                      child: CardOrdersPeak(
+                        onPressed: controller.onPressedLatestOrder,
+                      ),
+                    )
+                  : const SizedBox(),
             ),
           ),
           Obx(
             () => Visibility(
+              // duration: 300.milliseconds,
               visible: controller.isCardCartVisible.value,
-              child: Positioned(
-                bottom: 20.h,
-                left: 0.w,
-                right: 0.w,
-                child: Center(
-                  child: Obx(
-                    () => CardCartPeak(
-                      // productOrders: controller.productOrders.value,
-                      onPressed: controller.onPressedCart,
-                      totalPrice: controller.totalPrice.value,
-                      cartOverview: controller.cartOverview.value,
-                    ),
-                  ),
-                ),
-              ),
+              child: controller.isCardCartVisible.value
+                  ? Positioned(
+                      bottom: 20.h,
+                      left: 0.w,
+                      right: 0.w,
+                      child: Center(
+                        child: Obx(
+                          () => CardCartPeak(
+                            // productOrders: controller.productOrders.value,
+                            onPressed: controller.onPressedCart,
+                            totalPrice: controller.totalPrice.value,
+                            cartOverview: controller.cartOverview.value,
+                          ),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
             ),
           ),
         ],

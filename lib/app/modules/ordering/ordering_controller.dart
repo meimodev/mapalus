@@ -17,7 +17,7 @@ class OrderingController extends GetxController {
   void onReady() async {
     super.onReady();
 
-    User? _signedInUser = await userRepo.readSignedInUser();
+    User user = await userRepo.readSignedInUser();
 
     Map<String, dynamic> args = Get.arguments as Map<String, dynamic>;
     DeliveryInfo _deliveryInfo = args['delivery_info'] as DeliveryInfo;
@@ -27,7 +27,7 @@ class OrderingController extends GetxController {
     Order order = await orderRepo.createOrder(
       deliveryInfo: _deliveryInfo,
       products: _productOrders,
-      user: _signedInUser!,
+      user: user,
     );
 
     print(order.toString());

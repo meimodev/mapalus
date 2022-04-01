@@ -11,9 +11,10 @@ class ScreenWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      backgroundColor: backgroundColor ?? Palette.scaffold,
-      body: child,
-    ));
+      child: Scaffold(
+        backgroundColor: backgroundColor ?? Palette.scaffold,
+        body: child,
+      ),
+    );
   }
 }

@@ -70,7 +70,6 @@ class LocationController extends GetxController {
       return;
     }
 
-    //TODO show ordering screen & construct order in ordering screen
     List<ProductOrder> _productOrders = (Get.arguments
         as Map<String, dynamic>)['product_orders'] as List<ProductOrder>;
     Get.toNamed(

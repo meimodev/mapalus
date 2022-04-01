@@ -5,7 +5,7 @@ import 'package:mapalus/data/repo/user_repo.dart';
 class HomeBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put<HomeController>(HomeController());
     Get.put<UserRepo>(UserRepo());
+    Get.put<HomeController>(HomeController());
   }
 }

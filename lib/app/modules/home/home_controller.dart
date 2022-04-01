@@ -1,9 +1,14 @@
 import 'package:get/get.dart';
 import 'package:mapalus/data/models/product_order.dart';
+import 'package:mapalus/data/models/result.dart';
+import 'package:mapalus/data/models/user.dart';
+import 'package:mapalus/data/repo/user_repo.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/utils.dart';
 
 class HomeController extends GetxController {
+  UserRepo userRepo = Get.find<UserRepo>();
+
   RxBool isCardCartVisible = false.obs;
   RxBool isCardOrderVisible = false.obs;
 
@@ -20,8 +25,19 @@ class HomeController extends GetxController {
     Get.toNamed(Routes.orders);
   }
 
-  void onPressedCart() {
-    Get.toNamed(Routes.cart);
+  void onPressedCart() async {
+    try {
+      await userRepo.readSignedInUser();
+      Get.toNamed(Routes.cart);
+    } on Result catch (e) {
+      if (e.message.contains('NO_SIGNED_USER')) {
+        Get.toNamed(
+          Routes.signing,
+          arguments: "Silahkan masuk untuk melanjutkan",
+        );
+        return;
+      }
+    }
   }
 
   void onPressedAddToCart(ProductOrder productOrder) {
@@ -55,6 +71,11 @@ class HomeController extends GetxController {
   void onPressedDeleteItemFromCart(ProductOrder productOrder) {
     productOrders.value.remove(productOrder);
     _calculateCartData();
+  }
+
+  void onSignedInUser(User user) {
+    print(user.toString());
+    Get.toNamed(Routes.cart);
   }
 
   _calculateCartData() {

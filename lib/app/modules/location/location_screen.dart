@@ -31,41 +31,45 @@ class LocationScreen extends GetView<LocationController> {
           ),
           Center(
             child: Obx(
-              () => Visibility(
-                visible: controller.isLocationSelectionVisible.value,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Material(
-                      color: Palette.primary,
-                      clipBehavior: Clip.hardEdge,
-                      borderRadius: BorderRadius.circular(9.sp),
-                      child: InkWell(
-                        onTap: controller.onPressedSelectLocation,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Insets.medium.w,
-                            vertical: Insets.small.h,
+              () => AnimatedSwitcher(
+                duration: const Duration(milliseconds: 400),
+                child: controller.isLocationSelectionVisible.value
+                    ? Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Material(
+                            color: Palette.primary,
+                            clipBehavior: Clip.hardEdge,
+                            borderRadius: BorderRadius.circular(9.sp),
+                            child: InkWell(
+                              onTap: controller.onPressedSelectLocation,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: Insets.medium.w,
+                                  vertical: Insets.small.h,
+                                ),
+                                child: Text(
+                                  'Pilih Lokasi',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(
+                                        fontSize: 14.sp,
+                                      ),
+                                ),
+                              ),
+                            ),
                           ),
-                          child: Text(
-                            'Pilih Lokasi',
-                            style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
-                                      fontSize: 14.sp,
-                                    ),
+                          SizedBox(height: Insets.small.h),
+                          SvgPicture.asset(
+                            'assets/vectors/pin.svg',
+                            width: 30.sp,
+                            height: 45.sp,
+                            color: Palette.accent,
                           ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: Insets.small.h),
-                    SvgPicture.asset(
-                      'assets/vectors/pin.svg',
-                      width: 30.sp,
-                      height: 45.sp,
-                      color: Palette.accent,
-                    ),
-                  ],
-                ),
+                        ],
+                      )
+                    : const SizedBox(),
               ),
             ),
           ),
@@ -74,126 +78,130 @@ class LocationScreen extends GetView<LocationController> {
             right: 0,
             bottom: Insets.medium.h,
             child: Obx(
-              () => Visibility(
-                visible: !controller.isLocationSelectionVisible.value,
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: Insets.medium.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9.sp),
-                    color: Palette.cardForeground,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Obx(
-                        () => _BuildDeliveryFeeSelector(
-                          deliveries: controller.deliveries,
-                          weight: controller.weight.value,
-                          distance: controller.distance.value,
-                          onPressedDeliveryTime:
-                              controller.onPressedChangeDeliveryTime,
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: Insets.small.w,
-                          vertical: Insets.small.h,
-                        ),
+              () => AnimatedSwitcher(
+                duration: const Duration(milliseconds: 400),
+                child: controller.isLocationSelectionVisible.value
+                    ? const SizedBox()
+                    : Container(
+                        margin:
+                            EdgeInsets.symmetric(horizontal: Insets.medium.w),
                         decoration: BoxDecoration(
-                          border: Border.symmetric(
-                            horizontal: BorderSide(
-                              color: Colors.grey.shade200,
-                              width: 2,
-                            ),
-                          ),
+                          borderRadius: BorderRadius.circular(9.sp),
+                          color: Palette.cardForeground,
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Expanded(
+                            Obx(
+                              () => _BuildDeliveryFeeSelector(
+                                deliveries: controller.deliveries,
+                                weight: controller.weight.value,
+                                distance: controller.distance.value,
+                                onPressedDeliveryTime:
+                                    controller.onPressedChangeDeliveryTime,
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(
+                                horizontal: Insets.small.w,
+                                vertical: Insets.small.h,
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.symmetric(
+                                  horizontal: BorderSide(
+                                    color: Colors.grey.shade200,
+                                    width: 2,
+                                  ),
+                                ),
+                              ),
                               child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      left: Insets.small.w,
-                                      right: Insets.small.w * .5,
-                                    ),
-                                    child: Text(
-                                      'Lokasi Terpilih',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          ?.copyWith(
-                                            color: Palette.textPrimary,
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                            left: Insets.small.w,
+                                            right: Insets.small.w * .5,
                                           ),
+                                          child: Text(
+                                            'Lokasi Terpilih',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                ?.copyWith(
+                                                  color: Palette.textPrimary,
+                                                ),
+                                          ),
+                                        ),
+                                        SvgPicture.asset(
+                                          'assets/vectors/check.svg',
+                                          width: 24.sp,
+                                          height: 24.sp,
+                                          color: Palette.accent,
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  SvgPicture.asset(
-                                    'assets/vectors/check.svg',
-                                    width: 24.sp,
-                                    height: 24.sp,
-                                    color: Palette.accent,
+                                  Material(
+                                    child: InkWell(
+                                      onTap: controller.onPressedChangeLocation,
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: Insets.small.h,
+                                          horizontal: Insets.small.w,
+                                        ),
+                                        child: Text(
+                                          'Ubah Lokasi',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1
+                                              ?.copyWith(
+                                                fontSize: 10.sp,
+                                                color: Palette.primary,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                            Material(
-                              child: InkWell(
-                                onTap: controller.onPressedChangeLocation,
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: Insets.small.h,
-                                    horizontal: Insets.small.w,
-                                  ),
-                                  child: Text(
-                                    'Ubah Lokasi',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1
-                                        ?.copyWith(
-                                          fontSize: 10.sp,
-                                          color: Palette.primary,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                  ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                bottom: Insets.small.h,
+                                left: Insets.medium.w,
+                                right: Insets.medium.w,
+                              ),
+                              child: Obx(
+                                () => _BuildOrderInfo(
+                                  orderInfo: controller.orderInfo.value,
                                 ),
                               ),
                             ),
+                            Material(
+                              color: Palette.primary,
+                              clipBehavior: Clip.hardEdge,
+                              borderRadius: BorderRadius.circular(9.sp),
+                              child: InkWell(
+                                onTap: controller.onPressedMakeOrder,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: Insets.small.h,
+                                    horizontal: Insets.medium.w,
+                                  ),
+                                  child: const Center(
+                                    child: Text('Buat Pesanan'),
+                                  ),
+                                ),
+                              ),
+                            )
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          bottom: Insets.small.h,
-                          left: Insets.medium.w,
-                          right: Insets.medium.w,
-                        ),
-                        child: Obx(
-                          () => _BuildOrderInfo(
-                            orderInfo: controller.orderInfo.value,
-                          ),
-                        ),
-                      ),
-                      Material(
-                        color: Palette.primary,
-                        clipBehavior: Clip.hardEdge,
-                        borderRadius: BorderRadius.circular(9.sp),
-                        child: InkWell(
-                          onTap: controller.onPressedMakeOrder,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: Insets.small.h,
-                              horizontal: Insets.medium.w,
-                            ),
-                            child: const Center(
-                              child: Text('Buat Pesanan'),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
               ),
             ),
           ),

@@ -29,7 +29,7 @@ class Order {
     required this.status,
   }) {
     rating = Rating(0, 1, "default");
-    deliveringUser = User('', 'default');
+    deliveringUser = User(name: '', phone: 'default');
     if (orderTimeStamp == null) {
       _orderTimeStamp = Jiffy().format(Values.formatRawDate);
     }

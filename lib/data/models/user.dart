@@ -2,7 +2,7 @@ class User {
   String phone;
   String name;
 
-  User(this.phone, this.name);
+  User({required this.phone, required this.name});
 
   @override
   String toString() {
