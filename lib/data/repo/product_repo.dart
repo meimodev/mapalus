@@ -10,7 +10,7 @@ abstract class ProductRepoContract {
 }
 
 class ProductRepo extends ProductRepoContract {
-  FirebaseServices firebaseServices = FirebaseServices();
+  FirestoreService firebaseServices = FirestoreService();
 
   @override
   Future<Product> readProduct(int id) {

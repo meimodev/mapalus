@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/home/home_controller.dart';
-import 'package:mapalus/data/models/result.dart';
-import 'package:mapalus/data/models/user.dart';
+import 'package:mapalus/data/models/user_app.dart';
 import 'package:mapalus/data/repo/user_repo.dart';
 import 'package:mapalus/shared/enums.dart';
 
@@ -18,6 +17,7 @@ class SigningController extends GetxController {
   String name = '';
 
   Rx<CardSigningState> signingState = CardSigningState.oneTimePassword.obs;
+  RxBool isLoading = false.obs;
 
   @override
   void onInit() {
@@ -28,7 +28,10 @@ class SigningController extends GetxController {
 
   @override
   void onClose() {
-    homeController.onSignedInUser(User(name: name, phone: phone));
+    if (phone.isNotEmpty && name.isNotEmpty) {
+      homeController.onSignedInUser(UserApp(name: name, phone: phone));
+    }
+    Get.back();
   }
 
   onPressedRequestOTP() async {
@@ -36,6 +39,11 @@ class SigningController extends GetxController {
     if (input.isEmpty) {
       errorText.value = "Tidak bisa kosong";
       return;
+    }
+
+    if (input.startsWith("+62")) {
+      input = input.replaceFirst("+62", "0");
+      tecSigning.text = input;
     }
 
     if (!input.startsWith("0")) {
@@ -58,13 +66,36 @@ class SigningController extends GetxController {
       return;
     }
 
-    //TODO requestOTP logic here
+    isLoading.value = true;
     phone = input;
-    await userRepo.requestOTP(phone);
-
-    tecSigning.clear();
-    errorText.value = "";
-    signingState.value = CardSigningState.confirmCode;
+    userRepo.requestOTP(
+      phone,
+      (res) async {
+        switch (res.message) {
+          case 'PROCEED':
+            // userRepo.signInUser(phone);
+            Get.back();
+            break;
+          case 'UNREGISTERED':
+            isLoading.value = false;
+            tecSigning.clear();
+            errorText.value = "";
+            signingState.value = CardSigningState.notRegistered;
+            break;
+          case 'SENT':
+            isLoading.value = false;
+            tecSigning.clear();
+            errorText.value = "";
+            signingState.value = CardSigningState.confirmCode;
+            break;
+          case 'VERIFICATION_FAILED':
+            isLoading.value = false;
+            errorText.value =
+                "Koneksi ke internet bermasalah, cobalah sesaat lagi";
+            break;
+        }
+      },
+    );
   }
 
   onPressedConfirmCode() async {
@@ -84,15 +115,38 @@ class SigningController extends GetxController {
       return;
     }
 
-    bool checkIfRegistered = await userRepo.checkIfRegistered(phone);
-    if (checkIfRegistered) {
-      Get.back();
-      return;
-    }
+    isLoading.value = true;
 
-    tecSigning.clear();
-    errorText.value = "";
-    signingState.value = CardSigningState.notRegistered;
+    userRepo.checkOTPCode(input, (res) async {
+      switch (res.message) {
+        case 'INVALID_CODE':
+          isLoading.value = false;
+
+          errorText.value = "Kode yang dimasukkan tidak tepat";
+
+          return;
+        case 'INVALID_ID':
+          break;
+        case 'EXPIRED':
+          isLoading.value = false;
+          tecSigning.clear();
+          errorText.value =
+              "Kode kadaluarsa, silahkan masukkan nomor HP kembali";
+          signingState.value = CardSigningState.oneTimePassword;
+          return;
+        case 'OK':
+          if (await userRepo.checkIfRegistered(phone)) {
+            Get.back();
+            return;
+          } else {
+            isLoading.value = false;
+            tecSigning.clear();
+            errorText.value = "";
+            signingState.value = CardSigningState.notRegistered;
+          }
+          return;
+      }
+    });
   }
 
   onPressedCreateUser() async {
@@ -134,8 +188,6 @@ class SigningController extends GetxController {
   Future<bool> onPressedBack() {
     if (signingState.value == CardSigningState.confirmCode) {
       signingState.value = CardSigningState.oneTimePassword;
-      phone = "";
-      tecSigning.clear();
       return Future.value(false);
     }
     return Future.value(true);

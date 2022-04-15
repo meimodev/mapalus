@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/signing/signing_controller.dart';
+import 'package:mapalus/app/widgets/card_navigation.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
 import 'package:mapalus/shared/enums.dart';
-import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/theme.dart';
 
 class SigningScreen extends GetView<SigningController> {
@@ -19,6 +19,10 @@ class SigningScreen extends GetView<SigningController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          const CardNavigation(
+            title: '',
+            isInverted: true,
+          ),
           Expanded(
             child: Container(
               color: Palette.accent,
@@ -90,7 +94,7 @@ class SigningScreen extends GetView<SigningController> {
                   ),
                   child: SvgPicture.asset(
                     assetName,
-                    height: 260.h,
+                    height: 200.h,
                   ),
                 ),
                 Text(
@@ -141,15 +145,22 @@ class CardSigning extends StatelessWidget {
       ),
       child: WillPopScope(
         onWillPop: controller.onPressedBack,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ...generateSigningHeader(context),
-            SizedBox(height: Insets.small.h * .5),
-            generateSigningTextField(context),
-            SizedBox(height: Insets.small.h),
-            generateSigningButton(),
-          ],
+        child: Obx(
+          () => AnimatedSwitcher(
+            duration: const Duration(milliseconds: 400),
+            child: controller.isLoading.value
+                ? const CircularProgressIndicator(color: Palette.primary)
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      ...generateSigningHeader(context),
+                      SizedBox(height: Insets.small.h * .5),
+                      generateSigningTextField(context),
+                      SizedBox(height: Insets.small.h),
+                      generateSigningButton(),
+                    ],
+                  ),
+          ),
         ),
       ),
     );

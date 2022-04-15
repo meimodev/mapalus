@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:mapalus/data/models/delivery_info.dart';
 import 'package:mapalus/data/models/order.dart';
 import 'package:mapalus/data/models/product_order.dart';
-import 'package:mapalus/data/models/user.dart';
+import 'package:mapalus/data/models/user_app.dart';
 import 'package:mapalus/data/repo/order_repo.dart';
 import 'package:mapalus/data/repo/user_repo.dart';
 import 'package:mapalus/shared/routes.dart';
@@ -17,7 +17,7 @@ class OrderingController extends GetxController {
   void onReady() async {
     super.onReady();
 
-    User user = await userRepo.readSignedInUser();
+    UserApp? user = await userRepo.readSignedInUser();
 
     Map<String, dynamic> args = Get.arguments as Map<String, dynamic>;
     DeliveryInfo _deliveryInfo = args['delivery_info'] as DeliveryInfo;
@@ -27,7 +27,7 @@ class OrderingController extends GetxController {
     Order order = await orderRepo.createOrder(
       deliveryInfo: _deliveryInfo,
       products: _productOrders,
-      user: user,
+      user: user!,
     );
 
     print(order.toString());

@@ -2,7 +2,7 @@ import 'package:jiffy/jiffy.dart';
 import 'package:mapalus/data/models/delivery_info.dart';
 import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/data/models/rating.dart';
-import 'package:mapalus/data/models/user.dart';
+import 'package:mapalus/data/models/user_app.dart';
 import 'package:mapalus/shared/enums.dart';
 import 'package:mapalus/shared/values.dart';
 
@@ -14,8 +14,8 @@ class Order {
   String? _orderTimeStamp;
   String? _finishTimeStamp;
   Rating? rating;
-  User? orderingUser;
-  User? deliveringUser;
+  UserApp? orderingUser;
+  UserApp? deliveringUser;
 
   Order({
     rating,
@@ -29,7 +29,7 @@ class Order {
     required this.status,
   }) {
     rating = Rating(0, 1, "default");
-    deliveringUser = User(name: '', phone: 'default');
+    deliveringUser = UserApp(name: '', phone: 'default');
     if (orderTimeStamp == null) {
       _orderTimeStamp = Jiffy().format(Values.formatRawDate);
     }

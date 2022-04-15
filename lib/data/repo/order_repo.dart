@@ -2,27 +2,27 @@ import 'package:mapalus/data/models/delivery_info.dart';
 import 'package:mapalus/data/models/order.dart';
 import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/data/models/rating.dart';
-import 'package:mapalus/data/models/user.dart';
+import 'package:mapalus/data/models/user_app.dart';
 import 'package:mapalus/shared/enums.dart';
 
 abstract class OrderRepoContract {
   Future<Order> createOrder({
     required DeliveryInfo deliveryInfo,
     required List<ProductOrder> products,
-    required User user,
+    required UserApp user,
   });
 
   Future<Order> readOrder(int id);
 
-  Future<List<Order>> readOrders(User user);
+  Future<List<Order>> readOrders(UserApp user);
 
   Future<List<Order>> updateOrderStatus({
     required Order order,
-    required User user,
+    required UserApp user,
     required OrderStatus status,
   });
 
-  Future<bool> rateOrder(Order order, User user, Rating rating);
+  Future<bool> rateOrder(Order order, UserApp user, Rating rating);
 }
 
 class OrderRepo extends OrderRepoContract {
@@ -30,7 +30,7 @@ class OrderRepo extends OrderRepoContract {
   Future<Order> createOrder({
     required DeliveryInfo deliveryInfo,
     required List<ProductOrder> products,
-    required User user,
+    required UserApp user,
   }) async {
     await Future.delayed(const Duration(seconds: 3));
     Order res = Order(
@@ -44,7 +44,7 @@ class OrderRepo extends OrderRepoContract {
   }
 
   @override
-  Future<bool> rateOrder(Order order, User user, Rating rating) {
+  Future<bool> rateOrder(Order order, UserApp user, Rating rating) {
     // TODO: implement rateOrder
     throw UnimplementedError();
   }
@@ -56,14 +56,16 @@ class OrderRepo extends OrderRepoContract {
   }
 
   @override
-  Future<List<Order>> readOrders(User user) {
+  Future<List<Order>> readOrders(UserApp user) {
     // TODO: implement readOrders
     throw UnimplementedError();
   }
 
   @override
   Future<List<Order>> updateOrderStatus(
-      {required Order order, required User user, required OrderStatus status}) {
+      {required Order order,
+      required UserApp user,
+      required OrderStatus status}) {
     // TODO: implement updateOrderStatus
     throw UnimplementedError();
   }

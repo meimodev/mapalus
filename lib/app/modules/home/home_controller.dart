@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mapalus/data/models/product_order.dart';
-import 'package:mapalus/data/models/result.dart';
-import 'package:mapalus/data/models/user.dart';
+import 'package:mapalus/data/models/user_app.dart';
 import 'package:mapalus/data/repo/user_repo.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/utils.dart';
@@ -26,18 +25,17 @@ class HomeController extends GetxController {
   }
 
   void onPressedCart() async {
-    try {
-      await userRepo.readSignedInUser();
-      Get.toNamed(Routes.cart);
-    } on Result catch (e) {
-      if (e.message.contains('NO_SIGNED_USER')) {
-        Get.toNamed(
-          Routes.signing,
-          arguments: "Silahkan masuk untuk melanjutkan",
-        );
-        return;
-      }
+    UserApp? user = await userRepo.readSignedInUser();
+    if (user == null) {
+      Get.toNamed(
+        Routes.signing,
+        arguments: "Silahkan masuk untuk melanjutkan",
+      );
+      return;
     }
+
+    print(user.toString());
+    Get.toNamed(Routes.cart);
   }
 
   void onPressedAddToCart(ProductOrder productOrder) {
@@ -73,7 +71,7 @@ class HomeController extends GetxController {
     _calculateCartData();
   }
 
-  void onSignedInUser(User user) {
+  void onSignedInUser(UserApp user) {
     print(user.toString());
     Get.toNamed(Routes.cart);
   }
