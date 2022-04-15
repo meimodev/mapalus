@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:mapalus/app/modules/account_settings/account_settings_binding.dart';
 import 'package:mapalus/app/modules/account_settings/account_settings_screen.dart';
 import 'package:mapalus/app/modules/cart/cart_binding.dart';
 import 'package:mapalus/app/modules/cart/cart_screen.dart';
@@ -66,6 +67,7 @@ class Routes {
       GetPage(
         name: accountSetting,
         page: () => const AccountSettingsScreen(),
+        binding: AccountSettingsBinding(),
         transition: Transition.cupertino,
       ),
       GetPage(

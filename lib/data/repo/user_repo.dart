@@ -25,6 +25,9 @@ class UserRepo extends UserRepoContract {
 
   bool canRegister = false;
 
+  Function(UserApp)? onSuccessSigning;
+  VoidCallback? onSigningOut;
+
   UserRepo() {
     auth.authStateChanges().listen((User? user) async {
       print('AuthStateChanges()');
@@ -67,6 +70,9 @@ class UserRepo extends UserRepoContract {
 
   void signing(UserApp user) {
     signedUser = user;
+    if (onSuccessSigning != null) {
+      onSuccessSigning!(user);
+    }
     // var box = Hive.box('user_signing');
     // box.put('name', user.name);
     // box.put('phone', user.phone);
@@ -170,6 +176,10 @@ class UserRepo extends UserRepoContract {
     if (signedUser != null) {
       await FirebaseAuth.instance.signOut();
       signedUser = null;
+    }
+
+    if (onSigningOut != null) {
+      onSigningOut!();
     }
   }
 }

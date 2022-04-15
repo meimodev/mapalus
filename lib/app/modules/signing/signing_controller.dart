@@ -28,9 +28,13 @@ class SigningController extends GetxController {
 
   @override
   void onClose() {
+    if (message!.isEmpty) {
+      return;
+    }
     if (phone.isNotEmpty && name.isNotEmpty) {
       homeController.onSignedInUser(UserApp(name: name, phone: phone));
     }
+
     Get.back();
   }
 

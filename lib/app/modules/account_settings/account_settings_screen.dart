@@ -2,12 +2,13 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:mapalus/app/modules/account_settings/account_settings_controller.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
-import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/theme.dart';
 
-class AccountSettingsScreen extends StatelessWidget {
+class AccountSettingsScreen extends GetView<AccountSettingsController> {
   const AccountSettingsScreen({Key? key}) : super(key: key);
 
   @override
@@ -20,124 +21,184 @@ class AccountSettingsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const CardNavigation(title: 'Tentang Akun'),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: Insets.medium.h),
-                  Container(
-                    width: 120.w,
-                    height: 120.h,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Palette.accent,
-                    ),
-                  ),
-                  SizedBox(height: Insets.small.h),
-                  const Text('Jhon Manembo'),
-                  const Text('+62 812 1234 1234'),
-                ],
-              ),
-              SizedBox(height: Insets.medium.h),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: Insets.medium.w),
-                child: Column(
-                  children: [
-                    _buildItemRow(
-                      assetLocation: 'assets/vectors/edit.svg',
-                      text: 'Sunting Informasi Akun',
-                      context: context,
-                      onPressed: () {},
-                    ),
-                    Badge(
-                      padding: EdgeInsets.all(3.sp),
-                      badgeContent: Text(
-                        '99',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              fontSize: 10.sp,
-                              color: Palette.editable,
-                            ),
-                      ),
-                      position: BadgePosition.topStart(),
-                      child: _buildItemRow(
-                        assetLocation: 'assets/vectors/bag.svg',
-                        text: 'Pesanan Anda',
-                        context: context,
-                        onPressed: () {
-                          Navigator.pushNamed(context, Routes.orders);
-                        },
-                      ),
-                    ),
-                    _buildItemRow(
-                      assetLocation: 'assets/vectors/exit.svg',
-                      text: 'Keluar',
-                      context: context,
-                      onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, Routes.signing, (_) => false);
-                      },
-                    ),
-                  ],
+              Obx(
+                () => AnimatedSwitcher(
+                  duration: 400.milliseconds,
+                  child: controller.userName.isNotEmpty
+                      ? _buildSignedInBody(context)
+                      : _buildAnonymousBody(context),
                 ),
-              ),
-              SizedBox(height: Insets.small.h),
-              Container(
-                height: 2.h,
-                width: 100.w,
-                margin: EdgeInsets.symmetric(
-                  horizontal: Insets.medium.w,
-                ),
+              )
+            ],
+          ),
+          _buildDevNote(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSignedInBody(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: Insets.medium.h),
+            Container(
+              width: 120.w,
+              height: 120.h,
+              padding: EdgeInsets.all(24.sp),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
                 color: Palette.accent,
+              ),
+              child: Center(
+                child: SvgPicture.asset(
+                  'assets/images/mapalus.svg',
+                  color: Palette.primary,
+                ),
+              ),
+            ),
+            SizedBox(height: Insets.small.h),
+            const Text('Jhon Manembo'),
+            const Text('+62 812 1234 1234'),
+          ],
+        ),
+        SizedBox(height: Insets.medium.h),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: Insets.medium.w),
+          child: Column(
+            children: [
+              _buildItemRow(
+                assetLocation: 'assets/vectors/edit.svg',
+                text: 'Sunting Informasi Akun',
+                context: context,
+                onPressed: controller.onPressedEditAccountInfo,
+              ),
+              Badge(
+                padding: EdgeInsets.all(3.sp),
+                badgeContent: Text(
+                  '99',
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: 10.sp,
+                        color: Palette.editable,
+                      ),
+                ),
+                position: BadgePosition.topStart(),
+                child: _buildItemRow(
+                  assetLocation: 'assets/vectors/bag.svg',
+                  text: 'Pesanan Anda',
+                  context: context,
+                  onPressed: controller.onPressedOrders,
+                ),
+              ),
+              _buildItemRow(
+                assetLocation: 'assets/vectors/exit.svg',
+                text: 'Keluar',
+                context: context,
+                onPressed: controller.onPressedSignOut,
               ),
             ],
           ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: Insets.medium.w),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade100,
+        ),
+        SizedBox(height: Insets.small.h),
+        Container(
+          height: 2.h,
+          width: 100.w,
+          margin: EdgeInsets.symmetric(
+            horizontal: Insets.medium.w,
+          ),
+          color: Palette.accent,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAnonymousBody(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(height: Insets.medium.h),
+        Text(
+          'Silahkan masuk untuk melanjutkan',
+          style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                fontSize: 14.sp,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(height: Insets.small.h),
-                  Text(
-                    'mapalus v.1.2.441',
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w300,
-                          fontSize: 12.sp,
-                        ),
-                  ),
-                  Text(
-                    'www.meimodev.com',
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w300,
-                          fontSize: 12.sp,
-                        ),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'with ♥ 2022 ',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w300,
-                              fontSize: 12.sp,
-                            ),
-                      ),
-                      SvgPicture.asset(
-                        'assets/images/logo_meimo.svg',
-                        width: 15.sp,
-                        height: 15.sp,
-                      )
-                    ],
-                  ),
-                ],
+        ),
+        SizedBox(height: Insets.small.h),
+        Material(
+          clipBehavior: Clip.hardEdge,
+          color: Palette.primary,
+          borderRadius: BorderRadius.circular(9.sp),
+          elevation: 2,
+          child: InkWell(
+            onTap: controller.onPressedSignIn,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: Insets.medium.w,
+                vertical: Insets.medium.w * .5,
+              ),
+              child: Text(
+                'Masuk',
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      color: Palette.accent,
+                    ),
               ),
             ),
           ),
-        ],
+        ),
+        SizedBox(height: Insets.medium.h),
+      ],
+    );
+  }
+
+  Widget _buildDevNote(BuildContext context) {
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: Insets.medium.w),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade100,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(height: Insets.small.h),
+            Text(
+              'mapalus v.1.2.441',
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 12.sp,
+                  ),
+            ),
+            Text(
+              'www.meimodev.com',
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 12.sp,
+                  ),
+            ),
+            Row(
+              children: [
+                Text(
+                  'with ♥ 2022 ',
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 12.sp,
+                      ),
+                ),
+                SvgPicture.asset(
+                  'assets/images/logo_meimo.svg',
+                  width: 15.sp,
+                  height: 15.sp,
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
