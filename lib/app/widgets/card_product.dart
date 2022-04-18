@@ -33,7 +33,7 @@ class CardProduct extends StatelessWidget {
             children: [
               product.isAvailable
                   ? Text(
-                      "Tidak Tersedia",
+                      "",
                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             fontWeight: FontWeight.w300,
                             color: Palette.cardForeground,
@@ -65,7 +65,9 @@ class CardProduct extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.white,
+                    color: product.isAvailable
+                        ? Palette.accent.withOpacity(.85)
+                        : Palette.accent.withOpacity(.5),
                     boxShadow: [
                       BoxShadow(
                         spreadRadius: .25,
@@ -78,11 +80,10 @@ class CardProduct extends StatelessWidget {
                     ],
                   ),
                   child: Center(
-                    child: Text(
-                      'Image',
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            color: Palette.primary,
-                          ),
+                    child: SvgPicture.asset(
+                      'assets/images/mapalus.svg',
+                      width: 30.w,
+                      color: Palette.primary,
                     ),
                   ),
                 ),

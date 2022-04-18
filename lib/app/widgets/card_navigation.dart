@@ -8,10 +8,12 @@ class CardNavigation extends StatelessWidget {
     Key? key,
     required this.title,
     this.isInverted = false,
+    this.isCircular = false,
   }) : super(key: key);
 
   final String title;
   final bool isInverted;
+  final bool isCircular;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,7 @@ class CardNavigation extends StatelessWidget {
       color: isInverted ? Palette.accent : Palette.cardForeground,
       elevation: isInverted ? 0 : 6,
       shadowColor: isInverted ? null : Colors.grey.withOpacity(.125),
+      shape: isCircular ? const CircleBorder() : null,
       child: InkWell(
         onTap: () => Navigator.pop(context),
         child: Container(

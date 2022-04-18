@@ -211,11 +211,10 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                   ],
                 ),
                 child: Center(
-                  child: Text(
-                    'Image',
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: Palette.primary,
-                        ),
+                  child: SvgPicture.asset(
+                    'assets/images/mapalus.svg',
+                    color: Palette.primary,
+                    width: 60.w,
                   ),
                 ),
               ),

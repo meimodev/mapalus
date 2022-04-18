@@ -30,7 +30,7 @@ class Product {
         _unit = json["unit"],
         _status = json["status"],
         _weight = json["weight"],
-        isCustomPrice = json["isCustomPrice"];
+        isCustomPrice = json["custom_price"];
 
   @override
   bool operator ==(Object other) =>

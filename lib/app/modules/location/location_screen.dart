@@ -264,12 +264,13 @@ class LocationScreen extends GetView<LocationController> {
                 ),
               ),
             ),
-            const Positioned(
+            Positioned(
               left: 0,
-              top: 0,
-              child: CardNavigation(
+              top: Insets.small.h,
+              child: const CardNavigation(
                 title: '',
                 isInverted: true,
+                isCircular: true,
               ),
             ),
           ],

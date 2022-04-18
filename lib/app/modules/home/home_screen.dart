@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:mapalus/app/modules/home/home_controller.dart';
 import 'package:mapalus/app/widgets/card_category.dart';
 import 'package:mapalus/app/widgets/card_order_peak.dart';
@@ -88,18 +91,81 @@ class HomeScreen extends GetView<HomeController> {
                 ),
               ),
               SliverPadding(padding: EdgeInsets.all(Insets.small.sp)),
-              SliverGrid(
+
+              PagedSliverGrid(
+                pagingController: controller.pagingController,
+                builderDelegate: PagedChildBuilderDelegate<Product>(
+                  itemBuilder: (_, __, index) =>
+                      _buildProductCard(index, DataMock.products),
+                  noMoreItemsIndicatorBuilder: (context) => Container(
+                    margin: EdgeInsets.symmetric(
+                      horizontal: Insets.medium.w,
+                      vertical: Insets.small.h,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SizedBox(height: Insets.small.h),
+                        SvgPicture.asset(
+                          'assets/images/mapalus.svg',
+                          color: Palette.primary,
+                          width: 100.w,
+                        ),
+                        SizedBox(height: 4.h),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/images/logo_meimo.svg',
+                              width: 30.w,
+                            ),
+                            Text(
+                              ' ${Jiffy().year}',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.copyWith(
+                                    color: Colors.grey,
+                                    fontSize: 10.sp,
+                                  ),
+                            ),
+                            Text(
+                              ' © ',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey,
+                                    fontSize: 11.sp,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  newPageProgressIndicatorBuilder: (_) => Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(height: Insets.medium.h),
+                      const CircularProgressIndicator(
+                        color: Palette.primary,
+                      ),
+                    ],
+                  ),
+                ),
+                showNoMoreItemsIndicatorAsGridChild: false,
+                showNewPageProgressIndicatorAsGridChild: false,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   // maxCrossAxisExtent: 170.w,
                   crossAxisCount: 2,
                   crossAxisSpacing: 6.w,
                   mainAxisSpacing: 6.w,
                   mainAxisExtent: 250.h,
-                ),
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) =>
-                      _buildProductCard(index, DataMock.products),
-                  childCount: DataMock.products.length,
                 ),
               ),
               SliverPadding(

@@ -1,4 +1,7 @@
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:mapalus/data/models/data_mock.dart';
+import 'package:mapalus/data/models/product.dart';
 import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/data/models/user_app.dart';
 import 'package:mapalus/data/repo/user_repo.dart';
@@ -15,6 +18,22 @@ class HomeController extends GetxController {
   RxString cartOverview = "".obs;
 
   RxList<ProductOrder> productOrders = RxList([]);
+
+  final PagingController<int, Product> pagingController = PagingController(
+    firstPageKey: 0,
+  );
+
+  @override
+  void onInit() {
+    _initInfiniteScrolling();
+    super.onInit();
+  }
+
+  @override
+  void dispose() {
+    pagingController.dispose();
+    super.dispose();
+  }
 
   void onPressedLogo() {
     Get.toNamed(Routes.accountSetting);
@@ -90,5 +109,31 @@ class HomeController extends GetxController {
     if (count == 0) {
       isCardCartVisible.value = false;
     }
+  }
+
+  _initInfiniteScrolling() {
+    pagingController.addPageRequestListener((pageKey) {
+      print('Page key = $pageKey');
+      final _totalItem = DataMock.products.length;
+      final productsJson = DataMock.products;
+      if ((pageKey + 2) < _totalItem) {
+        pagingController.appendPage(
+          [
+            Product.fromJson(productsJson[0]),
+            Product.fromJson(productsJson[1]),
+          ],
+          pageKey + 2,
+        );
+        return;
+      }
+      if ((pageKey + 2) >= _totalItem) {
+        pagingController.appendLastPage(
+          [
+            Product.fromJson(productsJson[0]),
+            Product.fromJson(productsJson[1]),
+          ],
+        );
+      }
+    });
   }
 }

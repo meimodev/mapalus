@@ -9,7 +9,7 @@ class DataMock {
       "unit": "Kilogram",
       "weight": '1000',
       "status": 'available',
-      "isCustomPrice": true,
+      "custom_price": true,
     },
     {
       "id": 144,
@@ -20,7 +20,7 @@ class DataMock {
       "unit": "Kilogram",
       "weight": '1000',
       "status": 'available',
-      "isCustomPrice": true,
+      "custom_price": true,
     },
     {
       "id": 99,
@@ -30,11 +30,11 @@ class DataMock {
       "price": 2000,
       "unit": "Kilogram",
       "weight": '1000',
-      "status": 'available',
-      "isCustomPrice": false,
+      "status": 'unavailable',
+      "custom_price": false,
     },
     {
-      "id": 99,
+      "id": 111,
       "name": "Batang Emas",
       "description":
           "This product is not eligible to digest, so, adult precaution is required",
@@ -43,7 +43,7 @@ class DataMock {
       "unit": "gram",
       "weight": '1',
       "status": 'available',
-      "isCustomPrice": false,
+      "custom_price": false,
     },
   ];
 
