@@ -1,41 +1,45 @@
 import 'package:get/get.dart';
-import 'package:mapalus/data/models/data_mock.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mapalus/data/models/delivery_info.dart';
-import 'package:mapalus/data/models/order.dart';
 import 'package:mapalus/data/models/order_info.dart';
-import 'package:mapalus/data/models/product.dart';
 import 'package:mapalus/data/models/product_order.dart';
+import 'package:mapalus/data/repo/app_repo.dart';
 import 'package:mapalus/data/repo/order_repo.dart';
 import 'package:mapalus/shared/routes.dart';
+import 'package:mapalus/shared/utils.dart';
 
 class LocationController extends GetxController {
+  AppRepo appRepo = Get.find();
+
   RxBool isLocationSelectionVisible = true.obs;
+  RxBool isLocationSelectionButtonVisible = true.obs;
+
+  //TODO determine the distance between traditional market & destination
+  //TODO calculate price based on that distance & weight of ordered products
 
   Rx<OrderInfo> orderInfo = OrderInfo(
-    productCount: 2,
-    productPrice: 5000,
-    deliveryWeight: 1.5,
-    deliveryPrice: 10000,
-    deliveryDistance: 1,
+    productCount: 0,
+    productPrice: 0,
+    deliveryWeight: 0,
+    deliveryPrice: 0,
+    deliveryDistance: 0,
   ).obs;
 
-  RxDouble distance = 2.0.obs;
+  RxDouble distance = 0.0.obs;
   RxDouble weight = 2.0.obs;
 
   DeliveryInfo? _selectedDeliveryInfo;
 
-  RxList<DeliveryInfo> deliveries = DataMock.deliveries
-      .map(
-        (e) => DeliveryInfo.fromJSON(e),
-      )
-      .toList()
-      .obs;
+  late RxList<DeliveryInfo> deliveries;
 
   OrderRepo orderRepo = OrderRepo();
 
+  LatLng? deliveryCoordinate;
+
   @override
-  void onInit() {
-    super.onInit();
+  void onInit() async {
+    var d = await appRepo.getDeliveryTimes();
+    deliveries = d.map((e) => DeliveryInfo.fromJSON(e)).toList().obs;
 
     var args = Get.arguments;
     double _weight = double.parse(args['products_weight'].toString());
@@ -46,6 +50,8 @@ class LocationController extends GetxController {
     );
     weight.value = _weight;
     _calculateOrderInfo();
+
+    super.onInit();
   }
 
   onPressedChangeDeliveryTime(
@@ -60,8 +66,18 @@ class LocationController extends GetxController {
     );
   }
 
-  onPressedSelectLocation() {
+  onPressedSelectLocation() async {
     isLocationSelectionVisible.toggle();
+
+    //calculate the prices
+    if (isLocationSelectionVisible.isFalse) {
+      LatLng pos1 =
+          const LatLng(1.3019081307317848, 124.9068409438052); //pasar Tondano
+      double dis = Utils.calculateDistance(pos1, deliveryCoordinate!);
+      distance.value = Utils.roundDouble(dis, 2);
+      _calculateOrderInfo();
+      print('Distance = ' + distance.value.toString());
+    }
   }
 
   onPressedMakeOrder() async {
@@ -81,8 +97,25 @@ class LocationController extends GetxController {
     );
   }
 
-  onPressedChangeLocation() {
+  onPressedChangeLocation() async {
     isLocationSelectionVisible.toggle();
+  }
+
+  onCameraIdle(LatLng? pos) {
+    deliveryCoordinate = pos;
+    if (pos == null) {
+      isLocationSelectionButtonVisible.value = false;
+    } else {
+      isLocationSelectionButtonVisible.value = true;
+    }
+  }
+
+  Future<bool> onPressedBackButton() {
+    if (isLocationSelectionVisible.isFalse) {
+      isLocationSelectionVisible.toggle();
+      return Future.value(false);
+    }
+    return Future.value(true);
   }
 
   _calculateOrderInfo() {

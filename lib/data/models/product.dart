@@ -25,7 +25,7 @@ class Product {
       : id = json["id"],
         name = json["name"],
         description = json["description"],
-        imageUrl = json["imageUrl"],
+        imageUrl = json["image"],
         price = json["price"],
         _unit = json["unit"],
         _status = json["status"],

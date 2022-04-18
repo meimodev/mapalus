@@ -20,7 +20,6 @@ class FirestoreService {
 
     if (doc.exists) {
       Map data = doc.data() as Map<String, dynamic>;
-      print(data);
       UserApp userApp = UserApp(
         phone: phone,
         name: data['name'],
@@ -47,5 +46,14 @@ class FirestoreService {
         .then((value) => '[FIRESTORE] User successfully registered');
 
     return user;
+  }
+
+  Future<List<Map<String, dynamic>>> getDeliveryTimes() async {
+    CollectionReference col = fireStore.collection('delivery_time');
+    DocumentSnapshot doc = await col.doc('-env').get();
+
+    Map data = doc.data() as Map<String, dynamic>;
+
+    return Future.value(List<Map<String, dynamic>>.from(data["deliveries"]));
   }
 }

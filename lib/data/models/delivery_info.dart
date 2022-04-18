@@ -8,6 +8,8 @@ class DeliveryInfo {
   bool available;
   final String _discount;
 
+  String currentDate = Jiffy().format("dd/MM/yyyy");
+
   final List<List<double>> priceMatrixFromWeight = [
     //[0 - 2Km, >2Km - 4Km, >4Km - 6.5Km, >6.5km - 8Km]
     [6000, 8000, 10000, 20000], //0 - 2Kg
@@ -35,11 +37,13 @@ class DeliveryInfo {
         available = json["available"];
 
   Jiffy get startDate {
-    return Jiffy(_start, "HH:mm dd/MM/yyyy");
+    var res = Jiffy("$_start $currentDate", "HH:mm dd/MM/yyyy");
+    return res;
   }
 
   Jiffy get endDate {
-    return Jiffy(_end, "HH:mm dd/MM/yyyy");
+    var res = Jiffy("$_end $currentDate", "HH:mm dd/MM/yyyy");
+    return res;
   }
 
   String get title {

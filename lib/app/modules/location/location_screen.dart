@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/location/location_controller.dart';
 import 'package:mapalus/app/widgets/card_delivery_fee.dart';
+import 'package:mapalus/app/widgets/card_navigation.dart';
+import 'package:mapalus/app/widgets/google_map_wrapper.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
 import 'package:mapalus/data/models/delivery_info.dart';
 import 'package:mapalus/data/models/order_info.dart';
@@ -16,196 +18,262 @@ class LocationScreen extends GetView<LocationController> {
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
-      child: Stack(
-        children: [
-          Positioned(
-            right: 0,
-            left: 0,
-            top: 0,
-            bottom: 0,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.shade500,
+      child: WillPopScope(
+        onWillPop: controller.onPressedBackButton,
+        child: Stack(
+          children: [
+            Positioned(
+              right: 0,
+              bottom: 0,
+              top: 0,
+              left: 0,
+              child: GoogleMapWrapper(
+                onCameraIdle: controller.onCameraIdle,
               ),
             ),
-          ),
-          Center(
-            child: Obx(
-              () => AnimatedSwitcher(
-                duration: const Duration(milliseconds: 400),
-                child: controller.isLocationSelectionVisible.value
-                    ? Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Material(
-                            color: Palette.primary,
-                            clipBehavior: Clip.hardEdge,
-                            borderRadius: BorderRadius.circular(9.sp),
-                            child: InkWell(
-                              onTap: controller.onPressedSelectLocation,
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: Insets.medium.w,
-                                  vertical: Insets.small.h,
-                                ),
-                                child: Text(
-                                  'Pilih Lokasi',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      ?.copyWith(
-                                        fontSize: 14.sp,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: Insets.small.h),
-                          SvgPicture.asset(
-                            'assets/vectors/pin.svg',
-                            width: 30.sp,
-                            height: 45.sp,
-                            color: Palette.accent,
-                          ),
-                        ],
-                      )
-                    : const SizedBox(),
+            Center(
+              child: Container(
+                width: 3,
+                height: 3,
+                color: Colors.red,
               ),
             ),
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: Insets.medium.h,
-            child: Obx(
-              () => AnimatedSwitcher(
-                duration: const Duration(milliseconds: 400),
-                child: controller.isLocationSelectionVisible.value
-                    ? const SizedBox()
-                    : Container(
-                        margin:
-                            EdgeInsets.symmetric(horizontal: Insets.medium.w),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(9.sp),
-                          color: Palette.cardForeground,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Obx(
-                              () => _BuildDeliveryFeeSelector(
-                                deliveries: controller.deliveries,
-                                weight: controller.weight.value,
-                                distance: controller.distance.value,
-                                onPressedDeliveryTime:
-                                    controller.onPressedChangeDeliveryTime,
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.symmetric(
-                                horizontal: Insets.small.w,
-                                vertical: Insets.small.h,
-                              ),
-                              decoration: BoxDecoration(
-                                border: Border.symmetric(
-                                  horizontal: BorderSide(
-                                    color: Colors.grey.shade200,
-                                    width: 2,
-                                  ),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: Row(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                            left: Insets.small.w,
-                                            right: Insets.small.w * .5,
-                                          ),
-                                          child: Text(
-                                            'Lokasi Terpilih',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText1
-                                                ?.copyWith(
-                                                  color: Palette.textPrimary,
-                                                ),
-                                          ),
-                                        ),
-                                        SvgPicture.asset(
-                                          'assets/vectors/check.svg',
-                                          width: 24.sp,
-                                          height: 24.sp,
-                                          color: Palette.accent,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Material(
-                                    child: InkWell(
-                                      onTap: controller.onPressedChangeLocation,
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: Insets.small.h,
-                                          horizontal: Insets.small.w,
-                                        ),
-                                        child: Text(
-                                          'Ubah Lokasi',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1
-                                              ?.copyWith(
-                                                fontSize: 10.sp,
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        // const Expanded(child: SizedBox()),
+                        Obx(
+                          () => AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 400),
+                            child: controller.isLocationSelectionVisible.value
+                                ? Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      AnimatedSwitcher(
+                                        duration: 200.milliseconds,
+                                        child: controller
+                                                .isLocationSelectionButtonVisible
+                                                .value
+                                            ? Material(
                                                 color: Palette.primary,
-                                                fontWeight: FontWeight.w500,
+                                                clipBehavior: Clip.hardEdge,
+                                                borderRadius:
+                                                    BorderRadius.circular(9.sp),
+                                                child: InkWell(
+                                                  onTap: controller
+                                                      .onPressedSelectLocation,
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                      horizontal:
+                                                          Insets.medium.w,
+                                                      vertical: Insets.small.h,
+                                                    ),
+                                                    child: Text(
+                                                      'Pilih Lokasi',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText1
+                                                          ?.copyWith(
+                                                            fontSize: 14.sp,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            : const SizedBox(),
+                                      ),
+                                      SizedBox(height: Insets.small.h),
+                                      SvgPicture.asset(
+                                        'assets/vectors/pin.svg',
+                                        width: 30.sp,
+                                        height: 45.sp,
+                                        color: Palette.accent,
+                                      ),
+                                    ],
+                                  )
+                                : const SizedBox(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Expanded(child: SizedBox()),
+                ],
+              ),
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              top: 0,
+              child: Obx(
+                () => AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 200),
+                  child: controller.isLocationSelectionVisible.value
+                      ? const SizedBox()
+                      : Stack(
+                          children: [
+                            Positioned(
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                                child: Container(
+                                  color: Colors.black.withOpacity(.80),
+                                )),
+                            Positioned(
+                              left: 0,
+                              right: 0,
+                              bottom: Insets.medium.h,
+                              child: Container(
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: Insets.medium.w),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(9.sp),
+                                  color: Palette.cardForeground,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Obx(
+                                      () => _BuildDeliveryFeeSelector(
+                                        deliveries: controller.deliveries,
+                                        weight: controller.weight.value,
+                                        distance: controller.distance.value,
+                                        onPressedDeliveryTime: controller
+                                            .onPressedChangeDeliveryTime,
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                        horizontal: Insets.small.w,
+                                        vertical: Insets.small.h,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        border: Border.symmetric(
+                                          horizontal: BorderSide(
+                                            color: Colors.grey.shade200,
+                                            width: 2,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                    left: Insets.small.w,
+                                                    right: Insets.small.w * .5,
+                                                  ),
+                                                  child: Text(
+                                                    'Lokasi Terpilih',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyText1
+                                                        ?.copyWith(
+                                                          color: Palette
+                                                              .textPrimary,
+                                                        ),
+                                                  ),
+                                                ),
+                                                SvgPicture.asset(
+                                                  'assets/vectors/check.svg',
+                                                  width: 24.sp,
+                                                  height: 24.sp,
+                                                  color: Palette.accent,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Material(
+                                            child: InkWell(
+                                              onTap: controller
+                                                  .onPressedChangeLocation,
+                                              child: Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  vertical: Insets.small.h,
+                                                  horizontal: Insets.small.w,
+                                                ),
+                                                child: Text(
+                                                  'Ubah Lokasi',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1
+                                                      ?.copyWith(
+                                                        fontSize: 10.sp,
+                                                        color: Palette.primary,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                ),
                                               ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        bottom: Insets.small.h,
+                                        left: Insets.medium.w,
+                                        right: Insets.medium.w,
+                                      ),
+                                      child: Obx(
+                                        () => _BuildOrderInfo(
+                                          orderInfo: controller.orderInfo.value,
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                bottom: Insets.small.h,
-                                left: Insets.medium.w,
-                                right: Insets.medium.w,
-                              ),
-                              child: Obx(
-                                () => _BuildOrderInfo(
-                                  orderInfo: controller.orderInfo.value,
+                                    Material(
+                                      color: Palette.primary,
+                                      clipBehavior: Clip.hardEdge,
+                                      borderRadius: BorderRadius.circular(9.sp),
+                                      child: InkWell(
+                                        onTap: controller.onPressedMakeOrder,
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            vertical: Insets.small.h,
+                                            horizontal: Insets.medium.w,
+                                          ),
+                                          child: const Center(
+                                            child: Text('Buat Pesanan'),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
-                            Material(
-                              color: Palette.primary,
-                              clipBehavior: Clip.hardEdge,
-                              borderRadius: BorderRadius.circular(9.sp),
-                              child: InkWell(
-                                onTap: controller.onPressedMakeOrder,
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: Insets.small.h,
-                                    horizontal: Insets.medium.w,
-                                  ),
-                                  child: const Center(
-                                    child: Text('Buat Pesanan'),
-                                  ),
-                                ),
-                              ),
-                            )
                           ],
                         ),
-                      ),
+                ),
               ),
             ),
-          ),
-        ],
+            const Positioned(
+              left: 0,
+              top: 0,
+              child: CardNavigation(
+                title: '',
+                isInverted: true,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

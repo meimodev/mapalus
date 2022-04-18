@@ -50,9 +50,6 @@ class DialogConfirm extends StatelessWidget {
                 Material(
                   shape: ContinuousRectangleBorder(
                     borderRadius: BorderRadius.circular(12.sp),
-                    side: const BorderSide(
-                      color: Palette.primary,
-                    ),
                   ),
                   child: InkWell(
                     onTap: () {
@@ -66,7 +63,7 @@ class DialogConfirm extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-                          confirmText ?? 'IYA',
+                          confirmText ?? 'HAPUS',
                           style:
                               Theme.of(context).textTheme.bodyText1?.copyWith(
                                     color: Palette.primary,
