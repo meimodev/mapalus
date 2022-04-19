@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
+import 'package:mapalus/data/models/order.dart';
 import 'package:mapalus/data/models/user_app.dart';
 
 class FirestoreService {
@@ -20,9 +22,11 @@ class FirestoreService {
 
     if (doc.exists) {
       Map data = doc.data() as Map<String, dynamic>;
+      print("firebase service getuser $data");
       UserApp userApp = UserApp(
         phone: phone,
-        name: data['name'],
+        name: data["name"],
+        orders: List<String>.from(data["orders"]),
       );
       return userApp;
     } else {
@@ -40,10 +44,15 @@ class FirestoreService {
   Future<UserApp> createUser(UserApp user) async {
     CollectionReference users = fireStore.collection('users');
 
-    users
-        .doc(user.phone)
-        .set(user.toMap())
-        .then((value) => '[FIRESTORE] User successfully registered');
+    users.doc(user.phone).set(user.toMap()).then((value) {
+      if (kDebugMode) {
+        print('[FIRESTORE] USER successfully registered');
+      }
+    }).onError((e, _) {
+      if (kDebugMode) {
+        print('[FIRESTORE] USER creation error $e');
+      }
+    });
 
     return user;
   }
@@ -55,5 +64,47 @@ class FirestoreService {
     Map data = doc.data() as Map<String, dynamic>;
 
     return Future.value(List<Map<String, dynamic>>.from(data["deliveries"]));
+  }
+
+  Future<Order> createOrder(Order order) async {
+    CollectionReference orders = fireStore.collection('orders');
+
+    orders.doc(order.generateId()).set(order.toMap()).then((_) {
+      if (kDebugMode) {
+        print('[FIRESTORE] ORDER successfully created');
+      }
+    }).onError((e, _) {
+      if (kDebugMode) {
+        print('[FIRESTORE] ORDER creation error $e');
+      }
+    });
+
+    order.orderingUser.orders.add(order.generateId());
+    CollectionReference users = fireStore.collection('users');
+
+    users
+        .doc(order.orderingUser.phone)
+        .update({"orders": order.orderingUser.orders}).then((_) {
+      if (kDebugMode) {
+        print('[FIRESTORE] USER-ORDER successfully created');
+      }
+    }).onError((e, _) {
+      if (kDebugMode) {
+        print('[FIRESTORE] USER-ORDER creation error $e');
+      }
+    });
+
+    return order;
+  }
+
+  Future<Order?> readOrder(String id) async {
+    CollectionReference orders = fireStore.collection('orders');
+    DocumentSnapshot doc = await orders.doc(id).get();
+
+    if (doc.exists) {
+      final data = doc.data() as Map<String, dynamic>;
+      return Order.fromMap(data);
+    }
+    return null;
   }
 }

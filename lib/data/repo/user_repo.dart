@@ -34,15 +34,12 @@ class UserRepo extends UserRepoContract {
       if (user != null) {
         print('AuthStateChanges, Phone number confirmed');
         UserApp? userApp = await firestore.getUser(
-          user.phoneNumber!.replaceFirst(
-            '+62',
-            '0',
-          ),
+          user.phoneNumber!.replaceFirst('+62', '0'),
         );
         if (userApp != null) {
           signing(userApp);
 
-          print('signed success  ' + signedUser.toString());
+          print('signed success ' + signedUser.toString());
         } else {
           // user is not registered
           signedUser = null;
@@ -80,8 +77,6 @@ class UserRepo extends UserRepoContract {
 
   @override
   Future<UserApp?> readSignedInUser() {
-    print('Signed User = ' + signedUser.toString());
-
     return Future.value(signedUser);
   }
 

@@ -23,6 +23,7 @@ class LocationController extends GetxController {
     deliveryWeight: 0,
     deliveryPrice: 0,
     deliveryDistance: 0,
+    deliveryCoordinate: const LatLng(0, 0),
   ).obs;
 
   RxDouble distance = 0.0.obs;
@@ -32,7 +33,7 @@ class LocationController extends GetxController {
 
   late RxList<DeliveryInfo> deliveries;
 
-  OrderRepo orderRepo = OrderRepo();
+  OrderRepo orderRepo = Get.find<OrderRepo>();
 
   LatLng? deliveryCoordinate;
 
@@ -93,6 +94,7 @@ class LocationController extends GetxController {
       arguments: <String, dynamic>{
         'delivery_info': _selectedDeliveryInfo,
         'product_orders': _productOrders,
+        'order_info': orderInfo.value,
       },
     );
   }
@@ -122,6 +124,7 @@ class LocationController extends GetxController {
     orderInfo.value = orderInfo.value.copyWith(
       deliveryWeight: weight.value,
       deliveryDistance: distance.value,
+      deliveryCoordinate: deliveryCoordinate,
     );
   }
 }

@@ -1,15 +1,19 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mapalus/data/models/data_mock.dart';
+import 'package:mapalus/data/models/order.dart';
 import 'package:mapalus/data/models/product.dart';
 import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/data/models/user_app.dart';
+import 'package:mapalus/data/repo/order_repo.dart';
 import 'package:mapalus/data/repo/user_repo.dart';
+import 'package:mapalus/shared/enums.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/utils.dart';
 
 class HomeController extends GetxController {
   UserRepo userRepo = Get.find<UserRepo>();
+  OrderRepo orderRepo = Get.find<OrderRepo>();
 
   RxBool isCardCartVisible = false.obs;
   RxBool isCardOrderVisible = false.obs;
@@ -19,6 +23,8 @@ class HomeController extends GetxController {
 
   RxList<ProductOrder> productOrders = RxList([]);
 
+  Order? latestOrder;
+
   final PagingController<int, Product> pagingController = PagingController(
     firstPageKey: 0,
   );
@@ -26,6 +32,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     _initInfiniteScrolling();
+    _checkNewlyCreatedOrder();
     super.onInit();
   }
 
@@ -40,7 +47,9 @@ class HomeController extends GetxController {
   }
 
   void onPressedLatestOrder() {
-    Get.toNamed(Routes.orders);
+    if (isCardOrderVisible.isTrue && latestOrder != null) {
+      Get.toNamed(Routes.orderDetail, arguments: latestOrder);
+    }
   }
 
   void onPressedCart() async {
@@ -53,7 +62,6 @@ class HomeController extends GetxController {
       return;
     }
 
-    print(user.toString());
     Get.toNamed(Routes.cart);
   }
 
@@ -91,7 +99,6 @@ class HomeController extends GetxController {
   }
 
   void onSignedInUser(UserApp user) {
-    print(user.toString());
     Get.toNamed(Routes.cart);
   }
 
@@ -119,8 +126,8 @@ class HomeController extends GetxController {
       if ((pageKey + 2) < _totalItem) {
         pagingController.appendPage(
           [
-            Product.fromJson(productsJson[0]),
-            Product.fromJson(productsJson[1]),
+            Product.fromMap(productsJson[0]),
+            Product.fromMap(productsJson[1]),
           ],
           pageKey + 2,
         );
@@ -129,11 +136,39 @@ class HomeController extends GetxController {
       if ((pageKey + 2) >= _totalItem) {
         pagingController.appendLastPage(
           [
-            Product.fromJson(productsJson[0]),
-            Product.fromJson(productsJson[1]),
+            Product.fromMap(productsJson[0]),
+            Product.fromMap(productsJson[1]),
           ],
         );
       }
     });
+  }
+
+  orderCleanUp() {
+    productOrders.clear();
+    isCardCartVisible.value = false;
+
+    _checkNewlyCreatedOrder();
+  }
+
+  _checkNewlyCreatedOrder() async {
+    await Future.delayed(2.seconds);
+    if (userRepo.signedUser!.orders.isEmpty) {
+      return;
+    }
+    final _orders = userRepo.signedUser!.orders;
+    final latestOrderId = _orders.elementAt(_orders.length - 1);
+
+    // get the latest order
+    final _order = await orderRepo.readOrder(latestOrderId);
+    if (_order == null) {
+      return;
+    }
+    // check if order is not finish, then display it
+    if (_order.status == OrderStatus.placed) {
+      latestOrder = _order;
+      isCardOrderVisible.value = true;
+      // display in card latest order visibility
+    }
   }
 }

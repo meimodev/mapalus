@@ -2,6 +2,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
 
+
 class Utils {
   static String formatNumberToCurrency(dynamic number) {
     var f = NumberFormat('#,###');

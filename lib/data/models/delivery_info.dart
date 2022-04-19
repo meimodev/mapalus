@@ -128,4 +128,21 @@ class DeliveryInfo {
     return 'DeliveryInfo{id: $id, _start: $_start, _end: $_end, '
         'available: $available, _discount: $_discount}';
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "id": id,
+      "start": _start,
+      "end": _end,
+      "available": available,
+      "discount": _discount,
+    };
+  }
+
+  DeliveryInfo.fromMap(Map<String, dynamic> data)
+      : id = data["id"],
+        _start = data["start"],
+        _end = data["end"],
+        available = data["available"],
+        _discount = data["discount"];
 }

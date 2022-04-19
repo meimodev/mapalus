@@ -21,16 +21,16 @@ class Product {
   final String _weight;
   final bool isCustomPrice;
 
-  Product.fromJson(Map<String, dynamic> json)
-      : id = json["id"],
-        name = json["name"],
-        description = json["description"],
-        imageUrl = json["image"],
-        price = json["price"],
-        _unit = json["unit"],
-        _status = json["status"],
-        _weight = json["weight"],
-        isCustomPrice = json["custom_price"];
+  Product.fromMap(Map<String, dynamic> data)
+      : id = data["id"],
+        name = data["name"],
+        description = data["description"],
+        imageUrl = data["image"],
+        price = data["price"],
+        _unit = data["unit"],
+        _status = data["status"],
+        _weight = data["weight"],
+        isCustomPrice = data["custom_price"];
 
   @override
   bool operator ==(Object other) =>
@@ -55,5 +55,19 @@ class Product {
   @override
   String toString() {
     return 'Product{id: $id, name: $name, description: $description, imageUrl: $imageUrl, price: $price, unit: $unit, status: $status, isCustomPrice: $isCustomPrice}';
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'image': imageUrl,
+      'price': price,
+      'unit': _unit,
+      'status': _status,
+      'weight': _weight,
+      'custom_price': isCustomPrice,
+    };
   }
 }

@@ -62,7 +62,8 @@ class Routes {
         page: () => const HomeScreen(),
         binding: HomeBinding(),
         transition: Transition.fade,
-        maintainState: false,
+        maintainState: true,
+        preventDuplicates: true,
       ),
       GetPage(
         name: accountSetting,
@@ -72,7 +73,7 @@ class Routes {
       ),
       GetPage(
         name: orders,
-        page: () => const OrdersScreen(),
+        page: () => OrdersScreen(),
         transition: Transition.cupertino,
       ),
       GetPage(

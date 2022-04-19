@@ -55,7 +55,7 @@ class HomeScreen extends GetView<HomeController> {
                     ),
                     child: Column(
                       children: [
-                        SizedBox(height: 75.h),
+                        SizedBox(height: 60.h),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
@@ -173,30 +173,29 @@ class HomeScreen extends GetView<HomeController> {
                       EdgeInsets.symmetric(vertical: Insets.medium.sp * 2.5)),
             ],
           ),
-          Obx(
-            () => AnimatedSwitcher(
-              duration: 300.milliseconds,
-              child: controller.isCardOrderVisible.value
-                  ? Positioned(
-                      bottom: 110.h,
-                      right: 12.w,
-                      child: CardOrdersPeak(
+          Positioned(
+            bottom: 110.h,
+            right: 12.w,
+            child: Obx(
+              () => AnimatedSwitcher(
+                duration: 300.milliseconds,
+                child: controller.isCardOrderVisible.value
+                    ? CardOrdersPeak(
                         onPressed: controller.onPressedLatestOrder,
-                      ),
-                    )
-                  : const SizedBox(),
+                      )
+                    : const SizedBox(),
+              ),
             ),
           ),
-          Obx(
-            () => Visibility(
-              // duration: 300.milliseconds,
-              visible: controller.isCardCartVisible.value,
-              child: controller.isCardCartVisible.value
-                  ? Positioned(
-                      bottom: 20.h,
-                      left: 0.w,
-                      right: 0.w,
-                      child: Center(
+          Positioned(
+            bottom: 20.h,
+            left: 0.w,
+            right: 0.w,
+            child: Obx(
+              () => AnimatedSwitcher(
+                duration: 300.milliseconds,
+                child: controller.isCardCartVisible.value
+                    ? Center(
                         child: Obx(
                           () => CardCartPeak(
                             // productOrders: controller.productOrders.value,
@@ -205,9 +204,9 @@ class HomeScreen extends GetView<HomeController> {
                             cartOverview: controller.cartOverview.value,
                           ),
                         ),
-                      ),
-                    )
-                  : const SizedBox(),
+                      )
+                    : const SizedBox(),
+              ),
             ),
           ),
         ],
@@ -221,41 +220,41 @@ class HomeScreen extends GetView<HomeController> {
       scrollDirection: Axis.horizontal,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CardCategory(
             iconData: Icons.star,
-            isSelected: true,
-            name: 'Makanan',
+            name: 'Sembako',
             onPressed: () {},
           ),
-          SizedBox(width: Insets.medium.w),
+          SizedBox(width: Insets.small.w),
           CardCategory(
             iconData: Icons.star,
-            name: 'Minuman',
+            name: 'Lauk',
             onPressed: () {},
           ),
-          SizedBox(width: Insets.medium.w),
+          SizedBox(width: Insets.small.w),
           CardCategory(
             iconData: Icons.star,
-            name: 'Makian',
+            name: 'Bumbu',
             onPressed: () {},
           ),
-          SizedBox(width: Insets.medium.w),
+          SizedBox(width: Insets.small.w),
           CardCategory(
             iconData: Icons.star,
-            name: 'Maksiat',
+            name: 'Bahan',
             onPressed: () {},
           ),
-          SizedBox(width: Insets.medium.w),
+          SizedBox(width: Insets.small.w),
           CardCategory(
             iconData: Icons.star,
-            name: 'Mendingan',
+            name: 'Sayuran',
             onPressed: () {},
           ),
-          SizedBox(width: Insets.medium.w),
+          SizedBox(width: Insets.small.w),
           CardCategory(
             iconData: Icons.star,
-            name: 'Mayat',
+            name: 'Bahan Kue',
             onPressed: () {},
           ),
         ],
@@ -270,7 +269,7 @@ class HomeScreen extends GetView<HomeController> {
         right: index % 2 == 0 ? 0 : Insets.medium.w,
       ),
       child: CardProduct(
-        product: Product.fromJson(productsJSON[index]),
+        product: Product.fromMap(productsJSON[index]),
         onPressed: (product) {
           Get.dialog(
             DialogItemDetail(

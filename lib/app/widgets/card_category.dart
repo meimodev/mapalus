@@ -40,11 +40,16 @@ class CardCategory extends StatelessWidget {
           ),
         ),
         SizedBox(height: Insets.small.h * .5),
-        Text(
-          name,
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                color: isSelected ? Palette.textPrimary : Colors.grey,
-              ),
+        SizedBox(
+          width: 60.w,
+          child: Text(
+            name,
+            softWrap: true,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: isSelected ? Palette.textPrimary : Colors.grey,
+                ),
+          ),
         ),
       ],
     );

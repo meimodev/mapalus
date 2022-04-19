@@ -1,6 +1,10 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mapalus/app/modules/home/home_controller.dart';
 import 'package:mapalus/data/models/delivery_info.dart';
 import 'package:mapalus/data/models/order.dart';
+import 'package:mapalus/data/models/order_info.dart';
 import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/data/models/user_app.dart';
 import 'package:mapalus/data/repo/order_repo.dart';
@@ -8,8 +12,9 @@ import 'package:mapalus/data/repo/user_repo.dart';
 import 'package:mapalus/shared/routes.dart';
 
 class OrderingController extends GetxController {
-  OrderRepo orderRepo = OrderRepo();
+  OrderRepo orderRepo = Get.find<OrderRepo>();
   UserRepo userRepo = Get.find<UserRepo>();
+  HomeController homeController = Get.find<HomeController>();
 
   RxBool isLoading = true.obs;
 
@@ -23,14 +28,24 @@ class OrderingController extends GetxController {
     DeliveryInfo _deliveryInfo = args['delivery_info'] as DeliveryInfo;
     List<ProductOrder> _productOrders =
         args['product_orders'] as List<ProductOrder>;
+    OrderInfo _orderInfo = args['order_info'] as OrderInfo;
 
-    Order order = await orderRepo.createOrder(
-      deliveryInfo: _deliveryInfo,
-      products: _productOrders,
-      user: user!,
-    );
+    try {
+      Order order = await orderRepo.createOrder(
+        deliveryInfo: _deliveryInfo,
+        products: _productOrders,
+        user: user!,
+        orderInfo: _orderInfo,
+      );
+      if (kDebugMode) {
+        print(order.toString());
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('error occurred while creating order $e');
+      }
+    }
 
-    print(order.toString());
     isLoading.value = false;
   }
 
@@ -47,6 +62,8 @@ class OrderingController extends GetxController {
   }
 
   _backToHome() {
-    Get.offNamedUntil(Routes.home, (route) => false);
+    Get.until(ModalRoute.withName(Routes.home));
+    // Get.offNamedUntil(Routes.home, (_) => Get.currentRoute == Routes.home);
+    homeController.orderCleanUp();
   }
 }

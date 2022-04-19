@@ -61,8 +61,20 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
               ),
             ),
             SizedBox(height: Insets.small.h),
-            const Text('Jhon Manembo'),
-            const Text('+62 812 1234 1234'),
+            Text(
+              controller.userName.value,
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    color: Colors.grey,
+                    fontSize: 16.sp,
+                  ),
+            ),
+            Text(
+              controller.userPhone.value,
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    color: Palette.accent,
+                    fontSize: 14.sp,
+                  ),
+            ),
           ],
         ),
         SizedBox(height: Insets.medium.h),

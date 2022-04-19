@@ -35,4 +35,17 @@ class ProductOrder {
     String s = totalPrice.toStringAsFixed(2).replaceFirst(".00", "");
     return Utils.formatNumberToCurrency(int.parse(s));
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'product': product.toMap(),
+      'quantity': quantity,
+      'total_price': totalPrice,
+    };
+  }
+
+  ProductOrder.fromMap(Map<String, dynamic> data)
+      : quantity = double.parse(data["quantity"].toString()),
+        totalPrice = double.parse(data["total_price"].toString()),
+        product = Product.fromMap(data['product']);
 }
