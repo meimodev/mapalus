@@ -75,6 +75,24 @@ class Order {
     return res;
   }
 
+  Jiffy? get orderTimeStamp {
+    return _orderTimeStamp == null
+        ? null
+        : Jiffy(_orderTimeStamp, Values.formatRawDate);
+  }
+
+  Jiffy? get finishTimeStamp {
+    if (_finishTimeStamp != null && _finishTimeStamp!.isNotEmpty) {
+      print("FinishTimeStamp is not empyu");
+      return Jiffy(_finishTimeStamp, Values.formatRawDate);
+    }
+    return null;
+  }
+
+  void setFinishTimeStamp(Jiffy timeStamp) {
+    _finishTimeStamp = timeStamp.format(Values.formatRawDate);
+  }
+
   @override
   String toString() {
     return 'Order{id: $id, products: $products, deliveryInfo: $deliveryInfo, '
@@ -96,7 +114,7 @@ class Order {
       'status': status.name,
       'order_time': _orderTimeStamp,
       'finish_time': _finishTimeStamp,
-      'rating': rating,
+      'rating': rating != null ? rating!.toMap() : '',
       'ordering_user': orderingUser.toMap(),
       'delivering_user':
           deliveringUser != null ? deliveringUser!.toMap() : null,

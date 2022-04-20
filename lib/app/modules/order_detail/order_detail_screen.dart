@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mapalus/app/modules/order_detail/order_detail_controller.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
 import 'package:mapalus/app/widgets/card_order_detail_item.dart';
+import 'package:mapalus/app/widgets/dialog_rating.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
+import 'package:mapalus/data/models/product_order.dart';
+import 'package:mapalus/data/models/rating.dart';
+import 'package:mapalus/shared/enums.dart';
 import 'package:mapalus/shared/theme.dart';
+import 'package:get/get.dart';
 
-class OrderDetailScreen extends StatelessWidget {
+class OrderDetailScreen extends GetView<OrderDetailController> {
   const OrderDetailScreen({Key? key}) : super(key: key);
 
   @override
@@ -31,23 +37,32 @@ class OrderDetailScreen extends StatelessWidget {
             bottom: Insets.medium.h,
             child: Column(
               children: [
-                const CardNavigation(
-                  title: 'Rincian Pesanan #12345',
-                  isInverted: true,
+                Obx(
+                  () => CardNavigation(
+                    title: 'Rincian Pesanan #' + controller.id.value,
+                    isInverted: true,
+                  ),
                 ),
                 Expanded(
                   child: Container(
                     margin: EdgeInsets.symmetric(
                       horizontal: Insets.medium.w * .5,
                     ),
-                    child: ListView.builder(
-                      itemCount: 10,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) => CardOrderDetailItem(
-                        productName: 'Product ${index + 1}',
-                        productPrice: 'Rp, 999.999.999',
-                        index: (index + 1).toString(),
-                        productWeight: '999.999 gram',
+                    child: Obx(
+                      () => ListView.builder(
+                        itemCount: controller.productOrders.length,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          ProductOrder po =
+                              controller.productOrders.elementAt(index);
+                          return CardOrderDetailItem(
+                            productName: po.product.name,
+                            productPrice: po.totalPriceString,
+                            index: (index + 1).toString(),
+                            productWeight:
+                                '${po.quantityString} ${po.product.unit}',
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -76,10 +91,12 @@ class OrderDetailScreen extends StatelessWidget {
                               children: [
                                 Expanded(
                                   flex: 4,
-                                  child: _buildDeliveryStateCard(
-                                    context: context,
-                                    title: 'Dipesan',
-                                    timeStamp: '22/02/2022 18:23',
+                                  child: Obx(
+                                    () => _buildDeliveryStateCard(
+                                      context: context,
+                                      title: 'Dipesan',
+                                      timeStamp: controller.orderTime.value,
+                                    ),
                                   ),
                                 ),
                                 const Expanded(
@@ -88,65 +105,86 @@ class OrderDetailScreen extends StatelessWidget {
                                 ),
                                 Expanded(
                                   flex: 4,
-                                  child: _buildDeliveryStateCard(
-                                    context: context,
-                                    title: 'Diantar',
-                                    timeStamp: '22/02/2022 19:00 = 20:00',
+                                  child: Obx(
+                                    () => _buildDeliveryStateCard(
+                                      context: context,
+                                      title: 'Selesai',
+                                      timeStamp: controller.deliveryTime.value,
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                             SizedBox(height: Insets.medium.h),
-                            _buildRowItem(
-                              context,
-                              "Produk",
-                              '999 Produk',
-                              "Rp. 999.999.999",
+                            Obx(
+                              () => _buildRowItem(
+                                context,
+                                "Produk",
+                                controller.productCount.value,
+                                controller.productTotal.value,
+                              ),
                             ),
                             SizedBox(height: 6.h),
-                            _buildRowItem(
-                              context,
-                              "Pengantaran",
-                              '999.999 Kg',
-                              "Rp. 100.000",
+                            Obx(
+                              () => _buildRowItem(
+                                context,
+                                "Pengantaran",
+                                controller.deliveryCount.value,
+                                controller.deliveryTotal.value,
+                              ),
                             ),
                             SizedBox(height: 6.h),
-                            _buildRowItem(
-                              context,
-                              "Total Pembayaran",
-                              '',
-                              "Rp. 999.999.999",
-                              highLight: true,
+                            Obx(
+                              () => _buildRowItem(
+                                context,
+                                "Total Pembayaran",
+                                '',
+                                controller.totalPrice.value,
+                                highLight: true,
+                              ),
                             ),
                           ],
                         ),
                       ),
-                      Material(
-                        color: Palette.primary,
-                        clipBehavior: Clip.hardEdge,
-                        borderRadius: BorderRadius.circular(9.sp),
-                        child: InkWell(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return const DialogRating();
-                              },
-                            );
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: Insets.small.h,
-                              horizontal: Insets.medium.w,
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Selesaikan',
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
+                      // Material(
+                      //   color: Palette.primary,
+                      //   clipBehavior: Clip.hardEdge,
+                      //   borderRadius: BorderRadius.circular(9.sp),
+                      //   child: InkWell(
+                      //     onTap: () {
+                      //       showDialog(
+                      //         context: context,
+                      //         builder: (_) => DialogRating(
+                      //           onPressedRate: controller.onPressedRate,
+                      //         ),
+                      //       );
+                      //     },
+                      //     child: Padding(
+                      //       padding: EdgeInsets.symmetric(
+                      //         vertical: Insets.small.h,
+                      //         horizontal: Insets.medium.w,
+                      //       ),
+                      //       child: const Center(
+                      //         child: Text(
+                      //           'Selesaikan',
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // _BuildRatedLayout(
+                      //   rating: Rating(
+                      //     0,
+                      //     4,
+                      //     "This is the message",
+                      //     "22/02/2022 18:00:10",
+                      //   ),
+                      // ),
+                      Obx(
+                        () => _buildRatingLayout(context,
+                            orderStatus: controller.orderStatus.value,
+                            orderRating: controller.orderRating.value),
+                      ),
                     ],
                   ),
                 ),
@@ -156,6 +194,44 @@ class OrderDetailScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _buildRatingLayout(BuildContext context,
+      {required String orderStatus, required Rating orderRating}) {
+    if (orderStatus == OrderStatus.rejected.name) {
+      return const _BuildCancelLayout();
+    }
+
+    if (orderRating.number == 0) {
+      return Material(
+        color: Palette.primary,
+        clipBehavior: Clip.hardEdge,
+        borderRadius: BorderRadius.circular(9.sp),
+        child: InkWell(
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (_) => DialogRating(
+                onPressedRate: controller.onPressedRate,
+              ),
+            );
+          },
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: Insets.small.h,
+              horizontal: Insets.medium.w,
+            ),
+            child: const Center(
+              child: Text(
+                'Selesaikan',
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return _BuildRatedLayout(rating: orderRating);
   }
 
   _buildRowItem(
@@ -241,113 +317,71 @@ class OrderDetailScreen extends StatelessWidget {
       );
 }
 
-class DialogRating extends StatelessWidget {
-  const DialogRating({Key? key}) : super(key: key);
+class _BuildRatedLayout extends StatelessWidget {
+  const _BuildRatedLayout({
+    Key? key,
+    required this.rating,
+  }) : super(key: key);
+
+  final Rating rating;
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      clipBehavior: Clip.hardEdge,
-      backgroundColor: Colors.transparent,
-      child: Container(
-        alignment: Alignment.center,
-        height: 420.h,
-        width: 300.w,
-        clipBehavior: Clip.hardEdge,
-        padding: EdgeInsets.all(12.sp),
-        decoration: BoxDecoration(
-          color: Palette.cardForeground,
-          borderRadius: BorderRadius.circular(9.sp),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Masukkan & Penilaian anda\nakan sangat membantu layanan ini',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    fontSize: 14.sp,
-                  ),
-            ),
-            SizedBox(height: Insets.medium.h),
-            Container(
-              height: 210.h,
-              margin: EdgeInsets.symmetric(horizontal: Insets.small.w),
-              padding: EdgeInsets.symmetric(
-                horizontal: 9.w,
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9.sp),
-                color: Palette.editable,
-              ),
-              child: TextField(
-                maxLines: 100,
-                textAlign: TextAlign.start,
-                enableSuggestions: false,
-                scrollPhysics: const BouncingScrollPhysics(),
-                autocorrect: false,
-                style: TextStyle(
-                  color: Palette.accent,
-                  fontFamily: fontFamily,
-                  fontSize: 14.sp,
-                ),
-                cursorColor: Palette.primary,
-                decoration: InputDecoration(
-                  hintStyle: TextStyle(
-                    fontFamily: fontFamily,
-                    fontSize: 12.sp,
-                  ),
-                  isDense: true,
-                  border: InputBorder.none,
-                  hintText: "Layanan ini akan lebih baik jika ...",
-                ),
-              ),
-            ),
-            SizedBox(height: Insets.small.h),
-            SizedBox(
-              width: 50.w,
-              height: 50.h,
-              child: Center(
-                child: RatingBar.builder(
-                  initialRating: 3,
-                  minRating: 1,
-                  direction: Axis.horizontal,
-                  itemCount: 5,
-                  glowColor: Palette.editable.withOpacity(.25),
-                  itemSize: 27.sp,
-                  itemPadding: EdgeInsets.symmetric(horizontal: 6.w),
-                  onRatingUpdate: (rating) {},
-                  itemBuilder: (BuildContext context, int index) =>
-                      SvgPicture.asset(
-                    'assets/vectors/star.svg',
-                    color: Palette.primary,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: Insets.small.h),
-            Material(
+    return Container(
+      margin: EdgeInsets.only(
+        bottom: Insets.medium.h,
+        top: Insets.small.h * .5,
+      ),
+      child: Column(
+        children: [
+          RatingBar.builder(
+            initialRating: rating.number.toDouble(),
+            minRating: rating.number.toDouble(),
+            maxRating: rating.number.toDouble(),
+            direction: Axis.horizontal,
+            itemCount: 5,
+            glowColor: Palette.editable.withOpacity(.25),
+            itemSize: 27.sp,
+            itemPadding: EdgeInsets.symmetric(horizontal: 6.w),
+            onRatingUpdate: (_) {},
+            itemBuilder: (_, int index) => SvgPicture.asset(
+              'assets/vectors/star.svg',
               color: Palette.primary,
-              borderRadius: BorderRadius.circular(9.sp),
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Insets.small.w,
-                    vertical: Insets.small.h,
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'Nilai',
-                    ),
-                  ),
+            ),
+            updateOnDrag: false,
+            ignoreGestures: true,
+            unratedColor: Palette.accent,
+          ),
+          SizedBox(height: Insets.small.h * .5),
+          Text(
+            'Dinilai ${rating.ratingTimeStamp!.format("dd MMMM yyyy")}',
+            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w300,
                 ),
-              ),
-            )
-          ],
-        ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BuildCancelLayout extends StatelessWidget {
+  const _BuildCancelLayout({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(
+        vertical: Insets.medium.h,
+      ),
+      child: Text(
+        'Pesanan telah dibatalkan',
+        textAlign: TextAlign.center,
+        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              fontSize: 14.sp,
+              color: Palette.negative.withOpacity(.75),
+            ),
       ),
     );
   }

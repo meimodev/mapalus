@@ -29,9 +29,13 @@ class HomeScreen extends GetView<HomeController> {
             slivers: [
               // _buildUpperSection(context),
               SliverAppBar(
-                title: CardSearchBar(
-                  onSubmitted: (String value) {},
-                  onLogoPressed: controller.onPressedLogo,
+                title: Obx(
+                  () => CardSearchBar(
+                    onSubmitted: (String value) {},
+                    onLogoPressed: controller.onPressedLogo,
+                    notificationBadgeCount:
+                        controller.unfinishedOrderCount.value,
+                  ),
                 ),
                 collapsedHeight: 75.h,
                 expandedHeight: 300.h,

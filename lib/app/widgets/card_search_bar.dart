@@ -9,10 +9,12 @@ class CardSearchBar extends StatelessWidget {
     Key? key,
     required this.onSubmitted,
     required this.onLogoPressed,
+    required this.notificationBadgeCount,
   }) : super(key: key);
 
   final Function(String value) onSubmitted;
   final VoidCallback onLogoPressed;
+  final int notificationBadgeCount;
 
   @override
   Widget build(BuildContext context) {
@@ -71,14 +73,17 @@ class CardSearchBar extends StatelessWidget {
             SizedBox(width: Insets.small.w * .5),
             Badge(
               elevation: 0,
-              badgeContent: Text(
-                '99',
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      fontSize: 10.sp,
-                      color: Palette.editable,
-                    ),
+              showBadge: notificationBadgeCount > 0,
+              badgeContent: Center(
+                child: Text(
+                  notificationBadgeCount.toString(),
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: 10.sp,
+                        color: Palette.editable,
+                      ),
+                ),
               ),
-              padding: EdgeInsets.all(3.sp),
+              padding: EdgeInsets.all(6.sp),
               child: Material(
                 shape: const CircleBorder(),
                 color: Palette.accent,

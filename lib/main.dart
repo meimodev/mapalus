@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/theme.dart';
+import 'package:jiffy/jiffy.dart';
 
 import 'firebase_options.dart';
 
@@ -19,6 +20,7 @@ void main() async {
   if (defaultTargetPlatform == TargetPlatform.android) {
     AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
   }
+  await Jiffy.locale("id");
   runApp(const MyApp());
 }
 

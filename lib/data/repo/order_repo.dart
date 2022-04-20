@@ -25,7 +25,7 @@ abstract class OrderRepoContract {
     required OrderStatus status,
   });
 
-  Future<bool> rateOrder(Order order, UserApp user, Rating rating);
+  Future<Order> rateOrder(Order order, Rating rating);
 }
 
 class OrderRepo extends OrderRepoContract {
@@ -51,9 +51,12 @@ class OrderRepo extends OrderRepoContract {
   }
 
   @override
-  Future<bool> rateOrder(Order order, UserApp user, Rating rating) {
-    // TODO: implement rateOrder
-    throw UnimplementedError();
+  Future<Order> rateOrder(Order order, Rating rating) async {
+    //new order with updated rating
+    order.rating = rating;
+    order.status = OrderStatus.finished;
+    order.setFinishTimeStamp(rating.ratingTimeStamp!);
+    return await firestore.updateOrder(order);
   }
 
   @override

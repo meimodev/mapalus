@@ -57,9 +57,9 @@ class CardOrderDetailItem extends StatelessWidget {
                 SizedBox(height: 3.h),
                 Row(
                   children: [
-                    _buildWeightAndPriceCard(context, productName),
-                    SizedBox(width: 6.w),
                     _buildWeightAndPriceCard(context, productPrice),
+                    SizedBox(width: 6.w),
+                    _buildWeightAndPriceCard(context, productWeight),
                   ],
                 ),
               ],

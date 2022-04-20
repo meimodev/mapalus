@@ -107,4 +107,20 @@ class FirestoreService {
     }
     return null;
   }
+
+  Future<Order> updateOrder(Order order) async {
+    CollectionReference orders = fireStore.collection('orders');
+
+    orders.doc(order.generateId()).set(order.toMap()).then((_) {
+      if (kDebugMode) {
+        print('[FIRESTORE] ORDER successfully updated');
+      }
+    }).onError((e, _) {
+      if (kDebugMode) {
+        print('[FIRESTORE] ORDER update error $e');
+      }
+    });
+
+    return order;
+  }
 }

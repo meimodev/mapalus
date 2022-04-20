@@ -7,6 +7,7 @@ import 'package:mapalus/app/modules/home/home_binding.dart';
 import 'package:mapalus/app/modules/home/home_screen.dart';
 import 'package:mapalus/app/modules/location/location_binding.dart';
 import 'package:mapalus/app/modules/location/location_screen.dart';
+import 'package:mapalus/app/modules/order_detail/order_detail_binding.dart';
 import 'package:mapalus/app/modules/order_detail/order_detail_screen.dart';
 import 'package:mapalus/app/modules/ordering/ordering_binding.dart';
 import 'package:mapalus/app/modules/ordering/ordering_screen.dart';
@@ -80,6 +81,7 @@ class Routes {
         name: orderDetail,
         page: () => const OrderDetailScreen(),
         transition: Transition.cupertino,
+        binding: OrderDetailBinding(),
       ),
       GetPage(
         name: cart,

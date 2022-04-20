@@ -24,6 +24,7 @@ class HomeController extends GetxController {
   RxList<ProductOrder> productOrders = RxList([]);
 
   Order? latestOrder;
+  RxInt unfinishedOrderCount = 0.obs;
 
   final PagingController<int, Product> pagingController = PagingController(
     firstPageKey: 0,
@@ -32,8 +33,14 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     _initInfiniteScrolling();
-    _checkNewlyCreatedOrder();
     super.onInit();
+  }
+
+  @override
+  void onReady() {
+    Future.delayed(3.seconds).then((value) => checkNewlyCreatedOrder());
+
+    super.onReady();
   }
 
   @override
@@ -148,16 +155,18 @@ class HomeController extends GetxController {
     productOrders.clear();
     isCardCartVisible.value = false;
 
-    _checkNewlyCreatedOrder();
+    checkNewlyCreatedOrder();
   }
 
-  _checkNewlyCreatedOrder() async {
-    await Future.delayed(2.seconds);
+  checkNewlyCreatedOrder() async {
     if (userRepo.signedUser!.orders.isEmpty) {
       return;
     }
     final _orders = userRepo.signedUser!.orders;
     final latestOrderId = _orders.elementAt(_orders.length - 1);
+
+    //get the unfinished order count
+    unfinishedOrderCount.value = _orders.length;
 
     // get the latest order
     final _order = await orderRepo.readOrder(latestOrderId);
@@ -169,6 +178,8 @@ class HomeController extends GetxController {
       latestOrder = _order;
       isCardOrderVisible.value = true;
       // display in card latest order visibility
+    } else {
+      isCardOrderVisible.value = false;
     }
   }
 }
