@@ -159,6 +159,9 @@ class HomeController extends GetxController {
   }
 
   checkNewlyCreatedOrder() async {
+    if (userRepo.signedUser == null) {
+      return;
+    }
     if (userRepo.signedUser!.orders.isEmpty) {
       return;
     }

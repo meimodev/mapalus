@@ -8,6 +8,7 @@ class OrderInfo {
   double deliveryPrice;
   double deliveryDistance;
   LatLng deliveryCoordinate;
+  String deliveryTime;
 
   OrderInfo({
     required this.deliveryDistance,
@@ -16,6 +17,7 @@ class OrderInfo {
     required this.deliveryWeight,
     required this.deliveryPrice,
     required this.deliveryCoordinate,
+    this.deliveryTime = '',
   });
 
   OrderInfo.fromMap(Map<String, dynamic> data)
@@ -27,7 +29,8 @@ class OrderInfo {
         deliveryCoordinate = LatLng(
           data["delivery_coordinate"]["latitude"],
           data["delivery_coordinate"]["longitude"],
-        );
+        ),
+        deliveryTime = data['delivery_info'];
 
   String get totalPrice {
     double t = deliveryPrice + productPrice;
@@ -50,6 +53,10 @@ class OrderInfo {
     return '$deliveryWeight Kg $deliveryDistance Km';
   }
 
+  String get deliveryCoordinateF {
+    return '${deliveryCoordinate.latitude}, ${deliveryCoordinate.longitude}';
+  }
+
   OrderInfo copyWith({
     int? productCount,
     double? productPrice,
@@ -57,6 +64,7 @@ class OrderInfo {
     double? deliveryPrice,
     double? deliveryDistance,
     LatLng? deliveryCoordinate,
+    String? deliveryTime,
   }) {
     return OrderInfo(
       productCount: productCount ?? this.productCount,
@@ -65,6 +73,7 @@ class OrderInfo {
       deliveryPrice: deliveryPrice ?? this.deliveryPrice,
       deliveryDistance: deliveryDistance ?? this.deliveryDistance,
       deliveryCoordinate: deliveryCoordinate ?? this.deliveryCoordinate,
+      deliveryTime: deliveryTime ?? this.deliveryTime,
     );
   }
 
@@ -77,7 +86,8 @@ class OrderInfo {
           productPrice == other.productPrice &&
           deliveryWeight == other.deliveryWeight &&
           deliveryPrice == other.deliveryPrice &&
-          deliveryCoordinate == other.deliveryCoordinate;
+          deliveryCoordinate == other.deliveryCoordinate &&
+          deliveryTime == other.deliveryTime;
 
   @override
   int get hashCode =>
@@ -85,20 +95,21 @@ class OrderInfo {
       productPrice.hashCode ^
       deliveryWeight.hashCode ^
       deliveryPrice.hashCode ^
-      deliveryCoordinate.hashCode;
+      deliveryCoordinate.hashCode ^
+      deliveryTime.hashCode;
 
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> _deliveryCoordinate = {
-      'latitude': deliveryCoordinate.latitude,
-      'longitude': deliveryCoordinate.longitude,
-    };
     return {
       'product_count': productCount,
       'product_price': productPrice,
       'delivery_weight': deliveryWeight,
       'delivery_price': deliveryPrice,
       'delivery_distance': deliveryDistance,
-      'delivery_coordinate': _deliveryCoordinate,
+      'delivery_time': deliveryTime,
+      'delivery_coordinate': {
+        'latitude': deliveryCoordinate.latitude,
+        'longitude': deliveryCoordinate.longitude,
+      },
     };
   }
 }

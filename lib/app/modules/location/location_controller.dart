@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:mapalus/data/models/delivery_info.dart';
 import 'package:mapalus/data/models/order_info.dart';
 import 'package:mapalus/data/models/product_order.dart';
@@ -13,9 +14,6 @@ class LocationController extends GetxController {
 
   RxBool isLocationSelectionVisible = true.obs;
   RxBool isLocationSelectionButtonVisible = true.obs;
-
-  //TODO determine the distance between traditional market & destination
-  //TODO calculate price based on that distance & weight of ordered products
 
   Rx<OrderInfo> orderInfo = OrderInfo(
     productCount: 0,
@@ -85,6 +83,14 @@ class LocationController extends GetxController {
     if (_selectedDeliveryInfo == null) {
       Get.snackbar("Perhatian !", "Waktu pengataran belum dipilih");
       return;
+    }
+
+    var _deliveryTime = _selectedDeliveryInfo!.title;
+    if (_selectedDeliveryInfo!.isTomorrow) {
+      final _tomorrowDate = Jiffy().format("E dd MMM");
+      orderInfo.value.deliveryTime = "$_deliveryTime BESOK $_tomorrowDate";
+    } else {
+      orderInfo.value.deliveryTime = _deliveryTime;
     }
 
     List<ProductOrder> _productOrders = (Get.arguments

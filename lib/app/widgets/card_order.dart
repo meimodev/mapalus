@@ -30,7 +30,7 @@ class CardOrder extends StatelessWidget {
               SizedBox(
                 width: 39.w,
                 child: Text(
-                  '#${order.id}',
+                  '#${order.id!.replaceRange(0, 12, '')}',
                   style: Theme.of(context).textTheme.caption,
                   textAlign: TextAlign.start,
                 ),
@@ -47,7 +47,7 @@ class CardOrder extends StatelessWidget {
                           ),
                     ),
                     Text(
-                      '12/02/2022 15:30',
+                      order.orderTimeStamp!.format('E, dd MMMM'),
                       style: Theme.of(context).textTheme.caption?.copyWith(
                             fontWeight: FontWeight.w600,
                           ),
@@ -65,7 +65,7 @@ class CardOrder extends StatelessWidget {
                       style: Theme.of(context).textTheme.caption,
                     ),
                     Text(
-                      "Rp. 999.000.000",
+                      order.orderInfo.totalPrice,
                       style: Theme.of(context).textTheme.caption,
                     ),
                   ],
@@ -125,7 +125,7 @@ class CardOrder extends StatelessWidget {
                             ),
                       ),
                       Text(
-                        'Besok, 07:00 - 08:00',
+                        order.rating.ratingTimeStamp!.format("E, dd MMMM"),
                         style: Theme.of(context).textTheme.caption?.copyWith(
                               fontWeight: FontWeight.w600,
                             ),

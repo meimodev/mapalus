@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/home/home_controller.dart';
-import 'package:mapalus/data/models/delivery_info.dart';
 import 'package:mapalus/data/models/order.dart';
 import 'package:mapalus/data/models/order_info.dart';
 import 'package:mapalus/data/models/product_order.dart';
@@ -25,14 +24,12 @@ class OrderingController extends GetxController {
     UserApp? user = await userRepo.readSignedInUser();
 
     Map<String, dynamic> args = Get.arguments as Map<String, dynamic>;
-    DeliveryInfo _deliveryInfo = args['delivery_info'] as DeliveryInfo;
     List<ProductOrder> _productOrders =
         args['product_orders'] as List<ProductOrder>;
     OrderInfo _orderInfo = args['order_info'] as OrderInfo;
 
     try {
       Order order = await orderRepo.createOrder(
-        deliveryInfo: _deliveryInfo,
         products: _productOrders,
         user: user!,
         orderInfo: _orderInfo,

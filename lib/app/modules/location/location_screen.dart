@@ -267,8 +267,13 @@ class LocationScreen extends GetView<LocationController> {
             Positioned(
               left: 0,
               top: Insets.small.h,
-              child: const CardNavigation(
+              child: CardNavigation(
                 title: '',
+                onPressedBack: () async {
+                  if (await controller.onPressedBackButton()) {
+                    Navigator.pop(context);
+                  }
+                },
                 isInverted: true,
                 isCircular: true,
               ),
@@ -309,15 +314,21 @@ class _BuildDeliveryFeeSelectorState extends State<_BuildDeliveryFeeSelector> {
     // print(widget.deliveries[0]);
     // print(widget.weight);
     // print(widget.distance);
-    widget.onPressedDeliveryTime(
-      widget.deliveries[0],
-      Utils.formatCurrencyToNumber(
-        widget.deliveries[0].price(
-          distance: widget.distance,
-          weight: widget.weight,
-        ),
-      ),
-    );
+
+    for (int i = 0; i < widget.deliveries.length; i++) {
+      if (widget.deliveries[i].available) {
+        widget.onPressedDeliveryTime(
+          widget.deliveries[i],
+          Utils.formatCurrencyToNumber(
+            widget.deliveries[i].price(
+              distance: widget.distance,
+              weight: widget.weight,
+            ),
+          ),
+        );
+        break;
+      }
+    }
   }
 
   @override
@@ -341,13 +352,12 @@ class _BuildDeliveryFeeSelectorState extends State<_BuildDeliveryFeeSelector> {
           for (DeliveryInfo delivery in widget.deliveries) ...[
             SizedBox(height: Insets.small.h),
             CardDeliveryFee(
-              deliveryTime: delivery.title,
+              deliveryInfo: delivery,
+              isActive: activeIndex == delivery.id,
               price: delivery.price(
                 distance: widget.distance,
                 weight: widget.weight,
               ),
-              isTomorrow: !delivery.available,
-              isActive: activeIndex == delivery.id,
               onPressed: () {
                 setState(() {
                   activeIndex = delivery.id;

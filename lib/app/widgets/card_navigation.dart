@@ -7,6 +7,7 @@ class CardNavigation extends StatelessWidget {
   const CardNavigation({
     Key? key,
     required this.title,
+    this.onPressedBack,
     this.isInverted = false,
     this.isCircular = false,
   }) : super(key: key);
@@ -14,6 +15,7 @@ class CardNavigation extends StatelessWidget {
   final String title;
   final bool isInverted;
   final bool isCircular;
+  final VoidCallback? onPressedBack;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class CardNavigation extends StatelessWidget {
       shadowColor: isInverted ? null : Colors.grey.withOpacity(.125),
       shape: isCircular ? const CircleBorder() : null,
       child: InkWell(
-        onTap: () => Navigator.pop(context),
+        onTap: onPressedBack ?? () => Navigator.pop(context),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: Insets.medium.w),
           height: 60.h,

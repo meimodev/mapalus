@@ -11,6 +11,7 @@ import 'package:mapalus/app/modules/order_detail/order_detail_binding.dart';
 import 'package:mapalus/app/modules/order_detail/order_detail_screen.dart';
 import 'package:mapalus/app/modules/ordering/ordering_binding.dart';
 import 'package:mapalus/app/modules/ordering/ordering_screen.dart';
+import 'package:mapalus/app/modules/orders/orders_binding.dart';
 import 'package:mapalus/app/modules/orders/orders_screen.dart';
 import 'package:mapalus/app/modules/signing/signing_binding.dart';
 import 'package:mapalus/app/modules/signing/signing_screen.dart';
@@ -74,7 +75,8 @@ class Routes {
       ),
       GetPage(
         name: orders,
-        page: () => OrdersScreen(),
+        page: () => const OrdersScreen(),
+        binding: OrdersBinding(),
         transition: Transition.cupertino,
       ),
       GetPage(

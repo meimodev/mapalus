@@ -18,9 +18,6 @@ class DeliveryInfo {
     [27000, 36000, 45000, 120000], // >6Kg - 9Kg
   ];
 
-  /*TODO Every product must have predetermine weight in gram,
-   while the measuring unit can vary*/
-
   DeliveryInfo(
     this.id,
     this._start,
@@ -46,7 +43,19 @@ class DeliveryInfo {
     return res;
   }
 
+  bool get isTomorrow {
+    if (id == "NOW") {
+      return !Jiffy().isBetween(startDate, endDate);
+    }
+    return Jiffy().isAfter(startDate);
+  }
+
   String get title {
+    print('is tomorrow = $isTomorrow, '
+        'startDate = ${startDate.format("E, dd MMMM HH:mm")} '
+        'endDate = ${endDate.format("E, dd MMMM HH:mm")} '
+        'now = ${Jiffy().format("E, dd MMMM HH:mm")} '
+        'isAvailable = $available}');
     if (id == "NOW") {
       return "Sekarang";
     }
@@ -62,7 +71,14 @@ class DeliveryInfo {
     } else if (startHour > 17) {
       timeOfTheDay = "Malam";
     }
-    return "Jam ${startDate.hour} - ${endDate.hour} $timeOfTheDay";
+    return "Pukul ${startDate.hour} - ${endDate.hour} $timeOfTheDay";
+  }
+
+  bool get isAvailable {
+    if (id == "NOW") {
+      return !isTomorrow && available;
+    }
+    return available;
   }
 
   double get discount {
@@ -84,8 +100,6 @@ class DeliveryInfo {
     } else {
       return 'invalid weight $weight';
     }
-    //determine the distance in which class
-    //than multiply with discount
     return Utils.formatNumberToCurrency(
         ((distanceFee / 1000) * discount).round() * 1000);
   }

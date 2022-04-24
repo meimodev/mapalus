@@ -19,7 +19,11 @@ class UserApp {
     return 'User{phone: $phone, name: $name, orders: $orders}';
   }
 
-  Map<String, dynamic> toMap() {
-    return {'name': name, 'phone': phone, 'orders': orders};
+  Map<String, dynamic> toMap({minify = false}) {
+    return {
+      'name': name,
+      'phone': phone,
+      'orders': minify ? [] : orders,
+    };
   }
 }

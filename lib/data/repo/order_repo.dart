@@ -1,4 +1,3 @@
-import 'package:mapalus/data/models/delivery_info.dart';
 import 'package:mapalus/data/models/order.dart';
 import 'package:mapalus/data/models/order_info.dart';
 import 'package:mapalus/data/models/product_order.dart';
@@ -9,7 +8,6 @@ import 'package:mapalus/shared/enums.dart';
 
 abstract class OrderRepoContract {
   Future<Order> createOrder({
-    required DeliveryInfo deliveryInfo,
     required List<ProductOrder> products,
     required UserApp user,
     required OrderInfo orderInfo,
@@ -33,7 +31,6 @@ class OrderRepo extends OrderRepoContract {
 
   @override
   Future<Order> createOrder({
-    required DeliveryInfo deliveryInfo,
     required List<ProductOrder> products,
     required UserApp user,
     required OrderInfo orderInfo,
@@ -43,7 +40,6 @@ class OrderRepo extends OrderRepoContract {
       orderingUser: user,
       status: OrderStatus.placed,
       products: products,
-      deliveryInfo: deliveryInfo,
       orderInfo: orderInfo,
     );
     final newOrder = await firestore.createOrder(order);
@@ -66,9 +62,16 @@ class OrderRepo extends OrderRepoContract {
   }
 
   @override
-  Future<List<Order>> readOrders(UserApp user) {
-    // TODO: implement readOrders
-    throw UnimplementedError();
+  Future<List<Order>> readOrders(UserApp user) async {
+    var res = <Order>[];
+    var userOrders = user.orders;
+    for (String id in userOrders) {
+      Order? o = await firestore.readOrder(id);
+      if (o != null) {
+        res.add(o);
+      }
+    }
+    return res;
   }
 
   @override
