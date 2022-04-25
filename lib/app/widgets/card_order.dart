@@ -80,7 +80,7 @@ class CardOrder extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'menyiapkan',
+                        'Menunggu\nKonfirmasi',
                         style: Theme.of(context).textTheme.caption?.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
@@ -91,13 +91,13 @@ class CardOrder extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'pengantaran',
+                        'Pengantaran',
                         style: Theme.of(context).textTheme.caption?.copyWith(
                               fontWeight: FontWeight.w300,
                             ),
                       ),
                       Text(
-                        'Besok, 07:00 - 08:00',
+                        order.orderInfo.deliveryTimeF(shorted: true),
                         style: Theme.of(context).textTheme.caption?.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
@@ -108,7 +108,7 @@ class CardOrder extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'ditolak',
+                        'Dibatalkan',
                         style: Theme.of(context).textTheme.caption?.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
@@ -119,17 +119,21 @@ class CardOrder extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'selesai',
+                        'Selesai',
                         style: Theme.of(context).textTheme.caption?.copyWith(
                               fontWeight: FontWeight.w300,
                             ),
                       ),
-                      Text(
-                        order.rating.ratingTimeStamp!.format("E, dd MMMM"),
-                        style: Theme.of(context).textTheme.caption?.copyWith(
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
+                      order.rating.ratingTimeStamp != null
+                          ? Text(
+                              order.rating.ratingTimeStamp!
+                                  .format("E, dd MMMM"),
+                              style:
+                                  Theme.of(context).textTheme.caption?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                            )
+                          : const SizedBox(),
                     ],
                   ),
                 ),

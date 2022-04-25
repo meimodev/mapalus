@@ -11,6 +11,7 @@ import 'package:mapalus/shared/values.dart';
 class Order {
   String? id;
   List<ProductOrder> products;
+
   // DeliveryInfo deliveryInfo;
   OrderStatus status;
   String? _orderTimeStamp;
@@ -60,6 +61,13 @@ class Order {
         deliveringUser = data['delivering_user'] == null
             ? null
             : UserApp.fromMap(data['delivering_user']);
+
+  String get finishTimeStampF {
+    if (finishTimeStamp == null) {
+      return "-";
+    }
+    return finishTimeStamp!.format("E, ddd MMM yyyy");
+  }
 
   String generateId() {
     if (id != null) {

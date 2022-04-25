@@ -30,7 +30,7 @@ class OrderInfo {
           data["delivery_coordinate"]["latitude"],
           data["delivery_coordinate"]["longitude"],
         ),
-        deliveryTime = data['delivery_info'];
+        deliveryTime = data['delivery_time'];
 
   String get totalPrice {
     double t = deliveryPrice + productPrice;
@@ -55,6 +55,14 @@ class OrderInfo {
 
   String get deliveryCoordinateF {
     return '${deliveryCoordinate.latitude}, ${deliveryCoordinate.longitude}';
+  }
+
+  String deliveryTimeF({bool shorted = false}) {
+    var res = deliveryTime;
+    if (res.contains("BESOK") && shorted) {
+      res.substring(0, deliveryTime.length - 11);
+    }
+    return res;
   }
 
   OrderInfo copyWith({

@@ -109,13 +109,29 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                     () => _buildDeliveryStateCard(
                                       context: context,
                                       title: 'Selesai',
-                                      timeStamp: controller.deliveryTime.value,
+                                      timeStamp:
+                                          controller.finishTimeStamp.value,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                             SizedBox(height: Insets.medium.h),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                vertical: Insets.small.h * .5,
+                              ),
+                              decoration: const BoxDecoration(
+                                  border: Border(
+                                bottom: BorderSide(
+                                  color: Palette.accent,
+                                ),
+                              )),
+                              child: _buildDeliveryInfoLayout(
+                                context,
+                              ),
+                            ),
+                            SizedBox(height: Insets.small.h),
                             Obx(
                               () => _buildRowItem(
                                 context,
@@ -146,40 +162,6 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                           ],
                         ),
                       ),
-                      // Material(
-                      //   color: Palette.primary,
-                      //   clipBehavior: Clip.hardEdge,
-                      //   borderRadius: BorderRadius.circular(9.sp),
-                      //   child: InkWell(
-                      //     onTap: () {
-                      //       showDialog(
-                      //         context: context,
-                      //         builder: (_) => DialogRating(
-                      //           onPressedRate: controller.onPressedRate,
-                      //         ),
-                      //       );
-                      //     },
-                      //     child: Padding(
-                      //       padding: EdgeInsets.symmetric(
-                      //         vertical: Insets.small.h,
-                      //         horizontal: Insets.medium.w,
-                      //       ),
-                      //       child: const Center(
-                      //         child: Text(
-                      //           'Selesaikan',
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // _BuildRatedLayout(
-                      //   rating: Rating(
-                      //     0,
-                      //     4,
-                      //     "This is the message",
-                      //     "22/02/2022 18:00:10",
-                      //   ),
-                      // ),
                       Obx(
                         () => _buildRatingLayout(context,
                             orderStatus: controller.orderStatus.value,
@@ -196,13 +178,92 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
     );
   }
 
-  _buildRatingLayout(BuildContext context,
-      {required String orderStatus, required Rating orderRating}) {
+  _buildDeliveryInfoLayout(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Waktu Pengantaran",
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    fontSize: 10.sp,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w300,
+                  ),
+            ),
+            Text(
+              controller.deliveryTime.value,
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    fontSize: 12.sp,
+                  ),
+            ),
+            // SizedBox(height: 3.h),
+            // Text(
+            //   "Lokasi Pengantaran",
+            //   style: Theme.of(context).textTheme.bodyText1?.copyWith(
+            //         fontSize: 12.sp,
+            //       ),
+            // ),
+            // Text(
+            //   controller.deliveryCoordinate.value,
+            //   style: Theme.of(context).textTheme.bodyText1?.copyWith(
+            //         fontSize: 12.sp,
+            //       ),
+            // ),
+          ],
+        ),
+        Material(
+          color: Palette.primary,
+          clipBehavior: Clip.hardEdge,
+          borderRadius: BorderRadius.circular(12.sp),
+          child: InkWell(
+            onTap: controller.onPressedViewMaps,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: Insets.small.w * .5,
+                vertical: Insets.small.h * .5,
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.place,
+                  color: Palette.accent,
+                  size: 21.sp,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  _buildRatingLayout(
+    BuildContext context, {
+    required String orderStatus,
+    required Rating orderRating,
+  }) {
     if (orderStatus == OrderStatus.rejected.name) {
       return const _BuildCancelLayout();
     }
 
-    if (orderRating.number == 0) {
+    if (orderStatus == OrderStatus.placed.name) {
+      return Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: Insets.small.h,
+          horizontal: Insets.medium.w,
+        ),
+        child: const Center(
+          child: Text(
+            'Menunggu Konfirmasi Partner',
+          ),
+        ),
+      );
+    }
+
+    if (orderRating.id == 0) {
       return Material(
         color: Palette.primary,
         clipBehavior: Clip.hardEdge,

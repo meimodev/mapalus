@@ -8,6 +8,7 @@ import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/data/models/rating.dart';
 import 'package:mapalus/data/repo/order_repo.dart';
 import 'package:mapalus/shared/values.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class OrderDetailController extends GetxController {
   OrderRepo orderRepo = Get.find();
@@ -23,7 +24,9 @@ class OrderDetailController extends GetxController {
   RxString productCount = ''.obs;
   RxString deliveryTotal = ''.obs;
   RxString deliveryCount = ''.obs;
+  RxString deliveryCoordinate = "".obs;
   RxString totalPrice = ''.obs;
+  RxString finishTimeStamp = "".obs;
 
   RxString orderStatus = ''.obs;
   Rx<Rating> orderRating = Rating.zero().obs;
@@ -51,16 +54,14 @@ class OrderDetailController extends GetxController {
         ? '-'
         : _orderTimeStamp.format(Values.formatRawDate);
 
-    var _finishTimeStamp = order.finishTimeStamp;
-    deliveryTime.value = _finishTimeStamp == null
-        ? '-'
-        : _finishTimeStamp.format(Values.formatRawDate);
-
     productCount.value = order.orderInfo.productCountF;
     productTotal.value = order.orderInfo.productPriceF;
     deliveryCount.value = order.orderInfo.deliveryWeightF;
     deliveryTotal.value = order.orderInfo.deliveryPriceF;
+    deliveryCoordinate.value = order.orderInfo.deliveryCoordinateF;
+    deliveryTime.value = order.orderInfo.deliveryTimeF(shorted: true);
     totalPrice.value = order.orderInfo.totalPrice;
+    finishTimeStamp.value = order.finishTimeStampF;
 
     orderStatus.value = order.status.name;
 
@@ -79,5 +80,13 @@ class OrderDetailController extends GetxController {
     orderRating.value = rating;
     shouldCheckNewlyCreatedOrder = true;
     Get.back();
+  }
+
+  onPressedViewMaps() {
+    var _latitude = _order.orderInfo.deliveryCoordinate.latitude;
+    var _longitude = _order.orderInfo.deliveryCoordinate.longitude;
+    var _url =
+        'https://www.google.com/maps/search/?api=1&query=$_latitude,$_longitude';
+    launchUrlString(_url);
   }
 }
