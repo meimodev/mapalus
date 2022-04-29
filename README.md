@@ -7,7 +7,7 @@ Mobile app repo for the users.
 - Support android API 23 upward (from Marshmallow to latest)
 - Support iOS 12 upward
 
-### *[mapalus project]("https://www.mapalusindonesia.com")*
+### *[mapalus project](https://www.mapalusindonesia.com)*
 
 This repo is part of *mapalus project*
 
