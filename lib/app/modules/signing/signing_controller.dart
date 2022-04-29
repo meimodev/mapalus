@@ -19,10 +19,21 @@ class SigningController extends GetxController {
   Rx<CardSigningState> signingState = CardSigningState.oneTimePassword.obs;
   RxBool isLoading = false.obs;
 
+  Function(UserApp? signedUser)? onClosingSigning;
+
   @override
   void onInit() {
     var args = Get.arguments;
     message = args.toString();
+    userRepo.onSuccessSigning = (_) {
+      Get.back();
+    };
+    userRepo.onUnregisteredUser = (_) {
+      tecSigning.clear();
+      errorText.value = "";
+      signingState.value = CardSigningState.notRegistered;
+      isLoading.value = false;
+    };
     super.onInit();
   }
 
@@ -31,8 +42,8 @@ class SigningController extends GetxController {
     if (message!.isEmpty) {
       return;
     }
-    if (phone.isNotEmpty && name.isNotEmpty) {
-      homeController.onSignedInUser(UserApp(name: name, phone: phone));
+    if (userRepo.signedUser != null) {
+      homeController.onSignedInUser(userRepo.signedUser!);
     }
 
     Get.back();
@@ -75,27 +86,20 @@ class SigningController extends GetxController {
     userRepo.requestOTP(
       phone,
       (res) async {
+        print('Result Message : ${res.message}');
         switch (res.message) {
-          case 'PROCEED':
-            // userRepo.signInUser(phone);
-            Get.back();
-            break;
-          case 'UNREGISTERED':
-            isLoading.value = false;
-            tecSigning.clear();
-            errorText.value = "";
-            signingState.value = CardSigningState.notRegistered;
-            break;
           case 'SENT':
-            isLoading.value = false;
+            await Future.delayed(10.seconds);
+
             tecSigning.clear();
             errorText.value = "";
             signingState.value = CardSigningState.confirmCode;
+            isLoading.value = false;
             break;
           case 'VERIFICATION_FAILED':
-            isLoading.value = false;
             errorText.value =
                 "Koneksi ke internet bermasalah, cobalah sesaat lagi";
+            isLoading.value = false;
             break;
         }
       },

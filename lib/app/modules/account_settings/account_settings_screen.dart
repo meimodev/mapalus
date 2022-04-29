@@ -89,9 +89,10 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
                 onPressed: controller.onPressedEditAccountInfo,
               ),
               Badge(
-                padding: EdgeInsets.all(3.sp),
+                showBadge: controller.orderCount > 0,
+                padding: EdgeInsets.all(6.sp),
                 badgeContent: Text(
-                  '99',
+                  controller.orderCount.value.toString(),
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
                         fontSize: 10.sp,
                         color: Palette.editable,

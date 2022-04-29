@@ -34,5 +34,9 @@
        <meta-data android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyAvMIiqFo30C8SV-Myb2T_qh_zgFw6WeNM"/>
 
+       <meta-data
+           android:name="com.google.firebase.messaging.default_notification_channel_id"
+           android:value="order_channel" />
+
     </application>
 </manifest>

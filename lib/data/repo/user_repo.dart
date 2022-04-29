@@ -23,9 +23,9 @@ class UserRepo extends UserRepoContract {
   FirestoreService firestore = FirestoreService();
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  bool canRegister = false;
-
-  Function(UserApp)? onSuccessSigning;
+  Function(UserApp userApp)? onSuccessSigning;
+  Function(UserApp userApp)? onSignedUser;
+  Function(String phone)? onUnregisteredUser;
   VoidCallback? onSigningOut;
 
   UserRepo() {
@@ -42,14 +42,16 @@ class UserRepo extends UserRepoContract {
           print('signed success ' + signedUser.toString());
         } else {
           // user is not registered
+          if (onUnregisteredUser != null) {
+            onUnregisteredUser!(user.phoneNumber!);
+            onUnregisteredUser == null;
+          }
           signedUser = null;
-          canRegister = true;
           print('Phone is not registered ' + user.phoneNumber!);
         }
       } else {
         print('AuthStateChanges() user = null');
 
-        canRegister = false;
         signedUser = null;
       }
     });
@@ -69,6 +71,10 @@ class UserRepo extends UserRepoContract {
     signedUser = user;
     if (onSuccessSigning != null) {
       onSuccessSigning!(user);
+      onSuccessSigning = null;
+    }
+    if (onSignedUser != null) {
+      onSignedUser!(user);
     }
     // var box = Hive.box('user_signing');
     // box.put('name', user.name);
@@ -98,34 +104,31 @@ class UserRepo extends UserRepoContract {
   @override
   void requestOTP(String phone, Function(Result) onResult) async {
     phone = phone.replaceFirst("0", "+62");
-    if (kDebugMode) {
-      print("phone " + phone);
-    }
-    await auth.verifyPhoneNumber(
-      phoneNumber: phone,
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        await auth.signInWithCredential(credential);
-        if (!await checkIfRegistered(phone)) {
-          onResult(Result(message: "UNREGISTERED"));
-          return;
-        }
-        onResult(Result(message: "PROCEED"));
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        if (kDebugMode) {
-          print('VERIFICATION_FAILED ' + e.code);
-        }
-        onResult(Result(message: "VERIFICATION_FAILED"));
-      },
-      codeSent: (String _verificationId, int? _resendToken) {
-        resendToken = _resendToken;
-        verificationId = _verificationId;
 
-        onResult(Result(message: "SENT"));
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {},
-      forceResendingToken: resendToken,
-    );
+    try {
+      await auth.verifyPhoneNumber(
+        phoneNumber: phone,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await auth.signInWithCredential(credential);
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          if (kDebugMode) {
+            print('VERIFICATION_FAILED ' + e.code);
+          }
+          onResult(Result(message: "VERIFICATION_FAILED"));
+        },
+        codeSent: (String _verificationId, int? _resendToken) {
+          resendToken = _resendToken;
+          verificationId = _verificationId;
+
+          onResult(Result(message: "SENT"));
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {},
+        forceResendingToken: resendToken,
+      );
+    } catch (e) {
+      print("SOME ERROR OCCURED ${e.toString()}");
+    }
   }
 
   void checkOTPCode(String smsCode, Function(Result) onResult) async {

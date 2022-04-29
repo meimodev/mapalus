@@ -1,3 +1,5 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mapalus/data/models/data_mock.dart';
@@ -33,13 +35,13 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     _initInfiniteScrolling();
+    _initNotificationHandler();
     super.onInit();
   }
 
   @override
   void onReady() {
-    Future.delayed(3.seconds).then((value) => checkNewlyCreatedOrder());
-
+    Future.delayed(2.seconds).then((value) => checkNewlyCreatedOrder());
     super.onReady();
   }
 
@@ -50,7 +52,7 @@ class HomeController extends GetxController {
   }
 
   void onPressedLogo() {
-    Get.toNamed(Routes.accountSetting);
+    Get.toNamed(Routes.accountSetting, arguments: unfinishedOrderCount.value);
   }
 
   void onPressedLatestOrder() {
@@ -183,6 +185,82 @@ class HomeController extends GetxController {
       // display in card latest order visibility
     } else {
       isCardOrderVisible.value = false;
+    }
+  }
+
+  _initNotificationHandler() async {
+    const androidChannel = AndroidNotificationChannel(
+      'order_channel', // id
+      'order channel',
+      description: 'used to handle order notification exclusively',
+      importance: Importance.max,
+      enableVibration: true,
+      enableLights: true,
+      playSound: true,
+      showBadge: true,
+    );
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(androidChannel);
+
+    final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null) {
+      _handleMessage(
+        message: initialMessage,
+        flutterLocalNotificationsPlugin: flutterLocalNotificationsPlugin,
+        androidChannel: androidChannel,
+      );
+    }
+    FirebaseMessaging.onMessage.listen((event) {
+      _handleMessage(
+        message: event,
+        flutterLocalNotificationsPlugin: flutterLocalNotificationsPlugin,
+        androidChannel: androidChannel,
+      );
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      _handleMessage(
+        message: event,
+        flutterLocalNotificationsPlugin: flutterLocalNotificationsPlugin,
+        androidChannel: androidChannel,
+      );
+    });
+  }
+
+  _handleMessage({
+    required RemoteMessage message,
+    required FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
+    AndroidNotificationChannel? androidChannel,
+  }) {
+    RemoteNotification? notification = message.notification;
+
+    if (notification != null) {
+      AndroidNotification? android = notification.android;
+      if (android != null) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              androidChannel!.id,
+              androidChannel.name,
+              channelDescription: androidChannel.description,
+              playSound: androidChannel.playSound,
+              enableLights: androidChannel.enableLights,
+              enableVibration: androidChannel.enableVibration,
+            ),
+          ),
+        );
+        return;
+      }
+
+      Get.rawSnackbar(
+        message: notification.title,
+      );
     }
   }
 }

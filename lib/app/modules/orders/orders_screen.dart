@@ -35,35 +35,54 @@ class OrdersScreen extends GetView<OrdersController> {
                         padding: EdgeInsets.symmetric(
                           horizontal: Insets.medium.w,
                         ),
-                        child: Obx(
-                          () => ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: controller.orders.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              Order order = controller.orders.elementAt(index);
-                              return Padding(
-                                padding: EdgeInsets.symmetric(
-                                  vertical: Insets.small.h * .5,
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 400),
+                          child: controller.isNoOrderLayoutVisible.isTrue
+                              ? _buildNoOrderLayout(context)
+                              : Obx(
+                                  () => ListView.builder(
+                                    physics: const BouncingScrollPhysics(),
+                                    itemCount: controller.orders.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      Order order =
+                                          controller.orders.elementAt(index);
+                                      return Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: Insets.small.h * .5,
+                                        ),
+                                        child: CardOrder(
+                                          order: order,
+                                          onPressed: () {
+                                            Navigator.pushNamed(
+                                              context,
+                                              Routes.orderDetail,
+                                              arguments: order,
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 ),
-                                child: CardOrder(
-                                  order: order,
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      Routes.orderDetail,
-                                      arguments: order,
-                                    );
-                                  },
-                                ),
-                              );
-                            },
-                          ),
                         ),
                       ),
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  _buildNoOrderLayout(BuildContext context) {
+    return Center(
+      child: Text(
+        'Sedang tidak memiliki pesanan -_-',
+        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              color: Palette.accent,
+              fontSize: 14.sp,
+            ),
       ),
     );
   }

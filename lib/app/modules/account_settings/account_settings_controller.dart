@@ -15,7 +15,8 @@ class AccountSettingsController extends GetxController {
       userName.value = userRepo.signedUser!.name;
       userPhone.value = userRepo.signedUser!.phone;
     }
-    userRepo.onSuccessSigning = (user) {
+
+    userRepo.onSignedUser = (user) {
       userName.value = user.name;
       userPhone.value = user.phone;
     };
@@ -23,6 +24,9 @@ class AccountSettingsController extends GetxController {
       userName.value = '';
       userPhone.value = '';
     };
+
+    final _orderCount = int.parse(Get.arguments.toString());
+    orderCount.value = _orderCount;
     super.onInit();
   }
 

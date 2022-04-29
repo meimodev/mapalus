@@ -10,18 +10,20 @@ class OrdersController extends GetxController {
   RxList<Order> orders = <Order>[].obs;
 
   RxBool isLoading = false.obs;
+  RxBool isNoOrderLayoutVisible = false.obs;
 
   @override
   void onReady() {
-    //populate orders
     _populateOrders();
     super.onReady();
   }
 
   _populateOrders() async {
-    print("populating order");
     isLoading.value = true;
     orders.value = await orderRepo.readOrders(userRepo.signedUser!);
+    if (orders.isEmpty) {
+      isNoOrderLayoutVisible.value = true;
+    }
     isLoading.value = false;
   }
 }

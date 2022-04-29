@@ -8,8 +8,13 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/theme.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'firebase_options.dart';
+
+Future<void> _handleBackgroundMessage(RemoteMessage message) async {
+  print("Background message ${message.notification?.title}");
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +25,7 @@ void main() async {
   if (defaultTargetPlatform == TargetPlatform.android) {
     AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
   }
+  FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
   await Jiffy.locale("id");
   runApp(const MyApp());
 }
