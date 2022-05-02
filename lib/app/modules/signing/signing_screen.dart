@@ -149,7 +149,11 @@ class CardSigning extends StatelessWidget {
           () => AnimatedSwitcher(
             duration: const Duration(milliseconds: 400),
             child: controller.isLoading.value
-                ? const CircularProgressIndicator(color: Palette.primary)
+                ? Padding(
+                    padding: EdgeInsets.symmetric(vertical: Insets.small.h),
+                    child:
+                        const CircularProgressIndicator(color: Palette.primary),
+                  )
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -170,6 +174,7 @@ class CardSigning extends StatelessWidget {
     String _buttonText;
     VoidCallback _onPressed;
 
+    print("generateSigningButton() " + signingState.name);
     switch (signingState) {
       case CardSigningState.oneTimePassword:
         _buttonText = "Masuk";
@@ -180,9 +185,16 @@ class CardSigning extends StatelessWidget {
         _onPressed = onPressedConfirmCode;
 
         break;
-      default:
+      case CardSigningState.notRegistered:
+        print("generateSigningButton() not registered called");
+
         _buttonText = "Daftar & Masuk";
         _onPressed = onPressedCreateUser;
+
+        break;
+      default:
+        _buttonText = "INVALID STATE";
+        _onPressed = () {};
     }
 
     return Material(

@@ -28,26 +28,31 @@ class UserRepo extends UserRepoContract {
   Function(String phone)? onUnregisteredUser;
   VoidCallback? onSigningOut;
 
+  bool shouldCallIdChange = false;
+
+  // bool authStatusCalled = false;
+
   UserRepo() {
     auth.authStateChanges().listen((User? user) async {
-      print('AuthStateChanges()');
       if (user != null) {
-        print('AuthStateChanges, Phone number confirmed');
+        print('AuthStateChanges(), Phone number confirmed');
+        // authStatusCalled = true;
         UserApp? userApp = await firestore.getUser(
           user.phoneNumber!.replaceFirst('+62', '0'),
         );
         if (userApp != null) {
           signing(userApp);
 
-          print('signed success ' + signedUser.toString());
+          print('AuthStateChanges() signed success ' + signedUser.toString());
         } else {
           // user is not registered
           if (onUnregisteredUser != null) {
             onUnregisteredUser!(user.phoneNumber!);
-            onUnregisteredUser == null;
           }
           signedUser = null;
-          print('Phone is not registered ' + user.phoneNumber!);
+          shouldCallIdChange = true;
+          print('AuthStateChanges() Phone is not registered ' +
+              user.phoneNumber!);
         }
       } else {
         print('AuthStateChanges() user = null');
@@ -55,7 +60,38 @@ class UserRepo extends UserRepoContract {
         signedUser = null;
       }
     });
-    // checkPreviousSigning();
+    auth.idTokenChanges().listen((user) async {
+      //just called this listener when the auth status is never called
+      if (!shouldCallIdChange) {
+        return;
+      }
+      if (user != null) {
+        print('idTokenChanges(), Phone number confirmed');
+        if (signedUser != null) {
+          print('idTokenChanges(), user already signed');
+          return;
+        }
+        UserApp? userApp = await firestore.getUser(
+          user.phoneNumber!.replaceFirst('+62', '0'),
+        );
+
+        if (userApp != null) {
+          signing(userApp);
+
+          print('idTokenChanges() signed success ' + signedUser.toString());
+        } else {
+          // user is not registered
+          if (onUnregisteredUser != null) {
+            onUnregisteredUser!(user.phoneNumber!);
+          }
+          signedUser = null;
+          print(
+              'idTokenChanges() Phone is not registered ' + user.phoneNumber!);
+        }
+        return;
+      }
+      print("idTokenChanges() Phone not confirmed");
+    });
   }
 
   Future<void> checkPreviousSigning() async {
@@ -94,11 +130,10 @@ class UserRepo extends UserRepoContract {
   @override
   Future<UserApp> registerUser(String phone, String name) async {
     UserApp user = UserApp(phone: phone, name: name);
+    print("registerUser() $user");
     signing(await firestore.createUser(user));
 
-    return Future.value(
-      user,
-    );
+    return Future.value(user);
   }
 
   @override
@@ -110,10 +145,12 @@ class UserRepo extends UserRepoContract {
         phoneNumber: phone,
         verificationCompleted: (PhoneAuthCredential credential) async {
           await auth.signInWithCredential(credential);
+          print("[VERIFICATION COMPLETED] CODE AUTOMATICALLY RETRIEVED");
+          onResult(Result(message: "PROCEED"));
         },
         verificationFailed: (FirebaseAuthException e) {
           if (kDebugMode) {
-            print('VERIFICATION_FAILED ' + e.code);
+            print('[VERIFICATION_FAILED] ' + e.code);
           }
           onResult(Result(message: "VERIFICATION_FAILED"));
         },
@@ -121,6 +158,7 @@ class UserRepo extends UserRepoContract {
           resendToken = _resendToken;
           verificationId = _verificationId;
 
+          print('[CODE SENT]');
           onResult(Result(message: "SENT"));
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
@@ -139,22 +177,23 @@ class UserRepo extends UserRepoContract {
 
     try {
       await auth.signInWithCredential(credential);
+      onResult(Result(message: 'OK'));
     } on FirebaseAuthException catch (e) {
       if (e.code == "invalid-verification-code") {
         if (kDebugMode) {
-          print('inv code');
+          print('INVALID CODE');
         }
         onResult(Result(message: "INVALID_CODE"));
         return;
       } else if (e.code == "invalid-verification-id") {
         if (kDebugMode) {
-          print('inv id');
+          print('INVALID VERIFICATION ID');
         }
         onResult(Result(message: "INVALID_ID"));
         return;
       } else if (e.code == 'session-expired') {
         if (kDebugMode) {
-          print('session expired');
+          print('SESSION EXPIRED');
         }
         onResult(Result(message: "EXPIRED"));
         return;
@@ -166,8 +205,6 @@ class UserRepo extends UserRepoContract {
         }
       }
     }
-    Future.delayed(const Duration(milliseconds: 800));
-    onResult(Result(message: 'OK'));
   }
 
   Future<void> signOut() async {

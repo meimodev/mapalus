@@ -26,12 +26,15 @@ class SigningController extends GetxController {
     var args = Get.arguments;
     message = args.toString();
     userRepo.onSuccessSigning = (_) {
+      Get.rawSnackbar(title: "Berhasil Masuk");
       Get.back();
     };
     userRepo.onUnregisteredUser = (_) {
+      isLoading.value = true;
       tecSigning.clear();
       errorText.value = "";
       signingState.value = CardSigningState.notRegistered;
+
       isLoading.value = false;
     };
     super.onInit();
@@ -88,12 +91,20 @@ class SigningController extends GetxController {
       (res) async {
         print('Result Message : ${res.message}');
         switch (res.message) {
+          case "PROCEED":
+            tecSigning.clear();
+            isLoading.value = true;
+            break;
           case 'SENT':
-            await Future.delayed(10.seconds);
-
+            isLoading.value = true;
             tecSigning.clear();
             errorText.value = "";
             signingState.value = CardSigningState.confirmCode;
+            if (isLoading.isFalse) {
+              isLoading.value = true;
+            }
+            print("[WAITING] 8 SECONDS FOR CODE AUTO RETRIEVAL");
+            await Future.delayed(const Duration(seconds: 8));
             isLoading.value = false;
             break;
           case 'VERIFICATION_FAILED':
@@ -185,17 +196,21 @@ class SigningController extends GetxController {
       return;
     }
 
+    isLoading.value = true;
     name = input;
     await userRepo.registerUser(phone, name);
 
     tecSigning.clear();
     errorText.value = "";
+    isLoading.value = false;
     Get.back();
   }
 
   Future<bool> onPressedBack() {
     if (signingState.value == CardSigningState.confirmCode) {
       signingState.value = CardSigningState.oneTimePassword;
+      tecSigning.clear();
+      errorText.value = "";
       return Future.value(false);
     }
     return Future.value(true);
