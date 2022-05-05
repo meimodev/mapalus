@@ -25,72 +25,9 @@ class HomeScreen extends GetView<HomeController> {
             physics: const BouncingScrollPhysics(),
             controller: controller.scrollControllerMain,
             slivers: [
-              // _buildUpperSection(context),
-              SliverAppBar(
-                title: Obx(
-                  () => CardSearchBar(
-                    onSubmitted: (String value) {},
-                    onLogoPressed: controller.onPressedLogo,
-                    notificationBadgeCount:
-                        controller.unfinishedOrderCount.value,
-                  ),
-                ),
-                collapsedHeight: 75.h,
-                expandedHeight: 300.h,
-                forceElevated: true,
-                toolbarHeight: 75.h,
-                floating: true,
-                pinned: true,
-                snap: true,
-                backgroundColor: Palette.cardForeground,
-                elevation: 5,
-                shape: ContinuousRectangleBorder(
-                  borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(Insets.large.sp),
-                  ),
-                ),
-                flexibleSpace: FlexibleSpaceBar(
-                  collapseMode: CollapseMode.parallax,
-                  background: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: Insets.medium.w,
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 60.h),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              "Harga Pasar",
-                              textAlign: TextAlign.start,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline1!
-                                  .copyWith(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                            ),
-                            Text(
-                              "Antar di rumah",
-                              textAlign: TextAlign.start,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline1!
-                                  .copyWith(
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: Insets.small.h),
-                        _buildCardCategories(),
-                        SizedBox(height: Insets.small.h),
-                      ],
-                    ),
-                  ),
-                ),
+              _buildListAppBar(
+                context: context,
+                isSearching: controller.isSearchingProduct.value,
               ),
               SliverPadding(padding: EdgeInsets.all(Insets.small.sp)),
               _buildListProduct(),
@@ -266,11 +203,14 @@ class HomeScreen extends GetView<HomeController> {
           child: controller.isLoadingProducts.isTrue
               ? Center(
                   child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: Insets.medium.h,
-                        horizontal: Insets.small.w,
-                      ),
-                      child: const CircularProgressIndicator()),
+                    padding: EdgeInsets.only(
+                      top: Insets.large.h * 1.5,
+                      bottom: Insets.large.h * 2,
+                    ),
+                    child: const CircularProgressIndicator(
+                      color: Palette.primary,
+                    ),
+                  ),
                 )
               : const SizedBox(),
         ),
@@ -298,6 +238,74 @@ class HomeScreen extends GetView<HomeController> {
           ),
         ),
       ),
+    );
+  }
+
+  _buildListAppBar({required context, isSearching = false}) {
+    return SliverAppBar(
+      title: Obx(
+        () => CardSearchBar(
+          onSubmitted: controller.onSubmittedSearchText,
+          onTap: controller.onTapSearchText,
+          onLogoPressed: controller.onPressedLogo,
+          onChanged: controller.onChangedSearchText,
+          notificationBadgeCount: controller.unfinishedOrderCount.value,
+        ),
+      ),
+      collapsedHeight: 75.h,
+      expandedHeight: isSearching ? 75.h : 300.h,
+      forceElevated: true,
+      toolbarHeight: 75.h,
+      floating: true,
+      pinned: true,
+      snap: false,
+      backgroundColor: Palette.cardForeground,
+      elevation: 5,
+      shape: ContinuousRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          bottom: Radius.circular(Insets.large.sp),
+        ),
+      ),
+      flexibleSpace: isSearching
+          ? null
+          : FlexibleSpaceBar(
+              collapseMode: CollapseMode.parallax,
+              background: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: Insets.medium.w,
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(height: 60.h),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          "Harga Pasar",
+                          textAlign: TextAlign.start,
+                          style:
+                              Theme.of(context).textTheme.headline1!.copyWith(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                        ),
+                        Text(
+                          "Antar di rumah",
+                          textAlign: TextAlign.start,
+                          style:
+                              Theme.of(context).textTheme.headline1!.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: Insets.small.h),
+                    _buildCardCategories(),
+                    SizedBox(height: Insets.small.h),
+                  ],
+                ),
+              ),
+            ),
     );
   }
 }

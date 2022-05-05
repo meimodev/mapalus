@@ -10,11 +10,16 @@ class CardSearchBar extends StatelessWidget {
     required this.onSubmitted,
     required this.onLogoPressed,
     required this.notificationBadgeCount,
+    this.onTap,
+    required this.onChanged,
   }) : super(key: key);
 
   final Function(String value) onSubmitted;
+  final Function(String value) onChanged;
   final VoidCallback onLogoPressed;
   final int notificationBadgeCount;
+
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +53,8 @@ class CardSearchBar extends StatelessWidget {
                   Flexible(
                     child: TextField(
                       onSubmitted: onSubmitted,
+                      onTap: onTap,
+                      onChanged: onChanged,
                       maxLines: 1,
                       autocorrect: false,
                       style: TextStyle(

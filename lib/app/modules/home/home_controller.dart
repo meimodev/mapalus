@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/data/models/order.dart';
 import 'package:mapalus/data/models/product.dart';
@@ -35,6 +36,15 @@ class HomeController extends GetxController {
   var isNoMoreProductsToDisplay = false.obs;
   var displayProducts = <Product>[].obs;
 
+  var tempProducts = <Product>[];
+  var tempSearchedProducts = <Product>[];
+
+  var isSearchingProduct = false.obs;
+
+  var tec = TextEditingController();
+  final _pageSize = 4;
+  var _currentIndex = 0;
+
   @override
   void onInit() {
     _initProductsDisplay();
@@ -45,6 +55,7 @@ class HomeController extends GetxController {
   @override
   void onReady() {
     Future.delayed(2.seconds).then((value) => checkNewlyCreatedOrder());
+
     super.onReady();
   }
 
@@ -126,30 +137,31 @@ class HomeController extends GetxController {
 
   _initProductsDisplay() async {
     isLoadingProducts.value = true;
-    const _pageSize = 8;
-    var _currentIndex = 0;
 
-    final _products = await productRepo.getProducts();
-    displayProducts.value = _products.sublist(0, _pageSize);
+    tempProducts = await productRepo.getProducts();
+    tempSearchedProducts = List.from(tempProducts);
+    displayProducts.value = tempProducts.sublist(0, _pageSize);
     _currentIndex += _pageSize;
 
     scrollControllerMain.addListener(() async {
       if (isNoMoreProductsToDisplay.isTrue) {
         return;
       }
+
       if (scrollControllerMain.position.maxScrollExtent ==
           scrollControllerMain.offset) {
-        if ((_currentIndex + _pageSize) < _products.length) {
+        if ((_currentIndex + _pageSize) < tempProducts.length) {
           isLoadingProducts.value = true;
           await Future.delayed(500.milliseconds);
           displayProducts.addAll(
-              _products.sublist(_currentIndex, _currentIndex + _pageSize));
+            tempProducts.sublist(_currentIndex, _currentIndex + _pageSize),
+          );
           isLoadingProducts.value = false;
           _currentIndex += _pageSize;
         } else {
           isLoadingProducts.value = true;
           await Future.delayed(500.milliseconds);
-          displayProducts.addAll(_products.sublist(_currentIndex));
+          displayProducts.addAll(tempProducts.sublist(_currentIndex));
           isLoadingProducts.value = false;
           isNoMoreProductsToDisplay.value = true;
         }
@@ -266,6 +278,63 @@ class HomeController extends GetxController {
       Get.rawSnackbar(
         message: notification.title,
       );
+    }
+  }
+
+  void onTapSearchText() {
+    scrollControllerMain.animateTo(
+      275.h,
+      duration: 1.seconds,
+      curve: Curves.easeInOut,
+    );
+  }
+
+  onSubmittedSearchText(String value) {}
+
+  onChangedSearchText(String text) {
+    var _products = List<Product>.from(tempSearchedProducts);
+    if (text.length > 1) {
+      //separate the product that contain the text in product name to new list
+      //update display list to this new list
+      //
+      var _searched = _products.where(
+        (element) {
+          bool isContainName = element.name
+              .toLowerCase()
+              .trim()
+              .contains(text.toLowerCase().trim());
+          bool isContainCategory = element.category
+              .toLowerCase()
+              .trim()
+              .contains(text.toLowerCase().trim());
+          return isContainName || isContainCategory;
+        },
+      ).toList();
+      tempProducts = _searched;
+      //set only the initial products (because infinite scrolling)
+
+      _currentIndex = 0;
+      if (tempProducts.length > _pageSize) {
+        displayProducts.value = tempProducts.sublist(0, _pageSize);
+        _currentIndex += _pageSize;
+      } else {
+        displayProducts.value = tempProducts;
+        _currentIndex += tempProducts.length;
+      }
+    } else {
+      _currentIndex = 0;
+      tempProducts = List<Product>.from(tempSearchedProducts);
+      displayProducts.clear();
+
+      if (tempProducts.length > _pageSize) {
+        displayProducts.value = tempProducts.sublist(0, _pageSize);
+        _currentIndex += _pageSize;
+        isNoMoreProductsToDisplay.value = false;
+        // isLoadingProducts.value = true;
+      } else {
+        displayProducts.value = tempProducts;
+        _currentIndex += tempProducts.length;
+      }
     }
   }
 }
