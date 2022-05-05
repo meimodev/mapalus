@@ -1,13 +1,13 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:mapalus/data/models/data_mock.dart';
 import 'package:mapalus/data/models/order.dart';
 import 'package:mapalus/data/models/product.dart';
 import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/data/models/user_app.dart';
 import 'package:mapalus/data/repo/order_repo.dart';
+import 'package:mapalus/data/repo/product_repo.dart';
 import 'package:mapalus/data/repo/user_repo.dart';
 import 'package:mapalus/shared/enums.dart';
 import 'package:mapalus/shared/routes.dart';
@@ -16,6 +16,7 @@ import 'package:mapalus/shared/utils.dart';
 class HomeController extends GetxController {
   UserRepo userRepo = Get.find<UserRepo>();
   OrderRepo orderRepo = Get.find<OrderRepo>();
+  ProductRepo productRepo = Get.find<ProductRepo>();
 
   RxBool isCardCartVisible = false.obs;
   RxBool isCardOrderVisible = false.obs;
@@ -28,13 +29,15 @@ class HomeController extends GetxController {
   Order? latestOrder;
   RxInt unfinishedOrderCount = 0.obs;
 
-  final PagingController<int, Product> pagingController = PagingController(
-    firstPageKey: 0,
-  );
+  var scrollControllerMain = ScrollController();
+
+  var isLoadingProducts = false.obs;
+  var isNoMoreProductsToDisplay = false.obs;
+  var displayProducts = <Product>[].obs;
 
   @override
   void onInit() {
-    _initInfiniteScrolling();
+    _initProductsDisplay();
     _initNotificationHandler();
     super.onInit();
   }
@@ -43,12 +46,6 @@ class HomeController extends GetxController {
   void onReady() {
     Future.delayed(2.seconds).then((value) => checkNewlyCreatedOrder());
     super.onReady();
-  }
-
-  @override
-  void dispose() {
-    pagingController.dispose();
-    super.dispose();
   }
 
   void onPressedLogo() {
@@ -127,30 +124,38 @@ class HomeController extends GetxController {
     }
   }
 
-  _initInfiniteScrolling() {
-    pagingController.addPageRequestListener((pageKey) {
-      print('Page key = $pageKey');
-      final _totalItem = DataMock.products.length;
-      final productsJson = DataMock.products;
-      if ((pageKey + 2) < _totalItem) {
-        pagingController.appendPage(
-          [
-            Product.fromMap(productsJson[0]),
-            Product.fromMap(productsJson[1]),
-          ],
-          pageKey + 2,
-        );
+  _initProductsDisplay() async {
+    isLoadingProducts.value = true;
+    const _pageSize = 8;
+    var _currentIndex = 0;
+
+    final _products = await productRepo.getProducts();
+    displayProducts.value = _products.sublist(0, _pageSize);
+    _currentIndex += _pageSize;
+
+    scrollControllerMain.addListener(() async {
+      if (isNoMoreProductsToDisplay.isTrue) {
         return;
       }
-      if ((pageKey + 2) >= _totalItem) {
-        pagingController.appendLastPage(
-          [
-            Product.fromMap(productsJson[0]),
-            Product.fromMap(productsJson[1]),
-          ],
-        );
+      if (scrollControllerMain.position.maxScrollExtent ==
+          scrollControllerMain.offset) {
+        if ((_currentIndex + _pageSize) < _products.length) {
+          isLoadingProducts.value = true;
+          await Future.delayed(500.milliseconds);
+          displayProducts.addAll(
+              _products.sublist(_currentIndex, _currentIndex + _pageSize));
+          isLoadingProducts.value = false;
+          _currentIndex += _pageSize;
+        } else {
+          isLoadingProducts.value = true;
+          await Future.delayed(500.milliseconds);
+          displayProducts.addAll(_products.sublist(_currentIndex));
+          isLoadingProducts.value = false;
+          isNoMoreProductsToDisplay.value = true;
+        }
       }
     });
+    isLoadingProducts.value = false;
   }
 
   orderCleanUp() {

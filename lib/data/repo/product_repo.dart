@@ -10,7 +10,7 @@ abstract class ProductRepoContract {
 }
 
 class ProductRepo extends ProductRepoContract {
-  FirestoreService firebaseServices = FirestoreService();
+  FirestoreService firestore = FirestoreService();
 
   @override
   Future<Product> readProduct(int id) {
@@ -20,7 +20,6 @@ class ProductRepo extends ProductRepoContract {
 
   @override
   Future<List<Product>> readProducts() async {
-    await firebaseServices.getProducts();
     return Future.value([]);
   }
 
@@ -28,5 +27,10 @@ class ProductRepo extends ProductRepoContract {
   Future<Product> searchProduct() {
     // TODO: implement searchProduct
     throw UnimplementedError();
+  }
+
+  Future<List<Product>> getProducts() async {
+    var p = await firestore.getProducts();
+    return p;
   }
 }

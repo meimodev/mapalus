@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:jiffy/jiffy.dart';
 import 'package:mapalus/app/modules/home/home_controller.dart';
 import 'package:mapalus/app/widgets/card_category.dart';
 import 'package:mapalus/app/widgets/card_order_peak.dart';
@@ -11,7 +9,6 @@ import 'package:mapalus/app/widgets/card_cart_peak.dart';
 import 'package:mapalus/app/widgets/dialog_item_detail.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
 import 'package:mapalus/app/widgets/card_search_bar.dart';
-import 'package:mapalus/data/models/data_mock.dart';
 import 'package:mapalus/data/models/product.dart';
 import 'package:mapalus/shared/theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,6 +23,7 @@ class HomeScreen extends GetView<HomeController> {
         children: [
           CustomScrollView(
             physics: const BouncingScrollPhysics(),
+            controller: controller.scrollControllerMain,
             slivers: [
               // _buildUpperSection(context),
               SliverAppBar(
@@ -95,86 +93,12 @@ class HomeScreen extends GetView<HomeController> {
                 ),
               ),
               SliverPadding(padding: EdgeInsets.all(Insets.small.sp)),
-
-              PagedSliverGrid(
-                pagingController: controller.pagingController,
-                builderDelegate: PagedChildBuilderDelegate<Product>(
-                  itemBuilder: (_, __, index) =>
-                      _buildProductCard(index, DataMock.products),
-                  noMoreItemsIndicatorBuilder: (context) => Container(
-                    margin: EdgeInsets.symmetric(
-                      horizontal: Insets.medium.w,
-                      vertical: Insets.small.h,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        SizedBox(height: Insets.small.h),
-                        SvgPicture.asset(
-                          'assets/images/mapalus.svg',
-                          color: Palette.primary,
-                          width: 100.w,
-                        ),
-                        SizedBox(height: 4.h),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/images/logo_meimo.svg',
-                              width: 30.w,
-                            ),
-                            Text(
-                              ' ${Jiffy().year}',
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  ?.copyWith(
-                                    color: Colors.grey,
-                                    fontSize: 10.sp,
-                                  ),
-                            ),
-                            Text(
-                              ' © ',
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey,
-                                    fontSize: 11.sp,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  newPageProgressIndicatorBuilder: (_) => Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(height: Insets.medium.h),
-                      const CircularProgressIndicator(
-                        color: Palette.primary,
-                      ),
-                    ],
-                  ),
-                ),
-                showNoMoreItemsIndicatorAsGridChild: false,
-                showNewPageProgressIndicatorAsGridChild: false,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  // maxCrossAxisExtent: 170.w,
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 6.w,
-                  mainAxisSpacing: 6.w,
-                  mainAxisExtent: 250.h,
-                ),
-              ),
+              _buildListProduct(),
+              _buildListLoading(),
+              _buildListFooter(context),
               SliverPadding(
                   padding:
-                      EdgeInsets.symmetric(vertical: Insets.medium.sp * 2.5)),
+                      EdgeInsets.symmetric(vertical: Insets.medium.sp * 3)),
             ],
           ),
           Positioned(
@@ -266,14 +190,14 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  Widget _buildProductCard(int index, List<Map<String, dynamic>> productsJSON) {
+  Widget _buildProductCard(int index, List<Product> products) {
     return Padding(
       padding: EdgeInsets.only(
         left: index % 2 == 0 ? Insets.medium.w : 0,
         right: index % 2 == 0 ? 0 : Insets.medium.w,
       ),
       child: CardProduct(
-        product: Product.fromMap(productsJSON[index]),
+        product: products[index],
         onPressed: (product) {
           Get.dialog(
             DialogItemDetail(
@@ -282,6 +206,97 @@ class HomeScreen extends GetView<HomeController> {
             ),
           );
         },
+      ),
+    );
+  }
+
+  _buildListFooter(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Obx(
+        () => AnimatedSwitcher(
+          duration: const Duration(milliseconds: 400),
+          child: controller.isNoMoreProductsToDisplay.isTrue
+              ? Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: Insets.medium.h),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/images/mapalus.svg",
+                          color: Palette.primary,
+                          width: 45.w,
+                          height: 45.h,
+                        ),
+                        SizedBox(height: Insets.small.h * .5),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SvgPicture.asset(
+                              "assets/images/logo_meimo.svg",
+                              width: 30.w,
+                            ),
+                            SizedBox(width: 3.w),
+                            Text(
+                              '©2022',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.copyWith(
+                                    fontSize: 12.sp,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : const SizedBox(),
+        ),
+      ),
+    );
+  }
+
+  _buildListLoading() {
+    return SliverToBoxAdapter(
+      child: Obx(
+        () => AnimatedSwitcher(
+          duration: const Duration(milliseconds: 400),
+          child: controller.isLoadingProducts.isTrue
+              ? Center(
+                  child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: Insets.medium.h,
+                        horizontal: Insets.small.w,
+                      ),
+                      child: const CircularProgressIndicator()),
+                )
+              : const SizedBox(),
+        ),
+      ),
+    );
+  }
+
+  _buildListProduct() {
+    return SliverToBoxAdapter(
+      child: Obx(
+        () => GridView.builder(
+          shrinkWrap: true,
+          itemBuilder: (_, index) => _buildProductCard(
+            index,
+            controller.displayProducts.value,
+          ),
+          primary: false,
+          itemCount: controller.displayProducts.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            // maxCrossAxisExtent: 170.w,
+            crossAxisCount: 2,
+            crossAxisSpacing: 6.w,
+            mainAxisSpacing: 6.w,
+            mainAxisExtent: 250.h,
+          ),
+        ),
       ),
     );
   }

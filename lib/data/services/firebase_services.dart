@@ -1,20 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mapalus/data/models/order.dart';
+import 'package:mapalus/data/models/product.dart';
 import 'package:mapalus/data/models/user_app.dart';
 
 class FirestoreService {
   FirebaseFirestore fireStore;
 
   FirestoreService() : fireStore = FirebaseFirestore.instance;
-
-  Future<void> getProducts() async {
-    CollectionReference col = fireStore.collection('products');
-    DocumentSnapshot doc = await col.doc('1').get();
-
-    Map data = doc.data() as Map<String, dynamic>;
-    print(data);
-  }
 
   Future<UserApp?> getUser(String phone) async {
     CollectionReference col = fireStore.collection('users');
@@ -121,5 +114,18 @@ class FirestoreService {
     });
 
     return order;
+  }
+
+  Future<List<Product>> getProducts() async {
+    CollectionReference products = fireStore.collection('products');
+
+    var productsWithOrder = await products.orderBy("id").get();
+
+    var res = <Product>[];
+    for (var e in productsWithOrder.docs) {
+      var map = e.data() as Map<String, dynamic>;
+      res.add(Product.fromMap(map));
+    }
+    return res;
   }
 }
