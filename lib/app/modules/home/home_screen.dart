@@ -79,54 +79,6 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  Widget _buildCardCategories() {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CardCategory(
-            iconData: Icons.star,
-            name: 'Sembako',
-            onPressed: () {},
-          ),
-          SizedBox(width: Insets.small.w),
-          CardCategory(
-            iconData: Icons.star,
-            name: 'Lauk',
-            onPressed: () {},
-          ),
-          SizedBox(width: Insets.small.w),
-          CardCategory(
-            iconData: Icons.star,
-            name: 'Bumbu',
-            onPressed: () {},
-          ),
-          SizedBox(width: Insets.small.w),
-          CardCategory(
-            iconData: Icons.star,
-            name: 'Bahan',
-            onPressed: () {},
-          ),
-          SizedBox(width: Insets.small.w),
-          CardCategory(
-            iconData: Icons.star,
-            name: 'Sayuran',
-            onPressed: () {},
-          ),
-          SizedBox(width: Insets.small.w),
-          CardCategory(
-            iconData: Icons.star,
-            name: 'Bahan Kue',
-            onPressed: () {},
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildProductCard(int index, List<Product> products) {
     return Padding(
       padding: EdgeInsets.only(
@@ -245,6 +197,7 @@ class HomeScreen extends GetView<HomeController> {
     return SliverAppBar(
       title: Obx(
         () => CardSearchBar(
+          controller: controller.tecSearch,
           onSubmitted: controller.onSubmittedSearchText,
           onTap: controller.onTapSearchText,
           onLogoPressed: controller.onPressedLogo,
@@ -275,6 +228,7 @@ class HomeScreen extends GetView<HomeController> {
                   horizontal: Insets.medium.w,
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     SizedBox(height: 60.h),
                     Column(
@@ -300,12 +254,48 @@ class HomeScreen extends GetView<HomeController> {
                       ],
                     ),
                     SizedBox(height: Insets.small.h),
-                    _buildCardCategories(),
+                    _BuildCardCategories(
+                      onPressedCategories: controller.onPressedCategories,
+                      categories: controller.categories,
+                    ),
                     SizedBox(height: Insets.small.h),
                   ],
                 ),
               ),
             ),
+    );
+  }
+}
+
+class _BuildCardCategories extends StatelessWidget {
+  const _BuildCardCategories({
+    Key? key,
+    required this.onPressedCategories,
+    required this.categories,
+  }) : super(key: key);
+
+  final Function(String value) onPressedCategories;
+  final List<String> categories;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (var category in categories)
+            CardCategory(
+              iconData: Icons.star,
+              name: category,
+              onPressed: () {
+                onPressedCategories(category);
+              },
+            ),
+        ],
+      ),
     );
   }
 }

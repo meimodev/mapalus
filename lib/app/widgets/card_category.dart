@@ -19,6 +19,7 @@ class CardCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Material(
           color: isSelected ? Palette.accent : Palette.cardForeground,
@@ -41,12 +42,12 @@ class CardCategory extends StatelessWidget {
         ),
         SizedBox(height: Insets.small.h * .5),
         SizedBox(
-          width: 60.w,
+          width: 50.w,
           child: Text(
             name,
             softWrap: true,
-            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  fontSize: 12.sp,
                   color: isSelected ? Palette.textPrimary : Colors.grey,
                 ),
           ),

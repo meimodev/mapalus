@@ -41,15 +41,27 @@ class HomeController extends GetxController {
 
   var isSearchingProduct = false.obs;
 
-  var tec = TextEditingController();
+  TextEditingController tecSearch = TextEditingController();
   final _pageSize = 4;
   var _currentIndex = 0;
+
+  var categories = [
+    "Bahan Makanan",
+    "Bahan Dapur",
+    "Lauk Pauk",
+  ];
 
   @override
   void onInit() {
     _initProductsDisplay();
     _initNotificationHandler();
     super.onInit();
+  }
+
+  @override
+  void dispose() {
+    tecSearch.dispose();
+    super.dispose();
   }
 
   @override
@@ -293,6 +305,8 @@ class HomeController extends GetxController {
 
   onChangedSearchText(String text) {
     var _products = List<Product>.from(tempSearchedProducts);
+    isNoMoreProductsToDisplay.value = false;
+
     if (text.length > 1) {
       //separate the product that contain the text in product name to new list
       //update display list to this new list
@@ -320,6 +334,7 @@ class HomeController extends GetxController {
       } else {
         displayProducts.value = tempProducts;
         _currentIndex += tempProducts.length;
+        isNoMoreProductsToDisplay.value = true;
       }
     } else {
       _currentIndex = 0;
@@ -329,12 +344,17 @@ class HomeController extends GetxController {
       if (tempProducts.length > _pageSize) {
         displayProducts.value = tempProducts.sublist(0, _pageSize);
         _currentIndex += _pageSize;
-        isNoMoreProductsToDisplay.value = false;
         // isLoadingProducts.value = true;
       } else {
         displayProducts.value = tempProducts;
         _currentIndex += tempProducts.length;
+        isNoMoreProductsToDisplay.value = true;
       }
     }
+  }
+
+  onPressedCategories(String value) {
+    tecSearch.text = value;
+    onChangedSearchText(value);
   }
 }
