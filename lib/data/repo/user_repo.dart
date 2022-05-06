@@ -35,7 +35,9 @@ class UserRepo extends UserRepoContract {
   UserRepo() {
     auth.authStateChanges().listen((User? user) async {
       if (user != null) {
-        print('AuthStateChanges(), Phone number confirmed');
+        if (kDebugMode) {
+          print('AuthStateChanges(), Phone number confirmed');
+        }
         // authStatusCalled = true;
         UserApp? userApp = await firestore.getUser(
           user.phoneNumber!.replaceFirst('+62', '0'),
@@ -43,7 +45,9 @@ class UserRepo extends UserRepoContract {
         if (userApp != null) {
           signing(userApp);
 
-          print('AuthStateChanges() signed success ' + signedUser.toString());
+          if (kDebugMode) {
+            print('AuthStateChanges() signed success ' + signedUser.toString());
+          }
         } else {
           // user is not registered
           if (onUnregisteredUser != null) {
@@ -51,11 +55,15 @@ class UserRepo extends UserRepoContract {
           }
           signedUser = null;
           shouldCallIdChange = true;
-          print('AuthStateChanges() Phone is not registered ' +
-              user.phoneNumber!);
+          if (kDebugMode) {
+            print('AuthStateChanges() Phone is not registered ' +
+                user.phoneNumber!);
+          }
         }
       } else {
-        print('AuthStateChanges() user = null');
+        if (kDebugMode) {
+          print('AuthStateChanges() user = null');
+        }
 
         signedUser = null;
       }
@@ -66,9 +74,13 @@ class UserRepo extends UserRepoContract {
         return;
       }
       if (user != null) {
-        print('idTokenChanges(), Phone number confirmed');
+        if (kDebugMode) {
+          print('idTokenChanges(), Phone number confirmed');
+        }
         if (signedUser != null) {
-          print('idTokenChanges(), user already signed');
+          if (kDebugMode) {
+            print('idTokenChanges(), user already signed');
+          }
           return;
         }
         UserApp? userApp = await firestore.getUser(
@@ -78,19 +90,25 @@ class UserRepo extends UserRepoContract {
         if (userApp != null) {
           signing(userApp);
 
-          print('idTokenChanges() signed success ' + signedUser.toString());
+          if (kDebugMode) {
+            print('idTokenChanges() signed success ' + signedUser.toString());
+          }
         } else {
           // user is not registered
           if (onUnregisteredUser != null) {
             onUnregisteredUser!(user.phoneNumber!);
           }
           signedUser = null;
-          print(
-              'idTokenChanges() Phone is not registered ' + user.phoneNumber!);
+          if (kDebugMode) {
+            print('idTokenChanges() Phone is not registered ' +
+                user.phoneNumber!);
+          }
         }
         return;
       }
-      print("idTokenChanges() Phone not confirmed");
+      if (kDebugMode) {
+        print("idTokenChanges() Phone not confirmed");
+      }
     });
   }
 
@@ -130,7 +148,7 @@ class UserRepo extends UserRepoContract {
   @override
   Future<UserApp> registerUser(String phone, String name) async {
     UserApp user = UserApp(phone: phone, name: name);
-    print("registerUser() $user");
+    // print("registerUser() $user");
     signing(await firestore.createUser(user));
 
     return Future.value(user);
@@ -145,7 +163,9 @@ class UserRepo extends UserRepoContract {
         phoneNumber: phone,
         verificationCompleted: (PhoneAuthCredential credential) async {
           await auth.signInWithCredential(credential);
-          print("[VERIFICATION COMPLETED] CODE AUTOMATICALLY RETRIEVED");
+          if (kDebugMode) {
+            print("[VERIFICATION COMPLETED] CODE AUTOMATICALLY RETRIEVED");
+          }
           onResult(Result(message: "PROCEED"));
         },
         verificationFailed: (FirebaseAuthException e) {
@@ -158,14 +178,18 @@ class UserRepo extends UserRepoContract {
           resendToken = _resendToken;
           verificationId = _verificationId;
 
-          print('[CODE SENT]');
+          if (kDebugMode) {
+            print('[CODE SENT]');
+          }
           onResult(Result(message: "SENT"));
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
         forceResendingToken: resendToken,
       );
     } catch (e) {
-      print("SOME ERROR OCCURED ${e.toString()}");
+      if (kDebugMode) {
+        print("SOME ERROR OCCURED ${e.toString()}");
+      }
     }
   }
 

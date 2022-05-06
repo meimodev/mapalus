@@ -13,7 +13,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'firebase_options.dart';
 
 Future<void> _handleBackgroundMessage(RemoteMessage message) async {
-  print("Background message ${message.notification?.title}");
+  // print("Background message ${message.notification?.title}");
 }
 
 void main() async {

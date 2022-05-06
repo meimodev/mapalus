@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mapalus/data/models/product.dart';
 import 'package:mapalus/shared/theme.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class CardProduct extends StatelessWidget {
   const CardProduct({
@@ -27,7 +28,10 @@ class CardProduct extends StatelessWidget {
           onPressed(product);
         },
         child: Padding(
-          padding: EdgeInsets.all(Insets.small.sp * 1.75),
+          padding: EdgeInsets.symmetric(
+            horizontal: Insets.small.w,
+            vertical: Insets.small.w,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -60,9 +64,10 @@ class CardProduct extends StatelessWidget {
                         ),
                       ],
                     ),
-              SizedBox(height: Insets.small.h * 1.5),
+              SizedBox(height: Insets.small.h),
               Expanded(
                 child: Container(
+                  clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: product.isAvailable
@@ -79,16 +84,28 @@ class CardProduct extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      'assets/images/mapalus.svg',
-                      width: 30.w,
-                      color: Palette.primary,
-                    ),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      const Center(
+                        child: CircularProgressIndicator(
+                          color: Palette.primary,
+                          strokeWidth: 1,
+                        ),
+                      ),
+                      FadeInImage.memoryNetwork(
+                        placeholder: kTransparentImage,
+                        image: product.imageUrl,
+                        imageErrorBuilder: (context, _, __) {
+                          return SvgPicture.asset('assets/images/mapalus.svg');
+                        },
+                        fit: BoxFit.cover,
+                      ),
+                    ],
                   ),
                 ),
               ),
-              SizedBox(height: Insets.small.h * 1.5),
+              SizedBox(height: Insets.small.h),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

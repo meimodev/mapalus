@@ -5,6 +5,7 @@ import 'package:mapalus/app/widgets/text_input_quantity.dart';
 import 'package:mapalus/data/models/product.dart';
 import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/shared/theme.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 import 'button_alter_quantity.dart';
 
@@ -190,6 +191,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
               left: 0,
               right: 0,
               child: Container(
+                clipBehavior: Clip.hardEdge,
                 height: 210.h,
                 width: 210.w,
                 foregroundDecoration: !widget.product.isAvailable
@@ -210,12 +212,28 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                     ),
                   ],
                 ),
-                child: Center(
-                  child: SvgPicture.asset(
-                    'assets/images/mapalus.svg',
-                    color: Palette.primary,
-                    width: 60.w,
-                  ),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    const Center(
+                      child: CircularProgressIndicator(
+                        color: Palette.primary,
+                        strokeWidth: 1,
+                      ),
+                    ),
+                    FadeInImage.memoryNetwork(
+                      placeholder: kTransparentImage,
+                      image: widget.product.imageUrl,
+                      imageErrorBuilder: (context, _, __) {
+                        return SvgPicture.asset(
+                          'assets/images/mapalus.svg',
+                          width: 60.w,
+                          color: Palette.primary,
+                        );
+                      },
+                      fit: BoxFit.cover,
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -261,7 +279,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
       } else {
         tecPrice.text = (gram * widget.product.price).floor().toString();
       }
-      print('gram = ${tecGram.text} price = ${tecPrice.text}');
+      // print('gram = ${tecGram.text} price = ${tecPrice.text}');
     }
 
     _adding(int amount, TextEditingController controller, bool isFromPrice) {

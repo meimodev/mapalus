@@ -51,11 +51,11 @@ class DeliveryInfo {
   }
 
   String get title {
-    print('is tomorrow = $isTomorrow, '
-        'startDate = ${startDate.format("E, dd MMMM HH:mm")} '
-        'endDate = ${endDate.format("E, dd MMMM HH:mm")} '
-        'now = ${Jiffy().format("E, dd MMMM HH:mm")} '
-        'isAvailable = $available}');
+    // print('is tomorrow = $isTomorrow, '
+    //     'startDate = ${startDate.format("E, dd MMMM HH:mm")} '
+    //     'endDate = ${endDate.format("E, dd MMMM HH:mm")} '
+    //     'now = ${Jiffy().format("E, dd MMMM HH:mm")} '
+    //     'isAvailable = $available}');
     if (id == "NOW") {
       return "Sekarang";
     }

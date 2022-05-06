@@ -89,7 +89,7 @@ class SigningController extends GetxController {
     userRepo.requestOTP(
       phone,
       (res) async {
-        print('Result Message : ${res.message}');
+        // print('Result Message : ${res.message}');
         switch (res.message) {
           case "PROCEED":
             tecSigning.clear();
@@ -103,7 +103,7 @@ class SigningController extends GetxController {
             if (isLoading.isFalse) {
               isLoading.value = true;
             }
-            print("[WAITING] 8 SECONDS FOR CODE AUTO RETRIEVAL");
+            // print("[WAITING] 8 SECONDS FOR CODE AUTO RETRIEVAL");
             await Future.delayed(const Duration(seconds: 8));
             isLoading.value = false;
             break;

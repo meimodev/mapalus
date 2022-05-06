@@ -75,7 +75,7 @@ class LocationController extends GetxController {
       double dis = Utils.calculateDistance(pos1, deliveryCoordinate!);
       distance.value = Utils.roundDouble(dis, 2);
       _calculateOrderInfo();
-      print('Distance = ' + distance.value.toString());
+      // print('Distance = ' + distance.value.toString());
     }
   }
 

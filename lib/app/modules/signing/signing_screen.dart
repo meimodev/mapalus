@@ -174,7 +174,7 @@ class CardSigning extends StatelessWidget {
     String _buttonText;
     VoidCallback _onPressed;
 
-    print("generateSigningButton() " + signingState.name);
+    // print("generateSigningButton() " + signingState.name);
     switch (signingState) {
       case CardSigningState.oneTimePassword:
         _buttonText = "Masuk";
@@ -186,7 +186,7 @@ class CardSigning extends StatelessWidget {
 
         break;
       case CardSigningState.notRegistered:
-        print("generateSigningButton() not registered called");
+        // print("generateSigningButton() not registered called");
 
         _buttonText = "Daftar & Masuk";
         _onPressed = onPressedCreateUser;

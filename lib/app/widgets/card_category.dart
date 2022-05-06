@@ -42,7 +42,7 @@ class CardCategory extends StatelessWidget {
         ),
         SizedBox(height: Insets.small.h * .5),
         SizedBox(
-          width: 50.w,
+          width: 75,
           child: Text(
             name,
             softWrap: true,

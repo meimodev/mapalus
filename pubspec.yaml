@@ -31,6 +31,7 @@ dependencies:
   url_launcher: ^6.1.0
   firebase_messaging: ^11.3.0
   flutter_local_notifications: ^9.5.0
+  transparent_image: ^2.0.0
 
 
 dev_dependencies:
