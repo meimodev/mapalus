@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:mapalus/data/models/category.dart';
 import 'package:mapalus/data/models/order.dart';
 import 'package:mapalus/data/models/product.dart';
 import 'package:mapalus/data/models/product_order.dart';
@@ -47,10 +48,19 @@ class HomeController extends GetxController {
   final _pageSize = 4;
   var _currentIndex = 0;
 
-  var categories = [
-    "Bahan Makanan",
-    "Bahan Dapur",
-    "Lauk Pauk",
+  List<Category> categories = [
+    Category(
+      name: "Bahan Makanan",
+      imageUrl: "https://i.ibb.co/mJmZQkW/category-bahan-makanan.jpg",
+    ),
+    Category(
+      name: "Bahan Dapur",
+      imageUrl: "https://i.ibb.co/HhgsbGZ/category-bumbu-dapur.jpg",
+    ),
+    Category(
+      name: "Lauk Pauk",
+      imageUrl: "https://i.ibb.co/LgdQZXS/category-lauk-pauk.jpg",
+    ),
   ];
 
   @override
@@ -360,8 +370,8 @@ class HomeController extends GetxController {
     }
   }
 
-  onPressedCategories(String value) {
-    tecSearch.text = value;
-    onChangedSearchText(value);
+  onPressedCategories(Category category) {
+    tecSearch.text = category.name;
+    onChangedSearchText(category.name);
   }
 }

@@ -9,6 +9,7 @@ import 'package:mapalus/app/widgets/card_cart_peak.dart';
 import 'package:mapalus/app/widgets/dialog_item_detail.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
 import 'package:mapalus/app/widgets/card_search_bar.dart';
+import 'package:mapalus/data/models/category.dart';
 import 'package:mapalus/data/models/product.dart';
 import 'package:mapalus/shared/theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -274,8 +275,8 @@ class _BuildCardCategories extends StatelessWidget {
     required this.categories,
   }) : super(key: key);
 
-  final Function(String value) onPressedCategories;
-  final List<String> categories;
+  final Function(Category) onPressedCategories;
+  final List<Category> categories;
 
   @override
   Widget build(BuildContext context) {
@@ -288,8 +289,8 @@ class _BuildCardCategories extends StatelessWidget {
         children: [
           for (var category in categories)
             CardCategory(
-              iconData: Icons.star,
-              name: category,
+              imageUrl: category.imageUrl,
+              name: category.name,
               onPressed: () {
                 onPressedCategories(category);
               },

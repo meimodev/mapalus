@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mapalus/app/widgets/custom_image.dart';
 import 'package:mapalus/shared/theme.dart';
 
 class CardCategory extends StatelessWidget {
@@ -7,35 +8,34 @@ class CardCategory extends StatelessWidget {
     Key? key,
     this.isSelected = false,
     required this.name,
-    required this.iconData,
     required this.onPressed,
+    required this.imageUrl,
   }) : super(key: key);
 
   final bool isSelected;
-  final String name;
-  final IconData iconData;
   final VoidCallback onPressed;
+  final String name;
+  final String imageUrl;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Material(
-          color: isSelected ? Palette.accent : Palette.cardForeground,
-          elevation: isSelected ? 0 : 3,
-          borderRadius: BorderRadius.all(
-            Radius.circular(12.sp),
-          ),
-          clipBehavior: Clip.hardEdge,
-          child: InkWell(
-            onTap: onPressed,
-            child: Padding(
-              padding: EdgeInsets.all(12.sp),
-              child: Icon(
-                iconData,
-                color: isSelected ? Palette.primary : Palette.accent,
-                size: 30.sp,
+        SizedBox(
+          height: 45.w,
+          width: 45.w,
+          child: Material(
+            color: isSelected ? Palette.accent : Palette.cardForeground,
+            elevation: isSelected ? 0 : 3,
+            borderRadius: BorderRadius.all(
+              Radius.circular(12.sp),
+            ),
+            clipBehavior: Clip.hardEdge,
+            child: InkWell(
+              onTap: onPressed,
+              child: CustomImage(
+                imageUrl: imageUrl,
               ),
             ),
           ),
