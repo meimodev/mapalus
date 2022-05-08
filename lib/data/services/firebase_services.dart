@@ -119,7 +119,8 @@ class FirestoreService {
   Future<List<Product>> getProducts() async {
     CollectionReference products = fireStore.collection('products');
 
-    var productsWithOrder = await products.orderBy("id").get();
+    // var productsWithOrder = await products.orderBy("id").get();
+    var productsWithOrder = await products.get();
 
     var res = <Product>[];
     for (var e in productsWithOrder.docs) {
@@ -127,5 +128,11 @@ class FirestoreService {
       res.add(Product.fromMap(map));
     }
     return res;
+  }
+
+  Future<Object?> getAppVersion() async {
+    CollectionReference app = fireStore.collection('app');
+    DocumentSnapshot doc = await app.doc('mapalus').get();
+    return doc.data();
   }
 }

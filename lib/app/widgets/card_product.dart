@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mapalus/app/widgets/custom_image.dart';
 import 'package:mapalus/data/models/product.dart';
 import 'package:mapalus/shared/theme.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class CardProduct extends StatelessWidget {
   const CardProduct({
@@ -84,24 +84,10 @@ class CardProduct extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      const Center(
-                        child: CircularProgressIndicator(
-                          color: Palette.primary,
-                          strokeWidth: 1,
-                        ),
-                      ),
-                      FadeInImage.memoryNetwork(
-                        placeholder: kTransparentImage,
-                        image: product.imageUrl,
-                        imageErrorBuilder: (context, _, __) {
-                          return SvgPicture.asset('assets/images/mapalus.svg');
-                        },
-                        fit: BoxFit.cover,
-                      ),
-                    ],
+                  child: Center(
+                    child: CustomImage(
+                      imageUrl: product.imageUrl,
+                    ),
                   ),
                 ),
               ),

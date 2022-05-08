@@ -16,6 +16,8 @@ import 'package:mapalus/app/modules/orders/orders_screen.dart';
 import 'package:mapalus/app/modules/signing/signing_binding.dart';
 import 'package:mapalus/app/modules/signing/signing_screen.dart';
 import 'package:mapalus/app/modules/splash/splash_screen.dart';
+import 'package:mapalus/app/modules/update_app/update_app_screen.dart';
+
 
 class Routes {
   static const String splash = '/';
@@ -27,6 +29,8 @@ class Routes {
   static const String location = '/location';
   static const String ordering = '/ordering';
   static const String signing = '/signing';
+  static const String updateApp = '/update-app';
+
 
   // static Route<dynamic> generateRoute(RouteSettings settings) {
   //   switch (settings.name) {
@@ -108,6 +112,11 @@ class Routes {
         page: () => const SigningScreen(),
         binding: SigningBinding(),
         transition: Transition.leftToRight,
+      ),
+      GetPage(
+        name: updateApp,
+        page: () => const UpdateAppScreen(),
+        transition: Transition.rightToLeftWithFade,
       ),
     ];
   }

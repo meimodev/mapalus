@@ -7,6 +7,7 @@ import 'package:mapalus/data/models/order.dart';
 import 'package:mapalus/data/models/product.dart';
 import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/data/models/user_app.dart';
+import 'package:mapalus/data/repo/app_repo.dart';
 import 'package:mapalus/data/repo/order_repo.dart';
 import 'package:mapalus/data/repo/product_repo.dart';
 import 'package:mapalus/data/repo/user_repo.dart';
@@ -18,6 +19,7 @@ class HomeController extends GetxController {
   UserRepo userRepo = Get.find<UserRepo>();
   OrderRepo orderRepo = Get.find<OrderRepo>();
   ProductRepo productRepo = Get.find<ProductRepo>();
+  AppRepo appRepo = Get.find<AppRepo>();
 
   RxBool isCardCartVisible = false.obs;
   RxBool isCardOrderVisible = false.obs;
@@ -52,7 +54,12 @@ class HomeController extends GetxController {
   ];
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
+    await Future.delayed(1.seconds);
+    if (!await appRepo.checkIfLatestVersion()) {
+      Get.offNamed(Routes.updateApp);
+      return;
+    }
     _initProductsDisplay();
     _initNotificationHandler();
     super.onInit();

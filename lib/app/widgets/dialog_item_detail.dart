@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mapalus/app/widgets/custom_image.dart';
 import 'package:mapalus/app/widgets/text_input_quantity.dart';
 import 'package:mapalus/data/models/product.dart';
 import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/shared/theme.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 import 'button_alter_quantity.dart';
 
@@ -212,29 +212,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                     ),
                   ],
                 ),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    const Center(
-                      child: CircularProgressIndicator(
-                        color: Palette.primary,
-                        strokeWidth: 1,
-                      ),
-                    ),
-                    FadeInImage.memoryNetwork(
-                      placeholder: kTransparentImage,
-                      image: widget.product.imageUrl,
-                      imageErrorBuilder: (context, _, __) {
-                        return SvgPicture.asset(
-                          'assets/images/mapalus.svg',
-                          width: 60.w,
-                          color: Palette.primary,
-                        );
-                      },
-                      fit: BoxFit.cover,
-                    ),
-                  ],
-                ),
+                child: CustomImage(imageUrl: widget.product.imageUrl),
               ),
             ),
           ],
