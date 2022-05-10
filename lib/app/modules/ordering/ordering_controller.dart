@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:mapalus/app/modules/home/home_controller.dart';
 import 'package:mapalus/data/models/order.dart';
 import 'package:mapalus/data/models/order_info.dart';
@@ -35,8 +36,9 @@ class OrderingController extends GetxController {
         user: user!,
         orderInfo: _orderInfo,
       );
+      var now = Jiffy();
       NotificationService.instance.sendNotification(
-        title: "NEW ORDER !",
+        title: "NEW ORDER ! [${now.format("EEE, dd MMM HH:mm")}]",
         message:
             "${order.orderInfo.productCountF}, ${order.orderInfo.totalPrice}, ${order.orderInfo.deliveryTime}",
       );

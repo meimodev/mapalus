@@ -42,9 +42,9 @@ class SigningController extends GetxController {
 
   @override
   void onClose() {
-    if (message!.isEmpty) {
-      return;
-    }
+    // if (message!.isEmpty) {
+    //   return;
+    // }
     if (userRepo.signedUser != null) {
       homeController.onSignedInUser(userRepo.signedUser!);
     }
