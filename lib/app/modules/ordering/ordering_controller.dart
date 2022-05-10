@@ -38,7 +38,7 @@ class OrderingController extends GetxController {
       NotificationService.instance.sendNotification(
         title: "NEW ORDER !",
         message:
-            "${_productOrders.length} Produk, ${order.orderInfo.totalPrice}",
+            "${order.orderInfo.productCountF}, ${order.orderInfo.totalPrice}, ${order.orderInfo.deliveryTime}",
       );
       if (kDebugMode) {
         print(order.toString());
