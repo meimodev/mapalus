@@ -30,9 +30,10 @@ dependencies:
   google_maps_flutter: ^2.1.4
   url_launcher: ^6.1.0
   firebase_messaging: ^11.3.0
-  flutter_local_notifications: ^9.5.1
+  flutter_local_notifications: ^9.5.2
   transparent_image: ^2.0.0
   package_info_plus: ^1.4.2
+  dio: ^4.0.6
 
 
 

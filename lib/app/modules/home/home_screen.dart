@@ -175,6 +175,7 @@ class HomeScreen extends GetView<HomeController> {
     return SliverToBoxAdapter(
       child: Obx(
         () => GridView.builder(
+          addAutomaticKeepAlives: true,
           shrinkWrap: true,
           itemBuilder: (_, index) => _buildProductCard(
             index,

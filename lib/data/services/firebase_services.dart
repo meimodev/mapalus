@@ -135,4 +135,17 @@ class FirestoreService {
     DocumentSnapshot doc = await app.doc('mapalus').get();
     return doc.data();
   }
+
+  Future<Object?> getAppKeys() async {
+    CollectionReference app = fireStore.collection('app');
+    DocumentSnapshot doc = await app.doc('keys').get();
+
+    return doc.data();
+  }
+
+  getPartnerKey(String id) async {
+    CollectionReference partners = fireStore.collection('partners');
+    DocumentSnapshot doc = await partners.doc(id).get();
+    return doc.data();
+  }
 }

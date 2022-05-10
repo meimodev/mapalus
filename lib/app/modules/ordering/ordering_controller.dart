@@ -8,6 +8,7 @@ import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/data/models/user_app.dart';
 import 'package:mapalus/data/repo/order_repo.dart';
 import 'package:mapalus/data/repo/user_repo.dart';
+import 'package:mapalus/data/services/notification_service.dart';
 import 'package:mapalus/shared/routes.dart';
 
 class OrderingController extends GetxController {
@@ -33,6 +34,11 @@ class OrderingController extends GetxController {
         products: _productOrders,
         user: user!,
         orderInfo: _orderInfo,
+      );
+      NotificationService.instance.sendNotification(
+        title: "NEW ORDER !",
+        message:
+            "${_productOrders.length} Produk, ${order.orderInfo.totalPrice}",
       );
       if (kDebugMode) {
         print(order.toString());
