@@ -374,4 +374,11 @@ class HomeController extends GetxController {
     tecSearch.text = category.name;
     onChangedSearchText(category.name);
   }
+
+  void seeRecentOrder() {
+    if (isCardOrderVisible.isTrue && latestOrder != null) {
+      Get.toNamed(Routes.orderDetail, arguments: latestOrder);
+    }
+    orderCleanUp();
+  }
 }

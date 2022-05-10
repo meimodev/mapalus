@@ -51,7 +51,7 @@ class OrderRepo extends OrderRepoContract {
     //new order with updated rating
     order.rating = rating;
     order.status = OrderStatus.finished;
-    order.setFinishTimeStamp(rating.ratingTimeStamp!);
+    order.setFinishTimeStamp(rating.ratingTimeStamp);
     return await firestore.updateOrder(order);
   }
 

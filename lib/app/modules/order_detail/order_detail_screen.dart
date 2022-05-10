@@ -163,9 +163,11 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                         ),
                       ),
                       Obx(
-                        () => _buildRatingLayout(context,
-                            orderStatus: controller.orderStatus.value,
-                            orderRating: controller.orderRating.value),
+                        () => _buildRatingLayout(
+                          context,
+                          orderStatus: controller.orderStatus.value,
+                          orderRating: controller.orderRating.value,
+                        ),
                       ),
                     ],
                   ),
@@ -245,10 +247,6 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
     required String orderStatus,
     required Rating orderRating,
   }) {
-    if (orderStatus == OrderStatus.rejected.name) {
-      return const _BuildCancelLayout();
-    }
-
     if (orderStatus == OrderStatus.placed.name) {
       return Padding(
         padding: EdgeInsets.symmetric(
@@ -263,7 +261,11 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
       );
     }
 
-    if (orderRating.id == 0) {
+    if (orderStatus == OrderStatus.rejected.name) {
+      return const _BuildCancelLayout();
+    }
+
+    if (orderStatus == OrderStatus.accepted.name) {
       return Material(
         color: Palette.primary,
         clipBehavior: Clip.hardEdge,
@@ -292,7 +294,9 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
       );
     }
 
-    return _BuildRatedLayout(rating: orderRating);
+    if (orderStatus == OrderStatus.finished.name) {
+      return _BuildRatedLayout(rating: orderRating);
+    }
   }
 
   _buildRowItem(
@@ -378,55 +382,6 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
       );
 }
 
-class _BuildRatedLayout extends StatelessWidget {
-  const _BuildRatedLayout({
-    Key? key,
-    required this.rating,
-  }) : super(key: key);
-
-  final Rating rating;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(
-        bottom: Insets.medium.h,
-        top: Insets.small.h * .5,
-      ),
-      child: Column(
-        children: [
-          RatingBar.builder(
-            initialRating: rating.number.toDouble(),
-            minRating: rating.number.toDouble(),
-            maxRating: rating.number.toDouble(),
-            direction: Axis.horizontal,
-            itemCount: 5,
-            glowColor: Palette.editable.withOpacity(.25),
-            itemSize: 27.sp,
-            itemPadding: EdgeInsets.symmetric(horizontal: 6.w),
-            onRatingUpdate: (_) {},
-            itemBuilder: (_, int index) => SvgPicture.asset(
-              'assets/vectors/star.svg',
-              color: Palette.primary,
-            ),
-            updateOnDrag: false,
-            ignoreGestures: true,
-            unratedColor: Palette.accent,
-          ),
-          SizedBox(height: Insets.small.h * .5),
-          Text(
-            'Dinilai ${rating.ratingTimeStamp!.format("dd MMMM yyyy")}',
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w300,
-                ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _BuildCancelLayout extends StatelessWidget {
   const _BuildCancelLayout({Key? key}) : super(key: key);
 
@@ -444,6 +399,88 @@ class _BuildCancelLayout extends StatelessWidget {
               color: Palette.negative.withOpacity(.75),
             ),
       ),
+    );
+  }
+}
+
+class _BuildRatedLayout extends StatelessWidget {
+  const _BuildRatedLayout({
+    Key? key,
+    required this.rating,
+  }) : super(key: key);
+
+  final Rating rating;
+
+  @override
+  Widget build(BuildContext context) {
+    final isFinishedByPartner = rating.message.toLowerCase() == "from partner";
+
+    return Container(
+      margin: EdgeInsets.only(
+        bottom: Insets.medium.h,
+        top: Insets.small.h * .5,
+      ),
+      child: isFinishedByPartner
+          ? _buildFinishedByPartnerLayout(context)
+          : Column(
+              children: [
+                RatingBar.builder(
+                  initialRating: rating.number.toDouble(),
+                  minRating: rating.number.toDouble(),
+                  maxRating: rating.number.toDouble(),
+                  direction: Axis.horizontal,
+                  itemCount: 5,
+                  glowColor: Palette.editable.withOpacity(.25),
+                  itemSize: 27.sp,
+                  itemPadding: EdgeInsets.symmetric(horizontal: 6.w),
+                  onRatingUpdate: (_) {},
+                  itemBuilder: (_, int index) => SvgPicture.asset(
+                    'assets/vectors/star.svg',
+                    color: Palette.primary,
+                  ),
+                  updateOnDrag: false,
+                  ignoreGestures: true,
+                  unratedColor: Palette.accent,
+                ),
+                SizedBox(height: Insets.small.h * .5),
+                Text(
+                  'Dinilai ${rating.ratingTimeStamp.format("dd MMMM yyyy")}',
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w300,
+                      ),
+                ),
+                SizedBox(height: Insets.small.h * .5),
+                Text(
+                  " \"${rating.message}\" ",
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w300,
+                      ),
+                ),
+              ],
+            ),
+    );
+  }
+
+  _buildFinishedByPartnerLayout(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          'pesanan selesai',
+          style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w300,
+              ),
+        ),
+        Text(
+          rating.ratingTimeStamp.format("dd MMMM yyyy HH:mm"),
+          style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                fontSize: 10.sp,
+                fontWeight: FontWeight.w300,
+              ),
+        ),
+      ],
     );
   }
 }

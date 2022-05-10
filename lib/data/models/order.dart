@@ -69,6 +69,10 @@ class Order {
     return finishTimeStamp!.format("E, ddd MMM yyyy");
   }
 
+  String get idMinified {
+    return id!.replaceRange(0, 12, '');
+  }
+
   String generateId() {
     if (id != null) {
       return id!;

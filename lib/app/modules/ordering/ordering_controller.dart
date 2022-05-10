@@ -19,6 +19,8 @@ class OrderingController extends GetxController {
 
   RxBool isLoading = true.obs;
 
+  Order? _orderToPush;
+
   @override
   void onReady() async {
     super.onReady();
@@ -39,9 +41,11 @@ class OrderingController extends GetxController {
       var now = Jiffy();
       NotificationService.instance.sendNotification(
         title: "NEW ORDER ! [${now.format("EEE, dd MMM HH:mm")}]",
-        message:
-            "${order.orderInfo.productCountF}, ${order.orderInfo.totalPrice}, ${order.orderInfo.deliveryTime}",
+        message: "${order.orderInfo.productCountF}, "
+            "${order.orderInfo.totalPrice}, "
+            "${order.orderInfo.deliveryTime}",
       );
+      _orderToPush = order;
       if (kDebugMode) {
         print(order.toString());
       }
@@ -70,5 +74,13 @@ class OrderingController extends GetxController {
     Get.until(ModalRoute.withName(Routes.home));
     // Get.offNamedUntil(Routes.home, (_) => Get.currentRoute == Routes.home);
     homeController.orderCleanUp();
+  }
+
+  void onPressedSeeOrder() {
+    Get.until(ModalRoute.withName(Routes.home));
+    // Get.offNamedUntil(Routes.home, (_) => Get.currentRoute == Routes.home);
+    // homeController.seeRecentOrder();
+    homeController.orderCleanUp();
+    Get.toNamed(Routes.orderDetail, arguments: _orderToPush);
   }
 }

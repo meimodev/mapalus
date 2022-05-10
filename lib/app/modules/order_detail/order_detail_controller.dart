@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:get/get.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:mapalus/app/modules/home/home_controller.dart';
@@ -47,7 +45,7 @@ class OrderDetailController extends GetxController {
     Order order = Get.arguments as Order;
     _order = order;
     productOrders.value = order.products;
-    id.value = order.id!;
+    id.value = order.idMinified;
 
     var _orderTimeStamp = order.orderTimeStamp;
     orderTime.value = _orderTimeStamp == null
@@ -63,6 +61,8 @@ class OrderDetailController extends GetxController {
     totalPrice.value = order.orderInfo.totalPrice;
     finishTimeStamp.value = order.finishTimeStampF;
 
+    orderRating.value = order.rating;
+
     orderStatus.value = order.status.name;
 
     super.onInit();
@@ -71,7 +71,6 @@ class OrderDetailController extends GetxController {
   Future<void> onPressedRate(String message, double rate) async {
     //make call to firestore service to update order rating
     var rating = Rating(
-      Random().nextInt(99999),
       rate.ceil(),
       message,
       Jiffy(),

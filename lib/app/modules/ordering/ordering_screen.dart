@@ -68,47 +68,72 @@ class OrderingScreen extends GetView<OrderingController> {
               ),
             ),
             Positioned(
-                left: 0,
-                right: 0,
-                bottom: Insets.medium.h,
-                child: Obx(
-                  () => AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 300),
-                    child: controller.isLoading.value
-                        ? const SizedBox()
-                        : Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: Insets.medium.w),
-                            child: Material(
-                              elevation: 2,
-                              borderRadius: BorderRadius.circular(9.sp),
-                              color: Palette.primary,
-                              clipBehavior: Clip.hardEdge,
-                              child: InkWell(
-                                onTap: controller.onPressedReturn,
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: Insets.medium,
-                                    vertical: Insets.small.w,
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'Kembali',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          ?.copyWith(
-                                            fontSize: 14.sp,
-                                          ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+              left: 0,
+              right: 0,
+              bottom: Insets.medium.h,
+              child: Obx(
+                () => AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  child: controller.isLoading.value
+                      ? const SizedBox()
+                      : Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: Insets.medium.w,
                           ),
-                  ),
-                )),
+                          child: Column(
+                            children: [
+                              _buildButton(
+                                context: context,
+                                text: "Lihat Pesanan",
+                                onPressed: controller.onPressedSeeOrder,
+                              ),
+                              SizedBox(height: Insets.small.h),
+                              _buildButton(
+                                context: context,
+                                text: "Kembali",
+                                isSecondary: true,
+                                onPressed: controller.onPressedReturn,
+                              ),
+                            ],
+                          ),
+                        ),
+                ),
+              ),
+            ),
           ],
+        ),
+      ),
+    );
+  }
+
+  _buildButton({
+    required BuildContext context,
+    required String text,
+    required VoidCallback onPressed,
+    bool isSecondary = false,
+  }) {
+    return SizedBox(
+      width: isSecondary ? 190.w : double.infinity,
+      child: Material(
+        elevation: 2,
+        borderRadius: BorderRadius.circular(9.sp),
+        color: isSecondary ? Colors.grey : Palette.primary,
+        clipBehavior: Clip.hardEdge,
+        child: InkWell(
+          onTap: onPressed,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: isSecondary ? Insets.small.w * .75 : Insets.small.w,
+            ),
+            child: Center(
+              child: Text(
+                text,
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      fontSize: isSecondary ? 10.sp : 14.sp,
+                    ),
+              ),
+            ),
+          ),
         ),
       ),
     );
