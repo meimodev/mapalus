@@ -94,7 +94,9 @@ class HomeController extends GetxController {
 
   void onPressedLatestOrder() {
     if (isCardOrderVisible.isTrue && latestOrder != null) {
-      Get.toNamed(Routes.orderDetail, arguments: latestOrder);
+      Get.toNamed(Routes.orderDetail, arguments: latestOrder, parameters: {
+        'refresh': "true",
+      });
     }
   }
 

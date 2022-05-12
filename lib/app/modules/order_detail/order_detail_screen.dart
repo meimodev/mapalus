@@ -44,138 +44,160 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                   ),
                 ),
                 Expanded(
-                  child: Container(
-                    margin: EdgeInsets.symmetric(
-                      horizontal: Insets.medium.w * .5,
+                  child: Obx(
+                    () => AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 400),
+                      child: controller.canLoading.isTrue
+                          ? _buildLoadingLayout(context)
+                          : _buildMainLayout(context),
                     ),
-                    child: Obx(
-                      () => ListView.builder(
-                        itemCount: controller.productOrders.length,
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          ProductOrder po =
-                              controller.productOrders.elementAt(index);
-                          return CardOrderDetailItem(
-                            productName: po.product.name,
-                            productPrice: po.totalPriceString,
-                            index: (index + 1).toString(),
-                            productWeight:
-                                '${po.quantityString} ${po.product.unit}',
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: Insets.medium.w * .5,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9.sp),
-                    color: Palette.cardForeground,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: Insets.medium.h,
-                          bottom: Insets.medium.h,
-                          left: Insets.medium.w * .5,
-                          right: Insets.medium.w * .5,
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 4,
-                                  child: Obx(
-                                    () => _buildDeliveryStateCard(
-                                      context: context,
-                                      title: 'Dipesan',
-                                      timeStamp: controller.orderTime.value,
-                                    ),
-                                  ),
-                                ),
-                                const Expanded(
-                                  flex: 3,
-                                  child: SizedBox(),
-                                ),
-                                Expanded(
-                                  flex: 4,
-                                  child: Obx(
-                                    () => _buildDeliveryStateCard(
-                                      context: context,
-                                      title: 'Selesai',
-                                      timeStamp:
-                                          controller.finishTimeStamp.value,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: Insets.medium.h),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                vertical: Insets.small.h * .5,
-                              ),
-                              decoration: const BoxDecoration(
-                                  border: Border(
-                                bottom: BorderSide(
-                                  color: Palette.accent,
-                                ),
-                              )),
-                              child: _buildDeliveryInfoLayout(
-                                context,
-                              ),
-                            ),
-                            SizedBox(height: Insets.small.h),
-                            Obx(
-                              () => _buildRowItem(
-                                context,
-                                "Produk",
-                                controller.productCount.value,
-                                controller.productTotal.value,
-                              ),
-                            ),
-                            SizedBox(height: 6.h),
-                            Obx(
-                              () => _buildRowItem(
-                                context,
-                                "Pengantaran",
-                                controller.deliveryCount.value,
-                                controller.deliveryTotal.value,
-                              ),
-                            ),
-                            SizedBox(height: 6.h),
-                            Obx(
-                              () => _buildRowItem(
-                                context,
-                                "Total Pembayaran",
-                                '',
-                                controller.totalPrice.value,
-                                highLight: true,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Obx(
-                        () => _buildRatingLayout(
-                          context,
-                          orderStatus: controller.orderStatus.value,
-                          orderRating: controller.orderRating.value,
-                        ),
-                      ),
-                    ],
                   ),
                 ),
               ],
             ),
           )
         ],
+      ),
+    );
+  }
+
+  _buildMainLayout(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: Insets.medium.w * .5,
+            ),
+            child: Obx(
+              () => ListView.builder(
+                itemCount: controller.productOrders.length,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  ProductOrder po = controller.productOrders.elementAt(index);
+                  return CardOrderDetailItem(
+                    productName: po.product.name,
+                    productPrice: po.totalPriceString,
+                    index: (index + 1).toString(),
+                    productWeight: '${po.quantityString} ${po.product.unit}',
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: Insets.medium.w * .5,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(9.sp),
+            color: Palette.cardForeground,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  top: Insets.medium.h,
+                  bottom: Insets.medium.h,
+                  left: Insets.medium.w * .5,
+                  right: Insets.medium.w * .5,
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: Obx(
+                            () => _buildDeliveryStateCard(
+                              context: context,
+                              title: 'Dipesan',
+                              timeStamp: controller.orderTime.value,
+                            ),
+                          ),
+                        ),
+                        const Expanded(
+                          flex: 3,
+                          child: SizedBox(),
+                        ),
+                        Expanded(
+                          flex: 4,
+                          child: Obx(
+                            () => _buildDeliveryStateCard(
+                              context: context,
+                              title: 'Selesai',
+                              timeStamp: controller.finishTimeStamp.value,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: Insets.medium.h),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: Insets.small.h * .5,
+                      ),
+                      decoration: const BoxDecoration(
+                          border: Border(
+                        bottom: BorderSide(
+                          color: Palette.accent,
+                        ),
+                      )),
+                      child: _buildDeliveryInfoLayout(
+                        context,
+                      ),
+                    ),
+                    SizedBox(height: Insets.small.h),
+                    Obx(
+                      () => _buildRowItem(
+                        context,
+                        "Produk",
+                        controller.productCount.value,
+                        controller.productTotal.value,
+                      ),
+                    ),
+                    SizedBox(height: 6.h),
+                    Obx(
+                      () => _buildRowItem(
+                        context,
+                        "Pengantaran",
+                        controller.deliveryCount.value,
+                        controller.deliveryTotal.value,
+                      ),
+                    ),
+                    SizedBox(height: 6.h),
+                    Obx(
+                      () => _buildRowItem(
+                        context,
+                        "Total Pembayaran",
+                        '',
+                        controller.totalPrice.value,
+                        highLight: true,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Obx(
+                () => _buildRatingLayout(
+                  context,
+                  orderStatus: controller.orderStatus.value,
+                  orderRating: controller.orderRating.value,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  _buildLoadingLayout(BuildContext context) {
+    return const Center(
+      child: CircularProgressIndicator(
+        color: Palette.primary,
       ),
     );
   }

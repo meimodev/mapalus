@@ -32,6 +32,8 @@ class OrderDetailController extends GetxController {
   late Order _order;
   bool shouldCheckNewlyCreatedOrder = false;
 
+  RxBool canLoading = true.obs;
+
   @override
   void onClose() {
     if (shouldCheckNewlyCreatedOrder) {
@@ -41,8 +43,29 @@ class OrderDetailController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onReady() {
+    canLoading.value = true;
+
     Order order = Get.arguments as Order;
+    var params = Get.parameters;
+    if (params.isNotEmpty) {
+      _loadFreshOrder(order.id!);
+      super.onReady();
+      return;
+    }
+
+    _initInterfaceWithData(order);
+
+    super.onReady();
+  }
+
+  _loadFreshOrder(String orderId) async {
+    Order? t = await orderRepo.readOrder(orderId);
+    Order order = t!;
+    _initInterfaceWithData(order);
+  }
+
+  _initInterfaceWithData(Order order) {
     _order = order;
     productOrders.value = order.products;
     id.value = order.idMinified;
@@ -65,7 +88,7 @@ class OrderDetailController extends GetxController {
 
     orderStatus.value = order.status.name;
 
-    super.onInit();
+    canLoading.value = false;
   }
 
   Future<void> onPressedRate(String message, double rate) async {

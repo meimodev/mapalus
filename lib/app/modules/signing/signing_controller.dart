@@ -49,6 +49,7 @@ class SigningController extends GetxController {
       homeController.onSignedInUser(userRepo.signedUser!);
     }
 
+    tecSigning.dispose();
     Get.back();
   }
 
@@ -93,6 +94,7 @@ class SigningController extends GetxController {
         switch (res.message) {
           case "PROCEED":
             tecSigning.clear();
+            errorText.value = "";
             isLoading.value = true;
             break;
           case 'SENT':
@@ -106,6 +108,9 @@ class SigningController extends GetxController {
             // print("[WAITING] 8 SECONDS FOR CODE AUTO RETRIEVAL");
             await Future.delayed(const Duration(seconds: 8));
             isLoading.value = false;
+            if (userRepo.signedUser != null) {
+              Get.back();
+            }
             break;
           case 'VERIFICATION_FAILED':
             errorText.value =
@@ -196,11 +201,14 @@ class SigningController extends GetxController {
       return;
     }
 
+    await Future.delayed(400.milliseconds);
     isLoading.value = true;
     name = input;
     await userRepo.registerUser(phone, name);
 
-    tecSigning.clear();
+    // tecSigning.clear();
+    await Future.delayed(800.milliseconds);
+
     errorText.value = "";
     isLoading.value = false;
     Get.back();
