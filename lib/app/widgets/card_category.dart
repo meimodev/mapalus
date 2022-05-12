@@ -19,40 +19,51 @@ class CardCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 45.w,
-          width: 45.w,
-          child: Material(
-            color: isSelected ? Palette.accent : Palette.cardForeground,
-            elevation: isSelected ? 0 : 3,
-            borderRadius: BorderRadius.all(
-              Radius.circular(12.sp),
-            ),
-            clipBehavior: Clip.hardEdge,
-            child: InkWell(
-              onTap: onPressed,
-              child: CustomImage(
-                imageUrl: imageUrl,
-              ),
-            ),
-          ),
-        ),
-        SizedBox(height: Insets.small.h * .5),
-        SizedBox(
-          width: 75,
-          child: Text(
-            name,
-            softWrap: true,
-            style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  fontSize: 12.sp,
-                  color: isSelected ? Palette.textPrimary : Colors.grey,
+    return Material(
+      clipBehavior: Clip.hardEdge,
+      borderRadius: BorderRadius.circular(12.w),
+      child: InkWell(
+        onTap: () async {
+          await Future.delayed(const Duration(milliseconds: 700));
+          onPressed();
+        },
+        child: SizedBox(
+          width: 75.w,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                child: Container(
+                  width: 45.w,
+                  height: 45.w,
+                  decoration: BoxDecoration(
+                    color: isSelected ? Palette.accent : Palette.cardForeground,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(12.sp),
+                    ),
+                  ),
+                  clipBehavior: Clip.hardEdge,
+                  child: CustomImage(
+                    imageUrl: imageUrl,
+                  ),
                 ),
+              ),
+              SizedBox(height: Insets.small.h * .5),
+              SizedBox(
+                child: Text(
+                  name,
+                  softWrap: true,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        fontSize: 12.sp,
+                        color: isSelected ? Palette.textPrimary : Colors.grey,
+                      ),
+                ),
+              ),
+            ],
           ),
         ),
-      ],
+      ),
     );
   }
 }

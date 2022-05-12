@@ -35,7 +35,7 @@ class HomeController extends GetxController {
 
   var scrollControllerMain = ScrollController();
 
-  var isLoadingProducts = false.obs;
+  var canLoadingProducts = false.obs;
   var isNoMoreProductsToDisplay = false.obs;
   var displayProducts = <Product>[].obs;
 
@@ -167,7 +167,7 @@ class HomeController extends GetxController {
   }
 
   _initProductsDisplay() async {
-    isLoadingProducts.value = true;
+    canLoadingProducts.value = true;
 
     tempProducts = await productRepo.getProducts();
     tempSearchedProducts = List.from(tempProducts);
@@ -182,23 +182,23 @@ class HomeController extends GetxController {
       if (scrollControllerMain.position.maxScrollExtent ==
           scrollControllerMain.offset) {
         if ((_currentIndex + _pageSize) < tempProducts.length) {
-          isLoadingProducts.value = true;
+          canLoadingProducts.value = true;
           await Future.delayed(500.milliseconds);
           displayProducts.addAll(
             tempProducts.sublist(_currentIndex, _currentIndex + _pageSize),
           );
-          isLoadingProducts.value = false;
+          canLoadingProducts.value = false;
           _currentIndex += _pageSize;
         } else {
-          isLoadingProducts.value = true;
+          canLoadingProducts.value = true;
           await Future.delayed(500.milliseconds);
           displayProducts.addAll(tempProducts.sublist(_currentIndex));
-          isLoadingProducts.value = false;
+          canLoadingProducts.value = false;
           isNoMoreProductsToDisplay.value = true;
         }
       }
     });
-    isLoadingProducts.value = false;
+    canLoadingProducts.value = false;
   }
 
   orderCleanUp() {

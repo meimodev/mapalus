@@ -72,7 +72,6 @@ class OrderingController extends GetxController {
 
   _backToHome() {
     Get.until(ModalRoute.withName(Routes.home));
-    // Get.offNamedUntil(Routes.home, (_) => Get.currentRoute == Routes.home);
     homeController.orderCleanUp();
   }
 

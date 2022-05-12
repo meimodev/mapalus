@@ -108,30 +108,27 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                   children: [
                     Row(
                       children: [
-                        Expanded(
-                          flex: 4,
-                          child: Obx(
-                            () => _buildDeliveryStateCard(
-                              context: context,
-                              title: 'Dipesan',
-                              timeStamp: controller.orderTime.value,
-                            ),
+                        Obx(
+                          () => _buildDeliveryStateCard(
+                            context: context,
+                            title: 'Dipesan',
+                            timeStamp: controller.orderTime.value,
                           ),
                         ),
                         const Expanded(
                           flex: 3,
                           child: SizedBox(),
                         ),
-                        Expanded(
-                          flex: 4,
-                          child: Obx(
-                            () => _buildDeliveryStateCard(
-                              context: context,
-                              title: 'Selesai',
-                              timeStamp: controller.finishTimeStamp.value,
-                            ),
-                          ),
-                        ),
+                        // Expanded(
+                        //   flex: 4,
+                        //   child: Obx(
+                        //     () => _buildDeliveryStateCard(
+                        //       context: context,
+                        //       title: 'Selesai',
+                        //       timeStamp: controller.finishTimeStamp.value,
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                     SizedBox(height: Insets.medium.h),
@@ -376,7 +373,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
   }) =>
       Container(
         padding: EdgeInsets.symmetric(
-          horizontal: 6.w,
+          horizontal: Insets.small.w,
           vertical: 6.h,
         ),
         decoration: BoxDecoration(
@@ -466,7 +463,7 @@ class _BuildRatedLayout extends StatelessWidget {
                 ),
                 SizedBox(height: Insets.small.h * .5),
                 Text(
-                  'Dinilai ${rating.ratingTimeStamp.format("dd MMMM yyyy")}',
+                  'Dinilai ${rating.ratingTimeStamp.format("dd MMMM yyyy HH:mm")}',
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w300,

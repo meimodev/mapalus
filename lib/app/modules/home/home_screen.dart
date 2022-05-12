@@ -153,7 +153,7 @@ class HomeScreen extends GetView<HomeController> {
       child: Obx(
         () => AnimatedSwitcher(
           duration: const Duration(milliseconds: 400),
-          child: controller.isLoadingProducts.isTrue
+          child: controller.canLoadingProducts.isTrue
               ? Center(
                   child: Padding(
                     padding: EdgeInsets.only(
@@ -285,7 +285,6 @@ class _BuildCardCategories extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           for (var category in categories)

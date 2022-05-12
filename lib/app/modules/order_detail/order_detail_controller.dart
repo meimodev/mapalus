@@ -5,6 +5,7 @@ import 'package:mapalus/data/models/order.dart';
 import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/data/models/rating.dart';
 import 'package:mapalus/data/repo/order_repo.dart';
+import 'package:mapalus/shared/enums.dart';
 import 'package:mapalus/shared/values.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -71,9 +72,7 @@ class OrderDetailController extends GetxController {
     id.value = order.idMinified;
 
     var _orderTimeStamp = order.orderTimeStamp;
-    orderTime.value = _orderTimeStamp == null
-        ? '-'
-        : _orderTimeStamp.format(Values.formatRawDate);
+    orderTime.value = _orderTimeStamp!.format("EEEE, dd MMMM HH:mm");
 
     productCount.value = order.orderInfo.productCountF;
     productTotal.value = order.orderInfo.productPriceF;
@@ -92,15 +91,24 @@ class OrderDetailController extends GetxController {
   }
 
   Future<void> onPressedRate(String message, double rate) async {
-    //make call to firestore service to update order rating
+    canLoading.value = true;
+    Future.delayed(800.milliseconds);
     var rating = Rating(
       rate.ceil(),
       message,
       Jiffy(),
     );
     await orderRepo.rateOrder(_order, rating);
-    orderRating.value = rating;
+
     shouldCheckNewlyCreatedOrder = true;
+
+    await Future.delayed(800.milliseconds);
+
+    orderRating.value = rating;
+    orderStatus.value = OrderStatus.finished.name;
+
+    canLoading.value = false;
+
     Get.back();
   }
 

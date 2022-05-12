@@ -87,8 +87,8 @@ class LocationController extends GetxController {
 
     var _deliveryTime = _selectedDeliveryInfo!.title;
     if (_selectedDeliveryInfo!.isTomorrow) {
-      final _tomorrowDate = Jiffy().format("E dd MMM");
-      orderInfo.value.deliveryTime = "$_deliveryTime BESOK $_tomorrowDate";
+      final _tomorrowDate = Jiffy().add(days: 1).format("EEEE, dd MMM");
+      orderInfo.value.deliveryTime = "$_deliveryTime ($_tomorrowDate)";
     } else {
       orderInfo.value.deliveryTime = _deliveryTime;
     }

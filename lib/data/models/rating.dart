@@ -38,4 +38,17 @@ class Rating {
   String toString() {
     return 'Rating{number: $number, message: $message, _ratingTimeStamp: $_ratingTimeStamp}';
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Rating &&
+          runtimeType == other.runtimeType &&
+          number == other.number &&
+          message == other.message &&
+          _ratingTimeStamp == other._ratingTimeStamp;
+
+  @override
+  int get hashCode =>
+      number.hashCode ^ message.hashCode ^ _ratingTimeStamp.hashCode;
 }
