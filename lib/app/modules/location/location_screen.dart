@@ -336,9 +336,6 @@ class _BuildDeliveryFeeSelectorState extends State<_BuildDeliveryFeeSelector> {
     for (int i = 0; i < widget.deliveries.length; i++) {
       DeliveryInfo deliveryInfo = widget.deliveries[i];
       if (deliveryInfo.isAvailable) {
-        print(
-            "delivery time index $i is ${deliveryInfo.title} is availanle = ${deliveryInfo.isAvailable}");
-
         widget.onPressedDeliveryTime(
           deliveryInfo,
           Utils.formatCurrencyToNumber(

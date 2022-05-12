@@ -6,7 +6,6 @@ import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/data/models/rating.dart';
 import 'package:mapalus/data/repo/order_repo.dart';
 import 'package:mapalus/shared/enums.dart';
-import 'package:mapalus/shared/values.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class OrderDetailController extends GetxController {
