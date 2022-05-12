@@ -107,6 +107,7 @@ class LocationController extends GetxController {
 
   onPressedChangeLocation() async {
     isLocationSelectionVisible.toggle();
+    _selectedDeliveryInfo = null;
   }
 
   onCameraIdle(LatLng? pos) {
@@ -121,6 +122,7 @@ class LocationController extends GetxController {
   Future<bool> onPressedBackButton() {
     if (isLocationSelectionVisible.isFalse) {
       isLocationSelectionVisible.toggle();
+      _selectedDeliveryInfo = null;
       return Future.value(false);
     }
     return Future.value(true);

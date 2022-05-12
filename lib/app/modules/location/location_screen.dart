@@ -331,22 +331,26 @@ class _BuildDeliveryFeeSelectorState extends State<_BuildDeliveryFeeSelector> {
   @override
   void initState() {
     super.initState();
-    // print('buld deluvery selector');
-    // print(widget.deliveries[0]);
-    // print(widget.weight);
-    // print(widget.distance);
 
+    //select the initial selection for delivery time
     for (int i = 0; i < widget.deliveries.length; i++) {
-      if (widget.deliveries[i].available) {
+      DeliveryInfo deliveryInfo = widget.deliveries[i];
+      if (deliveryInfo.isAvailable) {
+        print(
+            "delivery time index $i is ${deliveryInfo.title} is availanle = ${deliveryInfo.isAvailable}");
+
         widget.onPressedDeliveryTime(
-          widget.deliveries[i],
+          deliveryInfo,
           Utils.formatCurrencyToNumber(
-            widget.deliveries[i].price(
+            deliveryInfo.price(
               distance: widget.distance,
               weight: widget.weight,
             ),
           ),
         );
+        setState(() {
+          activeIndex = deliveryInfo.id;
+        });
         break;
       }
     }
