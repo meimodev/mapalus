@@ -1,4 +1,6 @@
+<!--suppress AndroidDomInspection -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.meimodev.mapalus">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -6,7 +8,7 @@
 
 
    <application
-        android:label="mapalus"
+        android:label="Mapalus"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
