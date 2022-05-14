@@ -31,9 +31,8 @@ class HomeScreen extends GetView<HomeController> {
                 isSearching: controller.isSearchingProduct.value,
               ),
               SliverPadding(padding: EdgeInsets.all(Insets.small.sp)),
-              _buildListProduct(),
+              _buildMainLoading(context),
               _buildListLoading(),
-              _buildListFooter(context),
               SliverPadding(
                   padding:
                       EdgeInsets.symmetric(vertical: Insets.medium.sp * 3)),
@@ -80,70 +79,91 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  Widget _buildProductCard(int index, List<Product> products) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: index % 2 == 0 ? Insets.medium.w : 0,
-        right: index % 2 == 0 ? 0 : Insets.medium.w,
-      ),
-      child: CardProduct(
-        product: products[index],
-        onPressed: (product) {
-          Get.dialog(
-            DialogItemDetail(
-              product: product,
-              onPressedAddToCart: controller.onPressedAddToCart,
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  _buildListFooter(BuildContext context) {
+  _buildMainLoading(BuildContext context) {
     return SliverToBoxAdapter(
       child: Obx(
         () => AnimatedSwitcher(
           duration: const Duration(milliseconds: 400),
-          child: controller.isNoMoreProductsToDisplay.isTrue
-              ? Center(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: Insets.medium.h),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SvgPicture.asset(
-                          "assets/images/mapalus.svg",
-                          color: Palette.primary,
-                          width: 45.w,
-                          height: 45.h,
-                        ),
-                        SizedBox(height: Insets.small.h * .5),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SvgPicture.asset(
-                              "assets/images/logo_meimo.svg",
-                              width: 30.w,
-                            ),
-                            SizedBox(width: 3.w),
-                            Text(
-                              '©2022',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  ?.copyWith(
-                                    fontSize: 12.sp,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ],
+          child: controller.canLoadingMain.isTrue
+              ? SizedBox(
+                  height: 500.h,
+                  child: const Center(
+                    child: CircularProgressIndicator(
+                      color: Palette.primary,
                     ),
                   ),
                 )
-              : const SizedBox(),
+              : _buildListProduct(context),
         ),
+      ),
+    );
+  }
+
+  _buildListProduct(BuildContext context) {
+    return Column(
+      children: [
+        GridView.builder(
+          addAutomaticKeepAlives: true,
+          shrinkWrap: true,
+          itemBuilder: (_, index) => _buildProductCard(
+            index,
+            controller.displayProducts.value,
+          ),
+          primary: false,
+          itemCount: controller.displayProducts.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            // maxCrossAxisExtent: 170.w,
+            crossAxisCount: 2,
+            crossAxisSpacing: 6.w,
+            mainAxisSpacing: 6.w,
+            mainAxisExtent: 250.h,
+          ),
+        ),
+        _buildListFooter(context),
+      ],
+    );
+  }
+
+  _buildListFooter(BuildContext context) {
+    return Obx(
+      () => AnimatedSwitcher(
+        duration: const Duration(milliseconds: 400),
+        child: controller.isNoMoreProductsToDisplay.isTrue
+            ? Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: Insets.medium.h),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SvgPicture.asset(
+                        "assets/images/mapalus.svg",
+                        color: Palette.primary,
+                        width: 45.w,
+                        height: 45.h,
+                      ),
+                      SizedBox(height: Insets.small.h * .5),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SvgPicture.asset(
+                            "assets/images/logo_meimo.svg",
+                            width: 30.w,
+                          ),
+                          SizedBox(width: 3.w),
+                          Text(
+                            '©2022',
+                            style:
+                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                      fontSize: 12.sp,
+                                    ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            : const SizedBox(),
       ),
     );
   }
@@ -171,26 +191,22 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  _buildListProduct() {
-    return SliverToBoxAdapter(
-      child: Obx(
-        () => GridView.builder(
-          addAutomaticKeepAlives: true,
-          shrinkWrap: true,
-          itemBuilder: (_, index) => _buildProductCard(
-            index,
-            controller.displayProducts.value,
-          ),
-          primary: false,
-          itemCount: controller.displayProducts.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            // maxCrossAxisExtent: 170.w,
-            crossAxisCount: 2,
-            crossAxisSpacing: 6.w,
-            mainAxisSpacing: 6.w,
-            mainAxisExtent: 250.h,
-          ),
-        ),
+  _buildProductCard(int index, List<Product> products) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: index % 2 == 0 ? Insets.medium.w : 0,
+        right: index % 2 == 0 ? 0 : Insets.medium.w,
+      ),
+      child: CardProduct(
+        product: products[index],
+        onPressed: (product) {
+          Get.dialog(
+            DialogItemDetail(
+              product: product,
+              onPressedAddToCart: controller.onPressedAddToCart,
+            ),
+          );
+        },
       ),
     );
   }

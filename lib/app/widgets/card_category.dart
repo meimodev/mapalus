@@ -24,7 +24,7 @@ class CardCategory extends StatelessWidget {
       borderRadius: BorderRadius.circular(12.w),
       child: InkWell(
         onTap: () async {
-          await Future.delayed(const Duration(milliseconds: 700));
+          await Future.delayed(const Duration(milliseconds: 400));
           onPressed();
         },
         child: SizedBox(

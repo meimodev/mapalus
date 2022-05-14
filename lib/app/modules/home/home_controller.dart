@@ -36,6 +36,7 @@ class HomeController extends GetxController {
   var scrollControllerMain = ScrollController();
 
   var canLoadingProducts = false.obs;
+  var canLoadingMain = true.obs;
   var isNoMoreProductsToDisplay = false.obs;
   var displayProducts = <Product>[].obs;
 
@@ -167,7 +168,9 @@ class HomeController extends GetxController {
   }
 
   _initProductsDisplay() async {
-    canLoadingProducts.value = true;
+    canLoadingMain.value = true;
+
+    // canLoadingProducts.value = true;
 
     tempProducts = await productRepo.getProducts();
     tempSearchedProducts = List.from(tempProducts);
@@ -198,7 +201,10 @@ class HomeController extends GetxController {
         }
       }
     });
-    canLoadingProducts.value = false;
+    await Future.delayed(1.seconds);
+    canLoadingMain.value = false;
+
+    // canLoadingProducts.value = false;
   }
 
   orderCleanUp() {
@@ -322,7 +328,8 @@ class HomeController extends GetxController {
 
   onSubmittedSearchText(String value) {}
 
-  onChangedSearchText(String text) {
+  onChangedSearchText(String text) async {
+    canLoadingMain.value = true;
     var _products = List<Product>.from(tempSearchedProducts);
     isNoMoreProductsToDisplay.value = false;
 
@@ -370,6 +377,8 @@ class HomeController extends GetxController {
         isNoMoreProductsToDisplay.value = true;
       }
     }
+    await Future.delayed(1.seconds);
+    canLoadingMain.value = false;
   }
 
   onPressedCategories(Category category) {
