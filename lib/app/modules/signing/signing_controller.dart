@@ -70,8 +70,8 @@ class SigningController extends GetxController {
       return;
     }
 
-    if (input.length < 12) {
-      errorText.value = "Nomor handphone tidak kurang dari 12 angka";
+    if (input.length < 11) {
+      errorText.value = "Nomor handphone tidak kurang dari 11 angka";
       return;
     }
 
