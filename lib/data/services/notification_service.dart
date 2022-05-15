@@ -9,7 +9,7 @@ class NotificationService {
       _instance ??= NotificationService._();
 
   String? serverKey;
-  String? partnerFCMToken;
+  List<String>? partnerFCMToken;
 
   NotificationService._() {
     _fetchServerKey();
@@ -34,13 +34,13 @@ class NotificationService {
     var data = await fs.getPartnerKey("089525699078");
     var mapData = data as Map<String, dynamic>;
 
-    partnerFCMToken = mapData['fcm_token'];
+    partnerFCMToken = List<String>.of(mapData['fcm_token']);
   }
 
   Future<bool> sendNotification({
     required String title,
     required String message,
-    String toToken = "",
+    List<String> toToken = const [],
   }) async {
     if (serverKey == null) {
       await _fetchServerKey();
@@ -49,13 +49,26 @@ class NotificationService {
       await _fetchPartnerFCMToken();
     }
 
+    List<String> sourceToken = toToken.isEmpty ? partnerFCMToken! : toToken;
+    for (String token in sourceToken) {
+      constructNotification(title, message, token);
+    }
+
+    return true;
+  }
+
+  Future<void> constructNotification(
+    String title,
+    String message,
+    String token,
+  ) async {
     const baseUrl = "https://fcm.googleapis.com/fcm/send";
     final headers = {
       "Content-Type": "application/json",
       "Authorization": "key=$serverKey",
     };
     final body = {
-      "to": toToken.isEmpty ? partnerFCMToken : toToken,
+      "to": token,
       "notification": {
         "title": title,
         "body": message,
@@ -80,7 +93,5 @@ class NotificationService {
         print(e);
       }
     }
-
-    return true;
   }
 }
