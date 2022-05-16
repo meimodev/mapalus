@@ -31,7 +31,7 @@ class AppRepo extends AppRepoContract {
       return true;
     }
     if (localVersion.major == remoteVersion.major &&
-        localVersion.minor == remoteVersion.minor) {
+        localVersion.minor <= remoteVersion.minor) {
       return true;
     }
     return false;
