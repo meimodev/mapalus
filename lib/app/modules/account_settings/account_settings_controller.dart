@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:mapalus/app/modules/home/home_controller.dart';
 import 'package:mapalus/data/repo/user_repo.dart';
 import 'package:mapalus/shared/routes.dart';
 
@@ -6,6 +7,7 @@ class AccountSettingsController extends GetxController {
   RxString userName = ''.obs;
   RxString userPhone = ''.obs;
   RxInt orderCount = 0.obs;
+  HomeController homeController = Get.find();
 
   UserRepo userRepo = Get.find();
 
@@ -38,6 +40,9 @@ class AccountSettingsController extends GetxController {
 
   onPressedSignOut() async {
     await userRepo.signOut();
+    homeController.isCardCartVisible.value = false;
+    homeController.isCardOrderVisible.value = false;
+    homeController.unfinishedOrderCount.value = 0;
   }
 
   onPressedSignIn() {

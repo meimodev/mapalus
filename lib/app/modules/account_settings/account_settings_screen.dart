@@ -48,7 +48,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
             Container(
               width: 120.w,
               height: 120.h,
-              padding: EdgeInsets.all(24.sp),
+              padding: EdgeInsets.all(30.w),
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Palette.accent,
@@ -56,6 +56,8 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
               child: Center(
                 child: SvgPicture.asset(
                   'assets/images/mapalus.svg',
+                  width: 60.w,
+                  height: 60.h,
                   color: Palette.primary,
                 ),
               ),
