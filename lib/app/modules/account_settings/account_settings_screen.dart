@@ -82,12 +82,12 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
           padding: EdgeInsets.symmetric(horizontal: Insets.medium.w),
           child: Column(
             children: [
-              _buildItemRow(
-                assetLocation: 'assets/vectors/edit.svg',
-                text: 'Sunting Informasi Akun',
-                context: context,
-                onPressed: controller.onPressedEditAccountInfo,
-              ),
+              // _buildItemRow(
+              //   assetLocation: 'assets/vectors/edit.svg',
+              //   text: 'Sunting Informasi Akun',
+              //   context: context,
+              //   onPressed: controller.onPressedEditAccountInfo,
+              // ),
               Badge(
                 showBadge: controller.orderCount > 0,
                 padding: EdgeInsets.all(6.sp),

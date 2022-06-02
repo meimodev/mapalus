@@ -216,6 +216,7 @@ class HomeController extends GetxController {
 
   checkNewlyCreatedOrder() async {
     if (userRepo.signedUser == null) {
+      isCardOrderVisible.value = false;
       return;
     }
     if (userRepo.signedUser!.orders.isEmpty) {
@@ -236,7 +237,6 @@ class HomeController extends GetxController {
     if (_order.status == OrderStatus.placed) {
       latestOrder = _order;
       isCardOrderVisible.value = true;
-      // display in card latest order visibility
     } else {
       isCardOrderVisible.value = false;
     }

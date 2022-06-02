@@ -13,24 +13,24 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_screenutil: ^5.3.1
-  flutter_svg: ^1.0.3
+  flutter_screenutil: ^5.5.3
+  flutter_svg: ^1.1.0
   cupertino_icons: ^1.0.4
-  flutter_rating_bar: ^4.0.0
+  flutter_rating_bar: ^4.0.1
   badges: ^2.0.2
   carousel_slider: ^4.1.1
-  firebase_core: ^1.17.0
-  cloud_firestore: ^3.1.15
-  get: ^4.6.3
+  firebase_core: ^1.17.1
+  cloud_firestore: ^3.1.17
+  get: ^4.6.5
   intl: ^0.17.0
   jiffy: ^5.0.0
-  firebase_auth: ^3.3.18
-  hive: ^2.1.0
+  firebase_auth: ^3.3.19
+  hive: ^2.2.1
   hive_flutter: ^1.1.0
-  google_maps_flutter: ^2.1.5
+  google_maps_flutter: ^2.1.6
   url_launcher: ^6.1.2
-  firebase_messaging: ^11.4.0
-  flutter_local_notifications: ^9.5.3
+  firebase_messaging: ^11.4.1
+  flutter_local_notifications: ^9.5.3+1
   transparent_image: ^2.0.0
   package_info_plus: ^1.4.2
   dio: ^4.0.6

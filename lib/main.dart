@@ -41,14 +41,14 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 800),
       minTextAdapt: true,
       splitScreenMode: false,
-      builder: () => GetMaterialApp(
+      builder: (context, _) => GetMaterialApp(
         title: 'Mapalus',
         theme: appThemeData,
         debugShowCheckedModeBanner: false,
         initialRoute: Routes.splash,
         getPages: Routes.getRoutes(),
         builder: (context, widget) {
-          ScreenUtil.setContext(context);
+          // ScreenUtil.setContext(context);
           return MediaQuery(
             data: MediaQuery.of(context).copyWith(
               textScaleFactor: 1.0,
