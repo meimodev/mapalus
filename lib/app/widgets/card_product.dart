@@ -35,59 +35,72 @@ class CardProduct extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              product.isAvailable
-                  ? Text(
-                      "",
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontWeight: FontWeight.w300,
-                            color: Palette.cardForeground,
-                            fontSize: 11.sp,
-                          ),
-                    )
-                  : Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/vectors/min.svg',
-                          height: 15.sp,
-                          width: 15.sp,
-                          color: Colors.grey,
-                        ),
-                        SizedBox(width: Insets.small.w * .5),
-                        Text(
-                          "Tidak Tersedia",
-                          style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  product.isAvailable
+                      ? SizedBox(
+                          height: Insets.small.h,
+                        )
+                      : Row(
+                          children: [
+                            SvgPicture.asset(
+                              'assets/vectors/min.svg',
+                              height: 12.sp,
+                              width: 12.sp,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(width: Insets.small.w * .5),
+                            Text(
+                              "Sedang tidak tersedia",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(
                                     fontWeight: FontWeight.w300,
-                                    color: Colors.grey,
-                                    fontSize: 11.sp,
+                                    color: Palette.accent,
+                                    fontSize: 9.sp,
                                   ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                  product.isCustomPrice
+                      ? Row(
+                          children: [
+                            SvgPicture.asset(
+                              'assets/vectors/money.svg',
+                              height: 12.sp,
+                              width: 12.sp,
+                              color: Palette.accent,
+                            ),
+                          ],
+                        )
+                      : const SizedBox(),
+                ],
+              ),
               SizedBox(height: Insets.small.h),
-              Expanded(
-                child: Container(
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: product.isAvailable
-                        ? Palette.accent.withOpacity(.85)
-                        : Palette.accent.withOpacity(.5),
-                    boxShadow: [
-                      BoxShadow(
-                        spreadRadius: .25,
-                        blurRadius: 10,
-                        color: product.isAvailable
-                            ? Palette.primary.withOpacity(.125)
-                            : Colors.grey.withOpacity(.125),
-                        offset: const Offset(3, 3),
-                      ),
-                    ],
-                  ),
-                  child: Center(
-                    child: CustomImage(
-                      imageUrl: product.imageUrl,
+              Container(
+                height: 120.h,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: product.isAvailable
+                      ? Palette.accent.withOpacity(.85)
+                      : Palette.accent.withOpacity(.5),
+                  boxShadow: [
+                    BoxShadow(
+                      spreadRadius: .25,
+                      blurRadius: 10,
+                      color: product.isAvailable
+                          ? Palette.primary.withOpacity(.125)
+                          : Colors.grey.withOpacity(.125),
+                      offset: const Offset(3, 3),
                     ),
+                  ],
+                ),
+                child: Center(
+                  child: CustomImage(
+                    imageUrl: product.imageUrl,
                   ),
                 ),
               ),

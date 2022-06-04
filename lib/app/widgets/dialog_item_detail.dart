@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mapalus/app/widgets/custom_image.dart';
@@ -6,6 +9,7 @@ import 'package:mapalus/app/widgets/text_input_quantity.dart';
 import 'package:mapalus/data/models/product.dart';
 import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/shared/theme.dart';
+import 'package:mapalus/shared/utils.dart';
 
 import 'button_alter_quantity.dart';
 
@@ -24,7 +28,7 @@ class DialogItemDetail extends StatefulWidget {
 }
 
 class _DialogItemDetailState extends State<DialogItemDetail> {
-  TextEditingController tecGram = TextEditingController();
+  TextEditingController tecUnit = TextEditingController();
   TextEditingController tecPrice = TextEditingController();
 
   late int initAmount;
@@ -33,23 +37,34 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
 
   late int additionAmountPrice;
 
+  late StreamSubscription<bool> keyboardSubs;
+
+  bool isKeyboardVisible = false;
+
   @override
   void initState() {
+    super.initState();
     initAmount = 1;
     additionAmountUnit = 1;
     additionAmountPrice = widget.product.price;
 
-    tecGram.text = initAmount.toString();
+    tecUnit.text = initAmount.toString();
     tecPrice.text = widget.product.price.toString();
 
-    super.initState();
+    var keyboardVisibilityController = KeyboardVisibilityController();
+    keyboardSubs = keyboardVisibilityController.onChange.listen((bool visible) {
+      setState(() {
+        isKeyboardVisible = visible;
+      });
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
-    tecGram.dispose();
+    tecUnit.dispose();
     tecPrice.dispose();
+    keyboardSubs.cancel();
   }
 
   @override
@@ -78,7 +93,9 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SizedBox(height: 135.h),
+                    isKeyboardVisible
+                        ? SizedBox(height: 210.h)
+                        : SizedBox(height: 135.h),
                     Expanded(
                       child: Padding(
                         padding: EdgeInsets.symmetric(
@@ -114,25 +131,30 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                                         fontSize: 12.sp,
                                       ),
                                 ),
-                                SizedBox(height: Insets.medium.h),
-                                Text(
-                                  widget.product.description,
-                                  maxLines: 4,
-                                  textAlign: TextAlign.justify,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 12.sp,
-                                        color: Colors.grey,
+                                isKeyboardVisible
+                                    ? const SizedBox()
+                                    : SizedBox(height: Insets.medium.h),
+                                isKeyboardVisible
+                                    ? const SizedBox()
+                                    : Text(
+                                        widget.product.description,
+                                        maxLines: 4,
+                                        textAlign: TextAlign.justify,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.w300,
+                                              fontSize: 12.sp,
+                                              color: Colors.grey,
+                                            ),
                                       ),
-                                ),
                               ],
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: Insets.medium.h,
+                              padding: EdgeInsets.only(
+                                top: isKeyboardVisible ? 0 : Insets.medium.h,
+                                bottom: Insets.medium.h,
                               ),
                               child: widget.product.isAvailable
                                   ? _buildAvailableWidgets(context)
@@ -153,7 +175,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                             widget.onPressedAddToCart(
                               ProductOrder(
                                 product: widget.product,
-                                quantity: double.parse(tecGram.text),
+                                quantity: double.parse(tecUnit.text),
                                 totalPrice: double.parse(tecPrice.text),
                               ),
                             );
@@ -242,44 +264,55 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
     );
   }
 
+  _onChangeValue({required bool isFromPrice}) {
+    String t1 = tecUnit.text;
+    String t2 = tecPrice.text;
+
+    double gram = 0;
+    double price = 0;
+    try {
+      gram = double.parse(t1);
+      price = double.parse(t2);
+    } catch (e) {
+      gram = 0;
+      price = 0;
+    }
+
+    if (isFromPrice) {
+      double g = price / widget.product.price;
+      String s = g.toStringAsFixed(2);
+      if (s.contains(".00")) {
+        s = s.substring(0, s.length - 3);
+      }
+      tecUnit.text = s;
+    } else {
+      tecPrice.text = (gram * widget.product.price).floor().toString();
+    }
+    // print('gram = ${tecGram.text} price = ${tecPrice.text}');
+  }
+
+  _adding(int amount, TextEditingController controller, bool isFromPrice) {
+    late int cur;
+    try {
+      cur = int.parse(controller.text);
+    } catch (_) {
+      cur = 0;
+    }
+    if (amount < 0 && cur + amount <= 0) {
+      amount = 0;
+    }
+    controller.text = (cur + amount).toString();
+    _onChangeValue(isFromPrice: isFromPrice);
+  }
+
   Widget _buildAvailableWidgets(BuildContext context) {
-    _onChangeValue(bool isFromPrice) {
-      double gram = double.parse(tecGram.text);
-      double price = double.parse(tecPrice.text);
-
-      if (isFromPrice) {
-        double g = price / widget.product.price;
-        String s = g.toStringAsFixed(2);
-        if (s.contains(".00")) {
-          s = s.substring(0, s.length - 3);
-        }
-        tecGram.text = s;
-      } else {
-        tecPrice.text = (gram * widget.product.price).floor().toString();
-      }
-      // print('gram = ${tecGram.text} price = ${tecPrice.text}');
-    }
-
-    _adding(int amount, TextEditingController controller, bool isFromPrice) {
-      late int cur;
-      try {
-        cur = int.parse(controller.text);
-      } catch (_) {
-        cur = 0;
-      }
-      if (amount < 0 && cur + amount <= 0) {
-        amount = 0;
-      }
-      controller.text = (cur + amount).toString();
-      _onChangeValue(isFromPrice);
-    }
-
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        _buildQuantitySuggestionRow(),
         _buildQuantityRow(
           context: context,
-          valueLabel: 'gram',
+          valueLabel: widget.product.unit,
           isCustomPrice: true,
           icon: SvgPicture.asset(
             'assets/vectors/gram.svg',
@@ -287,21 +320,22 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
             height: 15.sp,
             color: Palette.accent,
           ),
-          textEditingController: tecGram,
+          textEditingController: tecUnit,
           onValueChanged: (value) {
-            _onChangeValue(false);
+            print('onchage');
+            _onChangeValue(isFromPrice: false);
           },
           onAdd: () {
-            _adding(additionAmountUnit, tecGram, false);
+            _adding(additionAmountUnit, tecUnit, false);
           },
           onSub: () {
-            _adding(-additionAmountUnit, tecGram, false);
+            _adding(-additionAmountUnit, tecUnit, false);
           },
         ),
         SizedBox(height: 9.h),
         _buildQuantityRow(
           context: context,
-          valueLabel: 'rupiah',
+          valueLabel: 'Rp',
           isCustomPrice: widget.product.isCustomPrice,
           icon: SvgPicture.asset(
             'assets/vectors/money.svg',
@@ -311,7 +345,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
           ),
           textEditingController: tecPrice,
           onValueChanged: (value) {
-            _onChangeValue(true);
+            _onChangeValue(isFromPrice: true);
           },
           onAdd: () {
             _adding(additionAmountPrice, tecPrice, true);
@@ -375,6 +409,93 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
           isEnabled: isCustomPrice,
         ),
       ],
+    );
+  }
+
+  _buildQuantitySuggestionRow() {
+    // if unit == kilogram then display the decimals kilos
+    // if customPrice than show prices 1.5x, 2x, 2.5x,
+
+    final decimalKilosDesc = [
+      _buildQuantitySuggestionChip("0.75 ${widget.product.unit}"),
+      _buildQuantitySuggestionChip("0.5 ${widget.product.unit}"),
+      _buildQuantitySuggestionChip("0.25 ${widget.product.unit}"),
+    ];
+
+    final decimalKilosAsc = [
+      _buildQuantitySuggestionChip("100 ${widget.product.unit}"),
+      _buildQuantitySuggestionChip("200 ${widget.product.unit}"),
+      _buildQuantitySuggestionChip("500 ${widget.product.unit}"),
+    ];
+
+    final multiplePrices = [
+      _buildQuantitySuggestionChip(
+          Utils.formatNumberToCurrency(widget.product.price * 1.5)),
+      _buildQuantitySuggestionChip(
+          Utils.formatNumberToCurrency(widget.product.price * 2)),
+      _buildQuantitySuggestionChip(
+          Utils.formatNumberToCurrency(widget.product.price * 2.5)),
+    ];
+
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          ...widget.product.unit.toLowerCase().contains("kg")
+              ? decimalKilosDesc
+              : [],
+          ...widget.product.unit.toLowerCase() == "gram" ? decimalKilosAsc : [],
+          ...widget.product.isCustomPrice ? multiplePrices : [],
+        ],
+      ),
+    );
+  }
+
+  _buildQuantitySuggestionChip(String text) {
+    bool isPrice = text.contains("Rp.");
+
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: Insets.small.h * .75,
+        left: Insets.small.w * .25,
+        right: Insets.small.w * .25,
+      ),
+      child: Material(
+        clipBehavior: Clip.antiAlias,
+        // color: Palette.primary,
+        shape: ContinuousRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+            side: const BorderSide(
+              color: Palette.primary,
+              width: 1.5,
+            )),
+        child: InkWell(
+          onTap: () {
+            if (isPrice) {
+              tecPrice.text =
+                  Utils.formatCurrencyToNumber(text).toInt().toString();
+              _onChangeValue(isFromPrice: isPrice);
+              return;
+            }
+            tecUnit.text = text.replaceAll(RegExp(r'[a-zA-Z]'), '');
+            _onChangeValue(isFromPrice: isPrice);
+          },
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: Insets.small.w * .75,
+              vertical: Insets.small.h * .25,
+            ),
+            child: Text(
+              text,
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    fontSize: 8.sp,
+                    color: Palette.primary,
+                  ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
