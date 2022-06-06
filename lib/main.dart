@@ -1,3 +1,4 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ void main() async {
   if (defaultTargetPlatform == TargetPlatform.android) {
     AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
   }
+  await FirebaseAppCheck.instance.activate();
   FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
   await Jiffy.locale("id");
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])

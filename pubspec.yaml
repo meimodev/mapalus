@@ -35,6 +35,7 @@ dependencies:
   package_info_plus: ^1.4.2
   dio: ^4.0.6
   flutter_keyboard_visibility: ^5.2.0
+  firebase_app_check: ^0.0.6+13
 
 
 
