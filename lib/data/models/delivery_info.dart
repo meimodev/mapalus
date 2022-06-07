@@ -12,11 +12,13 @@ class DeliveryInfo {
 
   final List<List<double>> priceMatrixFromWeight = [
     //[0 - 2Km, >2Km - 4Km, >4Km - 6.5Km, >6.5km - 8Km]
-    [6000, 8000, 10000, 20000], //0 - 2Kg
-    [12000, 16000, 20000, 40000], // >2Kg - 4Kg
-    [18000, 24000, 30000, 80000], // >4Kg - 6Kg
-    [27000, 36000, 45000, 120000], // >6Kg - 9Kg
+    [6000, 8000, 10000, 20000], //0 - 5Kg
+    [12000, 16000, 20000, 40000], // >5Kg - 7Kg
+    [18000, 24000, 30000, 80000], // >7Kg - 9Kg
+    [27000, 36000, 45000, 120000], // >9Kg - 11Kg
   ];
+
+  final List<double> weightMilestones = [5.0, 7.0, 9.0, 11.0];
 
   DeliveryInfo(
     this.id,
@@ -89,13 +91,13 @@ class DeliveryInfo {
     double distanceFee = 0;
     //determine the weight in which class
     weight = weight / 1000;
-    if (weight > 0 && weight <= 2.0) {
+    if (weight > 0 && weight <= weightMilestones[0]) {
       distanceFee = _calculateDistance(distance, 0);
-    } else if (weight > 2.0 && weight <= 4.0) {
+    } else if (weight > 2.0 && weight <= weightMilestones[1]) {
       distanceFee = _calculateDistance(distance, 1);
-    } else if (weight > 4.0 && weight <= 6.0) {
+    } else if (weight > 4.0 && weight <= weightMilestones[2]) {
       distanceFee = _calculateDistance(distance, 2);
-    } else if (weight > 6 && weight <= 9) {
+    } else if (weight > 6 && weight <= weightMilestones[3]) {
       distanceFee = _calculateDistance(distance, 3);
     } else {
       return 'invalid weight $weight';

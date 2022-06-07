@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 
@@ -130,6 +131,8 @@ class UserRepo extends UserRepoContract {
     if (onSignedUser != null) {
       onSignedUser!(user);
     }
+    FirebaseCrashlytics.instance
+        .setUserIdentifier("${user.phone} - ${user.name}");
     // var box = Hive.box('user_signing');
     // box.put('name', user.name);
     // box.put('phone', user.phone);
@@ -236,6 +239,7 @@ class UserRepo extends UserRepoContract {
       await FirebaseAuth.instance.signOut();
       signedUser = null;
     }
+    FirebaseCrashlytics.instance.setUserIdentifier("");
 
     if (onSigningOut != null) {
       onSigningOut!();

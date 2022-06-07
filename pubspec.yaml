@@ -3,7 +3,7 @@ description: Platform to support local community to hopefully be able to thrive
 
 publish_to: 'none'
 
-version: 1.0.5+5
+version: 1.0.6+6
 
 environment:
   sdk: ">=2.16.2 <3.0.0"
@@ -15,7 +15,7 @@ dependencies:
 
   flutter_screenutil: ^5.5.3
   flutter_svg: ^1.1.0
-  cupertino_icons: ^1.0.4
+  cupertino_icons: ^1.0.5
   flutter_rating_bar: ^4.0.1
   badges: ^2.0.3
   carousel_slider: ^4.1.1
@@ -30,12 +30,13 @@ dependencies:
   google_maps_flutter: ^2.1.7
   url_launcher: ^6.1.2
   firebase_messaging: ^11.4.1
-  flutter_local_notifications: ^9.5.3+1
+  flutter_local_notifications: ^9.6.0
   transparent_image: ^2.0.0
   package_info_plus: ^1.4.2
   dio: ^4.0.6
   flutter_keyboard_visibility: ^5.2.0
   firebase_app_check: ^0.0.6+13
+  firebase_crashlytics: ^2.8.1
 
 
 
