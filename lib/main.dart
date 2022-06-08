@@ -12,6 +12,7 @@ import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/theme.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'firebase_options.dart';
 

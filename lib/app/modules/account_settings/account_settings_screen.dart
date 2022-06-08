@@ -17,19 +17,21 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const CardNavigation(title: 'Tentang Akun'),
-              Obx(
-                () => AnimatedSwitcher(
-                  duration: 400.milliseconds,
-                  child: controller.userName.isNotEmpty
-                      ? _buildSignedInBody(context)
-                      : _buildAnonymousBody(context),
-                ),
-              )
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const CardNavigation(title: 'Tentang Akun'),
+                Obx(
+                  () => AnimatedSwitcher(
+                    duration: 400.milliseconds,
+                    child: controller.userName.isNotEmpty
+                        ? _buildSignedInBody(context)
+                        : _buildAnonymousBody(context),
+                  ),
+                )
+              ],
+            ),
           ),
           _buildDevNote(context),
         ],
@@ -169,51 +171,51 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
   }
 
   Widget _buildDevNote(BuildContext context) {
-    return Expanded(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: Insets.medium.w),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade100,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(height: Insets.small.h),
-            Text(
-              'mapalus v.1.2.441',
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: Insets.medium.w,
+        vertical: Insets.medium.h,
+      ),
+      color: Colors.grey.shade200,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Obx(
+            () => Text(
+              'mapalus ${controller.currentVersion.value}',
               style: Theme.of(context).textTheme.bodyText1?.copyWith(
                     color: Colors.grey,
-                    fontWeight: FontWeight.w300,
+                    fontWeight: FontWeight.w600,
                     fontSize: 12.sp,
                   ),
             ),
-            Text(
-              'www.meimodev.com',
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12.sp,
-                  ),
-            ),
-            Row(
-              children: [
-                Text(
-                  'with ♥ 2022 ',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12.sp,
-                      ),
+          ),
+          Text(
+            'www.meimodev.com',
+            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w300,
+                  fontSize: 12.sp,
                 ),
-                SvgPicture.asset(
-                  'assets/images/logo_meimo.svg',
-                  width: 15.sp,
-                  height: 15.sp,
-                )
-              ],
-            ),
-          ],
-        ),
+          ),
+          Row(
+            children: [
+              Text(
+                'with ♥ 2022 ',
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w300,
+                      fontSize: 12.sp,
+                    ),
+              ),
+              SvgPicture.asset(
+                'assets/images/logo_meimo.svg',
+                width: 15.sp,
+                height: 15.sp,
+              )
+            ],
+          ),
+        ],
       ),
     );
   }

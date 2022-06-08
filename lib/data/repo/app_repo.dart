@@ -36,4 +36,9 @@ class AppRepo extends AppRepoContract {
     }
     return false;
   }
+
+  Future<String> getCurrentVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    return 'v${packageInfo.version}';
+  }
 }

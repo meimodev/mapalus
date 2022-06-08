@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/home/home_controller.dart';
+import 'package:mapalus/data/repo/app_repo.dart';
 import 'package:mapalus/data/repo/user_repo.dart';
 import 'package:mapalus/shared/routes.dart';
 
@@ -7,12 +8,16 @@ class AccountSettingsController extends GetxController {
   RxString userName = ''.obs;
   RxString userPhone = ''.obs;
   RxInt orderCount = 0.obs;
+  RxString currentVersion = ''.obs;
+
   HomeController homeController = Get.find();
 
+  AppRepo appRepo = Get.find();
   UserRepo userRepo = Get.find();
 
   @override
   void onInit() {
+    super.onInit();
     if (userRepo.signedUser != null) {
       userName.value = userRepo.signedUser!.name;
       userPhone.value = userRepo.signedUser!.phone;
@@ -27,9 +32,14 @@ class AccountSettingsController extends GetxController {
       userPhone.value = '';
     };
 
-    final _orderCount = int.parse(Get.arguments.toString());
-    orderCount.value = _orderCount;
-    super.onInit();
+    final count = int.parse(Get.arguments.toString());
+    orderCount.value = count;
+
+    initVersion();
+  }
+
+  initVersion() async {
+    currentVersion.value = await appRepo.getCurrentVersion();
   }
 
   onPressedEditAccountInfo() {}
