@@ -54,7 +54,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '342086903599',
     projectId: 'mapalus-a26af',
     storageBucket: 'mapalus-a26af.appspot.com',
-    iosClientId: '342086903599-v0u3435mshr1pr8aas21prgbuk84i78t.apps.googleusercontent.com',
+    androidClientId: '342086903599-5d7ht8nn9vn6vgve24g9i0uvbnivf0l1.apps.googleusercontent.com',
+    iosClientId: '342086903599-slsvrmghsnosst242ekdg5mprbvrlhkr.apps.googleusercontent.com',
     iosBundleId: 'com.meimodev.mapalus',
   );
 }
