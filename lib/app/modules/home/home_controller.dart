@@ -55,12 +55,24 @@ class HomeController extends GetxController {
       imageUrl: "https://i.ibb.co/mJmZQkW/category-bahan-makanan.jpg",
     ),
     Category(
-      name: "Bahan Dapur",
+      name: "Lauk Pauk",
+      imageUrl: "https://i.ibb.co/LgdQZXS/category-lauk-pauk.jpg",
+    ),
+    Category(
+      name: "Bumbu Dapur",
       imageUrl: "https://i.ibb.co/HhgsbGZ/category-bumbu-dapur.jpg",
     ),
     Category(
-      name: "Lauk Pauk",
-      imageUrl: "https://i.ibb.co/LgdQZXS/category-lauk-pauk.jpg",
+      name: "Sayuran",
+      imageUrl: "https://i.ibb.co/M5jXDRG/category-sayuran.jpg",
+    ),
+    Category(
+      name: "Buah",
+      imageUrl: "https://i.ibb.co/cc7QcY6/category-buah.jpg",
+    ),
+    Category(
+      name: "Bahan Kue",
+      imageUrl: "https://i.ibb.co/3M4jN9F/category-bahan-kue.jpg",
     ),
   ];
 
