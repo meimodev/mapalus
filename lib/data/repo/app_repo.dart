@@ -23,8 +23,7 @@ class AppRepo extends AppRepoContract {
     Version remoteVersion = Version.fromMap(data as Map<String, dynamic>);
 
     if (kDebugMode) {
-      print('[APP VERSION] local $localVersion');
-      print('[APP VERSION] remote $remoteVersion');
+      print('[APP VERSION] local $localVersion remote $remoteVersion');
     }
 
     if (localVersion == remoteVersion) {
