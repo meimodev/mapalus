@@ -102,8 +102,14 @@ class DeliveryInfo {
     } else {
       return 'invalid weight $weight';
     }
+    var res = ((distanceFee / 1000) * discount).round() * 1000;
+    if (res <= 0) {
+      res = 0;
+    }
     return Utils.formatNumberToCurrency(
-        ((distanceFee / 1000) * discount).round() * 1000);
+      res,
+      canBeFree: true,
+    );
   }
 
   double _calculateDistance(double dis, int weightRow) {
