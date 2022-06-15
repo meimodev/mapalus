@@ -49,7 +49,6 @@ android {
 
     defaultConfig {
         applicationId "com.meimodev.mapalus"
-//        minSdkVersion flutter.minSdkVersion
         minSdkVersion 22
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
