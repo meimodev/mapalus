@@ -234,20 +234,20 @@ class HomeController extends GetxController {
     if (userRepo.signedUser!.orders.isEmpty) {
       return;
     }
-    final _orders = userRepo.signedUser!.orders;
-    final latestOrderId = _orders.elementAt(_orders.length - 1);
+    final oo = userRepo.signedUser!.orders;
+    final latestOrderId = oo.elementAt(oo.length - 1);
 
     //get the unfinished order count
-    unfinishedOrderCount.value = _orders.length;
+    unfinishedOrderCount.value = oo.length;
 
     // get the latest order
-    final _order = await orderRepo.readOrder(latestOrderId);
-    if (_order == null) {
+    final o = await orderRepo.readOrder(latestOrderId);
+    if (o == null) {
       return;
     }
     // check if order is not finish, then display it
-    if (_order.status == OrderStatus.placed) {
-      latestOrder = _order;
+    if (o.status == OrderStatus.placed) {
+      latestOrder = o;
       isCardOrderVisible.value = true;
     } else {
       isCardOrderVisible.value = false;
@@ -342,14 +342,14 @@ class HomeController extends GetxController {
 
   onChangedSearchText(String text) async {
     canLoadingMain.value = true;
-    var _products = List<Product>.from(tempSearchedProducts);
+    var pp = List<Product>.from(tempSearchedProducts);
     isNoMoreProductsToDisplay.value = false;
 
     if (text.length > 1) {
       //separate the product that contain the text in product name to new list
       //update display list to this new list
       //
-      var _searched = _products.where(
+      var searched = pp.where(
         (element) {
           bool isContainName = element.name
               .toLowerCase()
@@ -362,7 +362,7 @@ class HomeController extends GetxController {
           return isContainName || isContainCategory;
         },
       ).toList();
-      tempProducts = _searched;
+      tempProducts = searched;
       //set only the initial products (because infinite scrolling)
 
       _currentIndex = 0;

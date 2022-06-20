@@ -99,8 +99,8 @@ class _DialogRatingState extends State<DialogRating> {
                   glowColor: Palette.editable.withOpacity(.25),
                   itemSize: 27.sp,
                   itemPadding: EdgeInsets.symmetric(horizontal: 6.w),
-                  onRatingUpdate: (_rating) {
-                    rating = _rating;
+                  onRatingUpdate: (r) {
+                    rating = r;
                   },
                   itemBuilder: (BuildContext context, int index) =>
                       SvgPicture.asset(

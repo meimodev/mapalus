@@ -41,13 +41,13 @@ class LocationController extends GetxController {
     deliveries = d.map((e) => DeliveryInfo.fromJSON(e)).toList().obs;
 
     var args = Get.arguments;
-    double _weight = double.parse(args['products_weight'].toString());
+    double w = double.parse(args['products_weight'].toString());
     orderInfo.value = orderInfo.value.copyWith(
       productCount: int.parse(args['products_count'].toString()),
       productPrice: double.parse(args['products_price'].toString()),
-      deliveryWeight: _weight,
+      deliveryWeight: w,
     );
-    weight.value = _weight;
+    weight.value = w;
     _calculateOrderInfo();
 
     super.onInit();
@@ -85,21 +85,21 @@ class LocationController extends GetxController {
       return;
     }
 
-    var _deliveryTime = _selectedDeliveryInfo!.title;
+    var deliveryTime = _selectedDeliveryInfo!.title;
     if (_selectedDeliveryInfo!.isTomorrow) {
-      final _tomorrowDate = Jiffy().add(days: 1).format("EEEE, dd MMM");
-      orderInfo.value.deliveryTime = "$_deliveryTime ($_tomorrowDate)";
+      final tomorrowDate = Jiffy().add(days: 1).format("EEEE, dd MMM");
+      orderInfo.value.deliveryTime = "$deliveryTime ($tomorrowDate)";
     } else {
-      orderInfo.value.deliveryTime = _deliveryTime;
+      orderInfo.value.deliveryTime = deliveryTime;
     }
 
-    List<ProductOrder> _productOrders = (Get.arguments
+    List<ProductOrder> productOrders = (Get.arguments
         as Map<String, dynamic>)['product_orders'] as List<ProductOrder>;
     Get.toNamed(
       Routes.ordering,
       arguments: <String, dynamic>{
         'delivery_info': _selectedDeliveryInfo,
-        'product_orders': _productOrders,
+        'product_orders': productOrders,
         'order_info': orderInfo.value,
       },
     );

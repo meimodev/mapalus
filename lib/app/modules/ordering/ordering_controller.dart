@@ -28,15 +28,15 @@ class OrderingController extends GetxController {
     UserApp? user = await userRepo.readSignedInUser();
 
     Map<String, dynamic> args = Get.arguments as Map<String, dynamic>;
-    List<ProductOrder> _productOrders =
+    List<ProductOrder> productOrders =
         args['product_orders'] as List<ProductOrder>;
-    OrderInfo _orderInfo = args['order_info'] as OrderInfo;
+    OrderInfo orderInfo = args['order_info'] as OrderInfo;
 
     try {
       Order order = await orderRepo.createOrder(
-        products: _productOrders,
+        products: productOrders,
         user: user!,
-        orderInfo: _orderInfo,
+        orderInfo: orderInfo,
       );
       var now = Jiffy();
       NotificationService.instance.sendNotification(

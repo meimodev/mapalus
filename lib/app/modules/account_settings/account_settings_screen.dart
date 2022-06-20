@@ -22,12 +22,14 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const CardNavigation(title: 'Tentang Akun'),
-                Obx(
-                  () => AnimatedSwitcher(
-                    duration: 400.milliseconds,
-                    child: controller.userName.isNotEmpty
-                        ? _buildSignedInBody(context)
-                        : _buildAnonymousBody(context),
+                Expanded(
+                  child: Obx(
+                    () => AnimatedSwitcher(
+                      duration: 400.milliseconds,
+                      child: controller.userName.isNotEmpty
+                          ? _buildSignedInBody(context)
+                          : _buildAnonymousBody(context),
+                    ),
                   ),
                 )
               ],
@@ -82,6 +84,14 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
           ],
         ),
         SizedBox(height: Insets.medium.h),
+        Container(
+          height: .5,
+          margin: EdgeInsets.symmetric(
+            horizontal: Insets.large.w,
+          ),
+          color: Palette.accent,
+        ),
+        SizedBox(height: Insets.small.h),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: Insets.medium.w),
           child: Column(
@@ -120,14 +130,6 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
           ),
         ),
         SizedBox(height: Insets.small.h),
-        Container(
-          height: 2.h,
-          width: 100.w,
-          margin: EdgeInsets.symmetric(
-            horizontal: Insets.medium.w,
-          ),
-          color: Palette.accent,
-        ),
       ],
     );
   }
@@ -135,6 +137,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
   Widget _buildAnonymousBody(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(height: Insets.medium.h),
         Text(

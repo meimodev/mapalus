@@ -322,7 +322,6 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
           ),
           textEditingController: tecUnit,
           onValueChanged: (value) {
-            print('onchage');
             _onChangeValue(isFromPrice: false);
           },
           onAdd: () {

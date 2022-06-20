@@ -25,10 +25,7 @@ class SigningController extends GetxController {
   void onInit() {
     var args = Get.arguments;
     message = args.toString();
-    userRepo.onSuccessSigning = (_) {
-      Get.rawSnackbar(title: "Berhasil Masuk");
-      Get.back();
-    };
+
     userRepo.onUnregisteredUser = (_) {
       isLoading.value = true;
       tecSigning.clear();
@@ -38,6 +35,15 @@ class SigningController extends GetxController {
       isLoading.value = false;
     };
     super.onInit();
+  }
+
+  @override
+  void onReady() {
+    userRepo.onSuccessSigning = (_) {
+      Get.rawSnackbar(title: "Berhasil Masuk");
+      Get.back();
+    };
+    super.onReady();
   }
 
   @override

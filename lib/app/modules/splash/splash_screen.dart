@@ -13,19 +13,21 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  void wait(BuildContext context) async {
+  void wait(onProceed) async {
     await Future.delayed(const Duration(seconds: 2), () {});
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      Routes.home,
-      (route) => false,
-    );
+    onProceed();
   }
 
   @override
   void initState() {
     super.initState();
-    wait(context);
+    wait(() {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        Routes.home,
+        (route) => false,
+      );
+    });
   }
 
   @override

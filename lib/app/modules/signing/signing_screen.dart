@@ -171,30 +171,30 @@ class CardSigning extends StatelessWidget {
   }
 
   generateSigningButton() {
-    String _buttonText;
-    VoidCallback _onPressed;
+    String buttonText;
+    VoidCallback onPressed;
 
     // print("generateSigningButton() " + signingState.name);
     switch (signingState) {
       case CardSigningState.oneTimePassword:
-        _buttonText = "Masuk";
-        _onPressed = onPressedRequestOTP;
+        buttonText = "Masuk";
+        onPressed = onPressedRequestOTP;
         break;
       case CardSigningState.confirmCode:
-        _buttonText = "Konfirmasi Kode";
-        _onPressed = onPressedConfirmCode;
+        buttonText = "Konfirmasi Kode";
+        onPressed = onPressedConfirmCode;
 
         break;
       case CardSigningState.notRegistered:
         // print("generateSigningButton() not registered called");
 
-        _buttonText = "Daftar & Masuk";
-        _onPressed = onPressedCreateUser;
+        buttonText = "Daftar & Masuk";
+        onPressed = onPressedCreateUser;
 
         break;
       default:
-        _buttonText = "INVALID STATE";
-        _onPressed = () {};
+        buttonText = "INVALID STATE";
+        onPressed = () {};
     }
 
     return Material(
@@ -203,11 +203,11 @@ class CardSigning extends StatelessWidget {
       elevation: 2,
       borderRadius: BorderRadius.circular(9.sp),
       child: InkWell(
-        onTap: _onPressed,
+        onTap: onPressed,
         child: Padding(
           padding: EdgeInsets.all(Insets.small.sp),
           child: Center(
-            child: Text(_buttonText),
+            child: Text(buttonText),
           ),
         ),
       ),
@@ -216,21 +216,21 @@ class CardSigning extends StatelessWidget {
 
   generateSigningTextField(BuildContext context) {
     String labelText = "Nomor Handphone";
-    VoidCallback _onPressed;
+    VoidCallback onPressed;
 
     switch (signingState) {
       case CardSigningState.oneTimePassword:
-        _onPressed = onPressedRequestOTP;
+        onPressed = onPressedRequestOTP;
 
         break;
       case CardSigningState.confirmCode:
         labelText = "Kode";
-        _onPressed = onPressedConfirmCode;
+        onPressed = onPressedConfirmCode;
 
         break;
       case CardSigningState.notRegistered:
         labelText = "Nama Anda";
-        _onPressed = onPressedCreateUser;
+        onPressed = onPressedCreateUser;
 
         break;
     }
@@ -252,7 +252,7 @@ class CardSigning extends StatelessWidget {
             controller: controller.tecSigning,
             maxLines: 1,
             onSubmitted: (_) {
-              _onPressed();
+              onPressed();
             },
             autocorrect: false,
             style: TextStyle(

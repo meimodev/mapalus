@@ -39,7 +39,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
               children: [
                 Obx(
                   () => CardNavigation(
-                    title: 'Rincian Pesanan #' + controller.id.value,
+                    title: 'Rincian Pesanan #${controller.id.value}',
                     isInverted: true,
                   ),
                 ),
