@@ -16,8 +16,9 @@ class AccountSettingsController extends GetxController {
   UserRepo userRepo = Get.find();
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
+
     if (userRepo.signedUser != null) {
       userName.value = userRepo.signedUser!.name;
       userPhone.value = userRepo.signedUser!.phone;

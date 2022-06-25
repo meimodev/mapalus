@@ -26,14 +26,10 @@ class AppRepo extends AppRepoContract {
       print('[APP VERSION] local $localVersion remote $remoteVersion');
     }
 
-    if (localVersion == remoteVersion) {
-      return true;
+    if (remoteVersion > localVersion) {
+      return false;
     }
-    if (localVersion.major == remoteVersion.major &&
-        localVersion.minor <= remoteVersion.minor) {
-      return true;
-    }
-    return false;
+    return true;
   }
 
   Future<String> getCurrentVersion() async {

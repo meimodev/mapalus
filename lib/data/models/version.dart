@@ -32,6 +32,9 @@ class Version {
           minor == other.minor &&
           patch == other.patch;
 
+  bool operator >(Version version) =>
+      major > version.major || minor > version.minor;
+
   @override
   int get hashCode => major.hashCode ^ minor.hashCode ^ patch.hashCode;
 

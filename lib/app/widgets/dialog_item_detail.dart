@@ -61,10 +61,10 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
 
   @override
   void dispose() {
-    super.dispose();
     tecUnit.dispose();
     tecPrice.dispose();
     keyboardSubs.cancel();
+    super.dispose();
   }
 
   @override
@@ -74,7 +74,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
       elevation: 0,
       child: Container(
         alignment: Alignment.center,
-        height: 570.h,
+        height: 600.h,
         width: 300.w,
         color: Colors.transparent,
         child: Stack(
@@ -89,12 +89,12 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                   borderRadius: BorderRadius.all(Radius.circular(9.sp)),
                   color: Palette.cardForeground,
                 ),
-                height: 470.h,
+                height: 500.h,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     isKeyboardVisible
-                        ? SizedBox(height: 210.h)
+                        ? SizedBox(height: 230.h)
                         : SizedBox(height: 135.h),
                     Expanded(
                       child: Padding(

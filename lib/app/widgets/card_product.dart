@@ -112,7 +112,7 @@ class CardProduct extends StatelessWidget {
                     product.name,
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontWeight: FontWeight.w500,
-                          fontSize: 14.sp,
+                          fontSize: _calculateFontSize(),
                           color: product.isAvailable
                               ? Palette.textPrimary
                               : Colors.grey,
@@ -136,5 +136,14 @@ class CardProduct extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _calculateFontSize() {
+    if (product.name.length > 30) {
+      return 10.sp;
+    }
+    if (product.name.length > 24) {
+      return 12.sp;
+    }
   }
 }
