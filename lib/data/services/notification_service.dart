@@ -14,11 +14,6 @@ class NotificationService {
   NotificationService._() {
     _fetchServerKey();
     _fetchPartnerFCMToken();
-
-    /// Server Key
-    ///AAAAT6X35y8:APA91bGRDEWY5NoZ_yGcDMlKHIBJfl-Zy24LEhW9nODanXRonLr1LB
-    ///We64_aEKEYHP7lJWwI7D3CBn9TKxJVOU_lQ-tfo6OOpY99_XosPRpa5qFG1g989GjY
-    ///X0W1ovTn70GHG_z6twg_
   }
 
   Future<void> _fetchServerKey() async {
