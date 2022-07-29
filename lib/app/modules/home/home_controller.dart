@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -46,10 +48,10 @@ class HomeController extends GetxController {
   var isSearchingProduct = false.obs;
 
   TextEditingController tecSearch = TextEditingController();
-  final _pageSize = 4;
+  final _pageSize = 10;
   var _currentIndex = 0;
 
-  List<Category> categories = [
+  RxList<Category> categories = [
     Category(
       name: "Bahan Makanan",
       imageUrl: "https://i.ibb.co/mJmZQkW/category-bahan-makanan.jpg",
@@ -74,10 +76,11 @@ class HomeController extends GetxController {
       name: "Bahan Kue",
       imageUrl: "https://i.ibb.co/3M4jN9F/category-bahan-kue.jpg",
     ),
-  ];
+  ].obs;
 
   @override
   Future<void> onInit() async {
+    categories.shuffle();
     await Future.delayed(1.seconds);
     if (!await appRepo.checkIfLatestVersion()) {
       Get.offNamed(Routes.updateApp);
@@ -97,7 +100,6 @@ class HomeController extends GetxController {
   @override
   void onReady() {
     Future.delayed(2.seconds).then((value) => checkNewlyCreatedOrder());
-
     super.onReady();
   }
 
@@ -185,6 +187,7 @@ class HomeController extends GetxController {
     // canLoadingProducts.value = true;
 
     tempProducts = await productRepo.getProducts();
+    tempProducts.shuffle();
     tempSearchedProducts = List.from(tempProducts);
     displayProducts.value = tempProducts.sublist(0, _pageSize);
     _currentIndex += _pageSize;

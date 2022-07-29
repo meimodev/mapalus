@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -23,7 +25,7 @@ class HomeScreen extends GetView<HomeController> {
       child: Stack(
         children: [
           CustomScrollView(
-            physics: const BouncingScrollPhysics(),
+            // physics: const BouncingScrollPhysics(),
             controller: controller.scrollControllerMain,
             slivers: [
               _buildListAppBar(
@@ -102,7 +104,7 @@ class HomeScreen extends GetView<HomeController> {
   _buildListProduct(BuildContext context) {
     return Column(
       children: [
-        GridView.builder(
+        ListView.builder(
           addAutomaticKeepAlives: true,
           shrinkWrap: true,
           itemBuilder: (_, index) => _buildProductCard(
@@ -111,13 +113,13 @@ class HomeScreen extends GetView<HomeController> {
           ),
           primary: false,
           itemCount: controller.displayProducts.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            // maxCrossAxisExtent: 170.w,
-            crossAxisCount: 2,
-            crossAxisSpacing: 6.w,
-            mainAxisSpacing: 6.w,
-            mainAxisExtent: 250.h,
-          ),
+          // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          //   // maxCrossAxisExtent: 170.w,
+          //   crossAxisCount: 2,
+          //   crossAxisSpacing: 6.w,
+          //   mainAxisSpacing: 6.w,
+          //   mainAxisExtent: 250.h,
+          // ),
         ),
         _buildListFooter(context),
       ],
@@ -192,12 +194,14 @@ class HomeScreen extends GetView<HomeController> {
   }
 
   _buildProductCard(int index, List<Product> products) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: index % 2 == 0 ? Insets.medium.w : 0,
-        right: index % 2 == 0 ? 0 : Insets.medium.w,
-      ),
-      child: CardProduct(
+    return
+      // Padding(
+      // padding: EdgeInsets.only(
+      //   left: index % 2 == 0 ? Insets.medium.w : 0,
+      //   right: index % 2 == 0 ? 0 : Insets.medium.w,
+      // ),
+      // child:
+    CardProduct(
         product: products[index],
         onPressed: (product) {
           Get.dialog(
@@ -207,7 +211,7 @@ class HomeScreen extends GetView<HomeController> {
             ),
           );
         },
-      ),
+      // ),
     );
   }
 
@@ -272,9 +276,11 @@ class HomeScreen extends GetView<HomeController> {
                       ],
                     ),
                     SizedBox(height: Insets.small.h),
-                    _BuildCardCategories(
-                      onPressedCategories: controller.onPressedCategories,
-                      categories: controller.categories,
+                    Obx(
+                      ()=> _BuildCardCategories(
+                        onPressedCategories: controller.onPressedCategories,
+                        categories: controller.categories.value,
+                      ),
                     ),
                     SizedBox(height: Insets.small.h),
                   ],

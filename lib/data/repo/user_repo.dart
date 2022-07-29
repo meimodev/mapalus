@@ -150,7 +150,7 @@ class UserRepo extends UserRepoContract {
           onResult(Result(message: "PROCEED"));
         },
         verificationFailed: (FirebaseAuthException e) async {
-          print('[VERIFICATION_FAILED] ${e.code}');
+          debugPrint('[VERIFICATION_FAILED] ${e.code}');
           await FirebaseCrashlytics.instance.recordError(e, e.stackTrace,
               reason: 'FirebaseAuthException verificationFailed');
 
@@ -189,7 +189,7 @@ class UserRepo extends UserRepoContract {
 
       FirebaseCrashlytics.instance.log("AUTH EXCEPTION ${e.code}");
 
-      print('AUTH EXCEPTION ${e.code}');
+      debugPrint('AUTH EXCEPTION ${e.code}');
 
       if (e.code == "invalid-verification-code") {
         debugPrint('INVALID CODE');
