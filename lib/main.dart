@@ -28,14 +28,18 @@ void main() async {
   if (defaultTargetPlatform == TargetPlatform.android) {
     AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
   }
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) => runApp(const MyApp()));
+
   await FirebaseAppCheck.instance.activate();
   FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
   await Jiffy.locale("id");
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) => runApp(const MyApp()));
+  await FirebaseMessaging.instance.setAutoInitEnabled(true);
+
+
 }
 
 class MyApp extends StatelessWidget {

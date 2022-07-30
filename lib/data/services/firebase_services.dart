@@ -143,7 +143,7 @@ class FirestoreService {
     return doc.data();
   }
 
-  getPartnerKey(String id) async {
+  Future<Object?> getPartnerKey(String id) async {
     CollectionReference partners = fireStore.collection('partners');
     DocumentSnapshot doc = await partners.doc(id).get();
     return doc.data();

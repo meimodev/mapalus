@@ -9,11 +9,11 @@ class NotificationService {
       _instance ??= NotificationService._();
 
   String? serverKey;
-  List<String>? partnerFCMToken;
+  String? partnerFCMTopic;
 
   NotificationService._() {
     _fetchServerKey();
-    _fetchPartnerFCMToken();
+    _fetchPartnerFCMTopic();
   }
 
   Future<void> _fetchServerKey() async {
@@ -24,30 +24,27 @@ class NotificationService {
     serverKey = mapData['server_key'];
   }
 
-  Future<void> _fetchPartnerFCMToken() async {
+  Future<void> _fetchPartnerFCMTopic() async {
     var fs = FirestoreService();
     var data = await fs.getPartnerKey("089525699078");
     var mapData = data as Map<String, dynamic>;
 
-    partnerFCMToken = List<String>.of(mapData['fcm_token']);
+    partnerFCMTopic = '/topics/${mapData['id']}';
   }
 
   Future<bool> sendNotification({
     required String title,
     required String message,
-    List<String> toToken = const [],
+    String? destination,
   }) async {
     if (serverKey == null) {
       await _fetchServerKey();
     }
-    if (partnerFCMToken == null) {
-      await _fetchPartnerFCMToken();
+    if (partnerFCMTopic == null) {
+      await _fetchPartnerFCMTopic();
     }
 
-    List<String> sourceToken = toToken.isEmpty ? partnerFCMToken! : toToken;
-    for (String token in sourceToken) {
-      constructNotification(title, message, token);
-    }
+    constructNotification(title, message, destination ?? partnerFCMTopic!);
 
     return true;
   }
@@ -60,6 +57,7 @@ class NotificationService {
     const baseUrl = "https://fcm.googleapis.com/fcm/send";
     final headers = {
       "Content-Type": "application/json",
+      "Accept": "application/json",
       "Authorization": "key=$serverKey",
     };
     final body = {
@@ -70,6 +68,8 @@ class NotificationService {
       },
       "data": {
         "url": "https://www.mapalusindonesia.com",
+        // "click_action": "com.sample.test.OPEN_ACTIVITY",
+        "icon" : "ic_launcher"
       }
     };
 
@@ -80,13 +80,9 @@ class NotificationService {
         data: body,
         options: Options(headers: headers),
       );
-      if (kDebugMode) {
-        print(response);
-      }
+      debugPrint(response.toString());
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      debugPrint(e.toString());
     }
   }
 }

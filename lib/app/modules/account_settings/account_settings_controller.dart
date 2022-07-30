@@ -37,6 +37,7 @@ class AccountSettingsController extends GetxController {
     orderCount.value = count;
 
     initVersion();
+
   }
 
   initVersion() async {

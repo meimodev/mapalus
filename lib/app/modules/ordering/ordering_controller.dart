@@ -44,7 +44,7 @@ class OrderingController extends GetxController {
         message: "#${order.id}, "
             "${order.orderInfo.productCountF}, "
             "${order.orderInfo.totalPrice}, "
-            "DIantar ${order.orderInfo.deliveryTime}",
+            "Diantar ${order.orderInfo.deliveryTime}",
       );
       _orderToPush = order;
       if (kDebugMode) {

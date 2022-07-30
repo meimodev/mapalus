@@ -80,7 +80,7 @@ class HomeController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    categories.shuffle();
+    super.onInit();
     await Future.delayed(1.seconds);
     if (!await appRepo.checkIfLatestVersion()) {
       Get.offNamed(Routes.updateApp);
@@ -88,7 +88,8 @@ class HomeController extends GetxController {
     }
     _initProductsDisplay();
     _initNotificationHandler();
-    super.onInit();
+
+    categories.shuffle();
   }
 
   @override
