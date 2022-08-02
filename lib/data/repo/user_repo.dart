@@ -15,13 +15,15 @@ abstract class UserRepoContract {
   Future<UserApp> registerUser(String phone, String name);
 
   void requestOTP(String phone, Function(Result) onResult);
+
+  Future<bool> deleteUser(String phone);
 }
 
 class UserRepo extends UserRepoContract {
   UserApp? signedUser;
   int? resendToken;
   String? verificationId;
-  FirestoreService firestore = FirestoreService();
+  FirestoreService fireStore = FirestoreService();
   FirebaseAuth auth = FirebaseAuth.instance;
 
   Function(UserApp userApp)? onSuccessSigning;
@@ -32,13 +34,15 @@ class UserRepo extends UserRepoContract {
   bool shouldCallIdChange = false;
 
   // bool authStatusCalled = false;
+  User? user;
 
   UserRepo() {
     auth.authStateChanges().listen((User? user) async {
+      this.user = user;
       if (user != null) {
         debugPrint('AuthStateChanges(), Phone number confirmed');
         // authStatusCalled = true;
-        UserApp? userApp = await firestore.getUser(
+        UserApp? userApp = await fireStore.getUser(
           user.phoneNumber!.replaceFirst('+62', '0'),
         );
         if (userApp != null) {
@@ -71,7 +75,7 @@ class UserRepo extends UserRepoContract {
           debugPrint('idTokenChanges(), user already signed');
           return;
         }
-        UserApp? userApp = await firestore.getUser(
+        UserApp? userApp = await fireStore.getUser(
           user.phoneNumber!.replaceFirst('+62', '0'),
         );
 
@@ -125,14 +129,14 @@ class UserRepo extends UserRepoContract {
 
   @override
   Future<bool> checkIfRegistered(String phone) async {
-    return Future.value(await firestore.checkPhoneRegistration(phone));
+    return Future.value(await fireStore.checkPhoneRegistration(phone));
   }
 
   @override
   Future<UserApp> registerUser(String phone, String name) async {
     UserApp user = UserApp(phone: phone, name: name);
     // debugPrint("registerUser() $user");
-    signing(await firestore.createUser(user));
+    signing(await fireStore.createUser(user));
 
     return Future.value(user);
   }
@@ -140,7 +144,6 @@ class UserRepo extends UserRepoContract {
   @override
   void requestOTP(String phone, Function(Result) onResult) async {
     phone = phone.replaceFirst("0", "+62");
-
     try {
       await auth.verifyPhoneNumber(
         phoneNumber: phone,
@@ -221,5 +224,17 @@ class UserRepo extends UserRepoContract {
     if (onSigningOut != null) {
       onSigningOut!();
     }
+  }
+
+  @override
+  Future<bool> deleteUser(String phone) async {
+    if (user != null) {
+      try {
+        await user!.delete();
+      } catch (e) {
+        throw Exception('sign to confirm');
+      }
+    }
+    return await fireStore.deleteUser(phone);
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/account_settings/account_settings_controller.dart';
+import 'package:mapalus/app/widgets/button_delete_account.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
 import 'package:mapalus/shared/theme.dart';
@@ -31,7 +32,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
                           : _buildAnonymousBody(context),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -42,8 +43,9 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
   }
 
   Widget _buildSignedInBody(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return ListView(
+      // crossAxisAlignment: CrossAxisAlignment.stretch,
+      // mainAxisSize: MainAxisSize.max,
       children: [
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -129,7 +131,14 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
             ],
           ),
         ),
-        SizedBox(height: Insets.small.h),
+        SizedBox(height: Insets.large.h),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: Insets.medium.w),
+          child: DeleteAccountButton(
+            onPressedDelete: controller.onPressedDeleteAccount,
+            userPhone: controller.userRepo.signedUser!.phone,
+          ),
+        ),
       ],
     );
   }

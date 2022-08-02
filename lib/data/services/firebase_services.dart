@@ -148,4 +148,19 @@ class FirestoreService {
     DocumentSnapshot doc = await partners.doc(id).get();
     return doc.data();
   }
+
+  Future<bool> deleteUser(String id) async {
+    try {
+      await fireStore.collection('users').doc(id).delete();
+      if (kDebugMode) {
+        print('[FIRESTORE] DELETE $id success');
+      }
+      return true;
+    } catch (e) {
+      if (kDebugMode) {
+        print('[FIRESTORE] DELETE $id failed');
+      }
+      return false;
+    }
+  }
 }

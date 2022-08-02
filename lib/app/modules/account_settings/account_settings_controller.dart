@@ -37,7 +37,6 @@ class AccountSettingsController extends GetxController {
     orderCount.value = count;
 
     initVersion();
-
   }
 
   initVersion() async {
@@ -62,5 +61,23 @@ class AccountSettingsController extends GetxController {
       Routes.signing,
       arguments: "",
     );
+  }
+
+  onPressedDeleteAccount(String phone) async {
+    try {
+      var isDeleted = await userRepo.deleteUser(phone);
+      if (isDeleted) {
+        Get.back();
+        Get.snackbar('', 'user $phone Berhasil dihapus');
+      }
+      await userRepo.signOut();
+    } catch (e) {
+      var isNeedReSign = e.toString().contains('sign to confirm');
+      if (isNeedReSign) {
+        Get.toNamed(Routes.signing,
+            arguments: "Masuk untuk konfirmasi penghapusan akun");
+        await userRepo.signOut();
+      }
+    }
   }
 }
