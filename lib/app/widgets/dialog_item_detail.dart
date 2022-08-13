@@ -314,6 +314,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
           context: context,
           valueLabel: widget.product.unit,
           isCustomPrice: true,
+          // isReadOnly: widget.product.isCustomPrice,
           icon: SvgPicture.asset(
             'assets/vectors/gram.svg',
             width: 15.sp,
@@ -336,6 +337,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
           context: context,
           valueLabel: 'Rp',
           isCustomPrice: widget.product.isCustomPrice,
+          isReadOnly: !widget.product.isCustomPrice,
           icon: SvgPicture.asset(
             'assets/vectors/money.svg',
             width: 15.sp,
@@ -366,6 +368,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
     required VoidCallback onSub,
     required TextEditingController textEditingController,
     bool isCustomPrice = false,
+    bool isReadOnly = false,
   }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -374,7 +377,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
           icon: icon,
           onTextChanged: onValueChanged,
           textEditingController: textEditingController,
-          isReadOnly: !isCustomPrice,
+          isReadOnly: !isCustomPrice || isReadOnly,
           trailingWidget: Row(
             children: [
               SizedBox(width: 3.w),

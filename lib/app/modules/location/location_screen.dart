@@ -29,15 +29,16 @@ class LocationScreen extends GetView<LocationController> {
               left: 0,
               child: GoogleMapWrapper(
                 onCameraIdle: controller.onCameraIdle,
+                onMapCreated: controller.onMapCreated,
               ),
             ),
-            Center(
-              child: Container(
-                width: 3,
-                height: 3,
-                color: Colors.red,
-              ),
-            ),
+            // Center(
+            //   child: Container(
+            //     width: 3,
+            //     height: 3,
+            //     color: Colors.red,
+            //   ),
+            // ),
             Positioned(
               left: 0,
               right: 0,
@@ -65,8 +66,10 @@ class LocationScreen extends GetView<LocationController> {
                                             ? Material(
                                                 color: Palette.primary,
                                                 clipBehavior: Clip.hardEdge,
+                                                elevation: 5,
                                                 borderRadius:
-                                                    BorderRadius.circular(9.sp),
+                                                    BorderRadius.circular(
+                                                        16.sp),
                                                 child: InkWell(
                                                   onTap: controller
                                                       .onPressedSelectLocation,
@@ -83,6 +86,8 @@ class LocationScreen extends GetView<LocationController> {
                                                           .textTheme
                                                           .bodyText1
                                                           ?.copyWith(
+                                                            fontWeight:
+                                                                FontWeight.bold,
                                                             fontSize: 14.sp,
                                                           ),
                                                     ),
@@ -92,11 +97,10 @@ class LocationScreen extends GetView<LocationController> {
                                             : const SizedBox(),
                                       ),
                                       SizedBox(height: Insets.small.h),
-                                      SvgPicture.asset(
-                                        'assets/vectors/pin.svg',
-                                        width: 30.sp,
-                                        height: 45.sp,
-                                        color: Palette.accent,
+                                      Icon(
+                                        Icons.location_on,
+                                        color: Palette.primary,
+                                        size: 40.sp,
                                       ),
                                     ],
                                   )
@@ -297,6 +301,24 @@ class LocationScreen extends GetView<LocationController> {
                 },
                 isInverted: true,
                 isCircular: true,
+              ),
+            ),
+            Positioned(
+              top: 28.h,
+              left: 8.w,
+              right: 8.w,
+              child: Obx(
+                () => AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 400),
+                  child: controller.isLocationNoteEnabled.isTrue
+                      ? SizedBox(
+                          width: 180.w,
+                          child: _BuildCurrentLocationErrorNote(
+                            onTap: controller.onPressedLocationErrorNote,
+                          ),
+                        )
+                      : const SizedBox(),
+                ),
               ),
             ),
           ],
@@ -531,6 +553,49 @@ class _BuildOrderInfo extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _BuildCurrentLocationErrorNote extends StatelessWidget {
+  const _BuildCurrentLocationErrorNote({
+    Key? key,
+    required this.onTap,
+  }) : super(key: key);
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Palette.accent.withOpacity(.75),
+      borderRadius: BorderRadius.circular(Insets.medium),
+      elevation: 3,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: Insets.medium.w * .5,
+            vertical: Insets.small.h * .5,
+          ),
+          child: Row(
+            children: [
+              const Icon(
+                Icons.info_outline_rounded,
+                color: Palette.primary,
+              ),
+              SizedBox(width: 3.w),
+              Text(
+                "Lokasi Tidak diaktifkan",
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      color: Palette.primary,
+                      fontSize: 12.sp,
+                    ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

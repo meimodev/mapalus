@@ -64,6 +64,9 @@ class Product {
   String get weightF =>
       '${Utils.formatNumberToCurrency(weight).replaceFirst('Rp. ', '')} gram';
 
+  // bool get isQuantityNotEditable =>
+  //     name.contains("l )") || name.contains("g )");
+
   set weight(double weight) => _weight = weight.toString();
 
   @override

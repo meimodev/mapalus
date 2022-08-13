@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jiffy/jiffy.dart';
@@ -5,6 +6,7 @@ import 'package:mapalus/data/models/delivery_info.dart';
 import 'package:mapalus/data/models/order_info.dart';
 import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/data/repo/app_repo.dart';
+import 'package:mapalus/data/repo/location_repo.dart';
 import 'package:mapalus/data/repo/order_repo.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/utils.dart';
@@ -14,6 +16,8 @@ class LocationController extends GetxController {
 
   RxBool isLocationSelectionVisible = true.obs;
   RxBool isLocationSelectionButtonVisible = true.obs;
+
+  LocationRepoContract locationRepo = LocationRepo.instance;
 
   Rx<OrderInfo> orderInfo = OrderInfo(
     productCount: 0,
@@ -35,8 +39,15 @@ class LocationController extends GetxController {
 
   LatLng? deliveryCoordinate;
 
+  // LatLng? currentLocation;
+
+  RxBool isLocationNoteEnabled = false.obs;
+  GoogleMapController? googleMapController;
+
   @override
   void onInit() async {
+    super.onInit();
+
     var d = await appRepo.getDeliveryTimes();
     deliveries = d.map((e) => DeliveryInfo.fromJSON(e)).toList().obs;
 
@@ -49,8 +60,6 @@ class LocationController extends GetxController {
     );
     weight.value = w;
     _calculateOrderInfo();
-
-    super.onInit();
   }
 
   onPressedChangeDeliveryTime(
@@ -67,6 +76,9 @@ class LocationController extends GetxController {
 
   onPressedSelectLocation() async {
     isLocationSelectionVisible.toggle();
+    if (isLocationNoteEnabled.isTrue) {
+      isLocationNoteEnabled.toggle();
+    }
 
     //calculate the prices
     if (isLocationSelectionVisible.isFalse) {
@@ -107,6 +119,7 @@ class LocationController extends GetxController {
 
   onPressedChangeLocation() async {
     isLocationSelectionVisible.toggle();
+    isLocationNoteEnabled.toggle();
     _selectedDeliveryInfo = null;
   }
 
@@ -134,5 +147,48 @@ class LocationController extends GetxController {
       deliveryDistance: distance.value,
       deliveryCoordinate: deliveryCoordinate,
     );
+  }
+
+  onMapCreated(GoogleMapController controller) async {
+    googleMapController = controller;
+    initLocation();
+  }
+
+  void initLocation() async {
+    var locationEnabled = await locationRepo.isLocationServicesEnabled();
+    if (!locationEnabled) {
+      // TODo Display a note that tell user that the location service is not enabled
+      isLocationNoteEnabled.value = true;
+      return null;
+    }
+    var locationPermissionGranted =
+        await locationRepo.isLocationPermissionGranted();
+
+    if (!locationPermissionGranted) {
+      var granted = await locationRepo.requestLocationPermission();
+      if (!granted) {
+        return null;
+      }
+    }
+    if (googleMapController != null) {
+      try {
+        LatLng currLocation = LatLng(
+          await locationRepo.getDeviceLatitude(),
+          await locationRepo.getDeviceLongitude(),
+        );
+        googleMapController!
+            .animateCamera(CameraUpdate.newLatLng(currLocation));
+
+        if (isLocationNoteEnabled.isTrue) {
+          isLocationNoteEnabled.toggle();
+        }
+      } catch (e) {
+        debugPrint('Error While getting current location');
+      }
+    }
+  }
+
+  onPressedLocationErrorNote() async {
+    initLocation();
   }
 }

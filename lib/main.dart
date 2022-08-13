@@ -24,12 +24,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await Hive.initFlutter();
-  if (defaultTargetPlatform == TargetPlatform.android) {
-    AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
-  }
+
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) => runApp(const MyApp()));
+
+  await Hive.initFlutter();
 
   await FirebaseAppCheck.instance.activate();
   FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
@@ -39,6 +38,9 @@ void main() async {
 
   await FirebaseMessaging.instance.setAutoInitEnabled(true);
 
+  if (defaultTargetPlatform == TargetPlatform.android) {
+    AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
+  }
 
 }
 

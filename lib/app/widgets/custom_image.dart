@@ -1,7 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mapalus/shared/theme.dart';
-import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomImage extends StatelessWidget {
@@ -25,11 +25,28 @@ class CustomImage extends StatelessWidget {
                   strokeWidth: 1,
                 ),
               ),
-              FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage,
-                image: imageUrl,
-                imageErrorBuilder: (context, _, __) {
-                  return Container(
+              // FadeInImage.memoryNetwork(
+              //   placeholder: kTransparentImage,
+              //   image: imageUrl,
+              //   imageErrorBuilder: (context, _, __) {
+              //     return Container(
+              //       color: Palette.accent,
+              //       child: Center(
+              //         child: SvgPicture.asset(
+              //           'assets/images/mapalus.svg',
+              //           color: Palette.primary,
+              //           width: 60.w,
+              //         ),
+              //       ),
+              //     );
+              //   },
+              //   fit: BoxFit.cover,
+              // ),
+              CachedNetworkImage(
+                imageUrl: imageUrl,
+                fadeInDuration: const Duration(milliseconds: 600),
+                placeholder: (context,_)=> Container(color: Colors.transparent,),
+                errorWidget: (context, _, __) => Container(
                     color: Palette.accent,
                     child: Center(
                       child: SvgPicture.asset(
@@ -38,10 +55,8 @@ class CustomImage extends StatelessWidget {
                         width: 60.w,
                       ),
                     ),
-                  );
-                },
-                fit: BoxFit.cover,
-              ),
+                  ),
+              )
             ],
           );
   }
