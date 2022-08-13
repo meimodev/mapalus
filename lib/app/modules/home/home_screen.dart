@@ -312,6 +312,7 @@ class _BuildCardCategories extends StatelessWidget {
           for (var category in categories)
             CardCategory(
               imageUrl: category.imageUrl,
+              asset: category.asset,
               name: category.name,
               onPressed: () {
                 onPressedCategories(category);

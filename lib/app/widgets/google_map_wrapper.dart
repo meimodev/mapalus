@@ -39,6 +39,7 @@ class _GoogleMapWrapperState extends State<GoogleMapWrapper> {
       zoomGesturesEnabled: true,
       myLocationEnabled: true,
       myLocationButtonEnabled: true,
+
       onCameraIdle: () {
         widget.onCameraIdle(pickedPosition);
         isCameraIdle = true;

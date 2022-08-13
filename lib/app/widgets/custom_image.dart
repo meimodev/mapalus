@@ -7,58 +7,69 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomImage extends StatelessWidget {
   const CustomImage({
     Key? key,
-    required this.imageUrl,
+    required this.imageUrl, this.assetPath,
   }) : super(key: key);
 
   final String imageUrl;
+  final String? assetPath;
 
   @override
   Widget build(BuildContext context) {
-    return imageUrl.isEmpty
-        ? _buildInvalidUrl()
-        : Stack(
-            fit: StackFit.expand,
-            children: [
-              const Center(
-                child: CircularProgressIndicator(
-                  color: Palette.primary,
-                  strokeWidth: 1,
+    if (imageUrl.isEmpty) {
+      return _buildInvalidUrl();
+    }
+
+    if (assetPath != null) {
+      return Image.asset(assetPath!, fit: BoxFit.cover,);
+    }
+
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        const Center(
+          child: CircularProgressIndicator(
+            color: Palette.primary,
+            strokeWidth: 1,
+          ),
+        ),
+        // FadeInImage.memoryNetwork(
+        //   placeholder: kTransparentImage,
+        //   image: imageUrl,
+        //   imageErrorBuilder: (context, _, __) {
+        //     return Container(
+        //       color: Palette.accent,
+        //       child: Center(
+        //         child: SvgPicture.asset(
+        //           'assets/images/mapalus.svg',
+        //           color: Palette.primary,
+        //           width: 60.w,
+        //         ),
+        //       ),
+        //     );
+        //   },
+        //   fit: BoxFit.cover,
+        // ),
+        CachedNetworkImage(
+          imageUrl: imageUrl,
+          fadeInDuration: const Duration(milliseconds: 600),
+          placeholder: (context, _) =>
+              Container(
+                color: Colors.transparent,
+              ),
+          errorWidget: (context, _, __) =>
+              Container(
+                color: Palette.accent,
+                child: Center(
+                  child: SvgPicture.asset(
+                    'assets/images/mapalus.svg',
+                    color: Palette.primary,
+                    width: 60.w,
+                  ),
                 ),
               ),
-              // FadeInImage.memoryNetwork(
-              //   placeholder: kTransparentImage,
-              //   image: imageUrl,
-              //   imageErrorBuilder: (context, _, __) {
-              //     return Container(
-              //       color: Palette.accent,
-              //       child: Center(
-              //         child: SvgPicture.asset(
-              //           'assets/images/mapalus.svg',
-              //           color: Palette.primary,
-              //           width: 60.w,
-              //         ),
-              //       ),
-              //     );
-              //   },
-              //   fit: BoxFit.cover,
-              // ),
-              CachedNetworkImage(
-                imageUrl: imageUrl,
-                fadeInDuration: const Duration(milliseconds: 600),
-                placeholder: (context,_)=> Container(color: Colors.transparent,),
-                errorWidget: (context, _, __) => Container(
-                    color: Palette.accent,
-                    child: Center(
-                      child: SvgPicture.asset(
-                        'assets/images/mapalus.svg',
-                        color: Palette.primary,
-                        width: 60.w,
-                      ),
-                    ),
-                  ),
-              )
-            ],
-          );
+        )
+      ],
+    );
   }
 
   _buildInvalidUrl() {

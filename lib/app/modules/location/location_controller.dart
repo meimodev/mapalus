@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jiffy/jiffy.dart';
@@ -157,9 +156,8 @@ class LocationController extends GetxController {
   void initLocation() async {
     var locationEnabled = await locationRepo.isLocationServicesEnabled();
     if (!locationEnabled) {
-      // TODo Display a note that tell user that the location service is not enabled
       isLocationNoteEnabled.value = true;
-      return null;
+      return ;
     }
     var locationPermissionGranted =
         await locationRepo.isLocationPermissionGranted();
@@ -167,11 +165,13 @@ class LocationController extends GetxController {
     if (!locationPermissionGranted) {
       var granted = await locationRepo.requestLocationPermission();
       if (!granted) {
-        return null;
+        return ;
       }
+      initLocation();
+      return;
     }
-    if (googleMapController != null) {
-      try {
+      // try {
+      await Future.delayed(1.seconds);
         LatLng currLocation = LatLng(
           await locationRepo.getDeviceLatitude(),
           await locationRepo.getDeviceLongitude(),
@@ -182,10 +182,9 @@ class LocationController extends GetxController {
         if (isLocationNoteEnabled.isTrue) {
           isLocationNoteEnabled.toggle();
         }
-      } catch (e) {
-        debugPrint('Error While getting current location');
-      }
-    }
+      // } catch (e) {
+      //   debugPrint('Error While getting current location ${e.toString()}');
+      // }
   }
 
   onPressedLocationErrorNote() async {

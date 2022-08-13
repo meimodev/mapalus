@@ -1,9 +1,11 @@
 class Category {
   String name;
   String imageUrl;
+  String? asset;
 
   Category({
     required this.name,
-    required this.imageUrl,
+     this.imageUrl = "",
+     this.asset,
   });
 }

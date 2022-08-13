@@ -25,19 +25,23 @@ class LocationRepo extends LocationRepoContract {
 
   Position? position;
 
-  _initLocation() async {
+  Future<void> _initLocation() async {
+    if (position == null) {
+      await Future.delayed(const Duration(seconds: 1));
       position = await Geolocator.getCurrentPosition();
+    }
   }
 
   @override
   Future<double> getDeviceLatitude() async {
-    _initLocation();
+
+    await _initLocation();
     return position!.latitude;
   }
 
   @override
   Future<double> getDeviceLongitude() async {
-    _initLocation();
+    await _initLocation();
     return position!.longitude;
   }
 

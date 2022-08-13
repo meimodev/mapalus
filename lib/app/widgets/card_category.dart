@@ -9,13 +9,14 @@ class CardCategory extends StatelessWidget {
     this.isSelected = false,
     required this.name,
     required this.onPressed,
-    required this.imageUrl,
+    required this.imageUrl,  this.asset,
   }) : super(key: key);
 
   final bool isSelected;
   final VoidCallback onPressed;
   final String name;
   final String imageUrl;
+  final String? asset;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +46,7 @@ class CardCategory extends StatelessWidget {
                   clipBehavior: Clip.hardEdge,
                   child: CustomImage(
                     imageUrl: imageUrl,
+                    assetPath: asset,
                   ),
                 ),
               ),

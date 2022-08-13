@@ -55,32 +55,40 @@ class HomeController extends GetxController {
     Category(
       name: "Bahan Makanan",
       imageUrl: "https://i.ibb.co/mJmZQkW/category-bahan-makanan.jpg",
+      asset: "assets/images/category-bahan-makanan.jpeg",
     ),
     Category(
       name: "Lauk Pauk",
       imageUrl: "https://i.ibb.co/LgdQZXS/category-lauk-pauk.jpg",
+      asset: "assets/images/category-lauk-pauk.jpeg",
+
     ),
     Category(
       name: "Bumbu Dapur",
       imageUrl: "https://i.ibb.co/HhgsbGZ/category-bumbu-dapur.jpg",
+      asset: "assets/images/category-bumbu-dapur.jpeg"
     ),
     Category(
       name: "Sayuran",
       imageUrl: "https://i.ibb.co/M5jXDRG/category-sayuran.jpg",
+      asset: "assets/images/category-sayuran.jpeg"
     ),
     Category(
       name: "Buah",
       imageUrl: "https://i.ibb.co/cc7QcY6/category-buah.jpg",
+      asset: "assets/images/category-buah.jpeg"
     ),
     Category(
       name: "Bahan Kue",
       imageUrl: "https://i.ibb.co/3M4jN9F/category-bahan-kue.jpg",
+      asset: "assets/images/category-bahan-kue.jpeg"
     ),
   ].obs;
 
   @override
   Future<void> onInit() async {
     super.onInit();
+    categories.shuffle();
     await Future.delayed(1.seconds);
     if (!await appRepo.checkIfLatestVersion()) {
       Get.offNamed(Routes.updateApp);
@@ -89,7 +97,6 @@ class HomeController extends GetxController {
     _initProductsDisplay();
     _initNotificationHandler();
 
-    categories.shuffle();
   }
 
   @override
