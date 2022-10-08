@@ -36,4 +36,9 @@ class AppRepo extends AppRepoContract {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     return 'v${packageInfo.version}';
   }
+
+  Future<Map<String, dynamic>> getPricingModifier() async {
+    var data = await firestoreService.getPricingModifier();
+    return data as Map<String, dynamic>;
+  }
 }

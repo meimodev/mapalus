@@ -1,12 +1,10 @@
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/theme.dart';
@@ -38,10 +36,6 @@ void main() async {
 
   await FirebaseMessaging.instance.setAutoInitEnabled(true);
 
-  if (defaultTargetPlatform == TargetPlatform.android) {
-    AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
-  }
-
 }
 
 class MyApp extends StatelessWidget {
@@ -57,7 +51,7 @@ class MyApp extends StatelessWidget {
         title: 'Mapalus',
         theme: appThemeData,
         debugShowCheckedModeBanner: false,
-        initialRoute: Routes.splash,
+        initialRoute: Routes.home,
         getPages: Routes.getRoutes(),
         builder: (context, widget) {
           // ScreenUtil.setContext(context);

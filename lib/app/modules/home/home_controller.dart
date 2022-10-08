@@ -1,3 +1,4 @@
+
 // ignore_for_file: invalid_use_of_protected_member
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -89,12 +90,15 @@ class HomeController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     categories.shuffle();
-    await Future.delayed(1.seconds);
+    await Future.delayed(Duration.zero);
+
+    await _initProductsDisplay();
+
+    await Future.delayed(const Duration(seconds: 1));
     if (!await appRepo.checkIfLatestVersion()) {
       Get.offNamed(Routes.updateApp);
       return;
     }
-    _initProductsDisplay();
     _initNotificationHandler();
 
   }
@@ -189,7 +193,7 @@ class HomeController extends GetxController {
     }
   }
 
-  _initProductsDisplay() async {
+Future<void>  _initProductsDisplay() async {
     canLoadingMain.value = true;
 
     // canLoadingProducts.value = true;
@@ -209,7 +213,7 @@ class HomeController extends GetxController {
           scrollControllerMain.offset) {
         if ((_currentIndex + _pageSize) < tempProducts.length) {
           canLoadingProducts.value = true;
-          await Future.delayed(500.milliseconds);
+          await Future.delayed(Duration.zero);
           displayProducts.addAll(
             tempProducts.sublist(_currentIndex, _currentIndex + _pageSize),
           );
@@ -217,14 +221,14 @@ class HomeController extends GetxController {
           _currentIndex += _pageSize;
         } else {
           canLoadingProducts.value = true;
-          await Future.delayed(500.milliseconds);
+          await Future.delayed(Duration.zero);
           displayProducts.addAll(tempProducts.sublist(_currentIndex));
           canLoadingProducts.value = false;
           isNoMoreProductsToDisplay.value = true;
         }
       }
     });
-    await Future.delayed(1.seconds);
+    await Future.delayed(Duration.zero);
     canLoadingMain.value = false;
 
     // canLoadingProducts.value = false;

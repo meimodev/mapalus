@@ -1,8 +1,10 @@
+import 'dart:developer' as dev;
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:mapalus/data/models/delivery_info.dart';
 import 'package:mapalus/data/models/order_info.dart';
+import 'package:mapalus/data/models/pricing_modifier.dart';
 import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/data/repo/app_repo.dart';
 import 'package:mapalus/data/repo/location_repo.dart';
@@ -32,7 +34,7 @@ class LocationController extends GetxController {
 
   DeliveryInfo? _selectedDeliveryInfo;
 
-  late RxList<DeliveryInfo> deliveries;
+  RxList<DeliveryInfo> deliveries = <DeliveryInfo>[].obs;
 
   OrderRepo orderRepo = Get.find<OrderRepo>();
 
@@ -43,13 +45,26 @@ class LocationController extends GetxController {
   RxBool isLocationNoteEnabled = false.obs;
   GoogleMapController? googleMapController;
 
+  RxBool isLoading = true.obs;
+
   @override
   void onInit() async {
     super.onInit();
-
+    isLoading.value = true;
+    //fetch pricing modifier then fetch delivery times
+    final pm = await appRepo.getPricingModifier();
+    PricingModifier pricingModifier = PricingModifier.fromJson(pm);
     var d = await appRepo.getDeliveryTimes();
-    deliveries = d.map((e) => DeliveryInfo.fromJSON(e)).toList().obs;
+    //set the pricing modifier to each dDeliveryInfo object
+    deliveries = d.map((e) {
+      e.addAll(pricingModifier.toMap);
+      dev.log("Delivery info => $e" ,time: DateTime.now());
+      return DeliveryInfo.fromJSON(e);
+    }).toList().obs;
 
+    isLoading.value = false;
+
+    //fetch delivery fees
     var args = Get.arguments;
     double w = double.parse(args['products_weight'].toString());
     orderInfo.value = orderInfo.value.copyWith(
@@ -157,7 +172,7 @@ class LocationController extends GetxController {
     var locationEnabled = await locationRepo.isLocationServicesEnabled();
     if (!locationEnabled) {
       isLocationNoteEnabled.value = true;
-      return ;
+      return;
     }
     var locationPermissionGranted =
         await locationRepo.isLocationPermissionGranted();
@@ -165,26 +180,25 @@ class LocationController extends GetxController {
     if (!locationPermissionGranted) {
       var granted = await locationRepo.requestLocationPermission();
       if (!granted) {
-        return ;
+        return;
       }
       initLocation();
       return;
     }
-      // try {
-      await Future.delayed(1.seconds);
-        LatLng currLocation = LatLng(
-          await locationRepo.getDeviceLatitude(),
-          await locationRepo.getDeviceLongitude(),
-        );
-        googleMapController!
-            .animateCamera(CameraUpdate.newLatLng(currLocation));
+    // try {
+    await Future.delayed(1.seconds);
+    LatLng currLocation = LatLng(
+      await locationRepo.getDeviceLatitude(),
+      await locationRepo.getDeviceLongitude(),
+    );
+    googleMapController!.animateCamera(CameraUpdate.newLatLng(currLocation));
 
-        if (isLocationNoteEnabled.isTrue) {
-          isLocationNoteEnabled.toggle();
-        }
-      // } catch (e) {
-      //   debugPrint('Error While getting current location ${e.toString()}');
-      // }
+    if (isLocationNoteEnabled.isTrue) {
+      isLocationNoteEnabled.toggle();
+    }
+    // } catch (e) {
+    //   debugPrint('Error While getting current location ${e.toString()}');
+    // }
   }
 
   onPressedLocationErrorNote() async {

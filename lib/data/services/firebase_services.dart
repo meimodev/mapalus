@@ -163,4 +163,11 @@ class FirestoreService {
       return false;
     }
   }
+
+  Future<Object?> getPricingModifier() async {
+    CollectionReference app = fireStore.collection('app');
+    DocumentSnapshot doc = await app.doc('delivery_fee').get();
+
+    return doc.data();
+  }
 }

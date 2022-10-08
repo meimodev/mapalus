@@ -145,142 +145,166 @@ class LocationScreen extends GetView<LocationController> {
                                   borderRadius: BorderRadius.circular(9.sp),
                                   color: Palette.cardForeground,
                                 ),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    SingleChildScrollView(
-                                      physics: const BouncingScrollPhysics(),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          Obx(
-                                            () => _BuildDeliveryFeeSelector(
-                                              deliveries: controller.deliveries,
-                                              weight: controller.weight.value,
-                                              distance:
-                                                  controller.distance.value,
-                                              onPressedDeliveryTime: controller
-                                                  .onPressedChangeDeliveryTime,
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.symmetric(
-                                              horizontal: Insets.small.w,
-                                              vertical: Insets.small.h,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              border: Border.symmetric(
-                                                horizontal: BorderSide(
-                                                  color: Colors.grey.shade200,
-                                                  width: 2,
-                                                ),
-                                              ),
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Expanded(
-                                                  child: Row(
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                          left: Insets.small.w,
-                                                          right:
-                                                              Insets.small.w *
-                                                                  .5,
-                                                        ),
-                                                        child: Text(
-                                                          'Lokasi Terpilih',
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyText1
-                                                                  ?.copyWith(
-                                                                    color: Palette
-                                                                        .textPrimary,
-                                                                  ),
-                                                        ),
-                                                      ),
-                                                      SvgPicture.asset(
-                                                        'assets/vectors/check.svg',
-                                                        width: 24.sp,
-                                                        height: 24.sp,
-                                                        color: Palette.accent,
-                                                      ),
-                                                    ],
+                                child: AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 400),
+                                  child: controller.isLoading.value ? Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: Insets.large.h),
+                                    child:
+                                    const CircularProgressIndicator(
+                                      color: Palette.primary,
+                                    ),
+                                  ) : Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      SingleChildScrollView(
+                                        physics: const BouncingScrollPhysics(),
+                                        child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.stretch,
+                                                children: [
+                                                  Obx(
+                                                    () =>
+                                                        _BuildDeliveryFeeSelector(
+                                                      deliveries:
+                                                          controller.deliveries,
+                                                      weight: controller
+                                                          .weight.value,
+                                                      distance: controller
+                                                          .distance.value,
+                                                      onPressedDeliveryTime:
+                                                          controller
+                                                              .onPressedChangeDeliveryTime,
+                                                    ),
                                                   ),
-                                                ),
-                                                Material(
-                                                  child: InkWell(
-                                                    onTap: controller
-                                                        .onPressedChangeLocation,
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                        vertical:
-                                                            Insets.small.h,
-                                                        horizontal:
-                                                            Insets.small.w,
+                                                  Container(
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                      horizontal:
+                                                          Insets.small.w,
+                                                      vertical: Insets.small.h,
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      border: Border.symmetric(
+                                                        horizontal: BorderSide(
+                                                          color: Colors
+                                                              .grey.shade200,
+                                                          width: 2,
+                                                        ),
                                                       ),
-                                                      child: Text(
-                                                        'Ubah Lokasi',
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodyText1
-                                                            ?.copyWith(
-                                                              fontSize: 10.sp,
-                                                              color: Palette
-                                                                  .primary,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
+                                                    ),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Expanded(
+                                                          child: Row(
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .only(
+                                                                  left: Insets
+                                                                      .small.w,
+                                                                  right: Insets
+                                                                          .small
+                                                                          .w *
+                                                                      .5,
+                                                                ),
+                                                                child: Text(
+                                                                  'Lokasi Terpilih',
+                                                                  style: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .bodyText1
+                                                                      ?.copyWith(
+                                                                        color: Palette
+                                                                            .textPrimary,
+                                                                      ),
+                                                                ),
+                                                              ),
+                                                              SvgPicture.asset(
+                                                                'assets/vectors/check.svg',
+                                                                width: 24.sp,
+                                                                height: 24.sp,
+                                                                color: Palette
+                                                                    .accent,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Material(
+                                                          child: InkWell(
+                                                            onTap: controller
+                                                                .onPressedChangeLocation,
+                                                            child: Padding(
+                                                              padding: EdgeInsets
+                                                                  .symmetric(
+                                                                vertical: Insets
+                                                                    .small.h,
+                                                                horizontal:
+                                                                    Insets.small
+                                                                        .w,
+                                                              ),
+                                                              child: Text(
+                                                                'Ubah Lokasi',
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyText1
+                                                                    ?.copyWith(
+                                                                      fontSize:
+                                                                          10.sp,
+                                                                      color: Palette
+                                                                          .primary,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                    ),
+                                                              ),
                                                             ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                      bottom: Insets.small.h,
+                                                      left: Insets.medium.w,
+                                                      right: Insets.medium.w,
+                                                    ),
+                                                    child: Obx(
+                                                      () => _BuildOrderInfo(
+                                                        orderInfo: controller
+                                                            .orderInfo.value,
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                              bottom: Insets.small.h,
-                                              left: Insets.medium.w,
-                                              right: Insets.medium.w,
-                                            ),
-                                            child: Obx(
-                                              () => _BuildOrderInfo(
-                                                orderInfo:
-                                                    controller.orderInfo.value,
+                                                ],
                                               ),
-                                            ),
-                                          ),
-                                        ],
                                       ),
-                                    ),
-                                    Material(
-                                      color: Palette.primary,
-                                      clipBehavior: Clip.hardEdge,
-                                      borderRadius: BorderRadius.circular(9.sp),
-                                      child: InkWell(
-                                        onTap: controller.onPressedMakeOrder,
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            vertical: Insets.small.h,
-                                            horizontal: Insets.medium.w,
-                                          ),
-                                          child: const Center(
-                                            child: Text('Buat Pesanan'),
+                                      Material(
+                                        color: Palette.primary,
+                                        clipBehavior: Clip.hardEdge,
+                                        borderRadius: BorderRadius.circular(9.sp),
+                                        child: InkWell(
+                                          onTap: controller.onPressedMakeOrder,
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              vertical: Insets.small.h,
+                                              horizontal: Insets.medium.w,
+                                            ),
+                                            child: const Center(
+                                              child: Text('Buat Pesanan'),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -492,7 +516,8 @@ class _BuildOrderInfo extends StatelessWidget {
         _buildOrderInfoRowItem(
           context: context,
           title: "Pengantaran",
-          sub: orderInfo.deliveryWeightF,
+          // sub: orderInfo.deliveryWeightF,
+          sub: '',
           value: orderInfo.deliveryPriceF,
         ),
         SizedBox(height: 3.h),
@@ -510,7 +535,7 @@ class _BuildOrderInfo extends StatelessWidget {
   _buildOrderInfoRowItem({
     required context,
     required title,
-    required sub,
+    required String sub,
     required value,
     highLight = false,
   }) {
@@ -531,14 +556,17 @@ class _BuildOrderInfo extends StatelessWidget {
               ),
               highLight
                   ? const SizedBox()
-                  : Text(
-                      sub,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey,
-                          ),
-                    ),
+                  : sub.isEmpty
+                      ? const SizedBox()
+                      : Text(
+                          sub,
+                          style:
+                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey,
+                                  ),
+                        ),
             ],
           ),
         ),

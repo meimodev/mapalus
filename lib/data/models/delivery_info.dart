@@ -1,4 +1,5 @@
 import 'package:jiffy/jiffy.dart';
+import 'package:mapalus/data/models/pricing_modifier.dart';
 import 'package:mapalus/shared/utils.dart';
 
 class DeliveryInfo {
@@ -7,33 +8,44 @@ class DeliveryInfo {
   final String _end;
   bool available;
   final String _discount;
+  PricingModifier pricingModifier;
 
   String currentDate = Jiffy().format("dd/MM/yyyy");
 
-  final List<List<double>> priceMatrixFromWeight = [
-    //[0 - 2Km, >2Km - 4Km, >4Km - 6.5Km, >6.5km - 8Km]
-    [6000, 8000, 10000, 20000], //0 - 5Kg
-    [12000, 16000, 20000, 40000], // >5Kg - 7Kg
-    [18000, 24000, 30000, 80000], // >7Kg - 9Kg
-    [27000, 36000, 45000, 120000], // >9Kg - 11Kg
-  ];
+  // final List<List<double>> priceMatrixFromWeight = [
+  //   //[0 - 2Km, >2Km - 4Km, >4Km - 6.5Km, >6.5km - 8Km]
+  //   [6000, 8000, 10000, 20000], //0 - 5Kg
+  //   [12000, 16000, 20000, 40000], // >5Kg - 7Kg
+  //   [18000, 24000, 30000, 80000], // >7Kg - 9Kg
+  //   [27000, 36000, 45000, 120000], // >9Kg - 11Kg
+  // ];
 
   final List<double> weightMilestones = [5.0, 7.0, 9.0, 11.0];
 
-  DeliveryInfo(
-    this.id,
-    this._start,
-    this._end,
-    this.available,
-    this._discount,
-  );
+  DeliveryInfo({
+    required this.id,
+    required start,
+    required end,
+    required this.available,
+    required discount,
+    required this.pricingModifier,
+  })  : _start = start,
+        _end = end,
+        _discount = discount;
 
-  DeliveryInfo.fromJSON(Map<String, dynamic> json)
-      : id = json["id"],
-        _discount = json['discount'],
-        _start = json["start"],
-        _end = json["end"],
-        available = json["available"];
+  factory DeliveryInfo.fromJSON(Map<String, dynamic> json) => DeliveryInfo(
+        id: json["id"],
+        start: json["start"],
+        end: json["end"],
+        available: json["available"],
+        discount: json['discount'],
+        pricingModifier: PricingModifier(
+          distancePrice: json['distance_price'] ?? 1000,
+          weightPrice: json['weight_price'] ?? 1000,
+          distanceUnit: json['distance_unit'] ?? 1,
+          weightUnit: json['weight_unit'] ?? 1,
+        ),
+      );
 
   Jiffy get startDate {
     var res = Jiffy("$_start $currentDate", "HH:mm dd/MM/yyyy");
@@ -88,21 +100,27 @@ class DeliveryInfo {
   }
 
   String price({required double distance, required double weight}) {
-    double distanceFee = 0;
-    //determine the weight in which class
     weight = weight / 1000;
-    if (weight > 0 && weight <= weightMilestones[0]) {
-      distanceFee = _calculateDistance(distance, 0);
-    } else if (weight > 2.0 && weight <= weightMilestones[1]) {
-      distanceFee = _calculateDistance(distance, 1);
-    } else if (weight > 4.0 && weight <= weightMilestones[2]) {
-      distanceFee = _calculateDistance(distance, 2);
-    } else if (weight > 6 && weight <= weightMilestones[3]) {
-      distanceFee = _calculateDistance(distance, 3);
-    } else {
-      return 'invalid weight $weight';
-    }
-    var res = ((distanceFee / 1000) * discount).round() * 1000;
+
+    /*Default price modifier */
+
+    final perDistancePrice = pricingModifier.distancePrice;
+    final perWeightPrice = pricingModifier.weightPrice;
+    final perDistanceUnit = pricingModifier.distanceUnit;
+    final perWeightUnit = pricingModifier.weightUnit;
+
+    var fee = 0;
+
+    final calculatedDistanceUnit = (distance / perDistanceUnit).ceil();
+    final distanceUnit =
+        calculatedDistanceUnit <= 0 ? 1 : calculatedDistanceUnit;
+    final calculatedWeightUnit = (weight / perWeightUnit).ceil();
+    final weightUnit = calculatedWeightUnit <= 0 ? 1 : calculatedWeightUnit;
+
+    //based on distance
+    fee = (distanceUnit * perDistancePrice) + (weightUnit * perWeightPrice);
+
+    var res = ((fee / 1000) * discount).round() * 1000;
     if (res <= 0) {
       res = 0;
     }
@@ -110,20 +128,6 @@ class DeliveryInfo {
       res,
       canBeFree: true,
     );
-  }
-
-  double _calculateDistance(double dis, int weightRow) {
-    if (dis > 0 && dis <= 2.0) {
-      return priceMatrixFromWeight[weightRow][0];
-    } else if (dis > 2 && dis <= 4.0) {
-      return priceMatrixFromWeight[weightRow][1];
-    } else if (dis > 4 && dis <= 6.0) {
-      return priceMatrixFromWeight[weightRow][2];
-    } else if (dis > 6 && dis <= 9.0) {
-      return priceMatrixFromWeight[weightRow][3];
-    } else {
-      return -1;
-    }
   }
 
   @override
@@ -160,11 +164,4 @@ class DeliveryInfo {
       "discount": _discount,
     };
   }
-
-  DeliveryInfo.fromMap(Map<String, dynamic> data)
-      : id = data["id"],
-        _start = data["start"],
-        _end = data["end"],
-        available = data["available"],
-        _discount = data["discount"];
 }

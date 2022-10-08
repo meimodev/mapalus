@@ -15,13 +15,11 @@ import 'package:mapalus/app/modules/orders/orders_binding.dart';
 import 'package:mapalus/app/modules/orders/orders_screen.dart';
 import 'package:mapalus/app/modules/signing/signing_binding.dart';
 import 'package:mapalus/app/modules/signing/signing_screen.dart';
-import 'package:mapalus/app/modules/splash/splash_screen.dart';
 import 'package:mapalus/app/modules/update_app/update_app_screen.dart';
 
 
 class Routes {
-  static const String splash = '/';
-  static const String home = '/home';
+  static const String home = '/';
   static const String accountSetting = '/account-setting';
   static const String orders = '/orders';
   static const String orderDetail = '/order-detail';
@@ -59,10 +57,7 @@ class Routes {
 
   static List<GetPage> getRoutes() {
     return [
-      GetPage(
-        name: splash,
-        page: () => const SplashScreen(),
-      ),
+
       GetPage(
         name: home,
         page: () => const HomeScreen(),
