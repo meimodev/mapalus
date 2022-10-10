@@ -1,4 +1,5 @@
-import 'package:flutter/foundation.dart';
+import 'dart:developer' as dev;
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jiffy/jiffy.dart';
@@ -27,34 +28,33 @@ class OrderingController extends GetxController {
 
     UserApp? user = await userRepo.readSignedInUser();
 
-    Map<String, dynamic> args = Get.arguments as Map<String, dynamic>;
-    List<ProductOrder> productOrders =
+    final args = Get.arguments as Map<String, dynamic>;
+    final productOrders =
         args['product_orders'] as List<ProductOrder>;
-    OrderInfo orderInfo = args['order_info'] as OrderInfo;
+    final orderInfo = args['order_info'] as OrderInfo;
+    final paymentMethod =  args['payment_method'] as String;
+    final paymentAmount = args['payment_amount'] as int;
 
-    try {
-      Order order = await orderRepo.createOrder(
-        products: productOrders,
-        user: user!,
-        orderInfo: orderInfo,
-      );
-      var now = Jiffy();
-      NotificationService.instance.sendNotification(
-        title: "NEW ORDER ! on ${now.format("EEEE, dd MMM HH:mm")}",
-        message: "#${order.id}, "
-            "${order.orderInfo.productCountF}, "
-            "${order.orderInfo.totalPrice}, "
-            "Diantar ${order.orderInfo.deliveryTime}",
-      );
-      _orderToPush = order;
-      if (kDebugMode) {
-        print(order.toString());
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print('error occurred while creating order $e');
-      }
-    }
+    await Future.delayed(const Duration(milliseconds: 2000));
+
+    Order order = await orderRepo.createOrder(
+      products: productOrders,
+      user: user!,
+      orderInfo: orderInfo,
+      paymentAmount: paymentAmount,
+      paymentMethod: paymentMethod,
+    );
+    var now = Jiffy();
+    NotificationService.instance.sendNotification(
+      title: "NEW ORDER ! on ${now.format("EEEE, dd MMM HH:mm")}",
+      message: "#${order.idMinified}, "
+          "${order.orderInfo.productCountF}, "
+          "${order.orderInfo.totalPriceF}, "
+          "Diantar ${order.orderInfo.deliveryTime}",
+    );
+    _orderToPush = order;
+
+    dev.log(order.toString());
 
     isLoading.value = false;
   }
@@ -78,8 +78,6 @@ class OrderingController extends GetxController {
 
   void onPressedSeeOrder() {
     Get.until(ModalRoute.withName(Routes.home));
-    // Get.offNamedUntil(Routes.home, (_) => Get.currentRoute == Routes.home);
-    // homeController.seeRecentOrder();
     homeController.orderCleanUp();
     Get.toNamed(Routes.orderDetail, arguments: _orderToPush);
   }

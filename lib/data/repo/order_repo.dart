@@ -11,6 +11,8 @@ abstract class OrderRepoContract {
     required List<ProductOrder> products,
     required UserApp user,
     required OrderInfo orderInfo,
+    required String paymentMethod,
+    int paymentAmount,
   });
 
   Future<Order?> readOrder(String id);
@@ -34,16 +36,19 @@ class OrderRepo extends OrderRepoContract {
     required List<ProductOrder> products,
     required UserApp user,
     required OrderInfo orderInfo,
+    required String paymentMethod,
+    int paymentAmount = 0,
   }) async {
-    await Future.delayed(const Duration(seconds: 3));
     Order order = Order(
       orderingUser: user,
       status: OrderStatus.placed,
       products: products,
       orderInfo: orderInfo,
+      paymentMethod: paymentMethod,
+      paymentAmount: paymentAmount,
     );
     final newOrder = await firestore.createOrder(order);
-    return Future.value(newOrder);
+    return newOrder;
   }
 
   @override

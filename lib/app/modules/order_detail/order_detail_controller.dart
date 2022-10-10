@@ -1,3 +1,5 @@
+import 'dart:developer' as dev;
+
 import 'package:get/get.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:mapalus/app/modules/home/home_controller.dart';
@@ -6,7 +8,7 @@ import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/data/models/rating.dart';
 import 'package:mapalus/data/repo/order_repo.dart';
 import 'package:mapalus/shared/enums.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OrderDetailController extends GetxController {
   OrderRepo orderRepo = Get.find();
@@ -28,6 +30,8 @@ class OrderDetailController extends GetxController {
 
   RxString orderStatus = ''.obs;
   Rx<Rating> orderRating = Rating.zero().obs;
+  var paymentMethod = ''.obs;
+  var paymentAmount = 0.obs;
 
   late Order _order;
   bool shouldCheckNewlyCreatedOrder = false;
@@ -79,12 +83,18 @@ class OrderDetailController extends GetxController {
     deliveryTotal.value = order.orderInfo.deliveryPriceF;
     deliveryCoordinate.value = order.orderInfo.deliveryCoordinateF;
     deliveryTime.value = order.orderInfo.deliveryTimeF(shorted: true);
-    totalPrice.value = order.orderInfo.totalPrice;
+    totalPrice.value = order.orderInfo.totalPriceF;
     finishTimeStamp.value = order.finishTimeStampF;
 
     orderRating.value = order.rating;
 
     orderStatus.value = order.status.name;
+
+    paymentMethod.value = order.paymentMethodF;
+
+    paymentAmount.value = order.paymentAmount;
+
+    dev.log(order.toString());
 
     canLoading.value = false;
   }
@@ -116,6 +126,8 @@ class OrderDetailController extends GetxController {
     var longitude = _order.orderInfo.deliveryCoordinate.longitude;
     var url =
         'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
-    launchUrlString(url);
+
+    // ignore: deprecated_member_use
+    launch(url);
   }
 }

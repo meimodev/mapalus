@@ -6,6 +6,7 @@ import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/data/models/rating.dart';
 import 'package:mapalus/data/models/user_app.dart';
 import 'package:mapalus/shared/enums.dart';
+import 'package:mapalus/shared/utils.dart';
 import 'package:mapalus/shared/values.dart';
 
 class Order {
@@ -20,6 +21,8 @@ class Order {
   UserApp orderingUser;
   UserApp? deliveringUser;
   OrderInfo orderInfo;
+  String paymentMethod;
+  int paymentAmount;
 
   Order({
     rating,
@@ -31,6 +34,8 @@ class Order {
     required this.products,
     required this.status,
     required this.orderInfo,
+    required this.paymentMethod,
+    this.paymentAmount = 0,
   }) : rating = Rating.zero() {
     if (orderTimeStamp == null) {
       _orderTimeStamp = Jiffy().format(Values.formatRawDate);
@@ -60,7 +65,9 @@ class Order {
         orderingUser = UserApp.fromMap(data['ordering_user']),
         deliveringUser = data['delivering_user'] == null
             ? null
-            : UserApp.fromMap(data['delivering_user']);
+            : UserApp.fromMap(data['delivering_user']),
+        paymentMethod = data['payment_method'] ?? '',
+        paymentAmount = data['payment_amount'] ?? 0;
 
   String get finishTimeStampF {
     if (finishTimeStamp == null) {
@@ -102,12 +109,22 @@ class Order {
     _finishTimeStamp = timeStamp.format(Values.formatRawDate);
   }
 
+  String get paymentMethodF{
+    if (paymentMethod == "CASH") {
+      return "Bayar ditempat ${Utils.formatNumberToCurrency( paymentAmount)}";
+    }
+    return paymentMethod;
+  }
+
+
   @override
   String toString() {
-    return 'Order{id: $id, products: $products,'
+    return 'Order{id: $id, products: $products, '
         'status: $status, _orderTimeStamp: $_orderTimeStamp, '
         '_finishTimeStamp: $_finishTimeStamp, rating: $rating, '
-        'orderingUser: $orderingUser, deliveringUser: $deliveringUser}';
+        'orderingUser: $orderingUser, deliveringUser: $deliveringUser, '
+        'orderInfo: $orderInfo, paymentMethod: $paymentMethod, '
+        'paymentAmount: $paymentAmount}';
   }
 
   Map<String, dynamic> toMap() {
@@ -127,6 +144,8 @@ class Order {
       'ordering_user': orderingUser.toMap(minify: true),
       'delivering_user':
           deliveringUser != null ? deliveringUser!.toMap() : null,
+      'payment_method': paymentMethod,
+      'payment_amount': paymentAmount,
     };
   }
 }

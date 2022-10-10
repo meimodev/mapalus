@@ -23,11 +23,11 @@ class DeliveryInfo {
   final List<double> weightMilestones = [5.0, 7.0, 9.0, 11.0];
 
   DeliveryInfo({
-    required this.id,
     required start,
     required end,
-    required this.available,
     required discount,
+    required this.id,
+    required this.available,
     required this.pricingModifier,
   })  : _start = start,
         _end = end,

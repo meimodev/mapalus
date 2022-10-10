@@ -6,6 +6,7 @@ import 'package:mapalus/app/modules/location/location_controller.dart';
 import 'package:mapalus/app/widgets/card_delivery_fee.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
 import 'package:mapalus/app/widgets/google_map_wrapper.dart';
+import 'package:mapalus/app/widgets/payment_method_selection_card.dart';
 import 'package:mapalus/app/widgets/screen_wrapper.dart';
 import 'package:mapalus/data/models/delivery_info.dart';
 import 'package:mapalus/data/models/order_info.dart';
@@ -138,175 +139,7 @@ class LocationScreen extends GetView<LocationController> {
                               left: 0,
                               right: 0,
                               bottom: Insets.medium.h,
-                              child: Container(
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: Insets.medium.w),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(9.sp),
-                                  color: Palette.cardForeground,
-                                ),
-                                child: AnimatedSwitcher(
-                                  duration: const Duration(milliseconds: 400),
-                                  child: controller.isLoading.value ? Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: Insets.large.h),
-                                    child:
-                                    const CircularProgressIndicator(
-                                      color: Palette.primary,
-                                    ),
-                                  ) : Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      SingleChildScrollView(
-                                        physics: const BouncingScrollPhysics(),
-                                        child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.stretch,
-                                                children: [
-                                                  Obx(
-                                                    () =>
-                                                        _BuildDeliveryFeeSelector(
-                                                      deliveries:
-                                                          controller.deliveries,
-                                                      weight: controller
-                                                          .weight.value,
-                                                      distance: controller
-                                                          .distance.value,
-                                                      onPressedDeliveryTime:
-                                                          controller
-                                                              .onPressedChangeDeliveryTime,
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    margin:
-                                                        EdgeInsets.symmetric(
-                                                      horizontal:
-                                                          Insets.small.w,
-                                                      vertical: Insets.small.h,
-                                                    ),
-                                                    decoration: BoxDecoration(
-                                                      border: Border.symmetric(
-                                                        horizontal: BorderSide(
-                                                          color: Colors
-                                                              .grey.shade200,
-                                                          width: 2,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Expanded(
-                                                          child: Row(
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    EdgeInsets
-                                                                        .only(
-                                                                  left: Insets
-                                                                      .small.w,
-                                                                  right: Insets
-                                                                          .small
-                                                                          .w *
-                                                                      .5,
-                                                                ),
-                                                                child: Text(
-                                                                  'Lokasi Terpilih',
-                                                                  style: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .bodyText1
-                                                                      ?.copyWith(
-                                                                        color: Palette
-                                                                            .textPrimary,
-                                                                      ),
-                                                                ),
-                                                              ),
-                                                              SvgPicture.asset(
-                                                                'assets/vectors/check.svg',
-                                                                width: 24.sp,
-                                                                height: 24.sp,
-                                                                color: Palette
-                                                                    .accent,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Material(
-                                                          child: InkWell(
-                                                            onTap: controller
-                                                                .onPressedChangeLocation,
-                                                            child: Padding(
-                                                              padding: EdgeInsets
-                                                                  .symmetric(
-                                                                vertical: Insets
-                                                                    .small.h,
-                                                                horizontal:
-                                                                    Insets.small
-                                                                        .w,
-                                                              ),
-                                                              child: Text(
-                                                                'Ubah Lokasi',
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyText1
-                                                                    ?.copyWith(
-                                                                      fontSize:
-                                                                          10.sp,
-                                                                      color: Palette
-                                                                          .primary,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: EdgeInsets.only(
-                                                      bottom: Insets.small.h,
-                                                      left: Insets.medium.w,
-                                                      right: Insets.medium.w,
-                                                    ),
-                                                    child: Obx(
-                                                      () => _BuildOrderInfo(
-                                                        orderInfo: controller
-                                                            .orderInfo.value,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                      ),
-                                      Material(
-                                        color: Palette.primary,
-                                        clipBehavior: Clip.hardEdge,
-                                        borderRadius: BorderRadius.circular(9.sp),
-                                        child: InkWell(
-                                          onTap: controller.onPressedMakeOrder,
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                              vertical: Insets.small.h,
-                                              horizontal: Insets.medium.w,
-                                            ),
-                                            child: const Center(
-                                              child: Text('Buat Pesanan'),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                              child: _buildBody(context),
                             ),
                           ],
                         ),
@@ -345,6 +178,576 @@ class LocationScreen extends GetView<LocationController> {
                 ),
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _buildBody(BuildContext context) => Container(
+        margin: EdgeInsets.symmetric(horizontal: Insets.medium.w),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(9.sp),
+          color: Palette.cardForeground,
+        ),
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 400),
+          child: controller.isLoading.value
+              ? Padding(
+                  padding: EdgeInsets.symmetric(vertical: Insets.large.h),
+                  child: const CircularProgressIndicator(
+                    color: Palette.primary,
+                  ),
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Obx(
+                            () => _BuildDeliveryFeeSelector(
+                              deliveries: controller.deliveries,
+                              weight: controller.weight.value,
+                              distance: controller.distance.value,
+                              onPressedDeliveryTime:
+                                  controller.onPressedChangeDeliveryTime,
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                              horizontal: Insets.small.w,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.symmetric(
+                                horizontal: BorderSide(
+                                  color: Colors.grey.shade200,
+                                  width: 2,
+                                ),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      left: Insets.small.w,
+                                      right: Insets.small.w * .5,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const Text(
+                                              'Lokasi',
+                                            ),
+                                            SizedBox(width: 6.w),
+                                            SvgPicture.asset(
+                                              'assets/vectors/check.svg',
+                                              width: 15.sp,
+                                              height: 15.sp,
+                                              color: Palette.accent,
+                                            ),
+                                          ],
+                                        ),
+                                        Text(
+                                          "Lokasi pengantaran telah dipilih",
+                                          style: TextStyle(
+                                            fontSize: 9.sp,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Material(
+                                  child: InkWell(
+                                    onTap: controller.onPressedChangeLocation,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: Insets.small.h,
+                                        horizontal: Insets.small.w,
+                                      ),
+                                      child: Text(
+                                        'Ubah Lokasi',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1
+                                            ?.copyWith(
+                                              fontSize: 10.sp,
+                                              color: Palette.primary,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: Insets.small.h),
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                              horizontal: Insets.small.w,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.symmetric(
+                                horizontal: BorderSide(
+                                  color: Colors.grey.shade200,
+                                  width: 2,
+                                ),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      left: Insets.small.w,
+                                      right: Insets.small.w * .5,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const Text(
+                                              'Pembayaran',
+                                            ),
+                                            Obx(
+                                              () => controller
+                                                      .paymentMethodSubTittle
+                                                      .isNotEmpty
+                                                  ? Row(
+                                                      children: [
+                                                        SizedBox(width: 6.w),
+                                                        SvgPicture.asset(
+                                                          'assets/vectors/check.svg',
+                                                          width: 15.sp,
+                                                          height: 15.sp,
+                                                          color: Palette.accent,
+                                                        ),
+                                                      ],
+                                                    )
+                                                  : const SizedBox(),
+                                            ),
+                                          ],
+                                        ),
+                                        controller.paymentMethodSubTittle.value
+                                                .isEmpty
+                                            ? const SizedBox()
+                                            : Text(
+                                                controller
+                                                    .paymentMethodSubTittle
+                                                    .value,
+                                                style: TextStyle(
+                                                  fontSize: 9.sp,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Material(
+                                  child: InkWell(
+                                    onTap: () =>
+                                        _showPaymentMethodBottomSheet(context),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: Insets.small.h,
+                                        horizontal: Insets.small.w,
+                                      ),
+                                      child: Text(
+                                        'Ubah Pembayaran',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1
+                                            ?.copyWith(
+                                              fontSize: 10.sp,
+                                              color: Palette.primary,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: Insets.small.h),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              bottom: Insets.small.h,
+                              left: Insets.medium.w,
+                              right: Insets.medium.w,
+                            ),
+                            child: Obx(
+                              () => _BuildOrderInfo(
+                                orderInfo: controller.orderInfo.value,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Material(
+                      color: controller.paymentMethodSubTittle.isEmpty
+                          ? Palette.accent.withAlpha(50)
+                          : Palette.primary,
+                      clipBehavior: Clip.hardEdge,
+                      borderRadius: BorderRadius.circular(9.sp),
+                      child: InkWell(
+                        onTap: () {
+                          if (controller.paymentMethodSubTittle.isEmpty) {
+                            _showPaymentMethodBottomSheet(context);
+                            return;
+                          }
+                          controller.onPressedMakeOrder();
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: Insets.small.h,
+                            horizontal: Insets.medium.w,
+                          ),
+                          child: Obx(
+                            () => Center(
+                              child: controller.paymentMethodSubTittle.isEmpty
+                                  ? const Text("Pilih Pembayaran")
+                                  : const Text('Buat Pesanan'),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+        ),
+      );
+
+  _showPaymentMethodBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => _BuildPaymentMethodBottomSheet(
+        totalPrice: controller.orderInfo.value.totalPrice.toInt(),
+        moneyAmount: controller.paymentMoneyAmount,
+        selectedPaymentIndex: controller.paymentSelectedIndex,
+        onPressedPaymentMethodButton: (
+          int selectedPaymentIndex,
+          String message,
+          int? amount,
+        ) {
+          controller.paymentMethodSubTittle.value = message;
+          controller.paymentMoneyAmount = amount;
+          controller.paymentSelectedIndex = selectedPaymentIndex;
+          Navigator.pop(context);
+        },
+      ),
+    );
+  }
+}
+
+class _BuildPaymentMethodBottomSheet extends StatefulWidget {
+  const _BuildPaymentMethodBottomSheet({
+    Key? key,
+    required this.onPressedPaymentMethodButton,
+    required this.totalPrice,
+    this.selectedPaymentIndex,
+    this.moneyAmount,
+  }) : super(key: key);
+
+  final void Function(
+    int selectedPaymentIndex,
+    String message,
+    int? moneyAmount,
+  ) onPressedPaymentMethodButton;
+  final int totalPrice;
+  final int? selectedPaymentIndex;
+  final int? moneyAmount;
+
+  @override
+  State<_BuildPaymentMethodBottomSheet> createState() =>
+      _BuildPaymentMethodBottomSheetState();
+}
+
+class _BuildPaymentMethodBottomSheetState
+    extends State<_BuildPaymentMethodBottomSheet> {
+  String moneyAmountText = "";
+  TextEditingController tecMoneyAmount = TextEditingController();
+  String moneyAmountErrorText = "";
+
+  int selectedIndex = 0;
+
+  @override
+  void dispose() {
+    tecMoneyAmount.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    selectedIndex = widget.selectedPaymentIndex ?? 0;
+    if (widget.moneyAmount != null) {
+      tecMoneyAmount.text = widget.moneyAmount!.toString();
+    }
+  }
+
+  void onSubmitPaymentBottomSheetSelectionCard() {
+    if (selectedIndex == 0) {
+      setState(() {
+        moneyAmountErrorText = "";
+      });
+      final amountText = tecMoneyAmount.text;
+      if (amountText.isEmpty) {
+        setState(() {
+          moneyAmountErrorText = "Jumlah uang tidak boleh kosong";
+        });
+      }
+      if (amountText.startsWith("0")) {
+        setState(() {
+          moneyAmountErrorText = "Awalan angka dimulai dari 1 - 9";
+        });
+      }
+      final amount = int.tryParse(amountText);
+      if (amount == null) {
+        //set error text for moneyAmount text field
+        setState(() {
+          moneyAmountErrorText = "Hanya gunakan angka 0 - 9";
+        });
+        return;
+      }
+
+      if (amount < widget.totalPrice) {
+        setState(() {
+          moneyAmountErrorText = "Jumlah uang tidak mencukupi total pembayaran";
+        });
+        return;
+      }
+      widget.onPressedPaymentMethodButton(
+          0,
+          "Bayar ditempat (COD) ${Utils.formatNumberToCurrency(amount)}",
+          amount);
+      return;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomSheet(
+      enableDrag: false,
+      onClosing: () {},
+      builder: (context) => Padding(
+        padding: EdgeInsets.all(Insets.medium.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: ListView(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                children: [
+                  PaymentMethodSelectionCard(
+                    title: 'Bayar di tempat',
+                    subTitle: "Cash on Delivery (COD)",
+                    onPressed: () {
+                      setState(() {
+                        selectedIndex == 0;
+                      });
+                    },
+                    activate: selectedIndex == 0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SizedBox(height: Insets.small.h),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Insets.small.w,
+                              vertical: Insets.small.h * .5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            color: Palette.positive.withAlpha(50),
+                          ),
+                          child: RichText(
+                            text: TextSpan(
+                              text: "",
+                              style: TextStyle(
+                                fontSize: 9.sp,
+                                color: Colors.grey,
+                              ),
+                              children: const [
+                                TextSpan(text: "Silahkan masukkan"),
+                                TextSpan(
+                                  text: " jumlah uang ",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Palette.textPrimary,
+                                  ),
+                                ),
+                                TextSpan(
+                                    text:
+                                        "yang akan dibayar, untuk mempercepat proses pembayaran di tempat"),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: Insets.small.h),
+                        Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: Insets.small.w,
+                                vertical: 2.w,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Palette.editable,
+                                borderRadius: BorderRadius.circular(9.sp),
+                              ),
+                              child: SizedBox(
+                                width: 150.w,
+                                child: TextField(
+                                  controller: tecMoneyAmount,
+                                  maxLines: 1,
+                                  onSubmitted: (_) =>
+                                      onSubmitPaymentBottomSheetSelectionCard(),
+                                  autocorrect: false,
+                                  keyboardType: TextInputType.number,
+                                  style: TextStyle(
+                                    color: Palette.accent,
+                                    fontFamily: fontFamily,
+                                    fontSize: 12.sp,
+                                  ),
+                                  cursorColor: Palette.primary,
+                                  textInputAction: TextInputAction.done,
+                                  decoration: InputDecoration(
+                                    hintStyle: TextStyle(
+                                      fontFamily: fontFamily,
+                                      fontSize: 12.sp,
+                                    ),
+                                    labelStyle: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Palette.textPrimary,
+                                    ),
+                                    isDense: true,
+                                    border: InputBorder.none,
+                                    labelText: "Jumlah uang",
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: Insets.small.w),
+                            Expanded(
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Total Pembayaran",
+                                      style: TextStyle(
+                                        fontSize: 10.sp,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Text(
+                                      Utils.formatNumberToCurrency(
+                                          widget.totalPrice),
+                                      style: TextStyle(
+                                        fontSize: 12.sp,
+                                        color: Palette.textPrimary,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        AnimatedSwitcher(
+                          duration: 400.milliseconds,
+                          child: moneyAmountErrorText.isNotEmpty
+                              ? Padding(
+                                  padding: EdgeInsets.only(
+                                    left: Insets.small.w,
+                                    right: Insets.small.w,
+                                    top: Insets.small.h * .25,
+                                  ),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      moneyAmountErrorText,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        color: Palette.negative,
+                                        fontSize: 10.sp,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  PaymentMethodSelectionCard(
+                    title: "Gopay",
+                    subTitle: "Coming soon",
+                    onPressed: () {},
+                    available: false,
+                  ),
+                  PaymentMethodSelectionCard(
+                    title: "Shopee Pay",
+                    subTitle: "Coming soon",
+                    onPressed: () {},
+                    available: false,
+                  ),
+                  PaymentMethodSelectionCard(
+                    title: "BCA Virtual Account",
+                    subTitle: "Coming soon",
+                    onPressed: () {},
+                    available: false,
+                  ),
+                  PaymentMethodSelectionCard(
+                    title: "Transfer bank BRI",
+                    subTitle: "Coming soon",
+                    onPressed: () {},
+                    available: false,
+                  ),
+                  PaymentMethodSelectionCard(
+                    title: "Transfer bank BNI",
+                    subTitle: "Coming soon",
+                    onPressed: () {},
+                    available: false,
+                  ),
+                  PaymentMethodSelectionCard(
+                    title: "Transfer bank BCA",
+                    subTitle: "Coming soon",
+                    onPressed: () {},
+                    available: false,
+                  ),
+                ],
+              ),
+            ),
+            Material(
+              borderRadius: BorderRadius.circular(Insets.small.w),
+              color: Palette.primary,
+              child: InkWell(
+                onTap: onSubmitPaymentBottomSheetSelectionCard,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: Insets.small.h),
+                  child: const Center(child: Text("Pilih Pembayaran")),
+                ),
+              ),
+            )
           ],
         ),
       ),
@@ -525,7 +928,7 @@ class _BuildOrderInfo extends StatelessWidget {
           context: context,
           title: "Total Pembayaran",
           sub: '',
-          value: orderInfo.totalPrice,
+          value: orderInfo.totalPriceF,
           highLight: true,
         ),
       ],

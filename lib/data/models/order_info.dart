@@ -32,9 +32,13 @@ class OrderInfo {
         ),
         deliveryTime = data['delivery_time'];
 
-  String get totalPrice {
+  String get totalPriceF {
     double t = deliveryPrice + productPrice;
     return Utils.formatNumberToCurrency(t);
+  }
+
+  double get totalPrice {
+    return deliveryPrice + productPrice;
   }
 
   String get productPriceF {
