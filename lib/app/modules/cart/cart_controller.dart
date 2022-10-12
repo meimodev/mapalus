@@ -25,14 +25,6 @@ class CartController extends GetxController {
     _calculateInfo();
   }
 
-  // @override
-  // void onReady() {
-  //   productOrders = homeController.productOrders;
-  //   isCardCartVisible = homeController.isCardCartVisible;
-  //   _calculateInfo();
-  //   print('onready : $productOrders');
-  // }
-
   void onPressedSetDelivery() {
     Get.toNamed(Routes.location, arguments: {
       'products_count': _count,
@@ -50,7 +42,7 @@ class CartController extends GetxController {
     }
     count.value = "$_count Produk";
     weight.value =
-        "${(_weight / 1000).toStringAsFixed(2).replaceFirst('.00', '')} Kg";
+        "± ${(_weight/1000).ceil()} Kg";
     price.value = Utils.formatNumberToCurrency(_price);
   }
 

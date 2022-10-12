@@ -21,13 +21,7 @@ class CartScreen extends GetView<CartController> {
           const CardNavigation(title: 'Keranjang Belanja', isInverted: true),
           Expanded(
             child: Container(
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
                 color: Palette.accent,
-                borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(15.w),
-                ),
-              ),
               child: Obx(
                 () => ListView.builder(
                   itemCount: controller.productOrders.value.length,
@@ -47,10 +41,9 @@ class CartScreen extends GetView<CartController> {
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                  left: Insets.medium.w * 2,
-                  right: Insets.medium.w * 2,
-                  top: Insets.medium.h,
-                  bottom: Insets.small.h,
+                  left: Insets.medium.h * 2,
+                  right: Insets.medium.h * 2,
+                  top: Insets.small.h,
                 ),
                 child: Obx(
                   () => Column(
@@ -119,31 +112,20 @@ class CartScreen extends GetView<CartController> {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(
-            width: 120.w,
-            child: Text(
-              title,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w300,
-                  ),
-            ),
-          ),
-          Row(
-            children: [
-              const Text(":"),
-              SizedBox(width: 6.w),
-              SizedBox(
-                width: 120.w,
-                child: Text(
-                  value,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w300,
                 ),
-              ),
-            ],
+          ),
+          Text(
+            value,
+            // textAlign: TextAlign.start,
+            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w400,
+                ),
           ),
         ],
       );

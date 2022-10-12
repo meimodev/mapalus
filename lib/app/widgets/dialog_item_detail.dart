@@ -41,6 +41,8 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
 
   bool isKeyboardVisible = false;
 
+  String errorMessagePrice = "";
+
   @override
   void initState() {
     super.initState();
@@ -74,7 +76,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
       elevation: 0,
       child: Container(
         alignment: Alignment.center,
-        height: 600.h,
+        height: 610.h,
         width: 300.w,
         color: Colors.transparent,
         child: Stack(
@@ -119,7 +121,9 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                                         fontSize: 14.sp,
                                       ),
                                 ),
-                                SizedBox(height: Insets.small.h),
+                                isKeyboardVisible
+                                    ? const SizedBox()
+                                    : SizedBox(height: Insets.small.h),
                                 Text(
                                   '${widget.product.priceF} / ${widget.product.unit}',
                                   textAlign: TextAlign.center,
@@ -166,11 +170,17 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                     ),
                     Material(
                       color: widget.product.isAvailable
-                          ? Palette.primary
+                          ? errorMessagePrice.isEmpty
+                              ? Palette.primary
+                              : Colors.grey
                           : Palette.editable,
                       borderRadius: BorderRadius.all(Radius.circular(9.sp)),
                       child: InkWell(
                         onTap: () {
+                          if (errorMessagePrice.isNotEmpty) {
+                            return;
+                          }
+
                           if (widget.product.isAvailable) {
                             widget.onPressedAddToCart(
                               ProductOrder(
@@ -270,12 +280,21 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
 
     double gram = 0;
     double price = 0;
+
+    setState(() {
+      errorMessagePrice = "";
+    });
+
     try {
       gram = double.parse(t1);
       price = double.parse(t2);
     } catch (e) {
       gram = 0;
       price = 0;
+      setState(() {
+        errorMessagePrice = "Gunakan angka 0 - 9 untuk mengisi";
+      });
+      return;
     }
 
     if (isFromPrice) {
@@ -288,7 +307,24 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
     } else {
       tecPrice.text = (gram * widget.product.price).floor().toString();
     }
-    // print('gram = ${tecGram.text} price = ${tecPrice.text}');
+
+
+   final freshPrice =double.tryParse(tecPrice.text);
+    if (freshPrice == null) {
+      setState(() {
+        errorMessagePrice = "Gunakan angka 0 - 9 untuk mengisi";
+      });
+      return;
+    }
+    final minimumPrice = widget.product.minimumPrice;
+    if (widget.product.isCustomPrice && minimumPrice > 0) {
+      if (freshPrice < minimumPrice) {
+        setState(() {
+          errorMessagePrice =
+              "Harga pembelian minimal ${Utils.formatNumberToCurrency(minimumPrice)}";
+        });
+      }
+    }
   }
 
   _adding(int amount, TextEditingController controller, bool isFromPrice) {
@@ -309,6 +345,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        _buildQuantityCustomizableInfoRow(),
         _buildQuantitySuggestionRow(),
         _buildQuantityRow(
           context: context,
@@ -332,7 +369,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
             _adding(-additionAmountUnit, tecUnit, false);
           },
         ),
-        SizedBox(height: 9.h),
+        _buildErrorMinimumPriceRow(),
         _buildQuantityRow(
           context: context,
           valueLabel: 'Rp',
@@ -459,19 +496,16 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
 
     return Padding(
       padding: EdgeInsets.only(
-        bottom: Insets.small.h * .75,
+        bottom: Insets.small.h * 1,
         left: Insets.small.w * .25,
         right: Insets.small.w * .25,
       ),
       child: Material(
-        clipBehavior: Clip.antiAlias,
-        // color: Palette.primary,
+        clipBehavior: Clip.hardEdge,
+        color: Palette.primary,
         shape: ContinuousRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-            side: const BorderSide(
-              color: Palette.primary,
-              width: 1.5,
-            )),
+          borderRadius: BorderRadius.circular(30),
+        ),
         child: InkWell(
           onTap: () {
             if (isPrice) {
@@ -490,14 +524,56 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
             ),
             child: Text(
               text,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    fontSize: 8.sp,
-                    color: Palette.primary,
-                  ),
+              style: TextStyle(
+                fontSize: 8.sp,
+                color: Palette.accent,
+              ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  _buildQuantityCustomizableInfoRow() {
+    if (widget.product.isCustomPrice) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "* Bisa ubah harga pembelian sesuai kebutuhan",
+            style: TextStyle(
+              fontSize: 10.sp,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+          SizedBox(height: Insets.small.h * .5),
+        ],
+      );
+    }
+
+    return const SizedBox();
+  }
+
+  _buildErrorMinimumPriceRow() {
+    if (errorMessagePrice.isEmpty) {
+      return SizedBox(height: Insets.small.h);
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SizedBox(height: 3.h),
+        Text(
+          errorMessagePrice,
+          style: TextStyle(
+            fontWeight: FontWeight.w300,
+            color: Palette.negative,
+            fontSize: 9.sp,
+          ),
+        ),
+        SizedBox(height: 3.h),
+      ],
     );
   }
 }
