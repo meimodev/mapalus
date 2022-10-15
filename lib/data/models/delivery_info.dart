@@ -109,7 +109,7 @@ class DeliveryInfo {
     final perDistanceUnit = pricingModifier.distanceUnit;
     final perWeightUnit = pricingModifier.weightUnit;
 
-    var fee = 0;
+    double fee = 0;
 
     final calculatedDistanceUnit = (distance / perDistanceUnit).ceil();
     final distanceUnit =

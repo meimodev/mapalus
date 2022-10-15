@@ -1,13 +1,13 @@
 class PricingModifier {
-  int distancePrice;
+  double distancePrice;
 
-  int weightPrice;
+  double weightPrice;
 
   /*Per 2 Kilometer*/
-  int distanceUnit;
+  double distanceUnit;
 
   /*Per 7 Kilogram*/
-  int weightUnit;
+  double weightUnit;
 
   PricingModifier({
     required this.distancePrice,
@@ -17,10 +17,10 @@ class PricingModifier {
   });
 
   factory PricingModifier.fromJson(Map<String, dynamic> map) => PricingModifier(
-        distancePrice: map['distance_price'],
-        weightPrice: map['weight_price'],
-        distanceUnit: map['distance_unit'],
-        weightUnit: map['weight_unit'],
+        distancePrice:double.parse( map['distance_price'].toString()),
+        weightPrice: double.parse(map['weight_price'].toString()),
+        distanceUnit: double.parse(map['distance_unit'].toString()),
+        weightUnit: double.parse(map['weight_unit'].toString()),
       );
 
   Map<String, dynamic> get toMap => {

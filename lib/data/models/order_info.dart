@@ -22,10 +22,10 @@ class OrderInfo {
 
   OrderInfo.fromMap(Map<String, dynamic> data)
       : productCount = data["product_count"],
-        productPrice = data["product_price"],
-        deliveryWeight = data["delivery_weight"],
-        deliveryPrice = data["delivery_price"],
-        deliveryDistance = data["delivery_distance"],
+        productPrice = double.parse( data["product_price"].toString()),
+        deliveryWeight = double.parse( data["delivery_weight"].toString()),
+        deliveryPrice = double.parse( data["delivery_price"].toString()),
+        deliveryDistance = double.parse( data["delivery_distance"].toString()),
         deliveryCoordinate = LatLng(
           data["delivery_coordinate"]["latitude"],
           data["delivery_coordinate"]["longitude"],
