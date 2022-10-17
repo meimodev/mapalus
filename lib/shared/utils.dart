@@ -10,8 +10,12 @@ class Utils {
     if (number <= 0) {
       number = 0;
     }
-    if (number == 0 && canBeFree) {
+    if (number == 0 ) {
+      if (canBeFree) {
+
       return keyFree;
+      }
+      return "-";
     }
     var f = NumberFormat('#,###');
     var s = "Rp. ${f.format(number)}".replaceAll(",", ".");
@@ -20,6 +24,9 @@ class Utils {
 
   static double formatCurrencyToNumber(String currencyNumber) {
     if (currencyNumber.toLowerCase() == keyFree) {
+      return 0;
+    }
+    if (currencyNumber == "-") {
       return 0;
     }
     var string = currencyNumber.replaceAll("Rp. ", "");

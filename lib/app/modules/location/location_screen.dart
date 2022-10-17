@@ -507,10 +507,13 @@ class _BuildPaymentMethodBottomSheetState
         moneyAmountErrorText = "";
       });
       final amountText = tecMoneyAmount.text;
-      if (amountText.isEmpty) {
-        setState(() {
-          moneyAmountErrorText = "Jumlah uang tidak boleh kosong";
-        });
+      if (amountText.isEmpty || amountText == "0") {
+        widget.onPressedPaymentMethodButton(
+          0,
+          "Bayar ditempat ${Utils.formatNumberToCurrency(0)}",
+          0,
+        );
+        return;
       }
       if (amountText.startsWith("0")) {
         setState(() {
@@ -533,9 +536,10 @@ class _BuildPaymentMethodBottomSheetState
         return;
       }
       widget.onPressedPaymentMethodButton(
-          0,
-          "Bayar ditempat (COD) ${Utils.formatNumberToCurrency(amount)}",
-          amount);
+        0,
+        "Bayar ditempat (COD) ${Utils.formatNumberToCurrency(amount)}",
+        amount,
+      );
       return;
     }
   }

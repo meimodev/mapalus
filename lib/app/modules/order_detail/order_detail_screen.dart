@@ -175,7 +175,8 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                       () => _buildRowItem(
                         context,
                         "Pengantaran",
-                        controller.deliveryCount.value,
+                        // controller.deliveryCount.value,
+                        null,
                         controller.deliveryTotal.value,
                       ),
                     ),
@@ -184,7 +185,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                       () => _buildRowItem(
                         context,
                         "Total Pembayaran",
-                        '',
+                        null,
                         controller.totalPrice.value,
                         highLight: true,
                       ),
@@ -236,7 +237,6 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                     fontSize: 12.sp,
                   ),
             ),
-
           ],
         ),
         Material(
@@ -353,7 +353,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
   _buildRowItem(
     BuildContext context,
     String title,
-    String sub,
+    String? sub,
     String value, {
     bool highLight = false,
   }) =>
@@ -374,14 +374,17 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                 ),
                 highLight
                     ? const SizedBox()
-                    : Text(
-                        sub,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w300,
-                              color: Colors.grey,
-                            ),
-                      ),
+                    : sub == null
+                        ? const SizedBox()
+                        : Text(
+                            sub,
+                            style:
+                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.w300,
+                                      color: Colors.grey,
+                                    ),
+                          ),
               ],
             ),
           ),
