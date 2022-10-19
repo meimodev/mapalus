@@ -1,6 +1,7 @@
 import 'package:jiffy/jiffy.dart';
 import 'package:mapalus/data/models/pricing_modifier.dart';
 import 'package:mapalus/shared/utils.dart';
+import 'dart:developer' as dev;
 
 class DeliveryInfo {
   String id;
@@ -39,12 +40,7 @@ class DeliveryInfo {
         end: json["end"],
         available: json["available"],
         discount: json['discount'],
-        pricingModifier: PricingModifier(
-          distancePrice: json['distance_price'] ?? 1000,
-          weightPrice: json['weight_price'] ?? 1000,
-          distanceUnit: json['distance_unit'] ?? 1,
-          weightUnit: json['weight_unit'] ?? 1,
-        ),
+        pricingModifier: PricingModifier.fromJson(json),
       );
 
   Jiffy get startDate {
@@ -116,6 +112,8 @@ class DeliveryInfo {
         calculatedDistanceUnit <= 0 ? 1 : calculatedDistanceUnit;
     final calculatedWeightUnit = (weight / perWeightUnit).ceil();
     final weightUnit = calculatedWeightUnit <= 0 ? 1 : calculatedWeightUnit;
+
+    dev.log("distanceUnit $distance / $perDistanceUnit = $distanceUnit unit ceil() | weightUnit $weight / $perWeightUnit = $weightUnit unit ceil()");
 
     //based on distance
     fee = (distanceUnit * perDistancePrice) + (weightUnit * perWeightPrice);

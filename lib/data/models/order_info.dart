@@ -22,13 +22,13 @@ class OrderInfo {
 
   OrderInfo.fromMap(Map<String, dynamic> data)
       : productCount = data["product_count"],
-        productPrice = double.parse( data["product_price"].toString()),
-        deliveryWeight = double.parse( data["delivery_weight"].toString()),
-        deliveryPrice = double.parse( data["delivery_price"].toString()),
-        deliveryDistance = double.parse( data["delivery_distance"].toString()),
+        productPrice = double.parse(data["product_price"].toString()),
+        deliveryWeight = double.parse(data["delivery_weight"].toString()),
+        deliveryPrice = double.parse(data["delivery_price"].toString()),
+        deliveryDistance = double.parse(data["delivery_distance"].toString()),
         deliveryCoordinate = LatLng(
-          data["delivery_coordinate"]["latitude"],
-          data["delivery_coordinate"]["longitude"],
+          double.parse(data["delivery_coordinate"]["latitude"].toString()),
+          double.parse(data["delivery_coordinate"]["longitude"].toString()),
         ),
         deliveryTime = data['delivery_time'];
 
@@ -92,14 +92,14 @@ class OrderInfo {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is OrderInfo &&
-          runtimeType == other.runtimeType &&
-          productCount == other.productCount &&
-          productPrice == other.productPrice &&
-          deliveryWeight == other.deliveryWeight &&
-          deliveryPrice == other.deliveryPrice &&
-          deliveryCoordinate == other.deliveryCoordinate &&
-          deliveryTime == other.deliveryTime;
+          other is OrderInfo &&
+              runtimeType == other.runtimeType &&
+              productCount == other.productCount &&
+              productPrice == other.productPrice &&
+              deliveryWeight == other.deliveryWeight &&
+              deliveryPrice == other.deliveryPrice &&
+              deliveryCoordinate == other.deliveryCoordinate &&
+              deliveryTime == other.deliveryTime;
 
   @override
   int get hashCode =>
@@ -123,5 +123,12 @@ class OrderInfo {
         'longitude': deliveryCoordinate.longitude,
       },
     };
+  }
+
+  @override
+  String toString() {
+    return 'OrderInfo{productCount: $productCount, productPrice: $productPrice, '
+        'deliveryWeight: $deliveryWeight, deliveryPrice: $deliveryPrice, deliveryDistance: '
+        '$deliveryDistance, deliveryCoordinate: $deliveryCoordinate, deliveryTime: $deliveryTime}';
   }
 }

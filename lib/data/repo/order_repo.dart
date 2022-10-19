@@ -12,6 +12,7 @@ abstract class OrderRepoContract {
     required UserApp user,
     required OrderInfo orderInfo,
     required String paymentMethod,
+    required String note,
     int paymentAmount,
   });
 
@@ -38,6 +39,7 @@ class OrderRepo extends OrderRepoContract {
     required OrderInfo orderInfo,
     required String paymentMethod,
     int paymentAmount = 0,
+    required String note
   }) async {
     Order order = Order(
       orderingUser: user,
@@ -46,6 +48,7 @@ class OrderRepo extends OrderRepoContract {
       orderInfo: orderInfo,
       paymentMethod: paymentMethod,
       paymentAmount: paymentAmount,
+      note:note,
     );
     final newOrder = await firestore.createOrder(order);
     return newOrder;

@@ -3,6 +3,7 @@ import 'package:mapalus/app/modules/home/home_controller.dart';
 import 'package:mapalus/data/models/product_order.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus/shared/utils.dart';
+import 'dart:developer' as dev;
 
 class CartController extends GetxController {
   HomeController homeController = Get.find<HomeController>();
@@ -12,6 +13,8 @@ class CartController extends GetxController {
   var count = "".obs;
   var weight = "".obs;
   var price = "".obs;
+
+  var note = "".obs;
 
   int _count = 0;
   double _weight = 0;
@@ -26,12 +29,15 @@ class CartController extends GetxController {
   }
 
   void onPressedSetDelivery() {
-    Get.toNamed(Routes.location, arguments: {
+    final data = {
       'products_count': _count,
       'products_price': _price,
       'products_weight': _weight,
       'product_orders': productOrders,
-    });
+      'note': note.value,
+    };
+    dev.log(data.toString());
+    Get.toNamed(Routes.location, arguments: data);
   }
 
   _calculateInfo() {
@@ -41,8 +47,7 @@ class CartController extends GetxController {
       _price += element.totalPrice;
     }
     count.value = "$_count Produk";
-    weight.value =
-        "± ${(_weight/1000).ceil()} Kg";
+    weight.value = "± ${(_weight / 1000).ceil()} Kg";
     price.value = Utils.formatNumberToCurrency(_price);
   }
 
@@ -55,5 +60,9 @@ class CartController extends GetxController {
       return;
     }
     _calculateInfo();
+  }
+
+  onChangedNote(String note) {
+    this.note.value = note;
   }
 }

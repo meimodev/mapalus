@@ -94,7 +94,7 @@ final ThemeData appThemeData = ThemeData.light().copyWith(
 );
 
 class Palette {
-  static const Color primary = Color(0xFFffb600);
+  static const Color primary = Color(0xFFFF9800);
   static const Color accent = Color(0xFF2B2E33);
 
   static const Color cardForeground = Color(0xFFFFFFFF);

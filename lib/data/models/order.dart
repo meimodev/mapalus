@@ -23,6 +23,7 @@ class Order {
   OrderInfo orderInfo;
   String paymentMethod;
   int paymentAmount;
+  String note;
 
   Order({
     rating,
@@ -36,6 +37,7 @@ class Order {
     required this.orderInfo,
     required this.paymentMethod,
     this.paymentAmount = 0,
+    required this.note,
   }) : rating = Rating.zero() {
     if (orderTimeStamp == null) {
       _orderTimeStamp = Jiffy().format(Values.formatRawDate);
@@ -67,7 +69,8 @@ class Order {
             ? null
             : UserApp.fromMap(data['delivering_user']),
         paymentMethod = data['payment_method'] ?? '',
-        paymentAmount = data['payment_amount'] ?? 0;
+        paymentAmount = data['payment_amount'] ?? 0,
+        note = data['note'] ?? '';
 
   String get finishTimeStampF {
     if (finishTimeStamp == null) {
@@ -109,13 +112,12 @@ class Order {
     _finishTimeStamp = timeStamp.format(Values.formatRawDate);
   }
 
-  String get paymentMethodF{
+  String get paymentMethodF {
     if (paymentMethod == "CASH") {
-      return "Bayar ditempat ${Utils.formatNumberToCurrency( paymentAmount)}";
+      return "Bayar ditempat ${Utils.formatNumberToCurrency(paymentAmount)}";
     }
     return paymentMethod;
   }
-
 
   @override
   String toString() {
@@ -124,7 +126,7 @@ class Order {
         '_finishTimeStamp: $_finishTimeStamp, rating: $rating, '
         'orderingUser: $orderingUser, deliveringUser: $deliveringUser, '
         'orderInfo: $orderInfo, paymentMethod: $paymentMethod, '
-        'paymentAmount: $paymentAmount}';
+        'paymentAmount: $paymentAmount, note: $note}';
   }
 
   Map<String, dynamic> toMap() {
@@ -146,6 +148,7 @@ class Order {
           deliveringUser != null ? deliveringUser!.toMap() : null,
       'payment_method': paymentMethod,
       'payment_amount': paymentAmount,
+      'note': note,
     };
   }
 }

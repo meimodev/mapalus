@@ -12,6 +12,7 @@ import 'package:mapalus/data/models/rating.dart';
 import 'package:mapalus/shared/enums.dart';
 import 'package:mapalus/shared/theme.dart';
 import 'package:get/get.dart';
+import 'package:readmore/readmore.dart';
 
 class OrderDetailScreen extends GetView<OrderDetailController> {
   const OrderDetailScreen({Key? key}) : super(key: key);
@@ -161,6 +162,8 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                             child: _buildPaymentInfoLayout(context),
                           )
                         : const SizedBox(),
+                    SizedBox(height: Insets.small.h),
+                    controller.note.isNotEmpty ? _BuildNoteCard(note: controller.note) : const SizedBox(),
                     SizedBox(height: Insets.small.h),
                     Obx(
                       () => _buildRowItem(
@@ -535,6 +538,54 @@ class _BuildRatedLayout extends StatelessWidget {
               ),
         ),
       ],
+    );
+  }
+}
+
+class _BuildNoteCard extends StatelessWidget {
+  const _BuildNoteCard({
+    Key? key,
+    required this.note,
+  }) : super(key: key);
+
+  final String note;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(9.sp),
+        color: Palette.editable,
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: Insets.small.sp,
+        vertical: Insets.small.sp,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(Icons.edit_note_rounded, size: 15.sp),
+          SizedBox(width: 6.w),
+          Expanded(
+            child: ReadMoreText(
+              '$note  ',
+              trimLines: 1,
+              colorClickableText: Palette.primary,
+              trimMode: TrimMode.Line,
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    fontWeight: FontWeight.w300,
+                    fontSize: 12.sp,
+                  ),
+              delimiter: "  . . .  ",
+              delimiterStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 14.sp,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

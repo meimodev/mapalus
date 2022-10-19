@@ -38,6 +38,8 @@ class OrderDetailController extends GetxController {
 
   RxBool canLoading = true.obs;
 
+  String note = "";
+
   @override
   void onClose() {
     if (shouldCheckNewlyCreatedOrder) {
@@ -93,6 +95,8 @@ class OrderDetailController extends GetxController {
     paymentMethod.value = order.paymentMethodF;
 
     paymentAmount.value = order.paymentAmount;
+
+    note = order.note;
 
     dev.log(order.toString());
 

@@ -51,7 +51,9 @@ class LocationController extends GetxController {
 
   int? paymentMoneyAmount;
 
-  int paymentSelectedIndex =0;
+  int paymentSelectedIndex = 0;
+
+  String note = "";
 
   @override
   void onInit() async {
@@ -62,11 +64,14 @@ class LocationController extends GetxController {
     PricingModifier pricingModifier = PricingModifier.fromJson(pm);
     var d = await appRepo.getDeliveryTimes();
     //set the pricing modifier to each dDeliveryInfo object
-    deliveries = d.map((e) {
-      e.addAll(pricingModifier.toMap);
-      dev.log("Delivery info => $e" );
-      return DeliveryInfo.fromJSON(e);
-    }).toList().obs;
+    deliveries = d
+        .map((e) {
+          e.addAll(pricingModifier.toMap);
+          dev.log("Delivery info => $e");
+          return DeliveryInfo.fromJSON(e);
+        })
+        .toList()
+        .obs;
 
     isLoading.value = false;
 
@@ -79,6 +84,7 @@ class LocationController extends GetxController {
       deliveryWeight: w,
     );
     weight.value = w;
+    note = args['note'] ?? '';
     _calculateOrderInfo();
   }
 
@@ -102,8 +108,9 @@ class LocationController extends GetxController {
 
     //calculate the prices
     if (isLocationSelectionVisible.isFalse) {
-      LatLng pos1 =
-          const LatLng(1.3019081307317848, 124.9068409438052); ///pasar
+      LatLng pos1 = const LatLng(1.3019081307317848, 124.9068409438052);
+
+      ///pasar
       double dis = Utils.calculateDistance(pos1, deliveryCoordinate!);
       distance.value = Utils.roundDouble(dis, 2);
       _calculateOrderInfo();
@@ -139,6 +146,7 @@ class LocationController extends GetxController {
         'order_info': orderInfo.value,
         'payment_method': paymentMethodString,
         'payment_amount': paymentMoneyAmount ?? 0,
+        'note': note,
       },
     );
   }

@@ -17,7 +17,7 @@ class PricingModifier {
   });
 
   factory PricingModifier.fromJson(Map<String, dynamic> map) => PricingModifier(
-        distancePrice:double.parse( map['distance_price'].toString()),
+    distancePrice:double.parse( map['distance_price'].toString()),
         weightPrice: double.parse(map['weight_price'].toString()),
         distanceUnit: double.parse(map['distance_unit'].toString()),
         weightUnit: double.parse(map['weight_unit'].toString()),

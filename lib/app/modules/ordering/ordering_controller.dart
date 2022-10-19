@@ -29,11 +29,11 @@ class OrderingController extends GetxController {
     UserApp? user = await userRepo.readSignedInUser();
 
     final args = Get.arguments as Map<String, dynamic>;
-    final productOrders =
-        args['product_orders'] as List<ProductOrder>;
+    final productOrders = args['product_orders'] as List<ProductOrder>;
     final orderInfo = args['order_info'] as OrderInfo;
-    final paymentMethod =  args['payment_method'] as String;
+    final paymentMethod = args['payment_method'] as String;
     final paymentAmount = args['payment_amount'] as int;
+    final note = args['note'].toString();
 
     await Future.delayed(const Duration(milliseconds: 2000));
 
@@ -43,6 +43,7 @@ class OrderingController extends GetxController {
       orderInfo: orderInfo,
       paymentAmount: paymentAmount,
       paymentMethod: paymentMethod,
+      note: note,
     );
     var now = Jiffy();
     NotificationService.instance.sendNotification(

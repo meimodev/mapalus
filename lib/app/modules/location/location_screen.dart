@@ -497,7 +497,12 @@ class _BuildPaymentMethodBottomSheetState
     super.initState();
     selectedIndex = widget.selectedPaymentIndex ?? 0;
     if (widget.moneyAmount != null) {
-      tecMoneyAmount.text = widget.moneyAmount!.toString();
+      final moneyAmount = widget.moneyAmount!.toString();
+      if (moneyAmount == "0") {
+        tecMoneyAmount.text = "";
+        return;
+      }
+      tecMoneyAmount.text = moneyAmount;
     }
   }
 
@@ -506,6 +511,7 @@ class _BuildPaymentMethodBottomSheetState
       setState(() {
         moneyAmountErrorText = "";
       });
+
       final amountText = tecMoneyAmount.text;
       if (amountText.isEmpty || amountText == "0") {
         widget.onPressedPaymentMethodButton(
@@ -537,7 +543,7 @@ class _BuildPaymentMethodBottomSheetState
       }
       widget.onPressedPaymentMethodButton(
         0,
-        "Bayar ditempat (COD) ${Utils.formatNumberToCurrency(amount)}",
+        "Bayar ditempat ${Utils.formatNumberToCurrency(amount)}",
         amount,
       );
       return;
@@ -561,7 +567,7 @@ class _BuildPaymentMethodBottomSheetState
                 children: [
                   PaymentMethodSelectionCard(
                     title: 'Bayar di tempat',
-                    subTitle: "Cash on Delivery (COD)",
+                    subTitle: "Cash on Delivery",
                     onPressed: () {
                       setState(() {
                         selectedIndex == 0;
@@ -578,7 +584,7 @@ class _BuildPaymentMethodBottomSheetState
                               vertical: Insets.small.h * .5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6),
-                            color: Palette.positive.withAlpha(50),
+                            color: Palette.primary.withOpacity(.25),
                           ),
                           child: RichText(
                             text: TextSpan(
@@ -598,7 +604,7 @@ class _BuildPaymentMethodBottomSheetState
                                 ),
                                 TextSpan(
                                     text:
-                                        "yang akan dibayar, untuk mempercepat proses pembayaran di tempat"),
+                                        "yang akan dibayar, untuk mempermudah proses penukaran uang kembalian"),
                               ],
                             ),
                           ),
@@ -625,20 +631,20 @@ class _BuildPaymentMethodBottomSheetState
                                   autocorrect: false,
                                   keyboardType: TextInputType.number,
                                   style: TextStyle(
-                                    color: Palette.accent,
+                                    color: Palette.textPrimary,
                                     fontFamily: fontFamily,
-                                    fontSize: 12.sp,
+                                    fontSize: 10.sp,
                                   ),
                                   cursorColor: Palette.primary,
                                   textInputAction: TextInputAction.done,
                                   decoration: InputDecoration(
                                     hintStyle: TextStyle(
                                       fontFamily: fontFamily,
-                                      fontSize: 12.sp,
+                                      fontSize: 10.sp,
                                     ),
                                     labelStyle: TextStyle(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.w300,
                                       color: Palette.textPrimary,
                                     ),
                                     isDense: true,
