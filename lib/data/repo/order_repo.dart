@@ -1,10 +1,4 @@
-import 'package:mapalus/data/models/order.dart';
-import 'package:mapalus/data/models/order_info.dart';
-import 'package:mapalus/data/models/product_order.dart';
-import 'package:mapalus/data/models/rating.dart';
-import 'package:mapalus/data/models/user_app.dart';
-import 'package:mapalus/data/services/firebase_services.dart';
-import 'package:mapalus/shared/enums.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 abstract class OrderRepoContract {
   Future<Order> createOrder({
@@ -18,7 +12,7 @@ abstract class OrderRepoContract {
 
   Future<Order?> readOrder(String id);
 
-  Future<List<Order>> readOrders(UserApp user);
+  Future<List<Order>> readUserOrders(UserApp user);
 
   Future<List<Order>> updateOrderStatus({
     required Order order,
@@ -38,8 +32,8 @@ class OrderRepo extends OrderRepoContract {
     required UserApp user,
     required OrderInfo orderInfo,
     required String paymentMethod,
+    required String note,
     int paymentAmount = 0,
-    required String note
   }) async {
     Order order = Order(
       orderingUser: user,
@@ -48,38 +42,42 @@ class OrderRepo extends OrderRepoContract {
       orderInfo: orderInfo,
       paymentMethod: paymentMethod,
       paymentAmount: paymentAmount,
-      note:note,
+      note: note,
     );
-    final newOrder = await firestore.createOrder(order);
-    return newOrder;
+    await firestore.createOrder(
+      order.generateId(),
+      user.phone,
+      order.toMap(),
+    );
+    return order;
   }
 
   @override
   Future<Order> rateOrder(Order order, Rating rating) async {
-    //new order with updated rating
     order.rating = rating;
     order.status = OrderStatus.finished;
     order.setFinishTimeStamp(rating.ratingTimeStamp);
-    return await firestore.updateOrder(order);
+    final res = await firestore.updateOrder(order.generateId(), order.toMap());
+    final updatedOrder = Order.fromMap(res as Map<String, dynamic>);
+    return updatedOrder;
   }
 
   @override
   Future<Order?> readOrder(String id) async {
-    var res = await firestore.readOrder(id);
-    return res;
+    final res = await firestore.readOrder(id);
+    if (res == null) {
+      return null;
+    }
+    final data = res as Map<String, dynamic>;
+    return Order.fromMap(data);
   }
 
   @override
-  Future<List<Order>> readOrders(UserApp user) async {
-    var res = <Order>[];
-    var userOrders = user.orders;
-    for (String id in userOrders) {
-      Order? o = await firestore.readOrder(id);
-      if (o != null) {
-        res.add(o);
-      }
-    }
-    return res;
+  Future<List<Order>> readUserOrders(UserApp user) async {
+    final res = await firestore.readUserOrders(user.phone);
+    final data =
+        res.map((e) => Order.fromMap(e as Map<String, dynamic>)).toList();
+    return data;
   }
 
   @override

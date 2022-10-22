@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jiffy/jiffy.dart';
-import 'package:mapalus/data/models/order.dart';
-import 'package:mapalus/shared/enums.dart';
-import 'package:mapalus/shared/theme.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+
 
 class CardOrder extends StatelessWidget {
   const CardOrder({
@@ -38,6 +35,7 @@ class CardOrder extends StatelessWidget {
               ),
               SizedBox(width: 9.w),
               Expanded(
+                flex: 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -69,7 +67,6 @@ class CardOrder extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(width: 6.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +84,7 @@ class CardOrder extends StatelessWidget {
               ),
               SizedBox(width: 6.w),
               SizedBox(
-                width: 100.w,
+                width: 100,
                 child: _buildCardStatus(context),
               ),
             ],

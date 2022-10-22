@@ -1,5 +1,4 @@
-import 'package:mapalus/data/models/product.dart';
-import 'package:mapalus/data/services/firebase_services.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 abstract class ProductRepoContract {
   Future<Product> readProduct(int id);
@@ -30,7 +29,8 @@ class ProductRepo extends ProductRepoContract {
   }
 
   Future<List<Product>> getProducts() async {
-    var p = await firestore.getProducts();
-    return p;
+    final res = await firestore.getProducts();
+    final data = res.map((e) => Product.fromMap(e as Map<String, dynamic>)).toList();
+    return data;
   }
 }

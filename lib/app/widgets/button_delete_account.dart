@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mapalus/shared/theme.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:get/get.dart';
 
 class DeleteAccountButton extends StatelessWidget {

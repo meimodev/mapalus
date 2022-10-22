@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mapalus/app/widgets/screen_wrapper.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus/shared/routes.dart';
-import 'package:mapalus/shared/theme.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

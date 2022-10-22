@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:mapalus/app/widgets/dialog_confirm.dart';
-import 'package:mapalus/data/models/product_order.dart';
-import 'package:mapalus/shared/theme.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+
 
 class CardCartItem extends StatelessWidget {
   const CardCartItem({

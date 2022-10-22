@@ -1,23 +1,14 @@
 
 // ignore_for_file: invalid_use_of_protected_member
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:mapalus/data/models/category.dart';
-import 'package:mapalus/data/models/order.dart';
-import 'package:mapalus/data/models/product.dart';
-import 'package:mapalus/data/models/product_order.dart';
-import 'package:mapalus/data/models/user_app.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus/data/repo/app_repo.dart';
 import 'package:mapalus/data/repo/order_repo.dart';
 import 'package:mapalus/data/repo/product_repo.dart';
 import 'package:mapalus/data/repo/user_repo.dart';
-import 'package:mapalus/shared/enums.dart';
 import 'package:mapalus/shared/routes.dart';
-import 'package:mapalus/shared/utils.dart';
 
 class HomeController extends GetxController {
   UserRepo userRepo = Get.find<UserRepo>();

@@ -1,10 +1,8 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:mapalus/app/modules/payment/payment_controller.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
-import 'package:mapalus/app/widgets/screen_wrapper.dart';
-import 'package:mapalus/shared/theme.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 ///Not using this screen yet
 class PaymentScreen extends GetView<PaymentController> {

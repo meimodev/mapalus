@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class GoogleMapWrapper extends StatefulWidget {
   const GoogleMapWrapper({Key? key, required this.onCameraIdle, required this.onMapCreated})

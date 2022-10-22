@@ -1,7 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/home/home_controller.dart';
 import 'package:mapalus/app/widgets/card_category.dart';
@@ -9,12 +8,9 @@ import 'package:mapalus/app/widgets/card_order_peak.dart';
 import 'package:mapalus/app/widgets/card_product.dart';
 import 'package:mapalus/app/widgets/card_cart_peak.dart';
 import 'package:mapalus/app/widgets/dialog_item_detail.dart';
-import 'package:mapalus/app/widgets/screen_wrapper.dart';
+
 import 'package:mapalus/app/widgets/card_search_bar.dart';
-import 'package:mapalus/data/models/category.dart';
-import 'package:mapalus/data/models/product.dart';
-import 'package:mapalus/shared/theme.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
@@ -195,22 +191,22 @@ class HomeScreen extends GetView<HomeController> {
 
   _buildProductCard(int index, List<Product> products) {
     return
-      // Padding(
-      // padding: EdgeInsets.only(
-      //   left: index % 2 == 0 ? Insets.medium.w : 0,
-      //   right: index % 2 == 0 ? 0 : Insets.medium.w,
-      // ),
-      // child:
-    CardProduct(
-        product: products[index],
-        onPressed: (product) {
-          Get.dialog(
-            DialogItemDetail(
-              product: product,
-              onPressedAddToCart: controller.onPressedAddToCart,
-            ),
-          );
-        },
+        // Padding(
+        // padding: EdgeInsets.only(
+        //   left: index % 2 == 0 ? Insets.medium.w : 0,
+        //   right: index % 2 == 0 ? 0 : Insets.medium.w,
+        // ),
+        // child:
+        CardProduct(
+      product: products[index],
+      onPressed: (product) {
+        Get.dialog(
+          DialogItemDetail(
+            product: product,
+            onPressedAddToCart: controller.onPressedAddToCart,
+          ),
+        );
+      },
       // ),
     );
   }
@@ -277,7 +273,7 @@ class HomeScreen extends GetView<HomeController> {
                     ),
                     SizedBox(height: Insets.small.h),
                     Obx(
-                      ()=> _BuildCardCategories(
+                      () => _BuildCardCategories(
                         onPressedCategories: controller.onPressedCategories,
                         categories: controller.categories.value,
                       ),

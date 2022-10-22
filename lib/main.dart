@@ -1,15 +1,9 @@
-import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mapalus/shared/routes.dart';
-import 'package:mapalus/shared/theme.dart';
-import 'package:jiffy/jiffy.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 import 'firebase_options.dart';
 

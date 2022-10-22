@@ -1,16 +1,12 @@
 import 'dart:developer' as dev;
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:jiffy/jiffy.dart';
-import 'package:mapalus/data/models/delivery_info.dart';
-import 'package:mapalus/data/models/order_info.dart';
-import 'package:mapalus/data/models/pricing_modifier.dart';
-import 'package:mapalus/data/models/product_order.dart';
+
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+
 import 'package:mapalus/data/repo/app_repo.dart';
 import 'package:mapalus/data/repo/location_repo.dart';
 import 'package:mapalus/data/repo/order_repo.dart';
 import 'package:mapalus/shared/routes.dart';
-import 'package:mapalus/shared/utils.dart';
 
 class LocationController extends GetxController {
   AppRepo appRepo = Get.find();
@@ -26,7 +22,8 @@ class LocationController extends GetxController {
     deliveryWeight: 0,
     deliveryPrice: 0,
     deliveryDistance: 0,
-    deliveryCoordinate: const LatLng(0, 0),
+    deliveryCoordinateLatitude: 0,
+    deliveryCoordinateLongitude: 0,
   ).obs;
 
   RxDouble distance = 0.0.obs;
@@ -108,13 +105,17 @@ class LocationController extends GetxController {
 
     //calculate the prices
     if (isLocationSelectionVisible.isFalse) {
-      LatLng pos1 = const LatLng(1.3019081307317848, 124.9068409438052);
 
-      ///pasar
-      double dis = Utils.calculateDistance(pos1, deliveryCoordinate!);
+      ///pasar tondano coordinate
+      LatLng pos1 = const LatLng(1.3019081307317848, 124.9068409438052);
+      double dis = Utils.calculateDistance(
+        pos1Latitude: pos1.latitude,
+        pos1Longitude: pos1.longitude,
+        pos2Latitude: deliveryCoordinate!.latitude,
+        pos2Longitude: deliveryCoordinate!.longitude,
+      );
       distance.value = Utils.roundDouble(dis, 2);
       _calculateOrderInfo();
-      // print('Distance = ' + distance.value.toString());
     }
   }
 
@@ -179,7 +180,8 @@ class LocationController extends GetxController {
     orderInfo.value = orderInfo.value.copyWith(
       deliveryWeight: weight.value,
       deliveryDistance: distance.value,
-      deliveryCoordinate: deliveryCoordinate,
+      deliveryCoordinateLatitude: deliveryCoordinate?.latitude,
+      deliveryCoordinateLongitude: deliveryCoordinate?.longitude,
     );
   }
 

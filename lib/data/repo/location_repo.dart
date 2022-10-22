@@ -1,6 +1,5 @@
 import 'dart:async';
-
-import 'package:geolocator/geolocator.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 abstract class LocationRepoContract {
   Future<double> getDeviceLongitude();

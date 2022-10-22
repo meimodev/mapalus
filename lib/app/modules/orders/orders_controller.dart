@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:mapalus/data/models/order.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus/data/repo/order_repo.dart';
 import 'package:mapalus/data/repo/user_repo.dart';
 
@@ -20,7 +20,8 @@ class OrdersController extends GetxController {
 
   _populateOrders() async {
     isLoading.value = true;
-    orders.value = await orderRepo.readOrders(userRepo.signedUser!);
+    final userOrders = await orderRepo.readUserOrders(userRepo.signedUser!);
+    orders.value = userOrders.reversed.toList();
     if (orders.isEmpty) {
       isNoOrderLayoutVisible.value = true;
     }

@@ -1,15 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:mapalus/app/widgets/custom_image.dart';
 import 'package:mapalus/app/widgets/text_input_quantity.dart';
-import 'package:mapalus/data/models/product.dart';
-import 'package:mapalus/data/models/product_order.dart';
-import 'package:mapalus/shared/theme.dart';
-import 'package:mapalus/shared/utils.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+
 
 import 'button_alter_quantity.dart';
 

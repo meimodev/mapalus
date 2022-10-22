@@ -4,12 +4,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/widgets/card_cart_item.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
-import 'package:mapalus/app/widgets/screen_wrapper.dart';
-import 'package:mapalus/shared/theme.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 import 'cart_controller.dart';
 

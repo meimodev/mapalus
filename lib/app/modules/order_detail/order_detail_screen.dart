@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mapalus/app/modules/order_detail/order_detail_controller.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
 import 'package:mapalus/app/widgets/card_order_detail_item.dart';
 import 'package:mapalus/app/widgets/dialog_rating.dart';
-import 'package:mapalus/app/widgets/screen_wrapper.dart';
-import 'package:mapalus/data/models/product_order.dart';
-import 'package:mapalus/data/models/rating.dart';
-import 'package:mapalus/shared/enums.dart';
-import 'package:mapalus/shared/theme.dart';
 import 'package:get/get.dart';
-import 'package:readmore/readmore.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class OrderDetailScreen extends GetView<OrderDetailController> {
   const OrderDetailScreen({Key? key}) : super(key: key);

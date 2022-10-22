@@ -1,11 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 
-import 'package:mapalus/data/models/result.dart';
-import 'package:mapalus/data/models/user_app.dart';
-import 'package:mapalus/data/services/firebase_services.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 abstract class UserRepoContract {
   Future<UserApp?> readSignedInUser();
@@ -42,9 +37,11 @@ class UserRepo extends UserRepoContract {
       if (user != null) {
         debugPrint('AuthStateChanges(), Phone number confirmed');
         // authStatusCalled = true;
-        UserApp? userApp = await fireStore.getUser(
-          user.phoneNumber!.replaceFirst('+62', '0'),
-        );
+        final result = await fireStore.getUser(user.phoneNumber!);
+        UserApp? userApp = result  == null
+            ? null
+            : UserApp.fromMap(result as Map<String, dynamic>);
+
         if (userApp != null) {
           debugPrint('AuthStateChanges() signed success $signedUser');
           signing(userApp);
@@ -75,9 +72,10 @@ class UserRepo extends UserRepoContract {
           debugPrint('idTokenChanges(), user already signed');
           return;
         }
-        UserApp? userApp = await fireStore.getUser(
-          user.phoneNumber!.replaceFirst('+62', '0'),
-        );
+        final result = await fireStore.getUser(user.phoneNumber!);
+        UserApp? userApp = result  == null
+            ? null
+            : UserApp.fromMap(result as Map<String, dynamic>);
 
         if (userApp != null) {
           debugPrint('idTokenChanges() signed success $signedUser');
@@ -135,9 +133,8 @@ class UserRepo extends UserRepoContract {
   @override
   Future<UserApp> registerUser(String phone, String name) async {
     UserApp user = UserApp(phone: phone, name: name);
-    // debugPrint("registerUser() $user");
-    signing(await fireStore.createUser(user));
-
+    await fireStore.createUser(phone, user.toMap());
+    signing(user);
     return Future.value(user);
   }
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mapalus/data/models/order.dart';
-import 'package:mapalus/shared/enums.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class BuilderSwitchOrderStatus extends StatelessWidget {
   const BuilderSwitchOrderStatus({
