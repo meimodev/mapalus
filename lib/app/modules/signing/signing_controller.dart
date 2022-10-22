@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/home/home_controller.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
-import 'package:mapalus/data/repo/user_repo.dart';
 
 class SigningController extends GetxController {
   HomeController homeController = Get.find();

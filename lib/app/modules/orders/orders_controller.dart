@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
-import 'package:mapalus/data/repo/order_repo.dart';
-import 'package:mapalus/data/repo/user_repo.dart';
 
 class OrdersController extends GetxController {
   OrderRepo orderRepo = Get.find();

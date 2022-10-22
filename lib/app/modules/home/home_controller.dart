@@ -4,10 +4,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
-import 'package:mapalus/data/repo/app_repo.dart';
-import 'package:mapalus/data/repo/order_repo.dart';
-import 'package:mapalus/data/repo/product_repo.dart';
-import 'package:mapalus/data/repo/user_repo.dart';
 import 'package:mapalus/shared/routes.dart';
 
 class HomeController extends GetxController {

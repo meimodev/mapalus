@@ -1,12 +1,10 @@
-import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/home/home_controller.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
-import 'package:mapalus/data/repo/order_repo.dart';
-import 'package:mapalus/data/repo/user_repo.dart';
 import 'package:mapalus/shared/routes.dart';
+import 'dart:developer' as dev;
 
 class OrderingController extends GetxController {
   OrderRepo orderRepo = Get.find<OrderRepo>();

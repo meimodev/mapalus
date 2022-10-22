@@ -1,12 +1,7 @@
-import 'dart:developer' as dev;
 import 'package:get/get.dart';
-
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
-
-import 'package:mapalus/data/repo/app_repo.dart';
-import 'package:mapalus/data/repo/location_repo.dart';
-import 'package:mapalus/data/repo/order_repo.dart';
 import 'package:mapalus/shared/routes.dart';
+import 'dart:developer' as dev;
 
 class LocationController extends GetxController {
   AppRepo appRepo = Get.find();

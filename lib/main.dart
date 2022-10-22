@@ -29,7 +29,6 @@ void main() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
   await FirebaseMessaging.instance.setAutoInitEnabled(true);
-
 }
 
 class MyApp extends StatelessWidget {
