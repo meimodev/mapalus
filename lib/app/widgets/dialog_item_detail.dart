@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mapalus/app/widgets/custom_image.dart';
 import 'package:mapalus/app/widgets/text_input_quantity.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
@@ -312,7 +311,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
       return;
     }
     final minimumPrice = widget.product.minimumPrice;
-    if (widget.product.isCustomPrice && minimumPrice > 0) {
+    if (minimumPrice > 0) {
       if (freshPrice < minimumPrice) {
         setState(() {
           errorMessagePrice =

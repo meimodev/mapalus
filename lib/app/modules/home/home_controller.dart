@@ -82,7 +82,7 @@ class HomeController extends GetxController {
     await _initProductsDisplay();
 
     await Future.delayed(const Duration(seconds: 1));
-    if (!await appRepo.checkIfLatestVersion()) {
+    if (!await appRepo.checkIfLatestVersion(true)) {
       Get.offNamed(Routes.updateApp);
       return;
     }
@@ -185,7 +185,7 @@ Future<void>  _initProductsDisplay() async {
 
     // canLoadingProducts.value = true;
 
-    tempProducts = await productRepo.getProducts();
+    tempProducts = await productRepo.readProducts();
     tempProducts.shuffle();
     tempSearchedProducts = List.from(tempProducts);
     displayProducts.value = tempProducts.sublist(0, _pageSize);

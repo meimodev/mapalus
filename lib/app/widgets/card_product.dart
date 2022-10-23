@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mapalus/app/widgets/custom_image.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 
