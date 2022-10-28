@@ -345,7 +345,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
           context: context,
           valueLabel: widget.product.unit,
           isCustomPrice: true,
-          // isReadOnly: widget.product.isCustomPrice,
+          isReadOnly: !widget.product.isCustomPrice,
           icon: SvgPicture.asset(
             'assets/vectors/gram.svg',
             width: 15.sp,
