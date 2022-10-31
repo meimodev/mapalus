@@ -41,7 +41,7 @@ class UpdateAppScreen extends StatelessWidget {
                     icon: Icons.apple,
                     onPressed: () {
                       String url =
-                          "https://apps.apple.com/sg/app/bungkus/id1460126004";
+                          "https://apps.apple.com/id/app/mapalus/id1626796752";
                       launchUrlString(
                         url,
                         mode: LaunchMode.externalNonBrowserApplication,
