@@ -13,7 +13,7 @@ class OrderingController extends GetxController {
 
   RxBool isLoading = true.obs;
 
-  Order? _orderToPush;
+  OrderApp? _orderToPush;
 
   @override
   void onReady() async {
@@ -30,7 +30,7 @@ class OrderingController extends GetxController {
 
     await Future.delayed(const Duration(milliseconds: 2000));
 
-    Order order = await orderRepo.createOrder(
+    OrderApp order = await orderRepo.createOrder(
       products: productOrders,
       user: user!,
       orderInfo: orderInfo,

@@ -5,7 +5,7 @@ class OrdersController extends GetxController {
   OrderRepo orderRepo = Get.find();
   UserRepo userRepo = Get.find();
 
-  RxList<Order> orders = <Order>[].obs;
+  RxList<OrderApp> orders = <OrderApp>[].obs;
 
   RxBool isLoading = false.obs;
   RxBool isNoOrderLayoutVisible = false.obs;

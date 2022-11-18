@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'dart:io' show Platform;
 
 class UpdateAppScreen extends StatelessWidget {
   const UpdateAppScreen({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class UpdateAppScreen extends StatelessWidget {
               SizedBox(height: Insets.small.h * .5),
               SizedBox(height: Insets.large.h),
               Text(
-                'Silahkan update aplikasi\nuntuk keamanan & stabilitas termutakhir',
+                'Silahkan update aplikasi\nuntuk menggunakan fitur terbaru mapalus ☺',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyText1?.copyWith(
                       fontSize: 14.sp,
@@ -33,34 +34,34 @@ class UpdateAppScreen extends StatelessWidget {
               ),
               SizedBox(height: Insets.small.h),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _buildButton(
-                    context,
-                    title: 'App Store',
-                    icon: Icons.apple,
-                    onPressed: () {
-                      String url =
-                          "https://apps.apple.com/sg/app/bungkus/id1460126004";
-                      launchUrlString(
-                        url,
-                        mode: LaunchMode.externalNonBrowserApplication,
-                      );
-                    },
-                  ),
-                  _buildButton(
-                    context,
-                    title: 'Play Store',
-                    icon: Icons.android,
-                    onPressed: () {
-                      String url =
-                          "https://play.google.com/store/apps/details?id=com.meimodev.mapalus";
-                      launchUrlString(
-                        url,
-                        mode: LaunchMode.externalNonBrowserApplication,
-                      );
-                    },
-                  ),
+                  Platform.isIOS
+                      ? _buildButton(
+                          context,
+                          title: 'App Store',
+                          icon: Icons.apple,
+                          onPressed: () {
+                            String url =
+                                "https://apps.apple.com/us/app/mapalus/id1626796752";
+                            // ignore: deprecated_member_use
+                            launch(url);
+                          },
+                        )
+                      : const SizedBox(),
+                  Platform.isAndroid
+                      ? _buildButton(
+                          context,
+                          title: 'Play Store',
+                          icon: Icons.android,
+                          onPressed: () {
+                            String url =
+                                "https://play.google.com/store/apps/details?id=com.meimodev.mapalus";
+                            // ignore: deprecated_member_use
+                            launch(url);
+                          },
+                        )
+                      : const SizedBox(),
                 ],
               )
             ],

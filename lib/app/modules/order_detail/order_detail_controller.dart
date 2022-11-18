@@ -27,7 +27,7 @@ class OrderDetailController extends GetxController {
   var paymentMethod = ''.obs;
   var paymentAmount = 0.obs;
 
-  late Order _order;
+  late OrderApp _order;
   bool shouldCheckNewlyCreatedOrder = false;
 
   RxBool canLoading = true.obs;
@@ -46,7 +46,7 @@ class OrderDetailController extends GetxController {
   void onReady() {
     canLoading.value = true;
 
-    Order order = Get.arguments as Order;
+    OrderApp order = Get.arguments as OrderApp;
     var params = Get.parameters;
     if (params.isNotEmpty) {
       _loadFreshOrder(order.id!);
@@ -60,12 +60,12 @@ class OrderDetailController extends GetxController {
   }
 
   _loadFreshOrder(String orderId) async {
-    Order? t = await orderRepo.readOrder(orderId);
-    Order order = t!;
+    OrderApp? t = await orderRepo.readOrder(orderId);
+    OrderApp order = t!;
     _initInterfaceWithData(order);
   }
 
-  _initInterfaceWithData(Order order) {
+  _initInterfaceWithData(OrderApp order) {
     _order = order;
     productOrders.value = order.products;
     id.value = order.idMinified;

@@ -20,7 +20,7 @@ class HomeController extends GetxController {
 
   RxList<ProductOrder> productOrders = RxList([]);
 
-  Order? latestOrder;
+  OrderApp? latestOrder;
   RxInt unfinishedOrderCount = 0.obs;
 
   var scrollControllerMain = ScrollController();

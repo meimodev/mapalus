@@ -212,22 +212,23 @@ class CardSigning extends StatelessWidget {
 
   generateSigningTextField(BuildContext context) {
     String labelText = "Nomor Handphone";
+    var textInputType = TextInputType.number;
     VoidCallback onPressed;
 
     switch (signingState) {
       case CardSigningState.oneTimePassword:
         onPressed = onPressedRequestOTP;
-
+        textInputType = TextInputType.phone;
         break;
       case CardSigningState.confirmCode:
         labelText = "Kode";
         onPressed = onPressedConfirmCode;
-
+        textInputType = TextInputType.number;
         break;
       case CardSigningState.notRegistered:
         labelText = "Nama Anda";
         onPressed = onPressedCreateUser;
-
+        textInputType = TextInputType.text;
         break;
     }
 
@@ -247,9 +248,7 @@ class CardSigning extends StatelessWidget {
           TextField(
             controller: controller.tecSigning,
             maxLines: 1,
-            onSubmitted: (_) {
-              onPressed();
-            },
+            onSubmitted: (_) => onPressed(),
             autocorrect: false,
             style: TextStyle(
               color: Palette.accent,
@@ -257,6 +256,7 @@ class CardSigning extends StatelessWidget {
               fontSize: 14.sp,
             ),
             cursorColor: Palette.primary,
+            keyboardType: textInputType,
             decoration: InputDecoration(
               hintStyle: TextStyle(
                 fontFamily: fontFamily,

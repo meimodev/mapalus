@@ -43,7 +43,7 @@ class OrdersScreen extends GetView<OrdersController> {
                                     itemCount: controller.orders.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
-                                      Order order =
+                                          OrderApp order =
                                           controller.orders.elementAt(index);
                                       return Padding(
                                         padding: EdgeInsets.symmetric(

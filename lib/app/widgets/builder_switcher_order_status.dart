@@ -11,7 +11,7 @@ class BuilderSwitchOrderStatus extends StatelessWidget {
     required this.finished,
   }) : super(key: key);
 
-  final Order order;
+  final OrderApp order;
   final Widget placed;
   final Widget accepted;
   final Widget rejected;
