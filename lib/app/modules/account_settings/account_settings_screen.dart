@@ -94,12 +94,6 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
           padding: EdgeInsets.symmetric(horizontal: Insets.medium.w),
           child: Column(
             children: [
-              // _buildItemRow(
-              //   assetLocation: 'assets/vectors/edit.svg',
-              //   text: 'Sunting Informasi Akun',
-              //   context: context,
-              //   onPressed: controller.onPressedEditAccountInfo,
-              // ),
               Badge(
                 showBadge: controller.orderCount > 0,
                 padding: EdgeInsets.all(6.sp),
@@ -113,7 +107,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
                 position: BadgePosition.topStart(),
                 child: _buildItemRow(
                   assetLocation: 'assets/vectors/bag.svg',
-                  text: 'Pesanan Anda',
+                  text: 'Riwayat Pesanan',
                   context: context,
                   onPressed: controller.onPressedOrders,
                 ),
@@ -198,18 +192,10 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
                   ),
             ),
           ),
-          Text(
-            'www.meimodev.com',
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.w300,
-                  fontSize: 12.sp,
-                ),
-          ),
           Row(
             children: [
               Text(
-                'with ♥ 2022 ',
+                'with ♥ ${Jiffy().year} ',
                 style: Theme.of(context).textTheme.bodyText1?.copyWith(
                       color: Colors.grey,
                       fontWeight: FontWeight.w300,

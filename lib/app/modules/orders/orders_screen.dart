@@ -19,6 +19,7 @@ class OrdersScreen extends GetView<OrdersController> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const CardNavigation(title: 'Riwayat Pesanan'),
+          const SizedBox(height: Insets.small),
           Expanded(
             child: Obx(
               () => AnimatedSwitcher(
@@ -29,41 +30,37 @@ class OrdersScreen extends GetView<OrdersController> {
                           color: Palette.primary,
                         ),
                       )
-                    : Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Insets.medium.w,
-                        ),
-                        child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 400),
-                          child: controller.isNoOrderLayoutVisible.isTrue
-                              ? _buildNoOrderLayout(context)
-                              : Obx(
-                                  () => ListView.builder(
-                                    physics: const BouncingScrollPhysics(),
-                                    itemCount: controller.orders.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                          OrderApp order =
-                                          controller.orders.elementAt(index);
-                                      return Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: Insets.small.h * .5,
-                                        ),
-                                        child: CardOrder(
-                                          order: order,
-                                          onPressed: () {
-                                            Navigator.pushNamed(
-                                              context,
-                                              Routes.orderDetail,
-                                              arguments: order,
-                                            );
-                                          },
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                        ),
+                    : Column(
+                        children: [
+                          _BuildOrderStateChipsLayout(
+                            onChangedActiveIndex:
+                                controller.onChangeFilterActiveIndex,
+                          ),
+                          Expanded(
+                            child: Obx(
+                              () => AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 400),
+                                child: controller.orders.isNotEmpty ? ListView.builder(
+                                  physics: const BouncingScrollPhysics(),
+                                  itemCount: controller.orders.length,
+                                  itemBuilder: (BuildContext context, int index) {
+                                    OrderApp order = controller.orders[index];
+                                    return CardOrder(
+                                      order: order,
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          Routes.orderDetail,
+                                          arguments: order,
+                                        );
+                                      },
+                                    );
+                                  },
+                                ) : _buildNoOrderLayout(context),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
               ),
             ),
@@ -76,11 +73,127 @@ class OrdersScreen extends GetView<OrdersController> {
   _buildNoOrderLayout(BuildContext context) {
     return Center(
       child: Text(
-        'Sedang tidak memiliki pesanan -_-',
+        "Tidak ada pesanan -_-'",
         style: Theme.of(context).textTheme.bodyText1?.copyWith(
               color: Palette.accent,
               fontSize: 14.sp,
             ),
+      ),
+    );
+  }
+}
+
+class _BuildOrderStateChipsLayout extends StatefulWidget {
+  const _BuildOrderStateChipsLayout({
+    Key? key,
+    required this.onChangedActiveIndex,
+  }) : super(key: key);
+
+  final Function(OrderStatus?) onChangedActiveIndex;
+
+  @override
+  State<_BuildOrderStateChipsLayout> createState() =>
+      _BuildOrderStateChipsLayoutState();
+}
+
+class _BuildOrderStateChipsLayoutState
+    extends State<_BuildOrderStateChipsLayout> {
+  int activeIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const SizedBox(width: Insets.medium),
+        CustomChip(
+          text: "diterima",
+          active: activeIndex == 1,
+          onPressed: () {
+            setState(() {
+              activeIndex = activeIndex == 1 ? 0 : 1;
+            });
+            if (activeIndex == 0) {
+              widget.onChangedActiveIndex(null);
+              return;
+            }
+            widget.onChangedActiveIndex(OrderStatus.accepted);
+          },
+        ),
+        const SizedBox(width: 6),
+        CustomChip(
+          text: "ditolak",
+          active: activeIndex == 2,
+          onPressed: () {
+            setState(() {
+              activeIndex = activeIndex == 2 ? 0 : 2;
+            });
+            if (activeIndex == 0) {
+              widget.onChangedActiveIndex(null);
+              return;
+            }
+            widget.onChangedActiveIndex(OrderStatus.rejected);
+          },
+        ),
+        const SizedBox(width: 6),
+        CustomChip(
+          text: "selesai",
+          active: activeIndex == 3,
+          onPressed: () {
+            setState(() {
+              activeIndex = activeIndex == 3 ? 0 : 3;
+            });
+            if (activeIndex == 0) {
+              widget.onChangedActiveIndex(null);
+              return;
+            }
+            widget.onChangedActiveIndex(OrderStatus.finished);
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class CustomChip extends StatelessWidget {
+  const CustomChip({
+    Key? key,
+    required this.onPressed,
+    required this.text,
+    this.active = false,
+  }) : super(key: key);
+
+  final String text;
+  final VoidCallback onPressed;
+  final bool active;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      clipBehavior: Clip.antiAlias,
+      color: active ? Palette.primary : Palette.cardForeground,
+      shape: ContinuousRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side: const BorderSide(
+          color: Palette.primary,
+        ),
+      ),
+      child: InkWell(
+        onTap: onPressed,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Insets.small * .75,
+            vertical: Insets.small * .5,
+          ),
+          child: Center(
+            child: Text(
+              text,
+              style: TextStyle(
+                color: active ? Palette.cardForeground : Palette.primary,
+                fontSize: 10.sp,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

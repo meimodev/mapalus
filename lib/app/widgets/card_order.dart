@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
-
 class CardOrder extends StatelessWidget {
   const CardOrder({
     Key? key,
@@ -21,7 +20,10 @@ class CardOrder extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         child: Padding(
-          padding: EdgeInsets.all(Insets.small.w),
+          padding: const EdgeInsets.symmetric(
+            horizontal: Insets.medium,
+            vertical: Insets.small,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -144,12 +146,14 @@ class CardOrder extends StatelessWidget {
       );
     }
     if (order.status == OrderStatus.rejected) {
-      return Text(
-        'ditolak',
-        style: Theme.of(context).textTheme.caption?.copyWith(
-              fontWeight: FontWeight.w600,
-              color: Palette.negative,
-            ),
+      return Center(
+        child: Text(
+          'ditolak',
+          style: Theme.of(context).textTheme.caption?.copyWith(
+                fontWeight: FontWeight.w600,
+                color: Palette.negative,
+              ),
+        ),
       );
     }
     if (order.status == OrderStatus.finished) {

@@ -6,9 +6,9 @@ class OrdersController extends GetxController {
   UserRepo userRepo = Get.find();
 
   RxList<OrderApp> orders = <OrderApp>[].obs;
+  List<OrderApp> tempOrders = <OrderApp>[];
 
   RxBool isLoading = false.obs;
-  RxBool isNoOrderLayoutVisible = false.obs;
 
   @override
   void onReady() {
@@ -20,9 +20,21 @@ class OrdersController extends GetxController {
     isLoading.value = true;
     final userOrders = await orderRepo.readUserOrders(userRepo.signedUser!);
     orders.value = userOrders.reversed.toList();
-    if (orders.isEmpty) {
-      isNoOrderLayoutVisible.value = true;
-    }
+    tempOrders.addAll(orders);
+
     isLoading.value = false;
+  }
+
+  onChangeFilterActiveIndex(OrderStatus? status) {
+    if (status == null) {
+      if (tempOrders.length != orders.length) {
+        orders.value = tempOrders;
+      }
+      return;
+    }
+    if (tempOrders.length != orders.length) {
+      orders.value = tempOrders;
+    }
+    orders.value = orders.where((element) => element.status == status).toList();
   }
 }
