@@ -3,7 +3,7 @@ description: Platform to support local community to hopefully be able to thrive
 
 publish_to: 'none'
 
-version: 1.7.1+29
+version: 1.8.0+30
 
 environment:
   sdk: '>=2.16.2 <3.0.0'
@@ -19,7 +19,7 @@ dependencies:
 #  cupertino_icons: ^1.0.5
 
   firebase_core: ^2.1.1
-  flutter_native_splash: ^2.2.15
+  flutter_native_splash: ^2.2.16
   get: ^4.6.5
 
 dev_dependencies:

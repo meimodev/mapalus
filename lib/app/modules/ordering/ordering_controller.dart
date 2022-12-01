@@ -41,10 +41,10 @@ class OrderingController extends GetxController {
     var now = Jiffy();
     NotificationService.instance.sendNotification(
       title: "NEW ORDER ! on ${now.format("EEEE, dd MMM HH:mm")}",
-      message: "#${order.idMinified}, "
+      message: "#${order.idMinified} | ${order.orderingUser.name}-${order.orderingUser.phone} "
           "${order.orderInfo.productCountF}, "
           "${order.orderInfo.totalPriceF}, "
-          "Diantar ${order.orderInfo.deliveryTime}",
+          "Antar ${order.orderInfo.deliveryTime}",
     );
     _orderToPush = order;
 
