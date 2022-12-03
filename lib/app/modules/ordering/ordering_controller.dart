@@ -38,10 +38,9 @@ class OrderingController extends GetxController {
       paymentMethod: paymentMethod,
       note: note,
     );
-    var now = Jiffy();
     NotificationService.instance.sendNotification(
-      title: "NEW ORDER ! on ${now.format("EEEE, dd MMM HH:mm")}",
-      message: "#${order.idMinified} | ${order.orderingUser.name}-${order.orderingUser.phone} "
+      title: "Pesanan Baru ! on ${order.orderTimeStamp!.format("EEEE, dd MMM HH:mm")}",
+      message: "#${order.idMinified} | ${order.orderingUser.name} - ${order.orderingUser.phone} | "
           "${order.orderInfo.productCountF}, "
           "${order.orderInfo.totalPriceF}, "
           "Antar ${order.orderInfo.deliveryTime}",
