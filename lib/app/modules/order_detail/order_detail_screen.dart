@@ -32,7 +32,8 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
               children: [
                 Obx(
                   () => CardNavigation(
-                    title: 'Rincian Pesanan #${controller.id.value}',
+                    title:
+                        'Rincian Pesanan #${controller.order.value.idMinified}',
                     isInverted: true,
                   ),
                 ),
@@ -40,7 +41,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                   child: Obx(
                     () => AnimatedSwitcher(
                       duration: const Duration(milliseconds: 400),
-                      child: controller.canLoading.isTrue
+                      child: controller.isLoading.isTrue
                           ? _buildLoadingLayout(context)
                           : _buildMainLayout(context),
                     ),
@@ -64,10 +65,11 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
             ),
             child: Obx(
               () => ListView.builder(
-                itemCount: controller.productOrders.length,
+                itemCount: controller.order.value.products.length,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  ProductOrder po = controller.productOrders.elementAt(index);
+                  ProductOrder po =
+                      controller.order.value.products.elementAt(index);
                   return CardOrderDetailItem(
                     productName: po.product.name,
                     productPrice: po.totalPriceString,
@@ -92,10 +94,10 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                  top: Insets.medium.h,
-                  bottom: Insets.medium.h,
-                  left: Insets.medium.w * .5,
-                  right: Insets.medium.w * .5,
+                  top: Insets.small.sp,
+                  bottom: Insets.small.sp,
+                  left: Insets.medium.w,
+                  right: Insets.medium.w,
                 ),
                 child: Column(
                   children: [
@@ -105,7 +107,8 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                           () => _buildDeliveryStateCard(
                             context: context,
                             title: 'Dipesan',
-                            timeStamp: controller.orderTime.value,
+                            timeStamp: controller.order.value.orderTimeStamp
+                                .format('EEE, dd MMMM HH:mm'),
                           ),
                         ),
                         const Expanded(
@@ -140,7 +143,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                       ),
                     ),
                     SizedBox(height: Insets.small.h * .5),
-                    controller.paymentMethod.isNotEmpty
+                    controller.order.value.paymentMethod.isNotEmpty
                         ? Container(
                             padding: EdgeInsets.symmetric(
                               vertical: Insets.small.h * .5,
@@ -155,14 +158,16 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                           )
                         : const SizedBox(),
                     SizedBox(height: Insets.small.h),
-                    controller.note.isNotEmpty ? _BuildNoteCard(note: controller.note) : const SizedBox(),
+                    controller.order.value.note.isNotEmpty
+                        ? _BuildNoteCard(note: controller.order.value.note)
+                        : const SizedBox(),
                     SizedBox(height: Insets.small.h),
                     Obx(
                       () => _buildRowItem(
                         context,
                         "Produk",
-                        controller.productCount.value,
-                        controller.productTotal.value,
+                        controller.order.value.orderInfo.productCountF,
+                        controller.order.value.orderInfo.productPriceF,
                       ),
                     ),
                     SizedBox(height: 6.h),
@@ -170,9 +175,8 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                       () => _buildRowItem(
                         context,
                         "Pengantaran",
-                        // controller.deliveryCount.value,
                         null,
-                        controller.deliveryTotal.value,
+                        controller.order.value.orderInfo.deliveryPriceF,
                       ),
                     ),
                     SizedBox(height: 6.h),
@@ -181,7 +185,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                         context,
                         "Total Pembayaran",
                         null,
-                        controller.totalPrice.value,
+                        controller.order.value.orderInfo.totalPriceF,
                         highLight: true,
                       ),
                     ),
@@ -191,10 +195,18 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
               Obx(
                 () => _buildRatingLayout(
                   context,
-                  orderStatus: controller.orderStatus.value,
-                  orderRating: controller.orderRating.value,
+                  orderStatus: controller.order.value.status,
+                  rating: controller.order.value.rating,
                 ),
               ),
+              controller.order.value.status == OrderStatus.placed ||
+                      controller.order.value.status == OrderStatus.accepted
+                  ? _buildCancelOrderButton(
+                      context,
+                      controller.order.value,
+                      controller.onPressedCancel,
+                    )
+                  : const SizedBox(),
             ],
           ),
         ),
@@ -219,7 +231,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Waktu Pengantaran",
+              "Pengantaran",
               style: Theme.of(context).textTheme.bodyText1?.copyWith(
                     fontSize: 10.sp,
                     color: Colors.grey,
@@ -227,7 +239,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                   ),
             ),
             Text(
-              controller.deliveryTime.value,
+              controller.order.value.orderInfo.deliveryTime,
               style: Theme.of(context).textTheme.bodyText1?.copyWith(
                     fontSize: 12.sp,
                   ),
@@ -277,7 +289,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                   ),
             ),
             Text(
-              controller.paymentMethod.value,
+              controller.order.value.paymentMethodF,
               style: Theme.of(context).textTheme.bodyText1?.copyWith(
                     fontSize: 12.sp,
                   ),
@@ -290,58 +302,78 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
 
   _buildRatingLayout(
     BuildContext context, {
-    required String orderStatus,
-    required Rating orderRating,
+    required OrderStatus orderStatus,
+    required Rating? rating,
   }) {
-    if (orderStatus == OrderStatus.placed.name) {
-      return Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: Insets.small.h,
-          horizontal: Insets.medium.w,
-        ),
-        child: const Center(
-          child: Text(
-            'Menunggu Konfirmasi Partner',
+    switch (orderStatus) {
+      case OrderStatus.placed:
+        return Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: Insets.small.h,
+            horizontal: Insets.medium.w,
           ),
-        ),
-      );
-    }
-
-    if (orderStatus == OrderStatus.rejected.name) {
-      return const _BuildCancelLayout();
-    }
-
-    if (orderStatus == OrderStatus.accepted.name) {
-      return Material(
-        color: Palette.primary,
-        clipBehavior: Clip.hardEdge,
-        borderRadius: BorderRadius.circular(9.sp),
-        child: InkWell(
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (_) => DialogRating(
-                onPressedRate: controller.onPressedRate,
-              ),
-            );
-          },
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: Insets.small.h,
-              horizontal: Insets.medium.w,
-            ),
-            child: const Center(
-              child: Text(
-                'Selesaikan',
-              ),
+          child: const Center(
+            child: Text(
+              'Menunggu Konfirmasi Partner',
             ),
           ),
-        ),
-      );
-    }
+        );
+      case OrderStatus.accepted:
+        return Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: Insets.small.sp,
+            horizontal: Insets.medium.w,
+          ),
+          child: Column(
+            children: [
+              const Text(
+                'Yay! Pesanan sudah diterima ☺',
+              ),
+              Text(
+                'mohon menunggu pengantaran ya',
+                style: TextStyle(
+                  fontSize: 10.sp,
+                ),
+              ),
+            ],
+          ),
+        );
+      case OrderStatus.rejected:
+        return _BuildRejectedLayout(order: controller.order.value);
 
-    if (orderStatus == OrderStatus.finished.name) {
-      return _BuildRatedLayout(rating: orderRating);
+      case OrderStatus.delivered:
+        return Material(
+          color: Palette.primary,
+          clipBehavior: Clip.hardEdge,
+          borderRadius: BorderRadius.circular(9.sp),
+          child: InkWell(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (_) => DialogRating(
+                  onPressedRate: (message, rate) {
+                    controller
+                        .onPressedRate(message, rate)
+                        .then((value) => Navigator.pop(context));
+                  },
+                ),
+              );
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: Insets.small.h,
+                horizontal: Insets.medium.w,
+              ),
+              child: const Center(
+                child: Text(
+                  'Nilai layanan',
+                ),
+              ),
+            ),
+          ),
+        );
+      case OrderStatus.finished:
+        return _BuildRatedLayout(order: controller.order.value);
     }
   }
 
@@ -429,10 +461,51 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
           ],
         ),
       );
+
+  _buildCancelOrderButton(
+    BuildContext context,
+    OrderApp value,
+    VoidCallback onPressed,
+  ) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: Insets.medium.sp * 4,
+        right: Insets.medium.sp * 4,
+        bottom: Insets.small.sp,
+      ),
+      child: Material(
+        borderRadius: BorderRadius.circular(15),
+        color: Colors.grey.shade400,
+        child: InkWell(
+          onTap: onPressed,
+          child: Padding(
+            padding: const EdgeInsets.all(Insets.small),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.warning_rounded,
+                  color: Palette.negative.withOpacity(.5),
+                  size: 21.sp,
+                ),
+                const SizedBox(width: 3),
+                Text(
+                  "Batalkan Pesanan",
+                  style: TextStyle(fontSize: 10.sp, color: Colors.grey.shade50),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
-class _BuildCancelLayout extends StatelessWidget {
-  const _BuildCancelLayout({Key? key}) : super(key: key);
+class _BuildRejectedLayout extends StatelessWidget {
+  const _BuildRejectedLayout({Key? key, required this.order}) : super(key: key);
+
+  final OrderApp order;
 
   @override
   Widget build(BuildContext context) {
@@ -440,13 +513,25 @@ class _BuildCancelLayout extends StatelessWidget {
       margin: EdgeInsets.symmetric(
         vertical: Insets.medium.h,
       ),
-      child: Text(
-        'Pesanan telah dibatalkan',
-        textAlign: TextAlign.center,
-        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-              fontSize: 14.sp,
-              color: Palette.negative.withOpacity(.75),
+      child: Column(
+        children: [
+          Text(
+            'Pesanan telah dibatalkan',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 12.sp,
+              color: Palette.negative,
             ),
+          ),
+          Text(
+            order.confirmTimeStamp?.format("EEE, dd MMMM yyyy") ?? '-',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 12.sp,
+              color: Palette.negative,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -455,81 +540,57 @@ class _BuildCancelLayout extends StatelessWidget {
 class _BuildRatedLayout extends StatelessWidget {
   const _BuildRatedLayout({
     Key? key,
-    required this.rating,
+    required this.order,
   }) : super(key: key);
 
-  final Rating rating;
+  final OrderApp order;
 
   @override
   Widget build(BuildContext context) {
-    final isFinishedByPartner = rating.message.toLowerCase() == "from partner";
-
+    final rating = order.rating ?? Rating.zero();
     return Container(
       margin: EdgeInsets.only(
         bottom: Insets.medium.h,
         top: Insets.small.h * .5,
       ),
-      child: isFinishedByPartner
-          ? _buildFinishedByPartnerLayout(context)
-          : Column(
-              children: [
-                RatingBar.builder(
-                  initialRating: rating.number.toDouble(),
-                  minRating: rating.number.toDouble(),
-                  maxRating: rating.number.toDouble(),
-                  direction: Axis.horizontal,
-                  itemCount: 5,
-                  glowColor: Palette.editable.withOpacity(.25),
-                  itemSize: 27.sp,
-                  itemPadding: EdgeInsets.symmetric(horizontal: 6.w),
-                  onRatingUpdate: (_) {},
-                  itemBuilder: (_, int index) => SvgPicture.asset(
-                    'assets/vectors/star.svg',
-                    color: Palette.primary,
-                  ),
-                  updateOnDrag: false,
-                  ignoreGestures: true,
-                  unratedColor: Palette.accent,
-                ),
-                SizedBox(height: Insets.small.h * .5),
-                Text(
-                  'Dinilai ${rating.ratingTimeStamp.format("dd MMMM yyyy HH:mm")}',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w300,
-                      ),
-                ),
-                SizedBox(height: Insets.small.h * .5),
-                Text(
-                  " \"${rating.message}\" ",
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.w300,
-                      ),
-                ),
-              ],
+      child: Column(
+        children: [
+          RatingBar.builder(
+            initialRating: rating.number.toDouble(),
+            minRating: rating.number.toDouble(),
+            maxRating: rating.number.toDouble(),
+            direction: Axis.horizontal,
+            itemCount: 5,
+            glowColor: Palette.editable.withOpacity(.25),
+            itemSize: 27.sp,
+            itemPadding: EdgeInsets.symmetric(horizontal: 6.w),
+            onRatingUpdate: (_) {},
+            itemBuilder: (_, int index) => SvgPicture.asset(
+              'assets/vectors/star.svg',
+              color: Palette.primary,
             ),
-    );
-  }
-
-  _buildFinishedByPartnerLayout(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          'pesanan selesai',
-          style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w300,
-              ),
-        ),
-        Text(
-          rating.ratingTimeStamp.format("dd MMMM yyyy HH:mm"),
-          style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                fontSize: 10.sp,
-                fontWeight: FontWeight.w300,
-              ),
-        ),
-      ],
+            updateOnDrag: false,
+            ignoreGestures: true,
+            unratedColor: Palette.accent,
+          ),
+          SizedBox(height: Insets.small.h * .5),
+          Text(
+            'Dinilai ${order.finishTimeStamp?.format("dd MMMM yyyy") ?? '-'}',
+            style: TextStyle(
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+          SizedBox(height: Insets.small.h * .5),
+          Text(
+            " \"${rating.message}\" ",
+            style: TextStyle(
+              fontSize: 10.sp,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

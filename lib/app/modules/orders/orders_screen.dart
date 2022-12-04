@@ -136,11 +136,26 @@ class _BuildOrderStateChipsLayoutState
         ),
         const SizedBox(width: 6),
         CustomChip(
-          text: "selesai",
+          text: "diantar",
           active: activeIndex == 3,
           onPressed: () {
             setState(() {
               activeIndex = activeIndex == 3 ? 0 : 3;
+            });
+            if (activeIndex == 0) {
+              widget.onChangedActiveIndex(null);
+              return;
+            }
+            widget.onChangedActiveIndex(OrderStatus.delivered);
+          },
+        ),
+        const SizedBox(width: 6),
+        CustomChip(
+          text: "selesai",
+          active: activeIndex == 4,
+          onPressed: () {
+            setState(() {
+              activeIndex = activeIndex == 4 ? 0 : 4;
             });
             if (activeIndex == 0) {
               widget.onChangedActiveIndex(null);

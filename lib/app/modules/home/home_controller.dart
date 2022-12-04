@@ -1,4 +1,3 @@
-
 // ignore_for_file: invalid_use_of_protected_member
 
 import 'package:flutter/material.dart';
@@ -49,28 +48,23 @@ class HomeController extends GetxController {
       name: "Lauk Pauk",
       imageUrl: "https://i.ibb.co/LgdQZXS/category-lauk-pauk.jpg",
       asset: "assets/images/category-lauk-pauk.jpeg",
-
     ),
     Category(
-      name: "Bumbu Dapur",
-      imageUrl: "https://i.ibb.co/HhgsbGZ/category-bumbu-dapur.jpg",
-      asset: "assets/images/category-bumbu-dapur.jpeg"
-    ),
+        name: "Bumbu Dapur",
+        imageUrl: "https://i.ibb.co/HhgsbGZ/category-bumbu-dapur.jpg",
+        asset: "assets/images/category-bumbu-dapur.jpeg"),
     Category(
-      name: "Sayuran",
-      imageUrl: "https://i.ibb.co/M5jXDRG/category-sayuran.jpg",
-      asset: "assets/images/category-sayuran.jpeg"
-    ),
+        name: "Sayuran",
+        imageUrl: "https://i.ibb.co/M5jXDRG/category-sayuran.jpg",
+        asset: "assets/images/category-sayuran.jpeg"),
     Category(
-      name: "Buah",
-      imageUrl: "https://i.ibb.co/cc7QcY6/category-buah.jpg",
-      asset: "assets/images/category-buah.jpeg"
-    ),
+        name: "Buah",
+        imageUrl: "https://i.ibb.co/cc7QcY6/category-buah.jpg",
+        asset: "assets/images/category-buah.jpeg"),
     Category(
-      name: "Bahan Kue",
-      imageUrl: "https://i.ibb.co/3M4jN9F/category-bahan-kue.jpg",
-      asset: "assets/images/category-bahan-kue.jpeg"
-    ),
+        name: "Bahan Kue",
+        imageUrl: "https://i.ibb.co/3M4jN9F/category-bahan-kue.jpg",
+        asset: "assets/images/category-bahan-kue.jpeg"),
   ].obs;
 
   @override
@@ -87,7 +81,6 @@ class HomeController extends GetxController {
       return;
     }
     _initNotificationHandler();
-
   }
 
   @override
@@ -123,7 +116,6 @@ class HomeController extends GetxController {
       );
       return;
     }
-
     Get.toNamed(Routes.cart);
   }
 
@@ -180,7 +172,7 @@ class HomeController extends GetxController {
     }
   }
 
-Future<void>  _initProductsDisplay() async {
+  Future<void> _initProductsDisplay() async {
     canLoadingMain.value = true;
 
     // canLoadingProducts.value = true;
@@ -248,11 +240,9 @@ Future<void>  _initProductsDisplay() async {
       return;
     }
     // check if order is not finish, then display it
-    if (o.status == OrderStatus.placed) {
+    if (o.status != OrderStatus.finished) {
       latestOrder = o;
       isCardOrderVisible.value = true;
-    } else {
-      isCardOrderVisible.value = false;
     }
   }
 

@@ -28,10 +28,13 @@ class CardOrder extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SizedBox(
-                width: 39.w,
+                width: 30.w,
                 child: Text(
                   '#${order.idMinified}',
-                  style: Theme.of(context).textTheme.caption,
+                  style: TextStyle(
+                    fontSize: 9.sp,
+                    fontWeight: FontWeight.w300,
+                  ),
                   textAlign: TextAlign.start,
                 ),
               ),
@@ -43,28 +46,21 @@ class CardOrder extends StatelessWidget {
                   children: [
                     Text(
                       'dipesan',
-                      style: Theme.of(context).textTheme.caption?.copyWith(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 10.sp,
-                          ),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 9.sp,
+                      ),
                     ),
                     Text(
-                      order.orderTimeStamp!.isSame(
-                                Jiffy(),
-                                Units.DAY,
-                              ) &&
-                              order.status == OrderStatus.placed
-                          ? "Hari Ini"
-                          : order.orderTimeStamp!.format('E, dd MMMM'),
-                      style: Theme.of(context).textTheme.caption?.copyWith(
-                            fontWeight: order.orderTimeStamp!.isSame(
-                              Jiffy(),
-                              Units.DAY,
-                            )
+                      order.orderTimeStamp.format('E, dd MMMM'),
+                      style: TextStyle(
+                        fontSize: 9.sp,
+                        fontWeight:
+                            order.orderTimeStamp.isSame(Jiffy(), Units.DAY)
                                 ? FontWeight.w600
                                 : FontWeight.w300,
-                            color: Palette.textPrimary,
-                          ),
+                        color: Palette.textPrimary,
+                      ),
                     ),
                   ],
                 ),
@@ -75,11 +71,11 @@ class CardOrder extends StatelessWidget {
                   children: [
                     Text(
                       '${order.products.length} produk',
-                      style: Theme.of(context).textTheme.caption,
+                      style: TextStyle(fontSize: 9.sp),
                     ),
                     Text(
                       order.orderInfo.totalPriceF,
-                      style: Theme.of(context).textTheme.caption,
+                      style: TextStyle(fontSize: 9.sp),
                     ),
                   ],
                 ),
@@ -87,7 +83,7 @@ class CardOrder extends StatelessWidget {
               SizedBox(width: 6.w),
               SizedBox(
                 width: 100,
-                child: _buildCardStatus(context),
+                child: _buildCardOrderStatus(context),
               ),
             ],
           ),
@@ -96,15 +92,16 @@ class CardOrder extends StatelessWidget {
     );
   }
 
-  _buildCardStatus(BuildContext context) {
+  _buildCardOrderStatus(BuildContext context) {
     if (order.status == OrderStatus.placed) {
       return Column(
         children: [
           Text(
             'Menunggu konfirmasi',
-            style: Theme.of(context).textTheme.caption?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 9.sp,
+            ),
           ),
           SizedBox(height: 3.h),
           Align(
@@ -122,17 +119,18 @@ class CardOrder extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'diantar',
-            style: Theme.of(context).textTheme.caption?.copyWith(
-                  fontWeight: FontWeight.w300,
-                  fontSize: 10.sp,
-                ),
+            'antar',
+            style: TextStyle(
+              fontWeight: FontWeight.w300,
+              fontSize: 9.sp,
+            ),
           ),
           Text(
             order.orderInfo.deliveryTime,
-            style: Theme.of(context).textTheme.caption?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 9.sp,
+            ),
           ),
           SizedBox(height: 3.h),
           Align(
@@ -146,14 +144,49 @@ class CardOrder extends StatelessWidget {
       );
     }
     if (order.status == OrderStatus.rejected) {
-      return Center(
-        child: Text(
-          'ditolak',
-          style: Theme.of(context).textTheme.caption?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: Palette.negative,
-              ),
-        ),
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'batal',
+            style: TextStyle(
+              fontWeight: FontWeight.w300,
+              color: Palette.negative,
+              fontSize: 9.sp,
+            ),
+          ),
+          Text(
+            order.confirmTimeStamp?.format("E, dd MMMM") ?? '-',
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Palette.negative,
+              fontSize: 9.sp,
+            ),
+          ),
+        ],
+      );
+    }
+    if (order.status == OrderStatus.delivered) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'diantar',
+            style: TextStyle(
+              fontWeight: FontWeight.w300,
+              fontSize: 9.sp,
+              color: Palette.positive,
+            ),
+          ),
+          Text(
+            order.deliverTimeStamp?.format("E, dd MMM HH:mm:ss") ?? '-',
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Palette.positive,
+              fontSize: 9.sp,
+            ),
+          ),
+        ],
       );
     }
     if (order.status == OrderStatus.finished) {
@@ -162,16 +195,17 @@ class CardOrder extends StatelessWidget {
         children: [
           Text(
             'selesai',
-            style: Theme.of(context).textTheme.caption?.copyWith(
-                  fontWeight: FontWeight.w300,
-                  fontSize: 10.sp,
-                ),
+            style: TextStyle(
+              fontWeight: FontWeight.w300,
+              fontSize: 9.sp,
+            ),
           ),
           Text(
-            order.rating.ratingTimeStamp.format("E, dd MMMM"),
-            style: Theme.of(context).textTheme.caption?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+            order.finishTimeStamp!.format("E, dd MMMM"),
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 9.sp,
+            ),
           ),
         ],
       );

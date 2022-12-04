@@ -30,7 +30,7 @@ class OrderingController extends GetxController {
 
     await Future.delayed(const Duration(milliseconds: 2000));
 
-    OrderApp order = await orderRepo.createOrder(
+    final order = await orderRepo.createOrder(
       products: productOrders,
       user: user!,
       orderInfo: orderInfo,
@@ -38,8 +38,9 @@ class OrderingController extends GetxController {
       paymentMethod: paymentMethod,
       note: note,
     );
+
     NotificationService.instance.sendNotification(
-      title: "Pesanan Baru ! on ${order.orderTimeStamp!.format("EEEE, dd MMM HH:mm")}",
+      title: "Pesanan Baru ! on ${order.orderTimeStamp.format("EEEE, dd MMM HH:mm")}",
       message: "#${order.idMinified} | ${order.orderingUser.name} - ${order.orderingUser.phone} | "
           "${order.orderInfo.productCountF}, "
           "${order.orderInfo.totalPriceF}, "

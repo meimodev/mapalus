@@ -1,127 +1,83 @@
+import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/home/home_controller.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
-import 'dart:developer' as dev;
 
 class OrderDetailController extends GetxController {
   OrderRepo orderRepo = Get.find();
   HomeController homeController = Get.find();
 
-  RxList<ProductOrder> productOrders = <ProductOrder>[].obs;
-  RxString id = ''.obs;
+  RxList<ProductOrder> productOrdersChecked = <ProductOrder>[].obs;
 
-  RxString orderTime = ''.obs;
-  RxString deliveryTime = ''.obs;
+  RxString totalCheckedPrice = ''.obs;
 
-  RxString productTotal = ''.obs;
-  RxString productCount = ''.obs;
-  RxString deliveryTotal = ''.obs;
-  RxString deliveryCount = ''.obs;
-  RxString deliveryCoordinate = "".obs;
-  RxString totalPrice = ''.obs;
-  RxString finishTimeStamp = "".obs;
+  late Rx<OrderApp> order;
 
-  RxString orderStatus = ''.obs;
-  Rx<Rating> orderRating = Rating.zero().obs;
-  var paymentMethod = ''.obs;
-  var paymentAmount = 0.obs;
+  RxBool isLoading = true.obs;
 
-  late OrderApp _order;
-  bool shouldCheckNewlyCreatedOrder = false;
+  UserApp? orderingUser;
 
-  RxBool canLoading = true.obs;
+  late StreamSubscription orderListener;
 
-  String note = "";
+  @override
+  Future<void> onInit() async {
+    super.onInit();
+
+    isLoading.value = true;
+    OrderApp o = Get.arguments as OrderApp;
+    order = o.obs;
+
+    orderListener =
+        orderRepo.firestore.getOrderStream(o.id!).listen((snapshot) {
+      isLoading.value = true;
+
+      final t = OrderApp.fromMap(snapshot.data() as Map<String, dynamic>);
+      order = t.obs;
+
+      if (isLoading.isTrue) {
+        isLoading.value = false;
+      }
+    });
+
+    isLoading.value = false;
+  }
+
+  @override
+  void dispose() {
+    orderListener.cancel();
+    super.dispose();
+  }
 
   @override
   void onClose() {
-    if (shouldCheckNewlyCreatedOrder) {
-      homeController.checkNewlyCreatedOrder();
-    }
+    homeController.checkNewlyCreatedOrder();
     super.onClose();
   }
 
-  @override
-  void onReady() {
-    canLoading.value = true;
-
-    OrderApp order = Get.arguments as OrderApp;
-    var params = Get.parameters;
-    if (params.isNotEmpty) {
-      _loadFreshOrder(order.id!);
-      super.onReady();
-      return;
-    }
-
-    _initInterfaceWithData(order);
-
-    super.onReady();
-  }
-
-  _loadFreshOrder(String orderId) async {
-    OrderApp? t = await orderRepo.readOrder(orderId);
-    OrderApp order = t!;
-    _initInterfaceWithData(order);
-  }
-
-  _initInterfaceWithData(OrderApp order) {
-    _order = order;
-    productOrders.value = order.products;
-    id.value = order.idMinified;
-
-    var orderTimeStamp = order.orderTimeStamp;
-    orderTime.value = orderTimeStamp!.format("EEEE, dd MMMM HH:mm");
-
-    productCount.value = order.orderInfo.productCountF;
-    productTotal.value = order.orderInfo.productPriceF;
-    deliveryCount.value = order.orderInfo.deliveryWeightF;
-    deliveryTotal.value = order.orderInfo.deliveryPriceF;
-    deliveryCoordinate.value = order.orderInfo.deliveryCoordinateF;
-    deliveryTime.value = order.orderInfo.deliveryTimeF(shorted: true);
-    totalPrice.value = order.orderInfo.totalPriceF;
-    finishTimeStamp.value = order.finishTimeStampF;
-
-    orderRating.value = order.rating;
-
-    orderStatus.value = order.status.name;
-
-    paymentMethod.value = order.paymentMethodF;
-
-    paymentAmount.value = order.paymentAmount;
-
-    note = order.note;
-
-    dev.log(order.toString());
-
-    canLoading.value = false;
-  }
-
   Future<void> onPressedRate(String message, double rate) async {
-    canLoading.value = true;
+    isLoading.value = true;
     Future.delayed(800.milliseconds);
     var rating = Rating(
       rate.ceil(),
       message,
-      Jiffy(),
     );
-    await orderRepo.rateOrder(_order, rating);
+    await orderRepo.rateOrder(order.value, rating);
 
-    shouldCheckNewlyCreatedOrder = true;
+    isLoading.value = false;
+  }
 
-    await Future.delayed(800.milliseconds);
-
-    orderRating.value = rating;
-    orderStatus.value = OrderStatus.finished.name;
-
-    canLoading.value = false;
-
-    Get.back();
+  void onPressedCancel() {
+    const waNumber = '+62895355578090';
+    final orderId = order.value.id!;
+    final waUri = Uri.parse('whatsapp://send?phone=$waNumber&text='
+        'Halo admin MAPALUS, tolong batalkan pesanan $orderId karena: ');
+    launchUrl(waUri);
   }
 
   onPressedViewMaps() {
-    var latitude = _order.orderInfo.deliveryCoordinateLatitude;
-    var longitude = _order.orderInfo.deliveryCoordinateLongitude;
+    var latitude = order.value.orderInfo.deliveryCoordinateLatitude;
+    var longitude = order.value.orderInfo.deliveryCoordinateLongitude;
     var url =
         'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
 
