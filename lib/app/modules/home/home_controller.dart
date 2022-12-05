@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus/shared/routes.dart';
+import 'dart:developer' as dev;
 
 class HomeController extends GetxController {
   UserRepo userRepo = Get.find<UserRepo>();
@@ -251,7 +252,7 @@ class HomeController extends GetxController {
       'order_channel', // id
       'order channel',
       description: 'used to handle order notification exclusively',
-      importance: Importance.max,
+      importance: Importance.high,
       enableVibration: true,
       enableLights: true,
       playSound: true,
@@ -259,19 +260,36 @@ class HomeController extends GetxController {
     );
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         FlutterLocalNotificationsPlugin();
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(androidChannel);
 
-    final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
-    if (initialMessage != null) {
-      _handleMessage(
-        message: initialMessage,
-        flutterLocalNotificationsPlugin: flutterLocalNotificationsPlugin,
-        androidChannel: androidChannel,
-      );
-    }
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    const InitializationSettings initializationSettings =
+        InitializationSettings(
+      android: initializationSettingsAndroid,
+    );
+
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse response) async {
+        dev.log("notification payload ${response.payload}");
+      },
+    );
+
+    // await flutterLocalNotificationsPlugin
+    //     .resolvePlatformSpecificImplementation<
+    //         AndroidFlutterLocalNotificationsPlugin>()
+    //     ?.createNotificationChannel(androidChannel);
+
+    // final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    // if (initialMessage != null) {
+    //   _handleMessage(
+    //     message: initialMessage,
+    //     flutterLocalNotificationsPlugin: flutterLocalNotificationsPlugin,
+    //     androidChannel: androidChannel,
+    //   );
+    // }
+
     FirebaseMessaging.onMessage.listen((event) {
       _handleMessage(
         message: event,
@@ -279,13 +297,13 @@ class HomeController extends GetxController {
         androidChannel: androidChannel,
       );
     });
-    FirebaseMessaging.onMessageOpenedApp.listen((event) {
-      _handleMessage(
-        message: event,
-        flutterLocalNotificationsPlugin: flutterLocalNotificationsPlugin,
-        androidChannel: androidChannel,
-      );
-    });
+    // FirebaseMessaging.onMessageOpenedApp.listen((event) {
+    //   _handleMessage(
+    //     message: event,
+    //     flutterLocalNotificationsPlugin: flutterLocalNotificationsPlugin,
+    //     androidChannel: androidChannel,
+    //   );
+    // });
   }
 
   _handleMessage({
@@ -298,27 +316,31 @@ class HomeController extends GetxController {
     if (notification != null) {
       AndroidNotification? android = notification.android;
       if (android != null) {
+        AndroidNotificationDetails androidNotificationDetails =
+            AndroidNotificationDetails(
+          androidChannel!.id,
+          androidChannel.name,
+          channelDescription: androidChannel.description,
+          importance: Importance.max,
+          priority: Priority.high,
+          ticker: 'ticker',
+          enableVibration: true,
+          enableLights: true,
+        );
+
+        NotificationDetails notificationDetails =
+            NotificationDetails(android: androidNotificationDetails);
+
+        //show
+
         flutterLocalNotificationsPlugin.show(
           notification.hashCode,
           notification.title,
           notification.body,
-          NotificationDetails(
-            android: AndroidNotificationDetails(
-              androidChannel!.id,
-              androidChannel.name,
-              channelDescription: androidChannel.description,
-              playSound: androidChannel.playSound,
-              enableLights: androidChannel.enableLights,
-              enableVibration: androidChannel.enableVibration,
-            ),
-          ),
+          notificationDetails,
         );
         return;
       }
-
-      Get.rawSnackbar(
-        message: notification.title,
-      );
     }
   }
 
