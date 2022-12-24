@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mapalus/app/widgets/dialog_announcement.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'dart:developer' as dev;
@@ -81,6 +82,10 @@ class HomeController extends GetxController {
       Get.offNamed(Routes.updateApp);
       return;
     }
+    await Future.delayed(Duration.zero);
+    await checkAnnouncement();
+    await checkNewlyCreatedOrder();
+
     _initNotificationHandler();
   }
 
@@ -88,12 +93,6 @@ class HomeController extends GetxController {
   void dispose() {
     tecSearch.dispose();
     super.dispose();
-  }
-
-  @override
-  void onReady() {
-    Future.delayed(2.seconds).then((value) => checkNewlyCreatedOrder());
-    super.onReady();
   }
 
   void onPressedLogo() {
@@ -214,14 +213,14 @@ class HomeController extends GetxController {
     // canLoadingProducts.value = false;
   }
 
-  orderCleanUp() {
+  orderCleanUp() async {
     productOrders.clear();
     isCardCartVisible.value = false;
 
-    checkNewlyCreatedOrder();
+    await checkNewlyCreatedOrder();
   }
 
-  checkNewlyCreatedOrder() async {
+  Future<void> checkNewlyCreatedOrder() async {
     if (userRepo.signedUser == null) {
       isCardOrderVisible.value = false;
       return;
@@ -417,5 +416,16 @@ class HomeController extends GetxController {
       Get.toNamed(Routes.orderDetail, arguments: latestOrder);
     }
     orderCleanUp();
+  }
+
+  Future<void> checkAnnouncement() async {
+    final announcement = await appRepo.getAppAnnouncement();
+    if (announcement == null) {
+      return;
+    }
+    if (!announcement.activated) {
+      return;
+    }
+    Get.dialog(DialogAnnouncement(announcement: announcement));
   }
 }

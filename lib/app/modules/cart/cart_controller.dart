@@ -20,11 +20,12 @@ class CartController extends GetxController {
   double _price = 0;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
     productOrders = RxList.of(homeController.productOrders);
     isCardCartVisible = homeController.isCardCartVisible;
     _calculateInfo();
+    await homeController.checkAnnouncement();
   }
 
   void onPressedSetDelivery() {
