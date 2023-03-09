@@ -13,8 +13,8 @@ dependencies:
     sdk: flutter
 
   mapalus_flutter_commons:
-    path: ../mapalus_flutter_commons
-#    git: "https://github.com/meimodev/mapalus_flutter_commons.git"
+#    path: ../mapalus_flutter_commons
+    git: "https://github.com/meimodev/mapalus_flutter_commons.git"
 
 #  cupertino_icons: ^1.0.5
 

@@ -1,4 +1,3 @@
-// ignore_for_file: invalid_use_of_protected_member
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -67,6 +66,10 @@ class HomeController extends GetxController {
         name: "Bahan Kue",
         imageUrl: "https://i.ibb.co/3M4jN9F/category-bahan-kue.jpg",
         asset: "assets/images/category-bahan-kue.jpeg"),
+    Category(
+        name: "Paket Hemat",
+        imageUrl: "https://i.ibb.co/CHLm43X/category-paket.jpg",
+        asset: "assets/images/category-paket.jpg"),
   ].obs;
 
   @override
@@ -228,6 +231,7 @@ class HomeController extends GetxController {
     if (userRepo.signedUser!.orders.isEmpty) {
       return;
     }
+
     final oo = userRepo.signedUser!.orders;
     final latestOrderId = oo.elementAt(oo.length - 1);
 
