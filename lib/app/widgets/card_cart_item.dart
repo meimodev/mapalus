@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mapalus/app/widgets/dialog_confirm.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
-
 class CardCartItem extends StatelessWidget {
   const CardCartItem({
     Key? key,
@@ -36,10 +35,10 @@ class CardCartItem extends StatelessWidget {
             child: Text(
               (index + 1).toString(),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w300,
-                  ),
+              style: TextStyle(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w300,
+              ),
             ),
           ),
           SizedBox(width: Insets.small.w),
@@ -49,17 +48,17 @@ class CardCartItem extends StatelessWidget {
               children: [
                 Text(
                   productOrder.product.name,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 Text(
                   "${productOrder.product.priceF} / ${productOrder.product.unit}",
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12.sp,
-                        color: Colors.grey,
-                      ),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w300,
+                    fontSize: 12.sp,
+                    color: Colors.grey,
+                  ),
                 ),
                 _BuildAlterQuantity(
                   productOrder: productOrder,
@@ -87,7 +86,10 @@ class CardCartItem extends StatelessWidget {
                     'assets/vectors/cross.svg',
                     width: 21.sp,
                     height: 21.sp,
-                    color: Palette.negative,
+                    colorFilter: const ColorFilter.mode(
+                      Palette.negative,
+                      BlendMode.srcIn,
+                    ),
                   ),
                 ),
               ),

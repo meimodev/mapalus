@@ -135,9 +135,12 @@ class HomeScreen extends GetView<HomeController> {
                     children: [
                       SvgPicture.asset(
                         "assets/images/mapalus.svg",
-                        color: Palette.primary,
                         width: 45.w,
                         height: 45.h,
+                        colorFilter: const ColorFilter.mode(
+                          Palette.primary,
+                          BlendMode.srcIn,
+                        ),
                       ),
                       SizedBox(height: Insets.small.h * .5),
                       Row(
@@ -150,10 +153,9 @@ class HomeScreen extends GetView<HomeController> {
                           SizedBox(width: 3.w),
                           Text(
                             '©2022',
-                            style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
-                                      fontSize: 12.sp,
-                                    ),
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                            ),
                           ),
                         ],
                       ),
@@ -255,19 +257,19 @@ class HomeScreen extends GetView<HomeController> {
                         Text(
                           "Harga Pasar",
                           textAlign: TextAlign.start,
-                          style:
-                              Theme.of(context).textTheme.headline1!.copyWith(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w300,
-                                  ),
+                          style: TextStyle(
+                            fontSize: 36.sp,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w300,
+                          ),
                         ),
                         Text(
                           "Antar di rumah",
                           textAlign: TextAlign.start,
-                          style:
-                              Theme.of(context).textTheme.headline1!.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                          style: TextStyle(
+                            fontSize: 36.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ],
                     ),

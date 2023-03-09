@@ -30,14 +30,14 @@ class DialogConfirm extends StatelessWidget {
           children: [
             Text(
               title ?? 'Perhatian !',
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              style: TextStyle(
                     fontSize: 16.sp,
                   ),
             ),
             SizedBox(height: Insets.small.h),
             Text(
               description ?? '',
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              style: TextStyle(
                     fontSize: 13.sp,
                     fontWeight: FontWeight.w300,
                   ),
@@ -64,7 +64,7 @@ class DialogConfirm extends StatelessWidget {
                         child: Text(
                           confirmText ?? 'HAPUS',
                           style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                          const TextStyle(
                                     color: Palette.primary,
                                   ),
                         ),

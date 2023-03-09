@@ -102,10 +102,9 @@ class CartScreen extends GetView<CartController> {
                       child: Center(
                         child: Text(
                           'Atur Pengantaran',
-                          style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(
-                                    fontSize: 14.sp,
-                                  ),
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                          ),
                         ),
                       ),
                     ),
@@ -129,18 +128,18 @@ class CartScreen extends GetView<CartController> {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w300,
-                ),
+            style: TextStyle(
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w300,
+            ),
           ),
           Text(
             value,
             // textAlign: TextAlign.start,
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w400,
-                ),
+            style: TextStyle(
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w400,
+            ),
           ),
         ],
       );
@@ -224,7 +223,6 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
   }
 
   _buildNoteHint(BuildContext context) {
-
     final List<String> hints = [
       "Tu tomat ambe akang yang masi ba ijo-ijo",
       "Tu daging ambe yang bagian tawa lapis",
@@ -239,15 +237,16 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
       maxLines: 1,
       text: TextSpan(
         text: "Catatan ",
-        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-              fontWeight: FontWeight.w300,
-              fontSize: 12.sp,
-            ),
+        style: TextStyle(
+            fontFamily: fontFamily,
+            fontWeight: FontWeight.w300,
+            fontSize: 12.sp,
+            color: Palette.primary),
         children: [
           TextSpan(
             text: hints[Random().nextInt(hints.length)],
             style: TextStyle(
-              color: Colors.grey,
+              color: Colors.grey.withOpacity(.5),
               fontWeight: FontWeight.w300,
               fontSize: 12.sp,
             ),
@@ -262,10 +261,10 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
       note,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
-      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-            fontWeight: FontWeight.w300,
-            fontSize: 12.sp,
-          ),
+      style: TextStyle(
+        fontWeight: FontWeight.w300,
+        fontSize: 12.sp,
+      ),
     );
   }
 
@@ -308,9 +307,10 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
                       onSubmitted: (_) => onSubmitNote(),
                       autocorrect: false,
                       autofocus: true,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontSize: 12.sp,
-                          ),
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        color: Palette.textPrimary,
+                      ),
                       cursorColor: Palette.primary,
                       decoration: InputDecoration(
                         hintStyle: TextStyle(

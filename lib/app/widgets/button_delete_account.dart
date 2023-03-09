@@ -33,7 +33,7 @@ class DeleteAccountButton extends StatelessWidget {
           padding: EdgeInsets.all(Insets.small.w),
           child: Text(
             'Hapus Akun',
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+            style: TextStyle(
                   fontSize: 14.sp,
                   color: Palette.negative,
                   fontWeight: FontWeight.bold,
@@ -99,30 +99,24 @@ class _BuildBottomSheetDeleteAccountState
           children: [
             Text(
               'Perhatian!',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1
-                  ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
             ),
             SizedBox(width: Insets.small.h),
             RichText(
               textAlign: TextAlign.justify,
               text: TextSpan(
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    ?.copyWith(fontSize: 12.sp),
-                children: [
-                  const TextSpan(
+                style: TextStyle(fontSize: 12.sp),
+                children: const [
+                  TextSpan(
                     text: 'Akun yang dihapus ',
                   ),
                   TextSpan(
                     text: 'tidak bisa dikembalikan lagi. ',
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    style: TextStyle(
                           color: Palette.negative,
                         ),
                   ),
-                  const TextSpan(
+                  TextSpan(
                     text:
                         'Silahkan masukkan nomor telpon akun untuk konfirmasi.',
                   ),
@@ -185,7 +179,7 @@ class _BuildBottomSheetDeleteAccountState
                           child: Text(
                             'HAPUS AKUN',
                             style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                            TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,

@@ -86,7 +86,7 @@ class CardCartPeak extends StatelessWidget {
                       totalPrice,
                       maxLines: 1,
                       overflow: TextOverflow.fade,
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      style: TextStyle(
                             color: Palette.cardForeground,
                             fontWeight: FontWeight.w400,
                             fontSize: 14.sp,
@@ -94,7 +94,7 @@ class CardCartPeak extends StatelessWidget {
                     ),
                     Text(
                       cartOverview,
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      style: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.w300,
                             fontSize: 10.sp,

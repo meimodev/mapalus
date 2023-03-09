@@ -74,7 +74,7 @@ class OrdersScreen extends GetView<OrdersController> {
     return Center(
       child: Text(
         "Tidak ada pesanan -_-'",
-        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+        style: TextStyle(
               color: Palette.accent,
               fontSize: 14.sp,
             ),

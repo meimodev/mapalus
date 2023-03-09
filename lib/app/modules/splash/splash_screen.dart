@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus/shared/routes.dart';
 
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -40,7 +39,10 @@ class _SplashScreenState extends State<SplashScreen> {
             'assets/images/mapalus.svg',
             width: 90.sp,
             height: 90.sp,
-            color: Palette.primary,
+            colorFilter: const ColorFilter.mode(
+              Palette.primary,
+              BlendMode.srcIn,
+            ),
           ),
         ),
       ),

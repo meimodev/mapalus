@@ -44,7 +44,10 @@ class CardDeliveryFee extends StatelessWidget {
                               'assets/vectors/check.svg',
                               width: 24.sp,
                               height: 24.sp,
-                              color: Palette.accent,
+                              colorFilter: const ColorFilter.mode(
+                                Palette.accent,
+                                BlendMode.srcIn,
+                              ),
                             ),
                             SizedBox(width: Insets.small.w * .85),
                           ]
@@ -57,10 +60,7 @@ class CardDeliveryFee extends StatelessWidget {
                             children: [
                               Text(
                                 deliveryInfo.title,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1
-                                    ?.copyWith(
+                                style: TextStyle(
                                       fontSize: 12.sp,
                                       color: Palette.textPrimary,
                                     ),
@@ -68,10 +68,7 @@ class CardDeliveryFee extends StatelessWidget {
                               deliveryInfo.isTomorrow
                                   ? Text(
                                       ' BESOK ( ${deliveryInfo.startDate.add(days: 1).format("EEEE dd MMM")} )',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          ?.copyWith(
+                                      style: TextStyle(
                                             color: Palette.textPrimary,
                                             fontSize: 12.sp,
                                           ),
@@ -82,7 +79,7 @@ class CardDeliveryFee extends StatelessWidget {
                           Text(
                             price,
                             style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                            TextStyle(
                                       fontSize: 10.sp,
                                       fontWeight: FontWeight.w500,
                                       color: Colors.grey,
@@ -117,7 +114,7 @@ class CardDeliveryFee extends StatelessWidget {
             SnackBar(
               content: Text(
                 'Waktu pengantaran sedang tidak tersedia',
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                style: TextStyle(
                       fontSize: 14.sp,
                       color: Palette.cardForeground,
                     ),
@@ -141,7 +138,7 @@ class CardDeliveryFee extends StatelessWidget {
                         Text(
                           deliveryInfo.title,
                           style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                          TextStyle(
                                     fontSize: 12.sp,
                                     color: Colors.grey,
                                   ),
@@ -150,7 +147,7 @@ class CardDeliveryFee extends StatelessWidget {
                         Text(
                           message,
                           style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                          TextStyle(
                                     color: Palette.textPrimary,
                                     fontSize: 12.sp,
                                   ),
@@ -159,7 +156,7 @@ class CardDeliveryFee extends StatelessWidget {
                     ),
                     Text(
                       "Waktu pengantaran sedang tidak tersedia",
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      style: TextStyle(
                             fontSize: 10.sp,
                             fontWeight: FontWeight.w500,
                             color: Colors.grey,

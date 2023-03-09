@@ -20,14 +20,17 @@ class UpdateAppScreen extends StatelessWidget {
                 'assets/images/mapalus.svg',
                 width: 60.sp,
                 height: 60.sp,
-                color: Palette.accent,
+                colorFilter: const ColorFilter.mode(
+                  Palette.accent,
+                  BlendMode.srcIn,
+                ),
               ),
               SizedBox(height: Insets.small.h * .5),
               SizedBox(height: Insets.large.h),
               Text(
                 'Silahkan update aplikasi\nuntuk menggunakan fitur terbaru mapalus ☺',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w300,
                     ),
@@ -97,7 +100,7 @@ class UpdateAppScreen extends StatelessWidget {
               SizedBox(width: 6.w),
               Text(
                 title,
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                style:TextStyle(
                       fontSize: 12.sp,
                       color: Palette.accent,
                     ),

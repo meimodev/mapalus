@@ -44,7 +44,7 @@ class PaymentMethodSelectionCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  style: TextStyle(
                         color: available ? Palette.textPrimary : Colors.grey.shade400,
                         fontSize: 12.sp,
                       ),
@@ -52,7 +52,7 @@ class PaymentMethodSelectionCard extends StatelessWidget {
                 subTitle != null
                     ? Text(
                         subTitle!,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: TextStyle(
                           fontSize: 10.sp,
                           fontWeight: FontWeight.w500,
                           color: available ? Colors.grey : Colors.grey.shade400,

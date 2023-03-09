@@ -232,17 +232,17 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
           children: [
             Text(
               "Pengantaran",
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    fontSize: 10.sp,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w300,
-                  ),
+              style: TextStyle(
+                fontSize: 10.sp,
+                color: Colors.grey,
+                fontWeight: FontWeight.w300,
+              ),
             ),
             Text(
               controller.order.value.orderInfo.deliveryTime,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    fontSize: 12.sp,
-                  ),
+              style: TextStyle(
+                fontSize: 12.sp,
+              ),
             ),
           ],
         ),
@@ -282,17 +282,17 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
           children: [
             Text(
               "Pembayaran",
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    fontSize: 10.sp,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w300,
-                  ),
+              style: TextStyle(
+                fontSize: 10.sp,
+                color: Colors.grey,
+                fontWeight: FontWeight.w300,
+              ),
             ),
             Text(
               controller.order.value.paymentMethodF,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    fontSize: 12.sp,
-                  ),
+              style: TextStyle(
+                fontSize: 12.sp,
+              ),
             ),
           ],
         ),
@@ -394,10 +394,10 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
               children: [
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 highLight
                     ? const SizedBox()
@@ -405,12 +405,11 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                         ? const SizedBox()
                         : Text(
                             sub,
-                            style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
-                                      fontSize: 10.sp,
-                                      fontWeight: FontWeight.w300,
-                                      color: Colors.grey,
-                                    ),
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.grey,
+                            ),
                           ),
               ],
             ),
@@ -419,10 +418,10 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
             child: Text(
               value,
               textAlign: TextAlign.end,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
+              style: TextStyle(
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         ],
@@ -446,17 +445,17 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
           children: [
             Text(
               title,
-              style: Theme.of(context).textTheme.caption?.copyWith(
-                    fontSize: 9.sp,
-                    color: Palette.editable,
-                  ),
+              style: TextStyle(
+                fontSize: 9.sp,
+                color: Palette.editable,
+              ),
             ),
             Text(
               timeStamp,
-              style: Theme.of(context).textTheme.caption?.copyWith(
-                    fontSize: 9.sp,
-                    color: Palette.editable,
-                  ),
+              style: TextStyle(
+                fontSize: 9.sp,
+                color: Palette.editable,
+              ),
             ),
           ],
         ),
@@ -567,7 +566,10 @@ class _BuildRatedLayout extends StatelessWidget {
             onRatingUpdate: (_) {},
             itemBuilder: (_, int index) => SvgPicture.asset(
               'assets/vectors/star.svg',
-              color: Palette.primary,
+              colorFilter: const ColorFilter.mode(
+                Palette.primary,
+                BlendMode.srcIn,
+              ),
             ),
             updateOnDrag: false,
             ignoreGestures: true,
@@ -626,7 +628,7 @@ class _BuildNoteCard extends StatelessWidget {
               trimLines: 1,
               colorClickableText: Palette.primary,
               trimMode: TrimMode.Line,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              style: TextStyle(
                     fontWeight: FontWeight.w300,
                     fontSize: 12.sp,
                   ),

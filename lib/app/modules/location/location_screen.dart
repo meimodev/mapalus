@@ -78,14 +78,11 @@ class LocationScreen extends GetView<LocationController> {
                                                     ),
                                                     child: Text(
                                                       'Pilih Lokasi',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyText1
-                                                          ?.copyWith(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 14.sp,
-                                                          ),
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 14.sp,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -148,6 +145,7 @@ class LocationScreen extends GetView<LocationController> {
                 title: '',
                 onPressedBack: () async {
                   if (await controller.onPressedBackButton()) {
+                    // ignore: use_build_context_synchronously
                     Navigator.pop(context);
                   }
                 },
@@ -246,7 +244,11 @@ class LocationScreen extends GetView<LocationController> {
                                               'assets/vectors/check.svg',
                                               width: 15.sp,
                                               height: 15.sp,
-                                              color: Palette.accent,
+                                              colorFilter:
+                                                  const ColorFilter.mode(
+                                                Palette.accent,
+                                                BlendMode.srcIn,
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -271,14 +273,11 @@ class LocationScreen extends GetView<LocationController> {
                                       ),
                                       child: Text(
                                         'Ubah Lokasi',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            ?.copyWith(
-                                              fontSize: 10.sp,
-                                              color: Palette.primary,
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                        style: TextStyle(
+                                          fontSize: 10.sp,
+                                          color: Palette.primary,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -328,7 +327,11 @@ class LocationScreen extends GetView<LocationController> {
                                                           'assets/vectors/check.svg',
                                                           width: 15.sp,
                                                           height: 15.sp,
-                                                          color: Palette.accent,
+                                                          colorFilter:
+                                                             const ColorFilter.mode(
+                                                            Palette.accent,
+                                                            BlendMode.srcIn,
+                                                          ),
                                                         ),
                                                       ],
                                                     )
@@ -363,14 +366,11 @@ class LocationScreen extends GetView<LocationController> {
                                       ),
                                       child: Text(
                                         'Ubah Pembayaran',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            ?.copyWith(
-                                              fontSize: 10.sp,
-                                              color: Palette.primary,
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                        style: TextStyle(
+                                          fontSize: 10.sp,
+                                          color: Palette.primary,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -821,9 +821,9 @@ class _BuildDeliveryFeeSelectorState extends State<_BuildDeliveryFeeSelector> {
           Text(
             'Waktu Pengantaran',
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  fontSize: 12.sp,
-                ),
+            style: TextStyle(
+              fontSize: 12.sp,
+            ),
           ),
           for (DeliveryInfo delivery in widget.deliveries) ...[
             SizedBox(height: Insets.small.h),
@@ -957,10 +957,10 @@ class _BuildOrderInfo extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
               highLight
                   ? const SizedBox()
@@ -968,12 +968,11 @@ class _BuildOrderInfo extends StatelessWidget {
                       ? const SizedBox()
                       : Text(
                           sub,
-                          style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.grey,
-                                  ),
+                          style: TextStyle(
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey,
+                          ),
                         ),
             ],
           ),
@@ -982,10 +981,10 @@ class _BuildOrderInfo extends StatelessWidget {
           child: Text(
             value,
             textAlign: TextAlign.end,
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w400,
-                ),
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w400,
+            ),
           ),
         ),
       ],
@@ -1023,10 +1022,10 @@ class _BuildCurrentLocationErrorNote extends StatelessWidget {
               SizedBox(width: 3.w),
               Text(
                 "Lokasi Tidak diaktifkan",
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      color: Palette.primary,
-                      fontSize: 12.sp,
-                    ),
+                style: TextStyle(
+                  color: Palette.primary,
+                  fontSize: 12.sp,
+                ),
               ),
             ],
           ),

@@ -40,20 +40,14 @@ class OrderingScreen extends GetView<OrderingController> {
                             SizedBox(height: Insets.medium.h),
                             Text(
                               'Pesanan Diterima',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  ?.copyWith(
+                              style: TextStyle(
                                     fontSize: 14.sp,
                                   ),
                             ),
                             SizedBox(height: Insets.small.h),
                             Text(
                               'Anda akan segera dihubungi \nsaat waktu pengantaran nanti',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  ?.copyWith(
+                              style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w300,
                                   ),
@@ -80,13 +74,11 @@ class OrderingScreen extends GetView<OrderingController> {
                           child: Column(
                             children: [
                               _buildButton(
-                                context: context,
                                 text: "Lihat Pesanan",
                                 onPressed: controller.onPressedSeeOrder,
                               ),
                               SizedBox(height: Insets.small.h),
                               _buildButton(
-                                context: context,
                                 text: "Kembali",
                                 isSecondary: true,
                                 onPressed: controller.onPressedReturn,
@@ -104,7 +96,6 @@ class OrderingScreen extends GetView<OrderingController> {
   }
 
   _buildButton({
-    required BuildContext context,
     required String text,
     required VoidCallback onPressed,
     bool isSecondary = false,
@@ -125,7 +116,7 @@ class OrderingScreen extends GetView<OrderingController> {
             child: Center(
               child: Text(
                 text,
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                style: TextStyle(
                       fontSize: isSecondary ? 10.sp : 14.sp,
                     ),
               ),
@@ -144,7 +135,7 @@ class OrderingScreen extends GetView<OrderingController> {
         children: [
           Text(
             'Sedang Melakukan Pemesanan',
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+            style: TextStyle(
                   fontSize: 14.sp,
                 ),
           ),

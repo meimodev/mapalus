@@ -34,7 +34,7 @@ class CardOrderDetailItem extends StatelessWidget {
             child: Center(
               child: Text(
                 index,
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w400,
                     ),
@@ -48,7 +48,7 @@ class CardOrderDetailItem extends StatelessWidget {
               children: [
                 Text(
                   productName,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  style: TextStyle(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w400,
                       ),
@@ -85,7 +85,7 @@ class CardOrderDetailItem extends StatelessWidget {
         child: Text(
           text,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyText1?.copyWith(
+          style: TextStyle(
                 fontSize: 10.sp,
                 fontWeight: FontWeight.w300,
               ),

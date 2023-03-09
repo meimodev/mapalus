@@ -192,7 +192,7 @@ class CardProduct extends StatelessWidget {
                   children: [
                     Text(
                       product.name,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      style: TextStyle(
                         fontSize: _calculateFontSize(),
                       ),
                     ),
@@ -201,7 +201,7 @@ class CardProduct extends StatelessWidget {
                         Text(
                           '${product.priceF} / ${product.unit}',
                           style:
-                          Theme.of(context).textTheme.bodyText1?.copyWith(
+                          TextStyle(
                             fontSize: 10.sp,
                             fontWeight: FontWeight.w300,
                           ),

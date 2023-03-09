@@ -27,7 +27,7 @@ class ButtonAlterQuantity extends StatelessWidget {
           child: Center(
             child: Text(
               label,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              style: TextStyle(
                     fontSize: 19.sp,
                     color:
                         isEnabled ? Palette.textPrimary : Colors.grey.shade400,

@@ -95,7 +95,7 @@ class SigningScreen extends GetView<SigningController> {
                 ),
                 Text(
                   text,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  style: const TextStyle(
                         color: Palette.editable,
                       ),
                 ),
@@ -273,7 +273,7 @@ class CardSigning extends StatelessWidget {
               child: controller.errorText.isNotEmpty
                   ? Text(
                       controller.errorText.value,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      style: TextStyle(
                             color: Palette.negative,
                             fontSize: 10.sp,
                             fontWeight: FontWeight.w300,
@@ -311,7 +311,7 @@ class CardSigning extends StatelessWidget {
     return [
       Text(
         'Nomor Handphone',
-        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+        style: TextStyle(
               fontSize: 12.sp,
               color: isTitleHeadVisible ? Colors.grey : Colors.transparent,
             ),
@@ -319,7 +319,7 @@ class CardSigning extends StatelessWidget {
       Text(
         message ?? phone,
         textAlign: isAlignMiddle ? TextAlign.center : TextAlign.start,
-        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+        style: TextStyle(
               fontSize: 14.sp,
             ),
       ),

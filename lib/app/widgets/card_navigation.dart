@@ -35,13 +35,16 @@ class CardNavigation extends StatelessWidget {
                   'assets/vectors/back.svg',
                   height: 24.sp,
                   width: 24.sp,
-                  color: isInverted ? Palette.editable : Palette.textPrimary,
+                  colorFilter:  ColorFilter.mode(
+                    isInverted ? Palette.editable : Palette.textPrimary,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
               Center(
                 child: Text(
                   title,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  style: TextStyle(
                         color:
                             isInverted ? Palette.editable : Palette.textPrimary,
                       ),

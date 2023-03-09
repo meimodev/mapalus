@@ -21,7 +21,7 @@ class BadgeNotification extends StatelessWidget {
       child: Center(
         child: Text(
           text,
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+          style:TextStyle(
                 fontSize: 11.sp,
                 color: Palette.cardForeground,
               ),
