@@ -294,6 +294,53 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                 fontSize: 12.sp,
               ),
             ),
+            controller.order.value.paymentMethodF == "CASHLESS"
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Konfirmasi dengan admin untuk transfer manual",
+                        style: TextStyle(
+                          fontSize: 7.sp,
+                          color: Palette.textPrimary,
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: Insets.small.h * .5),
+                          Text(
+                            "BRI (Della Geovana Rey)",
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 10.sp,
+                            ),
+                          ),
+                          SelectableText(
+                            "145801007894509",
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                          SizedBox(height: Insets.small.h * .5),
+                          Text(
+                            "Dana (Della Geovana Rey)",
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 10.sp,
+                            ),
+                          ),
+                          SelectableText(
+                            "082293383305",
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  )
+                : const SizedBox(),
           ],
         ),
       ],
@@ -629,9 +676,9 @@ class _BuildNoteCard extends StatelessWidget {
               colorClickableText: Palette.primary,
               trimMode: TrimMode.Line,
               style: TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12.sp,
-                  ),
+                fontWeight: FontWeight.w300,
+                fontSize: 12.sp,
+              ),
               delimiter: "  . . .  ",
               delimiterStyle: TextStyle(
                 fontWeight: FontWeight.bold,

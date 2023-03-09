@@ -328,7 +328,8 @@ class LocationScreen extends GetView<LocationController> {
                                                           width: 15.sp,
                                                           height: 15.sp,
                                                           colorFilter:
-                                                             const ColorFilter.mode(
+                                                              const ColorFilter
+                                                                  .mode(
                                                             Palette.accent,
                                                             BlendMode.srcIn,
                                                           ),
@@ -543,6 +544,14 @@ class _BuildPaymentMethodBottomSheetState
       );
       return;
     }
+    if (selectedIndex == 1) {
+      widget.onPressedPaymentMethodButton(
+        1,
+        "Transfer Manual",
+        0,
+      );
+      return;
+    }
   }
 
   @override
@@ -555,6 +564,26 @@ class _BuildPaymentMethodBottomSheetState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Column(
+              children: [
+                Text(
+                  "Total Pembayaran",
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                  ),
+                ),
+                Text(
+                  Utils.formatNumberToCurrency(
+                      widget.totalPrice),
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: Palette.textPrimary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: Insets.small.h),
+              ],
+            ),
             Expanded(
               child: ListView(
                 shrinkWrap: true,
@@ -565,7 +594,7 @@ class _BuildPaymentMethodBottomSheetState
                     subTitle: "Cash on Delivery",
                     onPressed: () {
                       setState(() {
-                        selectedIndex == 0;
+                        selectedIndex = 0;
                       });
                     },
                     activate: selectedIndex == 0,
@@ -604,77 +633,55 @@ class _BuildPaymentMethodBottomSheetState
                             ),
                           ),
                         ),
-                        SizedBox(height: Insets.small.h),
-                        Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: Insets.small.w,
-                                vertical: 2.w,
+                        SizedBox(height: Insets.small.h *.5),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Palette.editable,
+                            borderRadius: BorderRadius.circular(9.sp),
+                          ),
+                          child: SizedBox(
+                            width: 150.w,
+                            child: TextField(
+                              controller: tecMoneyAmount,
+                              maxLines: 1,
+                              onSubmitted: (_) =>
+                                  onSubmitPaymentBottomSheetSelectionCard(),
+                              autocorrect: false,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(
+                                color: Palette.textPrimary,
+                                fontFamily: fontFamily,
+                                fontSize: 10.sp,
                               ),
-                              decoration: BoxDecoration(
-                                color: Palette.editable,
-                                borderRadius: BorderRadius.circular(9.sp),
-                              ),
-                              child: SizedBox(
-                                width: 150.w,
-                                child: TextField(
-                                  controller: tecMoneyAmount,
-                                  maxLines: 1,
-                                  onSubmitted: (_) =>
-                                      onSubmitPaymentBottomSheetSelectionCard(),
-                                  autocorrect: false,
-                                  keyboardType: TextInputType.number,
-                                  style: TextStyle(
-                                    color: Palette.textPrimary,
-                                    fontFamily: fontFamily,
-                                    fontSize: 10.sp,
-                                  ),
-                                  cursorColor: Palette.primary,
-                                  textInputAction: TextInputAction.done,
-                                  decoration: InputDecoration(
-                                    hintStyle: TextStyle(
-                                      fontFamily: fontFamily,
-                                      fontSize: 10.sp,
-                                    ),
-                                    labelStyle: TextStyle(
-                                      fontSize: 10.sp,
-                                      fontWeight: FontWeight.w300,
-                                      color: Palette.textPrimary,
-                                    ),
-                                    isDense: true,
-                                    border: InputBorder.none,
-                                    labelText: "Jumlah uang",
+                              cursorColor: Palette.primary,
+                              textInputAction: TextInputAction.done,
+                              decoration: InputDecoration(
+                                hintStyle: TextStyle(
+                                  fontFamily: fontFamily,
+                                  fontSize: 10.sp,
+                                ),
+                                labelStyle: TextStyle(
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.w300,
+                                  color: Palette.textPrimary,
+                                ),
+                                isDense: true,
+                                border: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: .25,
+                                    color: Palette.accent,
                                   ),
                                 ),
-                              ),
-                            ),
-                            SizedBox(width: Insets.small.w),
-                            Expanded(
-                              child: Center(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Total Pembayaran",
-                                      style: TextStyle(
-                                        fontSize: 10.sp,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                    Text(
-                                      Utils.formatNumberToCurrency(
-                                          widget.totalPrice),
-                                      style: TextStyle(
-                                        fontSize: 12.sp,
-                                        color: Palette.textPrimary,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: .25,
+                                    color: Palette.accent,
+                                  ),
                                 ),
+                                labelText: "Jumlah uang",
                               ),
                             ),
-                          ],
+                          ),
                         ),
                         AnimatedSwitcher(
                           duration: 400.milliseconds,
@@ -699,6 +706,50 @@ class _BuildPaymentMethodBottomSheetState
                                   ),
                                 )
                               : const SizedBox(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  PaymentMethodSelectionCard(
+                    title: 'Transfer Manual',
+                    subTitle:
+                        "Silahkan di transfer & lakukan konfirmasi ke admin",
+                    onPressed: () {
+                      setState(() {
+                        selectedIndex = 1;
+                      });
+                    },
+                    activate: selectedIndex == 1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: Insets.small.h * .5),
+                        Text(
+                          "BRI (Della Geovana Rey)",
+                          style: TextStyle(
+                            fontSize: 10.sp,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        Text(
+                          "145801007894509",
+                          style: TextStyle(
+                            fontSize: 10.sp,
+                          ),
+                        ),
+                        SizedBox(height: Insets.small.h * .5),
+                        Text(
+                          "Dana (Della Geovana Rey)",
+                          style: TextStyle(
+                            fontSize: 10.sp,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        Text(
+                          "0822 9338 3305",
+                          style: TextStyle(
+                            fontSize: 10.sp,
+                          ),
                         ),
                       ],
                     ),

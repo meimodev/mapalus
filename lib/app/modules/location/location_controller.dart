@@ -116,7 +116,7 @@ class LocationController extends GetxController {
 
   onPressedMakeOrder() async {
     if (_selectedDeliveryInfo == null) {
-      Get.snackbar("Perhatian !", "Waktu pengataran belum dipilih");
+      Get.rawSnackbar(title:"Perhatian !", message: "Waktu pengataran belum dipilih");
       return;
     }
 
