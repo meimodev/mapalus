@@ -65,7 +65,7 @@ class DialogConfirm extends StatelessWidget {
                           confirmText ?? 'HAPUS',
                           style:
                           const TextStyle(
-                                    color: Palette.primary,
+                                    color: PaletteTheme.primary,
                                   ),
                         ),
                       ),

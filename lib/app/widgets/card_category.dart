@@ -36,7 +36,7 @@ class CardCategory extends StatelessWidget {
                   width: 45.w,
                   height: 45.w,
                   decoration: BoxDecoration(
-                    color: isSelected ? Palette.accent : Palette.cardForeground,
+                    color: isSelected ? PaletteTheme.accent : PaletteTheme.cardForeground,
                     borderRadius: BorderRadius.all(
                       Radius.circular(12.sp),
                     ),
@@ -56,7 +56,7 @@ class CardCategory extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                         fontSize: 12.sp,
-                        color: isSelected ? Palette.textPrimary : Colors.grey,
+                        color: isSelected ? PaletteTheme.textPrimary : Colors.grey,
                       ),
                 ),
               ),

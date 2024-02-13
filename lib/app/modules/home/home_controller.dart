@@ -168,7 +168,7 @@ class HomeController extends GetxController {
       count++;
       weight += e.quantity;
     }
-    totalPrice.value = Utils.formatNumberToCurrency(total);
+    totalPrice.value = total.formatNumberToCurrency();
     cartOverview.value = "$count Produk, $weight Kilogram";
     if (count == 0) {
       isCardCartVisible.value = false;

@@ -33,14 +33,14 @@ class _SplashScreenState extends State<SplashScreen> {
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        color: Palette.accent,
+        color: PaletteTheme.accent,
         child: Center(
           child: SvgPicture.asset(
             'assets/images/mapalus.svg',
             width: 90.sp,
             height: 90.sp,
             colorFilter: const ColorFilter.mode(
-              Palette.primary,
+              PaletteTheme.primary,
               BlendMode.srcIn,
             ),
           ),

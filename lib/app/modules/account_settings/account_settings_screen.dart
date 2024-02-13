@@ -53,7 +53,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
               padding: EdgeInsets.all(30.w),
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: Palette.accent,
+                color: PaletteTheme.accent,
               ),
               child: Center(
                 child: SvgPicture.asset(
@@ -61,10 +61,10 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
                   width: 60.w,
                   height: 60.h,
                   colorFilter: const ColorFilter.mode(
-                    Palette.primary,
+                    PaletteTheme.primary,
                     BlendMode.srcIn,
                   ),
-                  // color: Palette.primary,
+                  // color: PaletteTheme.primary,
                 ),
               ),
             ),
@@ -79,7 +79,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
             Text(
               controller.userPhone.value,
               style: TextStyle(
-                color: Palette.accent,
+                color: PaletteTheme.accent,
                 fontSize: 14.sp,
               ),
             ),
@@ -91,7 +91,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
           margin: EdgeInsets.symmetric(
             horizontal: Insets.large.w,
           ),
-          color: Palette.accent,
+          color: PaletteTheme.accent,
         ),
         SizedBox(height: Insets.small.h),
         Padding(
@@ -104,7 +104,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
                   controller.orderCount.value.toString(),
                   style: TextStyle(
                     fontSize: 10.sp,
-                    color: Palette.editable,
+                    color: PaletteTheme.editable,
                   ),
                 ),
                 position: BadgePosition.topStart(),
@@ -149,7 +149,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
         SizedBox(height: Insets.small.h),
         Material(
           clipBehavior: Clip.hardEdge,
-          color: Palette.primary,
+          color: PaletteTheme.primary,
           borderRadius: BorderRadius.circular(9.sp),
           elevation: 2,
           child: InkWell(
@@ -162,7 +162,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
               child: const Text(
                 'Masuk',
                 style: TextStyle(
-                  color: Palette.accent,
+                  color: PaletteTheme.accent,
                 ),
               ),
             ),

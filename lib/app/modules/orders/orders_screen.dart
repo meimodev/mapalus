@@ -27,7 +27,7 @@ class OrdersScreen extends GetView<OrdersController> {
                 child: controller.isLoading.value
                     ? const Center(
                         child: CircularProgressIndicator(
-                          color: Palette.primary,
+                          color: PaletteTheme.primary,
                         ),
                       )
                     : Column(
@@ -75,7 +75,7 @@ class OrdersScreen extends GetView<OrdersController> {
       child: Text(
         "Tidak ada pesanan -_-'",
         style: TextStyle(
-              color: Palette.accent,
+              color: PaletteTheme.accent,
               fontSize: 14.sp,
             ),
       ),
@@ -185,11 +185,11 @@ class CustomChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       clipBehavior: Clip.antiAlias,
-      color: active ? Palette.primary : Palette.cardForeground,
+      color: active ? PaletteTheme.primary : PaletteTheme.cardForeground,
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.circular(20),
         side: const BorderSide(
-          color: Palette.primary,
+          color: PaletteTheme.primary,
         ),
       ),
       child: InkWell(
@@ -203,7 +203,7 @@ class CustomChip extends StatelessWidget {
             child: Text(
               text,
               style: TextStyle(
-                color: active ? Palette.cardForeground : Palette.primary,
+                color: active ? PaletteTheme.cardForeground : PaletteTheme.primary,
                 fontSize: 10.sp,
               ),
             ),

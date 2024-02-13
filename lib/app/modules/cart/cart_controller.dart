@@ -48,7 +48,7 @@ class CartController extends GetxController {
     }
     count.value = "$_count Produk";
     weight.value = "± ${(_weight / 1000).ceil()} Kg";
-    price.value = Utils.formatNumberToCurrency(_price);
+    price.value = _price.formatNumberToCurrency();
   }
 
   void onPressedItemDelete(ProductOrder productOrder) {

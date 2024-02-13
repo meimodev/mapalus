@@ -22,7 +22,7 @@ class CartScreen extends GetView<CartController> {
           const CardNavigation(title: 'Keranjang Belanja', isInverted: true),
           Expanded(
             child: Container(
-              color: Palette.accent,
+              color: PaletteTheme.accent,
               child: Obx(
                 () => ListView.builder(
                   itemCount: controller.productOrders.value.length,
@@ -90,7 +90,7 @@ class CartScreen extends GetView<CartController> {
                 child: Material(
                   borderRadius: BorderRadius.circular(9.sp),
                   clipBehavior: Clip.hardEdge,
-                  color: Palette.primary,
+                  color: PaletteTheme.primary,
                   elevation: 4,
                   child: InkWell(
                     onTap: controller.onPressedSetDelivery,
@@ -191,7 +191,7 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
     return Material(
       borderRadius: BorderRadius.circular(9.sp),
       clipBehavior: Clip.hardEdge,
-      color: Palette.editable,
+      color: PaletteTheme.editable,
       elevation: .5,
       child: InkWell(
         onTap: () {
@@ -241,7 +241,7 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
             fontFamily: fontFamily,
             fontWeight: FontWeight.w300,
             fontSize: 12.sp,
-            color: Palette.primary),
+            color: PaletteTheme.primary),
         children: [
           TextSpan(
             text: hints[Random().nextInt(hints.length)],
@@ -292,7 +292,7 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
                   vertical: 2.w,
                 ),
                 decoration: BoxDecoration(
-                  color: Palette.editable,
+                  color: PaletteTheme.editable,
                   borderRadius: BorderRadius.circular(9.sp),
                 ),
                 child: Column(
@@ -309,9 +309,9 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
                       autofocus: true,
                       style: TextStyle(
                         fontSize: 12.sp,
-                        color: Palette.textPrimary,
+                        color: PaletteTheme.textPrimary,
                       ),
-                      cursorColor: Palette.primary,
+                      cursorColor: PaletteTheme.primary,
                       decoration: InputDecoration(
                         hintStyle: TextStyle(
                           fontFamily: fontFamily,
@@ -330,7 +330,7 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Material(
-                    color: Palette.negative,
+                    color: PaletteTheme.negative,
                     shape: const CircleBorder(),
                     elevation: 1,
                     child: InkWell(
@@ -348,13 +348,13 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
                         child: Icon(
                           Icons.delete_outline,
                           size: 21.sp,
-                          color: Palette.cardForeground,
+                          color: PaletteTheme.cardForeground,
                         ),
                       ),
                     ),
                   ),
                   Material(
-                    color: Palette.positive,
+                    color: PaletteTheme.positive,
                     shape: const CircleBorder(),
                     elevation: 1,
                     child: InkWell(
@@ -367,7 +367,7 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
                         child: Icon(
                           Icons.check,
                           size: 21.sp,
-                          color: Palette.cardForeground,
+                          color: PaletteTheme.cardForeground,
                         ),
                       ),
                     ),

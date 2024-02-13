@@ -87,7 +87,7 @@ class HomeScreen extends GetView<HomeController> {
                   height: 500.h,
                   child: const Center(
                     child: CircularProgressIndicator(
-                      color: Palette.primary,
+                      color: PaletteTheme.primary,
                     ),
                   ),
                 )
@@ -138,7 +138,7 @@ class HomeScreen extends GetView<HomeController> {
                         width: 45.w,
                         height: 45.h,
                         colorFilter: const ColorFilter.mode(
-                          Palette.primary,
+                          PaletteTheme.primary,
                           BlendMode.srcIn,
                         ),
                       ),
@@ -181,7 +181,7 @@ class HomeScreen extends GetView<HomeController> {
                       bottom: Insets.large.h * 2,
                     ),
                     child: const CircularProgressIndicator(
-                      color: Palette.primary,
+                      color: PaletteTheme.primary,
                     ),
                   ),
                 )
@@ -232,7 +232,7 @@ class HomeScreen extends GetView<HomeController> {
       floating: true,
       pinned: true,
       snap: false,
-      backgroundColor: Palette.cardForeground,
+      backgroundColor: PaletteTheme.cardForeground,
       elevation: 5,
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.vertical(

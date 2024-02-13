@@ -25,7 +25,7 @@ class CardSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Palette.editable,
+        color: PaletteTheme.editable,
         borderRadius: BorderRadius.circular(Roundness.large.sp),
       ),
       padding: EdgeInsets.symmetric(
@@ -61,11 +61,11 @@ class CardSearchBar extends StatelessWidget {
                       maxLines: 1,
                       autocorrect: false,
                       style: TextStyle(
-                        color: Palette.accent,
+                        color: PaletteTheme.accent,
                         fontFamily: fontFamily,
                         fontSize: 12.sp,
                       ),
-                      cursorColor: Palette.primary,
+                      cursorColor: PaletteTheme.primary,
                       decoration: InputDecoration(
                         hintStyle: TextStyle(
                           fontFamily: fontFamily,
@@ -89,14 +89,14 @@ class CardSearchBar extends StatelessWidget {
                   notificationBadgeCount.toString(),
                   style: TextStyle(
                         fontSize: 10.sp,
-                        color: Palette.editable,
+                        color: PaletteTheme.editable,
                       ),
                 ),
               ),
               // padding: EdgeInsets.all(6.sp),
               child: Material(
                 shape: const CircleBorder(),
-                color: Palette.accent,
+                color: PaletteTheme.accent,
                 child: InkWell(
                   onTap: onLogoPressed,
                   child: Container(
@@ -108,7 +108,7 @@ class CardSearchBar extends StatelessWidget {
                       height: 12.sp,
                       width: 12.sp,
                       colorFilter: const ColorFilter.mode(
-                        Palette.primary,
+                        PaletteTheme.primary,
                         BlendMode.srcIn,
                       ),
                     ),

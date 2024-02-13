@@ -17,7 +17,7 @@ class DeleteAccountButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(Insets.small.w * 1.5),
         side: const BorderSide(
           width: .5,
-          color: Palette.negative,
+          color: PaletteTheme.negative,
         ),
       ),
       child: InkWell(
@@ -35,7 +35,7 @@ class DeleteAccountButton extends StatelessWidget {
             'Hapus Akun',
             style: TextStyle(
                   fontSize: 14.sp,
-                  color: Palette.negative,
+                  color: PaletteTheme.negative,
                   fontWeight: FontWeight.bold,
                 ),
             textAlign: TextAlign.center,
@@ -113,7 +113,7 @@ class _BuildBottomSheetDeleteAccountState
                   TextSpan(
                     text: 'tidak bisa dikembalikan lagi. ',
                     style: TextStyle(
-                          color: Palette.negative,
+                          color: PaletteTheme.negative,
                         ),
                   ),
                   TextSpan(
@@ -130,7 +130,7 @@ class _BuildBottomSheetDeleteAccountState
                 vertical: 2.w,
               ),
               decoration: BoxDecoration(
-                color: Palette.editable,
+                color: PaletteTheme.editable,
                 borderRadius: BorderRadius.circular(9.sp),
               ),
               child: Column(
@@ -144,11 +144,11 @@ class _BuildBottomSheetDeleteAccountState
                     onSubmitted: proceed,
                     autocorrect: false,
                     style: TextStyle(
-                      color: Palette.accent,
+                      color: PaletteTheme.accent,
                       fontFamily: fontFamily,
                       fontSize: 14.sp,
                     ),
-                    cursorColor: Palette.primary,
+                    cursorColor: PaletteTheme.primary,
                     decoration: InputDecoration(
                       hintStyle: TextStyle(
                         fontFamily: fontFamily,
@@ -167,7 +167,7 @@ class _BuildBottomSheetDeleteAccountState
               duration: const Duration(milliseconds: 400),
               child: isDeleteButtonEnabled
                   ? Material(
-                      color: Palette.negative,
+                      color: PaletteTheme.negative,
                       elevation: 5,
                       shape: ContinuousRectangleBorder(
                         borderRadius: BorderRadius.circular(Insets.small.w),

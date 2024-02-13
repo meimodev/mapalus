@@ -11,7 +11,7 @@ class PaymentScreen extends GetView<PaymentController> {
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
-      // backgroundColor: Palette.accent,
+      // backgroundColor: PaletteTheme.accent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -40,7 +40,7 @@ class PaymentScreen extends GetView<PaymentController> {
             padding: EdgeInsets.all( Insets.medium.w),
             child: Material(
               borderRadius: BorderRadius.circular(Insets.small.w),
-              color: Palette.primary,
+              color: PaletteTheme.primary,
               child: InkWell(
                 onTap: (){},
                 child: Center(child: Padding(

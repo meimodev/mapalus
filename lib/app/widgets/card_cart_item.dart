@@ -26,7 +26,7 @@ class CardCartItem extends StatelessWidget {
         vertical: Insets.small.h,
       ),
       decoration: BoxDecoration(
-          color: Palette.cardForeground,
+          color: PaletteTheme.cardForeground,
           borderRadius: BorderRadius.circular(9.sp)),
       child: Row(
         children: [
@@ -87,7 +87,7 @@ class CardCartItem extends StatelessWidget {
                     width: 21.sp,
                     height: 21.sp,
                     colorFilter: const ColorFilter.mode(
-                      Palette.negative,
+                      PaletteTheme.negative,
                       BlendMode.srcIn,
                     ),
                   ),
@@ -171,7 +171,7 @@ class CardCartItem extends StatelessWidget {
 //             horizontal: 6.w,
 //           ),
 //           decoration: BoxDecoration(
-//             color: Palette.editable,
+//             color: PaletteTheme.editable,
 //             borderRadius: BorderRadius.circular(3.sp),
 //           ),
 //           child: TextField(
@@ -180,11 +180,11 @@ class CardCartItem extends StatelessWidget {
 //             maxLines: 1,
 //             autocorrect: false,
 //             style: TextStyle(
-//               color: Palette.accent,
+//               color: PaletteTheme.accent,
 //               fontFamily: fontFamily,
 //               fontSize: 12.sp,
 //             ),
-//             cursorColor: Palette.primary,
+//             cursorColor: PaletteTheme.primary,
 //             decoration: InputDecoration(
 //                 hintStyle: TextStyle(
 //                   color: Colors.grey,
@@ -227,7 +227,7 @@ class CardCartItem extends StatelessWidget {
 //   }) {
 //     return Material(
 //       clipBehavior: Clip.hardEdge,
-//       color: Palette.editable,
+//       color: PaletteTheme.editable,
 //       borderRadius: BorderRadius.circular(3.sp),
 //       child: InkWell(
 //         onTap: onPressed,
@@ -291,7 +291,7 @@ class _BuildAlterQuantity extends StatelessWidget {
             horizontal: 6.w,
           ),
           decoration: BoxDecoration(
-            color: Palette.editable,
+            color: PaletteTheme.editable,
             borderRadius: BorderRadius.circular(3.sp),
           ),
           child: Row(
@@ -300,7 +300,7 @@ class _BuildAlterQuantity extends StatelessWidget {
               Text(
                 value,
                 style: TextStyle(
-                  color: Palette.accent,
+                  color: PaletteTheme.accent,
                   fontFamily: fontFamily,
                   fontSize: 12.sp,
                 ),

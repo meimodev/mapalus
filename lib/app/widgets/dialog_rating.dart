@@ -35,7 +35,7 @@ class _DialogRatingState extends State<DialogRating> {
         clipBehavior: Clip.hardEdge,
         padding: EdgeInsets.all(12.sp),
         decoration: BoxDecoration(
-          color: Palette.cardForeground,
+          color: PaletteTheme.cardForeground,
           borderRadius: BorderRadius.circular(9.sp),
         ),
         child: Column(
@@ -57,7 +57,7 @@ class _DialogRatingState extends State<DialogRating> {
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(9.sp),
-                color: Palette.editable,
+                color: PaletteTheme.editable,
               ),
               child: TextField(
                 controller: tecMessage,
@@ -67,11 +67,11 @@ class _DialogRatingState extends State<DialogRating> {
                 scrollPhysics: const BouncingScrollPhysics(),
                 autocorrect: false,
                 style: TextStyle(
-                  color: Palette.accent,
+                  color: PaletteTheme.accent,
                   fontFamily: fontFamily,
                   fontSize: 14.sp,
                 ),
-                cursorColor: Palette.primary,
+                cursorColor: PaletteTheme.primary,
                 decoration: InputDecoration(
                   hintStyle: TextStyle(
                     fontFamily: fontFamily,
@@ -93,7 +93,7 @@ class _DialogRatingState extends State<DialogRating> {
                   minRating: 1,
                   direction: Axis.horizontal,
                   itemCount: 5,
-                  glowColor: Palette.editable.withOpacity(.25),
+                  glowColor: PaletteTheme.editable.withOpacity(.25),
                   itemSize: 27.sp,
                   itemPadding: EdgeInsets.symmetric(horizontal: 6.w),
                   onRatingUpdate: (r) {
@@ -103,18 +103,18 @@ class _DialogRatingState extends State<DialogRating> {
                       SvgPicture.asset(
                     'assets/vectors/star.svg',
                     colorFilter: const ColorFilter.mode(
-                      Palette.primary,
+                      PaletteTheme.primary,
                       BlendMode.srcIn,
                     ),
                   ),
                   updateOnDrag: true,
-                  unratedColor: Palette.accent,
+                  unratedColor: PaletteTheme.accent,
                 ),
               ),
             ),
             SizedBox(height: Insets.small.h),
             Material(
-              color: Palette.primary,
+              color: PaletteTheme.primary,
               borderRadius: BorderRadius.circular(9.sp),
               child: InkWell(
                 onTap: () {

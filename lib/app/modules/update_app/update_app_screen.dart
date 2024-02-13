@@ -11,7 +11,7 @@ class UpdateAppScreen extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        color: Palette.cardForeground,
+        color: PaletteTheme.cardForeground,
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -21,7 +21,7 @@ class UpdateAppScreen extends StatelessWidget {
                 width: 60.sp,
                 height: 60.sp,
                 colorFilter: const ColorFilter.mode(
-                  Palette.accent,
+                  PaletteTheme.accent,
                   BlendMode.srcIn,
                 ),
               ),
@@ -81,7 +81,7 @@ class UpdateAppScreen extends StatelessWidget {
     required IconData icon,
   }) {
     return Material(
-      color: Palette.primary,
+      color: PaletteTheme.primary,
       borderRadius: BorderRadius.circular(12.w),
       child: InkWell(
         onTap: onPressed,
@@ -94,7 +94,7 @@ class UpdateAppScreen extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: Palette.accent,
+                color: PaletteTheme.accent,
                 size: 21.w,
               ),
               SizedBox(width: 6.w),
@@ -102,7 +102,7 @@ class UpdateAppScreen extends StatelessWidget {
                 title,
                 style:TextStyle(
                       fontSize: 12.sp,
-                      color: Palette.accent,
+                      color: PaletteTheme.accent,
                     ),
               ),
             ],

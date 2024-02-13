@@ -25,7 +25,7 @@ class CardOrderDetailItem extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 6.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(9.sp),
-        color: Palette.cardForeground,
+        color: PaletteTheme.cardForeground,
       ),
       child: Row(
         children: [
@@ -80,7 +80,7 @@ class CardOrderDetailItem extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(3.sp),
-          color: Palette.editable,
+          color: PaletteTheme.editable,
         ),
         child: Text(
           text,

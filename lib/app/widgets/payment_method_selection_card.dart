@@ -28,7 +28,7 @@ class PaymentMethodSelectionCard extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
         shape: ContinuousRectangleBorder(
           side: activate
-              ? const BorderSide(color: Palette.primary, width: 1.5)
+              ? const BorderSide(color: PaletteTheme.primary, width: 1.5)
               : BorderSide.none,
           borderRadius: BorderRadius.circular(12.w),
         ),
@@ -45,7 +45,7 @@ class PaymentMethodSelectionCard extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                        color: available ? Palette.textPrimary : Colors.grey.shade400,
+                        color: available ? PaletteTheme.textPrimary : Colors.grey.shade400,
                         fontSize: 12.sp,
                       ),
                 ),

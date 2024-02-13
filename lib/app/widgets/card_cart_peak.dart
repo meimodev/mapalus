@@ -41,7 +41,7 @@ class CardCartPeak extends StatelessWidget {
     return Material(
       clipBehavior: Clip.hardEdge,
       elevation: 9,
-      color: Palette.accent,
+      color: PaletteTheme.accent,
       borderRadius: BorderRadius.circular(30.sp),
       child: InkWell(
         onTap: onPressed,
@@ -56,7 +56,7 @@ class CardCartPeak extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 // CircleAvatar(
-                //   backgroundColor: Palette.primary,
+                //   backgroundColor: PaletteTheme.primary,
                 //   child: Padding(
                 //     padding: EdgeInsets.all(9.sp),
                 //     child: SvgPicture.asset(
@@ -68,7 +68,7 @@ class CardCartPeak extends StatelessWidget {
                   padding: EdgeInsets.all(9.sp),
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Palette.primary,
+                    color: PaletteTheme.primary,
                   ),
                   child: SvgPicture.asset(
                     "assets/vectors/cart.svg",
@@ -87,7 +87,7 @@ class CardCartPeak extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.fade,
                       style: TextStyle(
-                            color: Palette.cardForeground,
+                            color: PaletteTheme.cardForeground,
                             fontWeight: FontWeight.w400,
                             fontSize: 14.sp,
                           ),

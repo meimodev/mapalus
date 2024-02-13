@@ -23,7 +23,7 @@ class TextInputQuantity extends StatelessWidget {
       width: 147.w,
       height: 45.h,
       decoration: BoxDecoration(
-        color: Palette.editable,
+        color: PaletteTheme.editable,
         borderRadius: BorderRadius.circular(6.sp),
       ),
       child: Row(
@@ -47,11 +47,11 @@ class TextInputQuantity extends StatelessWidget {
               autocorrect: false,
               readOnly: isReadOnly,
               style: TextStyle(
-                color: Palette.accent,
+                color: PaletteTheme.accent,
                 fontFamily: fontFamily,
                 fontSize: 14.sp,
               ),
-              cursorColor: Palette.primary,
+              cursorColor: PaletteTheme.primary,
               decoration: InputDecoration(
                 hintStyle: TextStyle(
                   fontFamily: fontFamily,

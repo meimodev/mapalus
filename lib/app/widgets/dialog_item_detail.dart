@@ -83,7 +83,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                 clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(9.sp)),
-                  color: Palette.cardForeground,
+                  color: PaletteTheme.cardForeground,
                 ),
                 height: 500.h,
                 child: Column(
@@ -156,9 +156,9 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                     Material(
                       color: widget.product.isAvailable
                           ? errorMessagePrice.isEmpty
-                              ? Palette.primary
+                              ? PaletteTheme.primary
                               : Colors.grey
-                          : Palette.editable,
+                          : PaletteTheme.editable,
                       borderRadius: BorderRadius.all(Radius.circular(9.sp)),
                       child: InkWell(
                         onTap: () {
@@ -188,7 +188,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                               style: TextStyle(
                                     fontWeight: FontWeight.w400,
                                     color: widget.product.isAvailable
-                                        ? Palette.textPrimary
+                                        ? PaletteTheme.textPrimary
                                         : Colors.grey,
                                   ),
                             ),
@@ -216,7 +216,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                     : null,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Palette.accent,
+                  color: PaletteTheme.accent,
                   boxShadow: [
                     BoxShadow(
                       spreadRadius: .5,
@@ -306,7 +306,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
       if (freshPrice < minimumPrice) {
         setState(() {
           errorMessagePrice =
-              "Harga pembelian minimal ${Utils.formatNumberToCurrency(minimumPrice)}";
+              "Harga pembelian minimal ${minimumPrice.formatNumberToCurrency()}";
         });
       }
     }
@@ -342,7 +342,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
             width: 15.sp,
             height: 15.sp,
             colorFilter: const ColorFilter.mode(
-              Palette.accent,
+              PaletteTheme.accent,
               BlendMode.srcIn,
             ),
           ),
@@ -368,7 +368,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
             width: 15.sp,
             height: 15.sp,
             colorFilter: const ColorFilter.mode(
-              Palette.accent,
+              PaletteTheme.accent,
               BlendMode.srcIn,
             ),
           ),
@@ -460,11 +460,11 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
 
     final multiplePrices = [
       _buildQuantitySuggestionChip(
-          Utils.formatNumberToCurrency(widget.product.price * 1.5)),
+          (widget.product.price * 1.5).formatNumberToCurrency()),
       _buildQuantitySuggestionChip(
-          Utils.formatNumberToCurrency(widget.product.price * 2)),
+          (widget.product.price * 2).formatNumberToCurrency()),
       _buildQuantitySuggestionChip(
-          Utils.formatNumberToCurrency(widget.product.price * 2.5)),
+          (widget.product.price * 2.5).formatNumberToCurrency()),
     ];
 
     return SingleChildScrollView(
@@ -493,7 +493,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
       ),
       child: Material(
         clipBehavior: Clip.hardEdge,
-        color: Palette.primary,
+        color: PaletteTheme.primary,
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
@@ -501,7 +501,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
           onTap: () {
             if (isPrice) {
               tecPrice.text =
-                  Utils.formatCurrencyToNumber(text).toInt().toString();
+                  text.formatCurrencyToNumber().toInt().toString();
               _onChangeValue(isFromPrice: isPrice);
               return;
             }
@@ -517,7 +517,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
               text,
               style: TextStyle(
                 fontSize: 8.sp,
-                color: Palette.accent,
+                color: PaletteTheme.accent,
               ),
             ),
           ),
@@ -559,7 +559,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
           errorMessagePrice,
           style: TextStyle(
             fontWeight: FontWeight.w300,
-            color: Palette.negative,
+            color: PaletteTheme.negative,
             fontSize: 9.sp,
           ),
         ),

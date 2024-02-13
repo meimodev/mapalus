@@ -105,7 +105,7 @@ class OrderingScreen extends GetView<OrderingController> {
       child: Material(
         elevation: 2,
         borderRadius: BorderRadius.circular(9.sp),
-        color: isSecondary ? Colors.grey : Palette.primary,
+        color: isSecondary ? Colors.grey : PaletteTheme.primary,
         clipBehavior: Clip.hardEdge,
         child: InkWell(
           onTap: onPressed,
@@ -140,7 +140,7 @@ class OrderingScreen extends GetView<OrderingController> {
                 ),
           ),
           SizedBox(height: Insets.medium.h),
-          const CircularProgressIndicator(color: Palette.primary),
+          const CircularProgressIndicator(color: PaletteTheme.primary),
         ],
       ),
     );

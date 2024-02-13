@@ -19,7 +19,7 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 //         Radius.circular(12.sp),
 //       ),
 //       clipBehavior: Clip.hardEdge,
-//       color: Palette.cardForeground,
+//       color: PaletteTheme.cardForeground,
 //       child: InkWell(
 //         onTap: () {
 //           onPressed(product);
@@ -55,7 +55,7 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 //                                   .bodyText1!
 //                                   .copyWith(
 //                                     fontWeight: FontWeight.w300,
-//                                     color: Palette.accent,
+//                                     color: PaletteTheme.accent,
 //                                     fontSize: 9.sp,
 //                                   ),
 //                             ),
@@ -68,7 +68,7 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 //                               'assets/vectors/money.svg',
 //                               height: 12.sp,
 //                               width: 12.sp,
-//                               color: Palette.accent,
+//                               color: PaletteTheme.accent,
 //                             ),
 //                           ],
 //                         )
@@ -82,14 +82,14 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 //                 decoration: BoxDecoration(
 //                   shape: BoxShape.circle,
 //                   color: product.isAvailable
-//                       ? Palette.accent.withOpacity(.85)
-//                       : Palette.accent.withOpacity(.5),
+//                       ? PaletteTheme.accent.withOpacity(.85)
+//                       : PaletteTheme.accent.withOpacity(.5),
 //                   boxShadow: [
 //                     BoxShadow(
 //                       spreadRadius: .25,
 //                       blurRadius: 10,
 //                       color: product.isAvailable
-//                           ? Palette.primary.withOpacity(.125)
+//                           ? PaletteTheme.primary.withOpacity(.125)
 //                           : Colors.grey.withOpacity(.125),
 //                       offset: const Offset(3, 3),
 //                     ),
@@ -111,7 +111,7 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 //                           fontWeight: FontWeight.w500,
 //                           fontSize: _calculateFontSize(),
 //                           color: product.isAvailable
-//                               ? Palette.textPrimary
+//                               ? PaletteTheme.textPrimary
 //                               : Colors.grey,
 //                         ),
 //                   ),
@@ -122,7 +122,7 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 //                           fontWeight: FontWeight.w300,
 //                           fontSize: 11.sp,
 //                           color: product.isAvailable
-//                               ? Palette.textPrimary
+//                               ? PaletteTheme.textPrimary
 //                               : Colors.grey,
 //                         ),
 //                   ),
@@ -159,7 +159,7 @@ class CardProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       clipBehavior: Clip.hardEdge,
-      color: Palette.cardForeground,
+      color: PaletteTheme.cardForeground,
       child: InkWell(
         onTap: () {
           onPressed(product);
@@ -177,7 +177,7 @@ class CardProduct extends StatelessWidget {
                 width: 60.w,
                 clipBehavior: Clip.hardEdge,
                 decoration: const BoxDecoration(
-                  color: Palette.primary,
+                  color: PaletteTheme.primary,
                   backgroundBlendMode: BlendMode.clear,
                   shape: BoxShape.circle,
                 ),
@@ -254,7 +254,7 @@ class CardProduct extends StatelessWidget {
             : Container(
           padding: EdgeInsets.all(9.sp),
           decoration: const BoxDecoration(
-            color: Palette.accent,
+            color: PaletteTheme.accent,
             shape: BoxShape.circle,
           ),
           child: Text(
@@ -262,7 +262,7 @@ class CardProduct extends StatelessWidget {
             style: TextStyle(
               fontSize: 15.sp,
               fontWeight: FontWeight.bold,
-              color: Palette.negative,
+              color: PaletteTheme.negative,
             ),
           ),
         ),
@@ -271,7 +271,7 @@ class CardProduct extends StatelessWidget {
             ? Container(
           padding: EdgeInsets.all(9.sp),
           decoration: const BoxDecoration(
-            color: Palette.accent,
+            color: PaletteTheme.accent,
             shape: BoxShape.circle,
           ),
           child: Text(
@@ -279,7 +279,7 @@ class CardProduct extends StatelessWidget {
             style: TextStyle(
               fontSize: 11.sp,
               fontWeight: FontWeight.bold,
-              color: Palette.primary,
+              color: PaletteTheme.primary,
             ),
           ),
         )
@@ -304,7 +304,7 @@ class CardProduct extends StatelessWidget {
         for (var c in categoryList)
           Container(
             decoration: BoxDecoration(
-              color: Palette.accent,
+              color: PaletteTheme.accent,
               borderRadius: BorderRadius.circular(30.sp),
             ),
             child: Center(
@@ -317,7 +317,7 @@ class CardProduct extends StatelessWidget {
                   c,
                   style: TextStyle(
                     fontFamily: 'Roboto',
-                    color: Palette.primary,
+                    color: PaletteTheme.primary,
                     fontSize: 8.sp,
                   ),
                 ),

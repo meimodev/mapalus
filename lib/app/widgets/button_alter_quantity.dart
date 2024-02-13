@@ -16,7 +16,7 @@ class ButtonAlterQuantity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: isEnabled ? Palette.primary : Colors.grey.shade300,
+      color: isEnabled ? PaletteTheme.primary : Colors.grey.shade300,
       shape: const CircleBorder(),
       clipBehavior: Clip.hardEdge,
       child: InkWell(
@@ -30,7 +30,7 @@ class ButtonAlterQuantity extends StatelessWidget {
               style: TextStyle(
                     fontSize: 19.sp,
                     color:
-                        isEnabled ? Palette.textPrimary : Colors.grey.shade400,
+                        isEnabled ? PaletteTheme.textPrimary : Colors.grey.shade400,
                     fontWeight: FontWeight.w400,
                   ),
             ),

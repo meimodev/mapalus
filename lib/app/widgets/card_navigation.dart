@@ -18,7 +18,7 @@ class CardNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: isInverted ? Palette.accent : Palette.cardForeground,
+      color: isInverted ? PaletteTheme.accent : PaletteTheme.cardForeground,
       elevation: isInverted ? 0 : 6,
       shadowColor: isInverted ? null : Colors.grey.withOpacity(.125),
       shape: isCircular ? const CircleBorder() : null,
@@ -36,7 +36,7 @@ class CardNavigation extends StatelessWidget {
                   height: 24.sp,
                   width: 24.sp,
                   colorFilter:  ColorFilter.mode(
-                    isInverted ? Palette.editable : Palette.textPrimary,
+                    isInverted ? PaletteTheme.editable : PaletteTheme.textPrimary,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -46,7 +46,7 @@ class CardNavigation extends StatelessWidget {
                   title,
                   style: TextStyle(
                         color:
-                            isInverted ? Palette.editable : Palette.textPrimary,
+                            isInverted ? PaletteTheme.editable : PaletteTheme.textPrimary,
                       ),
                 ),
               ),

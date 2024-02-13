@@ -51,7 +51,7 @@ class DialogAnnouncement extends StatelessWidget {
             SizedBox(height: Insets.small.h),
             Material(
               borderRadius: BorderRadius.circular(12),
-              color: Palette.accent,
+              color: PaletteTheme.accent,
               child: InkWell(
                 onTap: () => Navigator.pop(context),
                 child: Padding(
@@ -64,7 +64,7 @@ class DialogAnnouncement extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 10.sp,
                       fontWeight: FontWeight.bold,
-                      color: Palette.primary,
+                      color: PaletteTheme.primary,
                     ),
                   ),
                 ),

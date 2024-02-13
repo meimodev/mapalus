@@ -12,7 +12,7 @@ class CardOrdersPeak extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Palette.primary,
+      color: PaletteTheme.primary,
       borderRadius: BorderRadius.only(
         bottomLeft: Radius.circular(18.sp),
         topLeft: Radius.circular(18.sp),
@@ -29,7 +29,7 @@ class CardOrdersPeak extends StatelessWidget {
               SvgPicture.asset(
                 "assets/vectors/bag.svg",
                 colorFilter: const ColorFilter.mode(
-                  Palette.textPrimary,
+                  PaletteTheme.textPrimary,
                   BlendMode.srcIn,
                 ),
                 height: 18.sp,
@@ -39,7 +39,7 @@ class CardOrdersPeak extends StatelessWidget {
               Text(
                 'Pesanan anda',
                 style: TextStyle(
-                      color: Palette.textPrimary,
+                      color: PaletteTheme.textPrimary,
                       fontWeight: FontWeight.w400,
                       fontSize: 12.sp,
                     ),

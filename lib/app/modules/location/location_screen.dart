@@ -60,7 +60,7 @@ class LocationScreen extends GetView<LocationController> {
                                                 .isLocationSelectionButtonVisible
                                                 .value
                                             ? Material(
-                                                color: Palette.primary,
+                                                color: PaletteTheme.primary,
                                                 clipBehavior: Clip.hardEdge,
                                                 elevation: 5,
                                                 borderRadius:
@@ -92,7 +92,7 @@ class LocationScreen extends GetView<LocationController> {
                                       SizedBox(height: Insets.small.h),
                                       Icon(
                                         Icons.location_on,
-                                        color: Palette.primary,
+                                        color: PaletteTheme.primary,
                                         size: 40.sp,
                                       ),
                                     ],
@@ -181,7 +181,7 @@ class LocationScreen extends GetView<LocationController> {
         margin: EdgeInsets.symmetric(horizontal: Insets.medium.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9.sp),
-          color: Palette.cardForeground,
+          color: PaletteTheme.cardForeground,
         ),
         child: AnimatedSwitcher(
           duration: const Duration(milliseconds: 400),
@@ -189,7 +189,7 @@ class LocationScreen extends GetView<LocationController> {
               ? Padding(
                   padding: EdgeInsets.symmetric(vertical: Insets.large.h),
                   child: const CircularProgressIndicator(
-                    color: Palette.primary,
+                    color: PaletteTheme.primary,
                   ),
                 )
               : Column(
@@ -246,7 +246,7 @@ class LocationScreen extends GetView<LocationController> {
                                               height: 15.sp,
                                               colorFilter:
                                                   const ColorFilter.mode(
-                                                Palette.accent,
+                                                PaletteTheme.accent,
                                                 BlendMode.srcIn,
                                               ),
                                             ),
@@ -275,7 +275,7 @@ class LocationScreen extends GetView<LocationController> {
                                         'Ubah Lokasi',
                                         style: TextStyle(
                                           fontSize: 10.sp,
-                                          color: Palette.primary,
+                                          color: PaletteTheme.primary,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -330,7 +330,7 @@ class LocationScreen extends GetView<LocationController> {
                                                           colorFilter:
                                                               const ColorFilter
                                                                   .mode(
-                                                            Palette.accent,
+                                                            PaletteTheme.accent,
                                                             BlendMode.srcIn,
                                                           ),
                                                         ),
@@ -369,7 +369,7 @@ class LocationScreen extends GetView<LocationController> {
                                         'Ubah Pembayaran',
                                         style: TextStyle(
                                           fontSize: 10.sp,
-                                          color: Palette.primary,
+                                          color: PaletteTheme.primary,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -397,8 +397,8 @@ class LocationScreen extends GetView<LocationController> {
                     ),
                     Material(
                       color: controller.paymentMethodSubTittle.isEmpty
-                          ? Palette.accent.withAlpha(50)
-                          : Palette.primary,
+                          ? PaletteTheme.accent.withAlpha(50)
+                          : PaletteTheme.primary,
                       clipBehavior: Clip.hardEdge,
                       borderRadius: BorderRadius.circular(9.sp),
                       child: InkWell(
@@ -512,7 +512,7 @@ class _BuildPaymentMethodBottomSheetState
       if (amountText.isEmpty || amountText == "0") {
         widget.onPressedPaymentMethodButton(
           0,
-          "Bayar ditempat ${Utils.formatNumberToCurrency(0)}",
+          "Bayar ditempat ${(0).formatNumberToCurrency()}",
           0,
         );
         return;
@@ -539,7 +539,7 @@ class _BuildPaymentMethodBottomSheetState
       }
       widget.onPressedPaymentMethodButton(
         0,
-        "Bayar ditempat ${Utils.formatNumberToCurrency(amount)}",
+        "Bayar ditempat ${amount.formatNumberToCurrency()}",
         amount,
       );
       return;
@@ -573,11 +573,10 @@ class _BuildPaymentMethodBottomSheetState
                   ),
                 ),
                 Text(
-                  Utils.formatNumberToCurrency(
-                      widget.totalPrice),
+                  widget.totalPrice.formatNumberToCurrency(),
                   style: TextStyle(
                     fontSize: 14.sp,
-                    color: Palette.textPrimary,
+                    color: PaletteTheme.textPrimary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -608,7 +607,7 @@ class _BuildPaymentMethodBottomSheetState
                               vertical: Insets.small.h * .5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6),
-                            color: Palette.primary.withOpacity(.25),
+                            color: PaletteTheme.primary.withOpacity(.25),
                           ),
                           child: RichText(
                             text: TextSpan(
@@ -623,7 +622,7 @@ class _BuildPaymentMethodBottomSheetState
                                   text: " jumlah uang ",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: Palette.textPrimary,
+                                    color: PaletteTheme.textPrimary,
                                   ),
                                 ),
                                 TextSpan(
@@ -633,10 +632,10 @@ class _BuildPaymentMethodBottomSheetState
                             ),
                           ),
                         ),
-                        SizedBox(height: Insets.small.h *.5),
+                        SizedBox(height: Insets.small.h * .5),
                         Container(
                           decoration: BoxDecoration(
-                            color: Palette.editable,
+                            color: PaletteTheme.editable,
                             borderRadius: BorderRadius.circular(9.sp),
                           ),
                           child: SizedBox(
@@ -649,11 +648,11 @@ class _BuildPaymentMethodBottomSheetState
                               autocorrect: false,
                               keyboardType: TextInputType.number,
                               style: TextStyle(
-                                color: Palette.textPrimary,
+                                color: PaletteTheme.textPrimary,
                                 fontFamily: fontFamily,
                                 fontSize: 10.sp,
                               ),
-                              cursorColor: Palette.primary,
+                              cursorColor: PaletteTheme.primary,
                               textInputAction: TextInputAction.done,
                               decoration: InputDecoration(
                                 hintStyle: TextStyle(
@@ -663,19 +662,19 @@ class _BuildPaymentMethodBottomSheetState
                                 labelStyle: TextStyle(
                                   fontSize: 10.sp,
                                   fontWeight: FontWeight.w300,
-                                  color: Palette.textPrimary,
+                                  color: PaletteTheme.textPrimary,
                                 ),
                                 isDense: true,
                                 border: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     width: .25,
-                                    color: Palette.accent,
+                                    color: PaletteTheme.accent,
                                   ),
                                 ),
                                 focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     width: .25,
-                                    color: Palette.accent,
+                                    color: PaletteTheme.accent,
                                   ),
                                 ),
                                 labelText: "Jumlah uang",
@@ -698,7 +697,7 @@ class _BuildPaymentMethodBottomSheetState
                                       moneyAmountErrorText,
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                        color: Palette.negative,
+                                        color: PaletteTheme.negative,
                                         fontSize: 10.sp,
                                         fontWeight: FontWeight.w300,
                                       ),
@@ -795,7 +794,7 @@ class _BuildPaymentMethodBottomSheetState
             ),
             Material(
               borderRadius: BorderRadius.circular(Insets.small.w),
-              color: Palette.primary,
+              color: PaletteTheme.primary,
               child: InkWell(
                 onTap: onSubmitPaymentBottomSheetSelectionCard,
                 child: Padding(
@@ -843,12 +842,13 @@ class _BuildDeliveryFeeSelectorState extends State<_BuildDeliveryFeeSelector> {
       if (deliveryInfo.isAvailable) {
         widget.onPressedDeliveryTime(
           deliveryInfo,
-          Utils.formatCurrencyToNumber(
-            deliveryInfo.price(
-              distance: widget.distance,
-              weight: widget.weight,
-            ),
-          ),
+          deliveryInfo
+              .price(
+                distance: widget.distance,
+                weight: widget.weight,
+              )
+              .formatCurrencyToNumber()
+              .toDouble(),
         );
         setState(() {
           activeIndex = deliveryInfo.id;
@@ -864,7 +864,7 @@ class _BuildDeliveryFeeSelectorState extends State<_BuildDeliveryFeeSelector> {
       padding: EdgeInsets.all(Insets.small.sp),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(9.sp),
-        color: Palette.cardForeground,
+        color: PaletteTheme.cardForeground,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -891,12 +891,13 @@ class _BuildDeliveryFeeSelectorState extends State<_BuildDeliveryFeeSelector> {
                 });
                 widget.onPressedDeliveryTime(
                   delivery,
-                  Utils.formatCurrencyToNumber(
-                    delivery.price(
-                      distance: widget.distance,
-                      weight: widget.weight,
-                    ),
-                  ),
+                  delivery
+                      .price(
+                        distance: widget.distance,
+                        weight: widget.weight,
+                      )
+                      .formatCurrencyToNumber()
+                      .toDouble(),
                 );
               },
             ),
@@ -1054,7 +1055,7 @@ class _BuildCurrentLocationErrorNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Palette.accent.withOpacity(.75),
+      color: PaletteTheme.accent.withOpacity(.75),
       borderRadius: BorderRadius.circular(Insets.medium),
       elevation: 3,
       child: InkWell(
@@ -1068,13 +1069,13 @@ class _BuildCurrentLocationErrorNote extends StatelessWidget {
             children: [
               const Icon(
                 Icons.info_outline_rounded,
-                color: Palette.primary,
+                color: PaletteTheme.primary,
               ),
               SizedBox(width: 3.w),
               Text(
                 "Lokasi Tidak diaktifkan",
                 style: TextStyle(
-                  color: Palette.primary,
+                  color: PaletteTheme.primary,
                   fontSize: 12.sp,
                 ),
               ),
