@@ -67,7 +67,7 @@ class CardDeliveryFee extends StatelessWidget {
                               ),
                               deliveryInfo.isTomorrow
                                   ? Text(
-                                      ' BESOK ( ${deliveryInfo.startDate.add(days: 1).format("EEEE dd MMM")} )',
+                                      ' BESOK ( ${deliveryInfo.startDate.add(days: 1).format(pattern:"EEEE dd MMM")} )',
                                       style: TextStyle(
                                             color: Palette.textPrimary,
                                             fontSize: 12.sp,

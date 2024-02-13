@@ -122,7 +122,7 @@ class LocationController extends GetxController {
 
     var deliveryTime = _selectedDeliveryInfo!.title;
     if (_selectedDeliveryInfo!.isTomorrow) {
-      final tomorrowDate = Jiffy().add(days: 1).format("EEEE, dd MMM");
+      final tomorrowDate = Jiffy.now().add(days: 1).format(pattern:"EEEE, dd MMM");
       orderInfo.value.deliveryTime = "$deliveryTime ($tomorrowDate)";
     } else {
       orderInfo.value.deliveryTime = deliveryTime;

@@ -196,7 +196,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
           Row(
             children: [
               Text(
-                'with ♥ ${Jiffy().year} ',
+                'with ♥ ${Jiffy.now().year} ',
                 style: TextStyle(
                   color: Colors.grey,
                   fontWeight: FontWeight.w300,

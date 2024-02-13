@@ -13,21 +13,20 @@ dependencies:
     sdk: flutter
 
   mapalus_flutter_commons:
-#    path: ../mapalus_flutter_commons
-    git: "https://github.com/meimodev/mapalus_flutter_commons.git"
+    path: ../mapalus_flutter_commons
+#    git: "https://github.com/meimodev/mapalus_flutter_commons.git"
 
-#  cupertino_icons: ^1.0.5
 
-  firebase_core: ^2.1.1
+  firebase_core: ^2.25.4
   flutter_native_splash: ^2.2.16
-  get: ^4.6.5
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_launcher_icons: '^0.9.2'
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.1
+  flutter_lints: ^3.0.1
 
 flutter_icons:
   android: true

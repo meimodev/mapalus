@@ -108,7 +108,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                             context: context,
                             title: 'Dipesan',
                             timeStamp: controller.order.value.orderTimeStamp
-                                .format('EEE, dd MMMM HH:mm'),
+                                .format(pattern:'EEE, dd MMMM HH:mm'),
                           ),
                         ),
                         const Expanded(
@@ -570,7 +570,7 @@ class _BuildRejectedLayout extends StatelessWidget {
             ),
           ),
           Text(
-            order.confirmTimeStamp?.format("EEE, dd MMMM yyyy") ?? '-',
+            order.confirmTimeStamp?.format(pattern:"EEE, dd MMMM yyyy") ?? '-',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 12.sp,
@@ -624,7 +624,7 @@ class _BuildRatedLayout extends StatelessWidget {
           ),
           SizedBox(height: Insets.small.h * .5),
           Text(
-            'Dinilai ${order.finishTimeStamp?.format("dd MMMM yyyy") ?? '-'}',
+            'Dinilai ${order.finishTimeStamp?.format(pattern:"dd MMMM yyyy") ?? '-'}',
             style: TextStyle(
               fontSize: 12.sp,
               fontWeight: FontWeight.w300,

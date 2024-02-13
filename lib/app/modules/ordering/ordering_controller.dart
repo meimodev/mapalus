@@ -40,7 +40,7 @@ class OrderingController extends GetxController {
     );
 
     NotificationService.instance.sendNotification(
-      title: "Pesanan Baru ! on ${order.orderTimeStamp.format("EEEE, dd MMM HH:mm")}",
+      title: "Pesanan Baru ! on ${order.orderTimeStamp.format(pattern:"EEEE, dd MMM HH:mm")}",
       message: "#${order.idMinified} | ${order.orderingUser.name} - ${order.orderingUser.phone} | "
           "${order.orderInfo.productCountF}, "
           "${order.orderInfo.totalPriceF}, "

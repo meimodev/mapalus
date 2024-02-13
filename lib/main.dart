@@ -24,7 +24,7 @@ void main() async {
 
   await FirebaseAppCheck.instance.activate();
   FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
-  await Jiffy.locale("id");
+  await Jiffy.setLocale("id");
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
@@ -47,10 +47,9 @@ class MyApp extends StatelessWidget {
         initialRoute: Routes.home,
         getPages: Routes.getRoutes(),
         builder: (context, widget) {
-          // ScreenUtil.setContext(context);
           return MediaQuery(
             data: MediaQuery.of(context).copyWith(
-              textScaleFactor: 1.0,
+              textScaler: const TextScaler.linear(1.0),
             ),
             child: widget!,
           );
