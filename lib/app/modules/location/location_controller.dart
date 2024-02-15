@@ -100,14 +100,16 @@ class LocationController extends GetxController {
 
     //calculate the prices
     if (isLocationSelectionVisible.isFalse) {
+      ///Pasar Tondano
+      // LatLng pos1 = const LatLng(1.3019081307317848, 124.9068409438052);
+      ///Pasar Tomohon
+      LatLng origin = const LatLng(1.3269405034419788, 124.84469252463695);
 
-      ///pasar tondano coordinate
-      LatLng pos1 = const LatLng(1.3019081307317848, 124.9068409438052);
       double dis = Utils.calculateDistance(
-        pos1Latitude: pos1.latitude,
-        pos1Longitude: pos1.longitude,
-        pos2Latitude: deliveryCoordinate!.latitude,
-        pos2Longitude: deliveryCoordinate!.longitude,
+        originLatitude: origin.latitude,
+        originLongitude: origin.longitude,
+        destinationLatitude: deliveryCoordinate!.latitude,
+        destinationLongitude: deliveryCoordinate!.longitude,
       );
       distance.value = Utils.roundDouble(dis, 2);
       _calculateOrderInfo();
@@ -116,13 +118,15 @@ class LocationController extends GetxController {
 
   onPressedMakeOrder() async {
     if (_selectedDeliveryInfo == null) {
-      Get.rawSnackbar(title:"Perhatian !", message: "Waktu pengataran belum dipilih");
+      Get.rawSnackbar(
+          title: "Perhatian !", message: "Waktu pengataran belum dipilih");
       return;
     }
 
     var deliveryTime = _selectedDeliveryInfo!.title;
     if (_selectedDeliveryInfo!.isTomorrow) {
-      final tomorrowDate = Jiffy.now().add(days: 1).format(pattern:"EEEE, dd MMM");
+      final tomorrowDate =
+          Jiffy.now().add(days: 1).format(pattern: "EEEE, dd MMM");
       orderInfo.value.deliveryTime = "$deliveryTime ($tomorrowDate)";
     } else {
       orderInfo.value.deliveryTime = deliveryTime;
