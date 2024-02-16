@@ -3,7 +3,7 @@ description: Platform to support local community to hopefully be able to thrive
 
 publish_to: 'none'
 
-version: 1.12.0+34
+version: 1.13.0+35
 
 environment:
   sdk: '>=2.16.2 <3.0.0'
@@ -13,8 +13,8 @@ dependencies:
     sdk: flutter
 
   mapalus_flutter_commons:
-    path: ../mapalus_flutter_commons
-#    git: "https://github.com/meimodev/mapalus_flutter_commons.git"
+#    path: ../mapalus_flutter_commons
+    git: "https://github.com/meimodev/mapalus_flutter_commons.git"
 
 
   firebase_core: ^2.25.4
