@@ -26,6 +26,7 @@ class LocationScreen extends GetView<LocationController> {
               child: GoogleMapWrapper(
                 onCameraIdle: controller.onCameraIdle,
                 onMapCreated: controller.onMapCreated,
+                defaultPosition: controller.defaultPosition,
               ),
             ),
             // Center(

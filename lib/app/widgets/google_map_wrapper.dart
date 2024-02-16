@@ -2,24 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class GoogleMapWrapper extends StatefulWidget {
-  const GoogleMapWrapper({Key? key, required this.onCameraIdle, required this.onMapCreated})
-      : super(key: key);
+  const GoogleMapWrapper({
+    Key? key,
+    required this.onCameraIdle,
+    required this.onMapCreated,
+    required this.defaultPosition,
+  }) : super(key: key);
 
   final void Function(LatLng?) onCameraIdle;
-  final void Function(GoogleMapController controller)onMapCreated;
-
+  final void Function(GoogleMapController controller) onMapCreated;
+  final LatLng defaultPosition;
 
   @override
   State<GoogleMapWrapper> createState() => _GoogleMapWrapperState();
 }
 
 class _GoogleMapWrapperState extends State<GoogleMapWrapper> {
-
-  final CameraPosition _startingPosition = const CameraPosition(
-    target: LatLng(1.3033882088016162, 124.9106824813296),
-    zoom: 17,
-  );
-
+  CameraPosition get _startingPosition => CameraPosition(
+        target: widget.defaultPosition,
+        zoom: 16,
+      );
 
   LatLng pickedPosition = const LatLng(1.3033882088016162, 124.9106824813296);
   bool isCameraIdle = true;
@@ -30,7 +32,7 @@ class _GoogleMapWrapperState extends State<GoogleMapWrapper> {
       onMapCreated: widget.onMapCreated,
       mapType: MapType.normal,
       initialCameraPosition: _startingPosition,
-      minMaxZoomPreference: const MinMaxZoomPreference(14, 19),
+      minMaxZoomPreference: const MinMaxZoomPreference(13, 19),
       mapToolbarEnabled: false,
       indoorViewEnabled: false,
       tiltGesturesEnabled: false,
@@ -39,7 +41,6 @@ class _GoogleMapWrapperState extends State<GoogleMapWrapper> {
       zoomGesturesEnabled: true,
       myLocationEnabled: true,
       myLocationButtonEnabled: true,
-
       onCameraIdle: () {
         widget.onCameraIdle(pickedPosition);
         isCameraIdle = true;
@@ -55,5 +56,4 @@ class _GoogleMapWrapperState extends State<GoogleMapWrapper> {
       rotateGesturesEnabled: false,
     );
   }
-
 }

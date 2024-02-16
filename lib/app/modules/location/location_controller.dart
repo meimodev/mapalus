@@ -47,9 +47,19 @@ class LocationController extends GetxController {
 
   String note = "";
 
+  //Default Position to TOMOHON
+  LatLng defaultPosition = const LatLng(
+    1.3269405034419788,
+    124.84469252463695,
+  );
+
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
+    initPricingModifiers();
+  }
+
+  void initPricingModifiers() async {
     isLoading.value = true;
     //fetch pricing modifier then fetch delivery times
     final pm = await appRepo.getPricingModifier();
