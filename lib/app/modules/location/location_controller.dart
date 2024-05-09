@@ -47,10 +47,13 @@ class LocationController extends GetxController {
 
   String note = "";
 
-  //Default Position to TOMOHON
   LatLng defaultPosition = const LatLng(
-    1.3269405034419788,
-    124.84469252463695,
+    // TOMOHON
+    // 1.3269405034419788,
+    // 124.84469252463695,
+    //TONDANO
+      1.3034800122609265,
+    124.91036967002547,
   );
 
   @override
@@ -111,9 +114,9 @@ class LocationController extends GetxController {
     //calculate the prices
     if (isLocationSelectionVisible.isFalse) {
       ///Pasar Tondano
-      // LatLng pos1 = const LatLng(1.3019081307317848, 124.9068409438052);
+      LatLng origin = const LatLng(1.3019081307317848, 124.9068409438052);
       ///Pasar Tomohon
-      LatLng origin = const LatLng(1.3269405034419788, 124.84469252463695);
+      // LatLng origin = const LatLng(1.3269405034419788, 124.84469252463695);
 
       double dis = Utils.calculateDistance(
         originLatitude: origin.latitude,
