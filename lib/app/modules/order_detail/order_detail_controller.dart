@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:mapalus/app/modules/home/home_controller.dart';
+import 'package:mapalus/app/modules/modules.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class OrderDetailController extends GetxController {
   OrderRepo orderRepo = Get.find();
-  HomeController homeController = Get.find();
+  GroceryController homeController = Get.find();
 
   RxList<ProductOrder> productOrdersChecked = <ProductOrder>[].obs;
 

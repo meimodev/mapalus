@@ -6,12 +6,12 @@ import 'package:mapalus/app/widgets/card_navigation.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class SigningScreen extends GetView<SigningController> {
-  const SigningScreen({Key? key}) : super(key: key);
+  const SigningScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
-      backgroundColor: PaletteTheme.accent,
+      backgroundColor: BaseColor.accent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -21,7 +21,7 @@ class SigningScreen extends GetView<SigningController> {
           ),
           Expanded(
             child: Container(
-              color: PaletteTheme.accent,
+              color: BaseColor.accent,
               child: CarouselSlider(
                 items: [
                   _buildGraphicHolderCard(
@@ -96,7 +96,7 @@ class SigningScreen extends GetView<SigningController> {
                 Text(
                   text,
                   style: const TextStyle(
-                        color: PaletteTheme.editable,
+                        color: BaseColor.editable,
                       ),
                 ),
               ],
@@ -110,13 +110,13 @@ class SigningScreen extends GetView<SigningController> {
 
 class CardSigning extends StatelessWidget {
   const CardSigning({
-    Key? key,
+    super.key,
     required this.signingState,
     required this.onPressedRequestOTP,
     required this.onPressedConfirmCode,
     required this.onPressedCreateUser,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final CardSigningState signingState;
 
@@ -134,7 +134,7 @@ class CardSigning extends StatelessWidget {
         vertical: Insets.small.w,
       ),
       decoration: BoxDecoration(
-        color: PaletteTheme.cardForeground,
+        color: BaseColor.cardForeground,
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(30.sp),
         ),
@@ -148,7 +148,7 @@ class CardSigning extends StatelessWidget {
                 ? Padding(
                     padding: EdgeInsets.symmetric(vertical: Insets.small.h),
                     child:
-                        const CircularProgressIndicator(color: PaletteTheme.primary),
+                        const CircularProgressIndicator(color: BaseColor.primary),
                   )
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -194,7 +194,7 @@ class CardSigning extends StatelessWidget {
     }
 
     return Material(
-      color: PaletteTheme.primary,
+      color: BaseColor.primary,
       clipBehavior: Clip.hardEdge,
       elevation: 2,
       borderRadius: BorderRadius.circular(9.sp),
@@ -238,7 +238,7 @@ class CardSigning extends StatelessWidget {
         vertical: 2.w,
       ),
       decoration: BoxDecoration(
-        color: PaletteTheme.editable,
+        color: BaseColor.editable,
         borderRadius: BorderRadius.circular(9.sp),
       ),
       child: Column(
@@ -251,11 +251,11 @@ class CardSigning extends StatelessWidget {
             onSubmitted: (_) => onPressed(),
             autocorrect: false,
             style: TextStyle(
-              color: PaletteTheme.accent,
+              color: BaseColor.accent,
               fontFamily: fontFamily,
               fontSize: 14.sp,
             ),
-            cursorColor: PaletteTheme.primary,
+            cursorColor: BaseColor.primary,
             keyboardType: textInputType,
             decoration: InputDecoration(
               hintStyle: TextStyle(
@@ -274,7 +274,7 @@ class CardSigning extends StatelessWidget {
                   ? Text(
                       controller.errorText.value,
                       style: TextStyle(
-                            color: PaletteTheme.negative,
+                            color: BaseColor.negative,
                             fontSize: 10.sp,
                             fontWeight: FontWeight.w300,
                           ),

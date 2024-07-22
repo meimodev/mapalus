@@ -1,8 +1,7 @@
-// ignore_for_file: invalid_use_of_protected_member
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mapalus/app/modules/home/home_controller.dart';
+import 'package:mapalus/app/modules/modules.dart';
 import 'package:mapalus/app/widgets/card_category.dart';
 import 'package:mapalus/app/widgets/card_order_peak.dart';
 import 'package:mapalus/app/widgets/card_product.dart';
@@ -12,8 +11,8 @@ import 'package:mapalus/app/widgets/dialog_item_detail.dart';
 import 'package:mapalus/app/widgets/card_search_bar.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
-class HomeScreen extends GetView<HomeController> {
-  const HomeScreen({Key? key}) : super(key: key);
+class GroceryScreen extends GetView<GroceryController> {
+  const GroceryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +86,7 @@ class HomeScreen extends GetView<HomeController> {
                   height: 500.h,
                   child: const Center(
                     child: CircularProgressIndicator(
-                      color: PaletteTheme.primary,
+                      color: BaseColor.primary,
                     ),
                   ),
                 )
@@ -138,7 +137,7 @@ class HomeScreen extends GetView<HomeController> {
                         width: 45.w,
                         height: 45.h,
                         colorFilter: const ColorFilter.mode(
-                          PaletteTheme.primary,
+                          BaseColor.primary,
                           BlendMode.srcIn,
                         ),
                       ),
@@ -181,7 +180,7 @@ class HomeScreen extends GetView<HomeController> {
                       bottom: Insets.large.h * 2,
                     ),
                     child: const CircularProgressIndicator(
-                      color: PaletteTheme.primary,
+                      color: BaseColor.primary,
                     ),
                   ),
                 )
@@ -232,7 +231,7 @@ class HomeScreen extends GetView<HomeController> {
       floating: true,
       pinned: true,
       snap: false,
-      backgroundColor: PaletteTheme.cardForeground,
+      backgroundColor: BaseColor.cardForeground,
       elevation: 5,
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.vertical(
@@ -291,10 +290,9 @@ class HomeScreen extends GetView<HomeController> {
 
 class _BuildCardCategories extends StatelessWidget {
   const _BuildCardCategories({
-    Key? key,
     required this.onPressedCategories,
     required this.categories,
-  }) : super(key: key);
+  });
 
   final Function(Category) onPressedCategories;
   final List<Category> categories;

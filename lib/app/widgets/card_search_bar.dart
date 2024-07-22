@@ -4,14 +4,14 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart' ;
 
 class CardSearchBar extends StatelessWidget {
   const CardSearchBar({
-    Key? key,
+    super.key,
     required this.onSubmitted,
     required this.onLogoPressed,
     required this.notificationBadgeCount,
     this.onTap,
     required this.onChanged,
     this.controller,
-  }) : super(key: key);
+  });
 
   final Function(String value) onSubmitted;
   final Function(String value) onChanged;
@@ -25,7 +25,7 @@ class CardSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: PaletteTheme.editable,
+        color: BaseColor.editable,
         borderRadius: BorderRadius.circular(Roundness.large.sp),
       ),
       padding: EdgeInsets.symmetric(
@@ -61,11 +61,11 @@ class CardSearchBar extends StatelessWidget {
                       maxLines: 1,
                       autocorrect: false,
                       style: TextStyle(
-                        color: PaletteTheme.accent,
+                        color: BaseColor.accent,
                         fontFamily: fontFamily,
                         fontSize: 12.sp,
                       ),
-                      cursorColor: PaletteTheme.primary,
+                      cursorColor: BaseColor.primary,
                       decoration: InputDecoration(
                         hintStyle: TextStyle(
                           fontFamily: fontFamily,
@@ -89,14 +89,14 @@ class CardSearchBar extends StatelessWidget {
                   notificationBadgeCount.toString(),
                   style: TextStyle(
                         fontSize: 10.sp,
-                        color: PaletteTheme.editable,
+                        color: BaseColor.editable,
                       ),
                 ),
               ),
               // padding: EdgeInsets.all(6.sp),
               child: Material(
                 shape: const CircleBorder(),
-                color: PaletteTheme.accent,
+                color: BaseColor.accent,
                 child: InkWell(
                   onTap: onLogoPressed,
                   child: Container(
@@ -108,7 +108,7 @@ class CardSearchBar extends StatelessWidget {
                       height: 12.sp,
                       width: 12.sp,
                       colorFilter: const ColorFilter.mode(
-                        PaletteTheme.primary,
+                        BaseColor.primary,
                         BlendMode.srcIn,
                       ),
                     ),

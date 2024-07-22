@@ -3,11 +3,10 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class ButtonAlterQuantity extends StatelessWidget {
   const ButtonAlterQuantity(
-      {Key? key,
+      {super.key,
       required this.onPressed,
       required this.label,
-      this.isEnabled = true})
-      : super(key: key);
+      this.isEnabled = true});
 
   final VoidCallback onPressed;
   final String label;
@@ -16,7 +15,7 @@ class ButtonAlterQuantity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: isEnabled ? PaletteTheme.primary : Colors.grey.shade300,
+      color: isEnabled ? BaseColor.primary : Colors.grey.shade300,
       shape: const CircleBorder(),
       clipBehavior: Clip.hardEdge,
       child: InkWell(
@@ -30,7 +29,7 @@ class ButtonAlterQuantity extends StatelessWidget {
               style: TextStyle(
                     fontSize: 19.sp,
                     color:
-                        isEnabled ? PaletteTheme.textPrimary : Colors.grey.shade400,
+                        isEnabled ? BaseColor.textPrimary : Colors.grey.shade400,
                     fontWeight: FontWeight.w400,
                   ),
             ),

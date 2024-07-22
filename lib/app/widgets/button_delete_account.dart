@@ -4,8 +4,7 @@ import 'package:get/get.dart';
 
 class DeleteAccountButton extends StatelessWidget {
   const DeleteAccountButton(
-      {Key? key, required this.onPressedDelete, required this.userPhone})
-      : super(key: key);
+      {super.key, required this.onPressedDelete, required this.userPhone});
 
   final Function(String phone) onPressedDelete;
   final String userPhone;
@@ -17,7 +16,7 @@ class DeleteAccountButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(Insets.small.w * 1.5),
         side: const BorderSide(
           width: .5,
-          color: PaletteTheme.negative,
+          color: BaseColor.negative,
         ),
       ),
       child: InkWell(
@@ -35,7 +34,7 @@ class DeleteAccountButton extends StatelessWidget {
             'Hapus Akun',
             style: TextStyle(
                   fontSize: 14.sp,
-                  color: PaletteTheme.negative,
+                  color: BaseColor.negative,
                   fontWeight: FontWeight.bold,
                 ),
             textAlign: TextAlign.center,
@@ -48,8 +47,7 @@ class DeleteAccountButton extends StatelessWidget {
 
 class _BuildBottomSheetDeleteAccount extends StatefulWidget {
   const _BuildBottomSheetDeleteAccount(
-      {Key? key, required this.onPressedPositive, required this.userPhone})
-      : super(key: key);
+      {required this.onPressedPositive, required this.userPhone});
 
   final VoidCallback onPressedPositive;
   final String userPhone;
@@ -113,7 +111,7 @@ class _BuildBottomSheetDeleteAccountState
                   TextSpan(
                     text: 'tidak bisa dikembalikan lagi. ',
                     style: TextStyle(
-                          color: PaletteTheme.negative,
+                          color: BaseColor.negative,
                         ),
                   ),
                   TextSpan(
@@ -130,7 +128,7 @@ class _BuildBottomSheetDeleteAccountState
                 vertical: 2.w,
               ),
               decoration: BoxDecoration(
-                color: PaletteTheme.editable,
+                color: BaseColor.editable,
                 borderRadius: BorderRadius.circular(9.sp),
               ),
               child: Column(
@@ -144,11 +142,11 @@ class _BuildBottomSheetDeleteAccountState
                     onSubmitted: proceed,
                     autocorrect: false,
                     style: TextStyle(
-                      color: PaletteTheme.accent,
+                      color: BaseColor.accent,
                       fontFamily: fontFamily,
                       fontSize: 14.sp,
                     ),
-                    cursorColor: PaletteTheme.primary,
+                    cursorColor: BaseColor.primary,
                     decoration: InputDecoration(
                       hintStyle: TextStyle(
                         fontFamily: fontFamily,
@@ -167,7 +165,7 @@ class _BuildBottomSheetDeleteAccountState
               duration: const Duration(milliseconds: 400),
               child: isDeleteButtonEnabled
                   ? Material(
-                      color: PaletteTheme.negative,
+                      color: BaseColor.negative,
                       elevation: 5,
                       shape: ContinuousRectangleBorder(
                         borderRadius: BorderRadius.circular(Insets.small.w),

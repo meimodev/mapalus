@@ -3,13 +3,13 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class BuilderSwitchOrderStatus extends StatelessWidget {
   const BuilderSwitchOrderStatus({
-    Key? key,
+    super.key,
     required this.order,
     required this.placed,
     required this.accepted,
     required this.rejected,
     required this.finished,
-  }) : super(key: key);
+  });
 
   final OrderApp order;
   final Widget placed;

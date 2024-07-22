@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-import 'package:mapalus/app/modules/home/home_controller.dart';
+import 'package:mapalus/app/modules/modules.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'dart:developer' as dev;
 
 class CartController extends GetxController {
-  HomeController homeController = Get.find<HomeController>();
+  GroceryController homeController = Get.find<GroceryController>();
 
   late RxList<ProductOrder> productOrders;
   late RxBool isCardCartVisible;

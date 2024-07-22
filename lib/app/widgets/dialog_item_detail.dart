@@ -1,3 +1,5 @@
+// ignore_for_file: use_super_parameters
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -83,7 +85,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                 clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(9.sp)),
-                  color: PaletteTheme.cardForeground,
+                  color: BaseColor.cardForeground,
                 ),
                 height: 500.h,
                 child: Column(
@@ -156,9 +158,9 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                     Material(
                       color: widget.product.isAvailable
                           ? errorMessagePrice.isEmpty
-                              ? PaletteTheme.primary
+                              ? BaseColor.primary
                               : Colors.grey
-                          : PaletteTheme.editable,
+                          : BaseColor.editable,
                       borderRadius: BorderRadius.all(Radius.circular(9.sp)),
                       child: InkWell(
                         onTap: () {
@@ -188,7 +190,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                               style: TextStyle(
                                     fontWeight: FontWeight.w400,
                                     color: widget.product.isAvailable
-                                        ? PaletteTheme.textPrimary
+                                        ? BaseColor.textPrimary
                                         : Colors.grey,
                                   ),
                             ),
@@ -216,7 +218,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                     : null,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: PaletteTheme.accent,
+                  color: BaseColor.accent,
                   boxShadow: [
                     BoxShadow(
                       spreadRadius: .5,
@@ -342,7 +344,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
             width: 15.sp,
             height: 15.sp,
             colorFilter: const ColorFilter.mode(
-              PaletteTheme.accent,
+              BaseColor.accent,
               BlendMode.srcIn,
             ),
           ),
@@ -368,7 +370,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
             width: 15.sp,
             height: 15.sp,
             colorFilter: const ColorFilter.mode(
-              PaletteTheme.accent,
+              BaseColor.accent,
               BlendMode.srcIn,
             ),
           ),
@@ -493,7 +495,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
       ),
       child: Material(
         clipBehavior: Clip.hardEdge,
-        color: PaletteTheme.primary,
+        color: BaseColor.primary,
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
@@ -517,7 +519,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
               text,
               style: TextStyle(
                 fontSize: 8.sp,
-                color: PaletteTheme.accent,
+                color: BaseColor.accent,
               ),
             ),
           ),
@@ -559,7 +561,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
           errorMessagePrice,
           style: TextStyle(
             fontWeight: FontWeight.w300,
-            color: PaletteTheme.negative,
+            color: BaseColor.negative,
             fontSize: 9.sp,
           ),
         ),

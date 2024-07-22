@@ -1,23 +1,6 @@
 import 'package:get/get.dart';
-import 'package:mapalus/app/modules/account_settings/account_settings_binding.dart';
-import 'package:mapalus/app/modules/account_settings/account_settings_screen.dart';
-import 'package:mapalus/app/modules/cart/cart_binding.dart';
-import 'package:mapalus/app/modules/cart/cart_screen.dart';
-import 'package:mapalus/app/modules/home/home_binding.dart';
-import 'package:mapalus/app/modules/home/home_screen.dart';
-import 'package:mapalus/app/modules/location/location_binding.dart';
-import 'package:mapalus/app/modules/location/location_screen.dart';
-import 'package:mapalus/app/modules/order_detail/order_detail_binding.dart';
-import 'package:mapalus/app/modules/order_detail/order_detail_screen.dart';
-import 'package:mapalus/app/modules/ordering/ordering_binding.dart';
-import 'package:mapalus/app/modules/ordering/ordering_screen.dart';
-import 'package:mapalus/app/modules/orders/orders_binding.dart';
-import 'package:mapalus/app/modules/orders/orders_screen.dart';
-import 'package:mapalus/app/modules/payment/payment_screen.dart';
-import 'package:mapalus/app/modules/signing/signing_binding.dart';
-import 'package:mapalus/app/modules/signing/signing_screen.dart';
-import 'package:mapalus/app/modules/update_app/update_app_screen.dart';
 
+import 'package:mapalus/app/modules/modules.dart';
 
 class Routes {
   static const String home = '/';
@@ -31,6 +14,9 @@ class Routes {
   static const String updateApp = '/update-app';
   static const String payment = '/payment';
 
+  static const String grocery = '/grocery';
+  static const String food = '/food';
+  static const String laundry = '/laundry';
 
   // static Route<dynamic> generateRoute(RouteSettings settings) {
   //   switch (settings.name) {
@@ -59,11 +45,10 @@ class Routes {
 
   static List<GetPage> getRoutes() {
     return [
-
       GetPage(
         name: home,
-        page: () => const HomeScreen(),
-        binding: HomeBinding(),
+        page: () => const MainHomeScreen(),
+        binding: MainHomeBinding(),
         transition: Transition.fade,
         maintainState: true,
         preventDuplicates: true,
@@ -120,6 +105,25 @@ class Routes {
         page: () => const PaymentScreen(),
         transition: Transition.rightToLeftWithFade,
       ),
+      GetPage(
+        name: grocery,
+        page: () => const GroceryScreen(),
+        binding: GroceryBinding(),
+        transition: Transition.rightToLeftWithFade,
+      ),
+      GetPage(
+        name: food,
+        page: () => const FoodScreen(),
+        binding: FoodBinding(),
+        transition: Transition.rightToLeftWithFade,
+      ),
+      GetPage(
+        name: laundry,
+        page: () => const LaundryScreen(),
+        binding: LaundryBinding(),
+        transition: Transition.rightToLeftWithFade,
+      ),
+
     ];
   }
 }

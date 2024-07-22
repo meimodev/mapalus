@@ -4,11 +4,11 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class CardCartItem extends StatelessWidget {
   const CardCartItem({
-    Key? key,
+    super.key,
     required this.index,
     required this.productOrder,
     required this.onPressedDelete,
-  }) : super(key: key);
+  });
 
   final int index;
   final ProductOrder productOrder;
@@ -26,7 +26,7 @@ class CardCartItem extends StatelessWidget {
         vertical: Insets.small.h,
       ),
       decoration: BoxDecoration(
-          color: PaletteTheme.cardForeground,
+          color: BaseColor.cardForeground,
           borderRadius: BorderRadius.circular(9.sp)),
       child: Row(
         children: [
@@ -87,7 +87,7 @@ class CardCartItem extends StatelessWidget {
                     width: 21.sp,
                     height: 21.sp,
                     colorFilter: const ColorFilter.mode(
-                      PaletteTheme.negative,
+                      BaseColor.negative,
                       BlendMode.srcIn,
                     ),
                   ),
@@ -171,7 +171,7 @@ class CardCartItem extends StatelessWidget {
 //             horizontal: 6.w,
 //           ),
 //           decoration: BoxDecoration(
-//             color: PaletteTheme.editable,
+//             color: BaseColor.editable,
 //             borderRadius: BorderRadius.circular(3.sp),
 //           ),
 //           child: TextField(
@@ -180,11 +180,11 @@ class CardCartItem extends StatelessWidget {
 //             maxLines: 1,
 //             autocorrect: false,
 //             style: TextStyle(
-//               color: PaletteTheme.accent,
+//               color: BaseColor.accent,
 //               fontFamily: fontFamily,
 //               fontSize: 12.sp,
 //             ),
-//             cursorColor: PaletteTheme.primary,
+//             cursorColor: BaseColor.primary,
 //             decoration: InputDecoration(
 //                 hintStyle: TextStyle(
 //                   color: Colors.grey,
@@ -227,7 +227,7 @@ class CardCartItem extends StatelessWidget {
 //   }) {
 //     return Material(
 //       clipBehavior: Clip.hardEdge,
-//       color: PaletteTheme.editable,
+//       color: BaseColor.editable,
 //       borderRadius: BorderRadius.circular(3.sp),
 //       child: InkWell(
 //         onTap: onPressed,
@@ -251,9 +251,8 @@ class CardCartItem extends StatelessWidget {
 
 class _BuildAlterQuantity extends StatelessWidget {
   const _BuildAlterQuantity({
-    Key? key,
     required this.productOrder,
-  }) : super(key: key);
+  });
 
   final ProductOrder productOrder;
 
@@ -291,7 +290,7 @@ class _BuildAlterQuantity extends StatelessWidget {
             horizontal: 6.w,
           ),
           decoration: BoxDecoration(
-            color: PaletteTheme.editable,
+            color: BaseColor.editable,
             borderRadius: BorderRadius.circular(3.sp),
           ),
           child: Row(
@@ -300,7 +299,7 @@ class _BuildAlterQuantity extends StatelessWidget {
               Text(
                 value,
                 style: TextStyle(
-                  color: PaletteTheme.accent,
+                  color: BaseColor.accent,
                   fontFamily: fontFamily,
                   fontSize: 12.sp,
                 ),

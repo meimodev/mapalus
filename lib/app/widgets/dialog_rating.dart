@@ -3,9 +3,9 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class DialogRating extends StatefulWidget {
   const DialogRating({
-    Key? key,
+    super.key,
     required this.onPressedRate,
-  }) : super(key: key);
+  });
 
   final Function(String message, double rating) onPressedRate;
 
@@ -35,7 +35,7 @@ class _DialogRatingState extends State<DialogRating> {
         clipBehavior: Clip.hardEdge,
         padding: EdgeInsets.all(12.sp),
         decoration: BoxDecoration(
-          color: PaletteTheme.cardForeground,
+          color: BaseColor.cardForeground,
           borderRadius: BorderRadius.circular(9.sp),
         ),
         child: Column(
@@ -57,7 +57,7 @@ class _DialogRatingState extends State<DialogRating> {
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(9.sp),
-                color: PaletteTheme.editable,
+                color: BaseColor.editable,
               ),
               child: TextField(
                 controller: tecMessage,
@@ -67,11 +67,11 @@ class _DialogRatingState extends State<DialogRating> {
                 scrollPhysics: const BouncingScrollPhysics(),
                 autocorrect: false,
                 style: TextStyle(
-                  color: PaletteTheme.accent,
+                  color: BaseColor.accent,
                   fontFamily: fontFamily,
                   fontSize: 14.sp,
                 ),
-                cursorColor: PaletteTheme.primary,
+                cursorColor: BaseColor.primary,
                 decoration: InputDecoration(
                   hintStyle: TextStyle(
                     fontFamily: fontFamily,
@@ -93,7 +93,7 @@ class _DialogRatingState extends State<DialogRating> {
                   minRating: 1,
                   direction: Axis.horizontal,
                   itemCount: 5,
-                  glowColor: PaletteTheme.editable.withOpacity(.25),
+                  glowColor: BaseColor.editable.withOpacity(.25),
                   itemSize: 27.sp,
                   itemPadding: EdgeInsets.symmetric(horizontal: 6.w),
                   onRatingUpdate: (r) {
@@ -103,18 +103,18 @@ class _DialogRatingState extends State<DialogRating> {
                       SvgPicture.asset(
                     'assets/vectors/star.svg',
                     colorFilter: const ColorFilter.mode(
-                      PaletteTheme.primary,
+                      BaseColor.primary,
                       BlendMode.srcIn,
                     ),
                   ),
                   updateOnDrag: true,
-                  unratedColor: PaletteTheme.accent,
+                  unratedColor: BaseColor.accent,
                 ),
               ),
             ),
             SizedBox(height: Insets.small.h),
             Material(
-              color: PaletteTheme.primary,
+              color: BaseColor.primary,
               borderRadius: BorderRadius.circular(9.sp),
               child: InkWell(
                 onTap: () {

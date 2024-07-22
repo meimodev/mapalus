@@ -1,3 +1,5 @@
+// ignore_for_file: use_super_parameters
+
 import 'package:flutter/material.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
@@ -51,7 +53,7 @@ class DialogAnnouncement extends StatelessWidget {
             SizedBox(height: Insets.small.h),
             Material(
               borderRadius: BorderRadius.circular(12),
-              color: PaletteTheme.accent,
+              color: BaseColor.accent,
               child: InkWell(
                 onTap: () => Navigator.pop(context),
                 child: Padding(
@@ -64,7 +66,7 @@ class DialogAnnouncement extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 10.sp,
                       fontWeight: FontWeight.bold,
-                      color: PaletteTheme.primary,
+                      color: BaseColor.primary,
                     ),
                   ),
                 ),

@@ -3,10 +3,10 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class CardOrder extends StatelessWidget {
   const CardOrder({
-    Key? key,
+    super.key,
     required this.order,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final OrderApp order;
   final VoidCallback onPressed;
@@ -15,7 +15,7 @@ class CardOrder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       borderRadius: BorderRadius.circular(9.sp),
-      color: PaletteTheme.cardForeground,
+      color: BaseColor.cardForeground,
       clipBehavior: Clip.hardEdge,
       child: InkWell(
         onTap: onPressed,
@@ -59,7 +59,7 @@ class CardOrder extends StatelessWidget {
                             order.orderTimeStamp.isSame(Jiffy.now(),unit: Unit.day)
                                 ? FontWeight.w600
                                 : FontWeight.w300,
-                        color: PaletteTheme.textPrimary,
+                        color: BaseColor.textPrimary,
                       ),
                     ),
                   ],
@@ -108,7 +108,7 @@ class CardOrder extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Container(
               height: 1.h,
-              color: PaletteTheme.primary,
+              color: BaseColor.primary,
             ),
           ),
         ],
@@ -137,7 +137,7 @@ class CardOrder extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Container(
               height: 1.h,
-              color: PaletteTheme.accent,
+              color: BaseColor.accent,
             ),
           ),
         ],
@@ -151,7 +151,7 @@ class CardOrder extends StatelessWidget {
             'batal',
             style: TextStyle(
               fontWeight: FontWeight.w300,
-              color: PaletteTheme.negative,
+              color: BaseColor.negative,
               fontSize: 9.sp,
             ),
           ),
@@ -159,7 +159,7 @@ class CardOrder extends StatelessWidget {
             order.confirmTimeStamp?.format(pattern:"E, dd MMMM") ?? '-',
             style: TextStyle(
               fontWeight: FontWeight.w600,
-              color: PaletteTheme.negative,
+              color: BaseColor.negative,
               fontSize: 9.sp,
             ),
           ),
@@ -175,14 +175,14 @@ class CardOrder extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.w300,
               fontSize: 9.sp,
-              color: PaletteTheme.positive,
+              color: BaseColor.positive,
             ),
           ),
           Text(
             order.deliverTimeStamp?.format(pattern:"E, dd MMM HH:mm:ss") ?? '-',
             style: TextStyle(
               fontWeight: FontWeight.w600,
-              color: PaletteTheme.positive,
+              color: BaseColor.positive,
               fontSize: 9.sp,
             ),
           ),

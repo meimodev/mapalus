@@ -6,7 +6,7 @@ import 'package:mapalus/app/widgets/card_navigation.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class AccountSettingsScreen extends GetView<AccountSettingsController> {
-  const AccountSettingsScreen({Key? key}) : super(key: key);
+  const AccountSettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
               padding: EdgeInsets.all(30.w),
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: PaletteTheme.accent,
+                color: BaseColor.accent,
               ),
               child: Center(
                 child: SvgPicture.asset(
@@ -61,10 +61,10 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
                   width: 60.w,
                   height: 60.h,
                   colorFilter: const ColorFilter.mode(
-                    PaletteTheme.primary,
+                    BaseColor.primary,
                     BlendMode.srcIn,
                   ),
-                  // color: PaletteTheme.primary,
+                  // color: BaseColor.primary,
                 ),
               ),
             ),
@@ -79,7 +79,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
             Text(
               controller.userPhone.value,
               style: TextStyle(
-                color: PaletteTheme.accent,
+                color: BaseColor.accent,
                 fontSize: 14.sp,
               ),
             ),
@@ -91,7 +91,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
           margin: EdgeInsets.symmetric(
             horizontal: Insets.large.w,
           ),
-          color: PaletteTheme.accent,
+          color: BaseColor.accent,
         ),
         SizedBox(height: Insets.small.h),
         Padding(
@@ -104,7 +104,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
                   controller.orderCount.value.toString(),
                   style: TextStyle(
                     fontSize: 10.sp,
-                    color: PaletteTheme.editable,
+                    color: BaseColor.editable,
                   ),
                 ),
                 position: BadgePosition.topStart(),
@@ -149,7 +149,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
         SizedBox(height: Insets.small.h),
         Material(
           clipBehavior: Clip.hardEdge,
-          color: PaletteTheme.primary,
+          color: BaseColor.primary,
           borderRadius: BorderRadius.circular(9.sp),
           elevation: 2,
           child: InkWell(
@@ -162,7 +162,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
               child: const Text(
                 'Masuk',
                 style: TextStyle(
-                  color: PaletteTheme.accent,
+                  color: BaseColor.accent,
                 ),
               ),
             ),

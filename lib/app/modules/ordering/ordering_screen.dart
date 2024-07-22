@@ -4,7 +4,7 @@ import 'package:mapalus/app/modules/ordering/ordering_controller.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class OrderingScreen extends GetView<OrderingController> {
-  const OrderingScreen({Key? key}) : super(key: key);
+  const OrderingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +105,7 @@ class OrderingScreen extends GetView<OrderingController> {
       child: Material(
         elevation: 2,
         borderRadius: BorderRadius.circular(9.sp),
-        color: isSecondary ? Colors.grey : PaletteTheme.primary,
+        color: isSecondary ? Colors.grey : BaseColor.primary,
         clipBehavior: Clip.hardEdge,
         child: InkWell(
           onTap: onPressed,
@@ -140,7 +140,7 @@ class OrderingScreen extends GetView<OrderingController> {
                 ),
           ),
           SizedBox(height: Insets.medium.h),
-          const CircularProgressIndicator(color: PaletteTheme.primary),
+          const CircularProgressIndicator(color: BaseColor.primary),
         ],
       ),
     );

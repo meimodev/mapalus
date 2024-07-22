@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class OrderDetailScreen extends GetView<OrderDetailController> {
-  const OrderDetailScreen({Key? key}) : super(key: key);
+  const OrderDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
             top: 0,
             bottom: 0,
             child: Container(
-              color: PaletteTheme.accent,
+              color: BaseColor.accent,
             ),
           ),
           Positioned(
@@ -87,7 +87,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(9.sp),
-            color: PaletteTheme.cardForeground,
+            color: BaseColor.cardForeground,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -135,7 +135,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                       decoration: const BoxDecoration(
                           border: Border(
                         bottom: BorderSide(
-                          color: PaletteTheme.accent,
+                          color: BaseColor.accent,
                         ),
                       )),
                       child: _buildDeliveryInfoLayout(
@@ -151,7 +151,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                             decoration: const BoxDecoration(
                                 border: Border(
                               bottom: BorderSide(
-                                color: PaletteTheme.accent,
+                                color: BaseColor.accent,
                               ),
                             )),
                             child: _buildPaymentInfoLayout(context),
@@ -217,7 +217,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
   _buildLoadingLayout(BuildContext context) {
     return const Center(
       child: CircularProgressIndicator(
-        color: PaletteTheme.primary,
+        color: BaseColor.primary,
       ),
     );
   }
@@ -247,7 +247,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
           ],
         ),
         Material(
-          color: PaletteTheme.primary,
+          color: BaseColor.primary,
           clipBehavior: Clip.hardEdge,
           elevation: 2,
           borderRadius: BorderRadius.circular(6.sp),
@@ -261,7 +261,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
               child: Center(
                 child: Icon(
                   Icons.place,
-                  color: PaletteTheme.accent,
+                  color: BaseColor.accent,
                   size: 18.sp,
                 ),
               ),
@@ -302,7 +302,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                         "Konfirmasi dengan admin untuk transfer manual",
                         style: TextStyle(
                           fontSize: 7.sp,
-                          color: PaletteTheme.textPrimary,
+                          color: BaseColor.textPrimary,
                         ),
                       ),
                       Column(
@@ -390,7 +390,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
 
       case OrderStatus.delivered:
         return Material(
-          color: PaletteTheme.primary,
+          color: BaseColor.primary,
           clipBehavior: Clip.hardEdge,
           borderRadius: BorderRadius.circular(9.sp),
           child: InkWell(
@@ -486,7 +486,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6.sp),
-          color: PaletteTheme.accent,
+          color: BaseColor.accent,
         ),
         child: Column(
           children: [
@@ -494,14 +494,14 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
               title,
               style: TextStyle(
                 fontSize: 9.sp,
-                color: PaletteTheme.editable,
+                color: BaseColor.editable,
               ),
             ),
             Text(
               timeStamp,
               style: TextStyle(
                 fontSize: 9.sp,
-                color: PaletteTheme.editable,
+                color: BaseColor.editable,
               ),
             ),
           ],
@@ -531,7 +531,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
               children: [
                 Icon(
                   Icons.warning_rounded,
-                  color: PaletteTheme.negative.withOpacity(.5),
+                  color: BaseColor.negative.withOpacity(.5),
                   size: 21.sp,
                 ),
                 const SizedBox(width: 3),
@@ -549,7 +549,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
 }
 
 class _BuildRejectedLayout extends StatelessWidget {
-  const _BuildRejectedLayout({Key? key, required this.order}) : super(key: key);
+  const _BuildRejectedLayout({required this.order});
 
   final OrderApp order;
 
@@ -566,7 +566,7 @@ class _BuildRejectedLayout extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 12.sp,
-              color: PaletteTheme.negative,
+              color: BaseColor.negative,
             ),
           ),
           Text(
@@ -574,7 +574,7 @@ class _BuildRejectedLayout extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 12.sp,
-              color: PaletteTheme.negative,
+              color: BaseColor.negative,
             ),
           ),
         ],
@@ -585,9 +585,8 @@ class _BuildRejectedLayout extends StatelessWidget {
 
 class _BuildRatedLayout extends StatelessWidget {
   const _BuildRatedLayout({
-    Key? key,
     required this.order,
-  }) : super(key: key);
+  });
 
   final OrderApp order;
 
@@ -607,20 +606,20 @@ class _BuildRatedLayout extends StatelessWidget {
             maxRating: rating.number.toDouble(),
             direction: Axis.horizontal,
             itemCount: 5,
-            glowColor: PaletteTheme.editable.withOpacity(.25),
+            glowColor: BaseColor.editable.withOpacity(.25),
             itemSize: 27.sp,
             itemPadding: EdgeInsets.symmetric(horizontal: 6.w),
             onRatingUpdate: (_) {},
             itemBuilder: (_, int index) => SvgPicture.asset(
               'assets/vectors/star.svg',
               colorFilter: const ColorFilter.mode(
-                PaletteTheme.primary,
+                BaseColor.primary,
                 BlendMode.srcIn,
               ),
             ),
             updateOnDrag: false,
             ignoreGestures: true,
-            unratedColor: PaletteTheme.accent,
+            unratedColor: BaseColor.accent,
           ),
           SizedBox(height: Insets.small.h * .5),
           Text(
@@ -646,9 +645,8 @@ class _BuildRatedLayout extends StatelessWidget {
 
 class _BuildNoteCard extends StatelessWidget {
   const _BuildNoteCard({
-    Key? key,
     required this.note,
-  }) : super(key: key);
+  });
 
   final String note;
 
@@ -658,7 +656,7 @@ class _BuildNoteCard extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(9.sp),
-        color: PaletteTheme.editable,
+        color: BaseColor.editable,
       ),
       padding: EdgeInsets.symmetric(
         horizontal: Insets.small.sp,
@@ -673,7 +671,7 @@ class _BuildNoteCard extends StatelessWidget {
             child: ReadMoreText(
               '$note  ',
               trimLines: 1,
-              colorClickableText: PaletteTheme.primary,
+              colorClickableText: BaseColor.primary,
               trimMode: TrimMode.Line,
               style: TextStyle(
                 fontWeight: FontWeight.w300,

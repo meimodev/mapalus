@@ -3,7 +3,7 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'dart:io' show Platform;
 
 class UpdateAppScreen extends StatelessWidget {
-  const UpdateAppScreen({Key? key}) : super(key: key);
+  const UpdateAppScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class UpdateAppScreen extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        color: PaletteTheme.cardForeground,
+        color: BaseColor.cardForeground,
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -21,7 +21,7 @@ class UpdateAppScreen extends StatelessWidget {
                 width: 60.sp,
                 height: 60.sp,
                 colorFilter: const ColorFilter.mode(
-                  PaletteTheme.accent,
+                  BaseColor.accent,
                   BlendMode.srcIn,
                 ),
               ),
@@ -81,7 +81,7 @@ class UpdateAppScreen extends StatelessWidget {
     required IconData icon,
   }) {
     return Material(
-      color: PaletteTheme.primary,
+      color: BaseColor.primary,
       borderRadius: BorderRadius.circular(12.w),
       child: InkWell(
         onTap: onPressed,
@@ -94,7 +94,7 @@ class UpdateAppScreen extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: PaletteTheme.accent,
+                color: BaseColor.accent,
                 size: 21.w,
               ),
               SizedBox(width: 6.w),
@@ -102,7 +102,7 @@ class UpdateAppScreen extends StatelessWidget {
                 title,
                 style:TextStyle(
                       fontSize: 12.sp,
-                      color: PaletteTheme.accent,
+                      color: BaseColor.accent,
                     ),
               ),
             ],

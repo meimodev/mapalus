@@ -3,13 +3,13 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class TextInputQuantity extends StatelessWidget {
   const TextInputQuantity({
-    Key? key,
+    super.key,
     this.icon,
     this.onTextChanged,
     required this.textEditingController,
     this.isReadOnly = false,
     this.trailingWidget,
-  }) : super(key: key);
+  });
 
   final Widget? icon;
   final Function(String)? onTextChanged;
@@ -23,7 +23,7 @@ class TextInputQuantity extends StatelessWidget {
       width: 147.w,
       height: 45.h,
       decoration: BoxDecoration(
-        color: PaletteTheme.editable,
+        color: BaseColor.editable,
         borderRadius: BorderRadius.circular(6.sp),
       ),
       child: Row(
@@ -47,11 +47,11 @@ class TextInputQuantity extends StatelessWidget {
               autocorrect: false,
               readOnly: isReadOnly,
               style: TextStyle(
-                color: PaletteTheme.accent,
+                color: BaseColor.accent,
                 fontFamily: fontFamily,
                 fontSize: 14.sp,
               ),
-              cursorColor: PaletteTheme.primary,
+              cursorColor: BaseColor.primary,
               decoration: InputDecoration(
                 hintStyle: TextStyle(
                   fontFamily: fontFamily,

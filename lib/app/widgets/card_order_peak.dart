@@ -3,16 +3,16 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class CardOrdersPeak extends StatelessWidget {
   const CardOrdersPeak({
-    Key? key,
+    super.key,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: PaletteTheme.primary,
+      color: BaseColor.primary,
       borderRadius: BorderRadius.only(
         bottomLeft: Radius.circular(18.sp),
         topLeft: Radius.circular(18.sp),
@@ -29,7 +29,7 @@ class CardOrdersPeak extends StatelessWidget {
               SvgPicture.asset(
                 "assets/vectors/bag.svg",
                 colorFilter: const ColorFilter.mode(
-                  PaletteTheme.textPrimary,
+                  BaseColor.textPrimary,
                   BlendMode.srcIn,
                 ),
                 height: 18.sp,
@@ -39,7 +39,7 @@ class CardOrdersPeak extends StatelessWidget {
               Text(
                 'Pesanan anda',
                 style: TextStyle(
-                      color: PaletteTheme.textPrimary,
+                      color: BaseColor.textPrimary,
                       fontWeight: FontWeight.w400,
                       fontSize: 12.sp,
                     ),

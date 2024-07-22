@@ -3,12 +3,12 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class CardCartPeak extends StatelessWidget {
   const CardCartPeak({
-    Key? key,
+    super.key,
     required this.onPressed,
     // required this.productOrders,
     required this.totalPrice,
     required this.cartOverview,
-  }) : super(key: key);
+  });
 
   final VoidCallback onPressed;
   // final List<ProductOrder> productOrders;
@@ -41,7 +41,7 @@ class CardCartPeak extends StatelessWidget {
     return Material(
       clipBehavior: Clip.hardEdge,
       elevation: 9,
-      color: PaletteTheme.accent,
+      color: BaseColor.accent,
       borderRadius: BorderRadius.circular(30.sp),
       child: InkWell(
         onTap: onPressed,
@@ -56,7 +56,7 @@ class CardCartPeak extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 // CircleAvatar(
-                //   backgroundColor: PaletteTheme.primary,
+                //   backgroundColor: BaseColor.primary,
                 //   child: Padding(
                 //     padding: EdgeInsets.all(9.sp),
                 //     child: SvgPicture.asset(
@@ -68,7 +68,7 @@ class CardCartPeak extends StatelessWidget {
                   padding: EdgeInsets.all(9.sp),
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: PaletteTheme.primary,
+                    color: BaseColor.primary,
                   ),
                   child: SvgPicture.asset(
                     "assets/vectors/cart.svg",
@@ -87,7 +87,7 @@ class CardCartPeak extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.fade,
                       style: TextStyle(
-                            color: PaletteTheme.cardForeground,
+                            color: BaseColor.cardForeground,
                             fontWeight: FontWeight.w400,
                             fontSize: 14.sp,
                           ),

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mapalus/app/modules/home/home_controller.dart';
+import 'package:mapalus/app/modules/modules.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'dart:developer' as dev;
@@ -9,7 +9,7 @@ import 'dart:developer' as dev;
 class OrderingController extends GetxController {
   OrderRepo orderRepo = Get.find<OrderRepo>();
   UserRepo userRepo = Get.find<UserRepo>();
-  HomeController homeController = Get.find<HomeController>();
+  GroceryController homeController = Get.find<GroceryController>();
 
   RxBool isLoading = true.obs;
 

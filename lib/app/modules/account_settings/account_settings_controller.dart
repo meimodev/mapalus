@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:mapalus/app/modules/home/home_controller.dart';
+import 'package:mapalus/app/modules/modules.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus/shared/routes.dart';
 
@@ -9,7 +9,7 @@ class AccountSettingsController extends GetxController {
   RxInt orderCount = 0.obs;
   RxString currentVersion = ''.obs;
 
-  HomeController homeController = Get.find();
+  GroceryController homeController = Get.find();
 
   AppRepo appRepo = Get.find();
   UserRepo userRepo = Get.find();

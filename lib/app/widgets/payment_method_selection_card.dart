@@ -3,14 +3,14 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class PaymentMethodSelectionCard extends StatelessWidget {
   const PaymentMethodSelectionCard({
-    Key? key,
+    super.key,
     required this.title,
     this.subTitle,
     required this.onPressed,
     this.activate = false,
     this.available = true,
     this.child,
-  }) : super(key: key);
+  });
 
   final String title;
   final String? subTitle;
@@ -28,7 +28,7 @@ class PaymentMethodSelectionCard extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
         shape: ContinuousRectangleBorder(
           side: activate
-              ? const BorderSide(color: PaletteTheme.primary, width: 1.5)
+              ? const BorderSide(color: BaseColor.primary, width: 1.5)
               : BorderSide.none,
           borderRadius: BorderRadius.circular(12.w),
         ),
@@ -45,7 +45,7 @@ class PaymentMethodSelectionCard extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                        color: available ? PaletteTheme.textPrimary : Colors.grey.shade400,
+                        color: available ? BaseColor.textPrimary : Colors.grey.shade400,
                         fontSize: 12.sp,
                       ),
                 ),

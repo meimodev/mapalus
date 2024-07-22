@@ -3,7 +3,7 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus/shared/routes.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -33,14 +33,14 @@ class _SplashScreenState extends State<SplashScreen> {
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        color: PaletteTheme.accent,
+        color: BaseColor.accent,
         child: Center(
           child: SvgPicture.asset(
             'assets/images/mapalus.svg',
             width: 90.sp,
             height: 90.sp,
             colorFilter: const ColorFilter.mode(
-              PaletteTheme.primary,
+              BaseColor.primary,
               BlendMode.srcIn,
             ),
           ),

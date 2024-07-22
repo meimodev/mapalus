@@ -6,12 +6,12 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 ///Not using this screen yet
 class PaymentScreen extends GetView<PaymentController> {
-  const PaymentScreen({Key? key}) : super(key: key);
+  const PaymentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
-      // backgroundColor: PaletteTheme.accent,
+      // backgroundColor: BaseColor.accent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -40,7 +40,7 @@ class PaymentScreen extends GetView<PaymentController> {
             padding: EdgeInsets.all( Insets.medium.w),
             child: Material(
               borderRadius: BorderRadius.circular(Insets.small.w),
-              color: PaletteTheme.primary,
+              color: BaseColor.primary,
               child: InkWell(
                 onTap: (){},
                 child: Center(child: Padding(

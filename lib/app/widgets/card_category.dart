@@ -3,12 +3,12 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class CardCategory extends StatelessWidget {
   const CardCategory({
-    Key? key,
+    super.key,
     this.isSelected = false,
     required this.name,
     required this.onPressed,
     required this.imageUrl,  this.asset,
-  }) : super(key: key);
+  });
 
   final bool isSelected;
   final VoidCallback onPressed;
@@ -36,7 +36,7 @@ class CardCategory extends StatelessWidget {
                   width: 45.w,
                   height: 45.w,
                   decoration: BoxDecoration(
-                    color: isSelected ? PaletteTheme.accent : PaletteTheme.cardForeground,
+                    color: isSelected ? BaseColor.accent : BaseColor.cardForeground,
                     borderRadius: BorderRadius.all(
                       Radius.circular(12.sp),
                     ),
@@ -56,7 +56,7 @@ class CardCategory extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                         fontSize: 12.sp,
-                        color: isSelected ? PaletteTheme.textPrimary : Colors.grey,
+                        color: isSelected ? BaseColor.textPrimary : Colors.grey,
                       ),
                 ),
               ),

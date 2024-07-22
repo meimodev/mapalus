@@ -1,3 +1,5 @@
+// ignore_for_file: use_super_parameters
+
 import 'package:flutter/material.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
@@ -65,7 +67,7 @@ class DialogConfirm extends StatelessWidget {
                           confirmText ?? 'HAPUS',
                           style:
                           const TextStyle(
-                                    color: PaletteTheme.primary,
+                                    color: BaseColor.primary,
                                   ),
                         ),
                       ),

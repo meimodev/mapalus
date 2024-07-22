@@ -3,12 +3,12 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class CardOrderDetailItem extends StatelessWidget {
   const CardOrderDetailItem({
-    Key? key,
+    super.key,
     required this.index,
     required this.productName,
     required this.productPrice,
     required this.productWeight,
-  }) : super(key: key);
+  });
 
   final String index;
   final String productName;
@@ -25,7 +25,7 @@ class CardOrderDetailItem extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 6.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(9.sp),
-        color: PaletteTheme.cardForeground,
+        color: BaseColor.cardForeground,
       ),
       child: Row(
         children: [
@@ -80,7 +80,7 @@ class CardOrderDetailItem extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(3.sp),
-          color: PaletteTheme.editable,
+          color: BaseColor.editable,
         ),
         child: Text(
           text,

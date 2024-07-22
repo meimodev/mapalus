@@ -9,7 +9,7 @@ import 'package:mapalus/app/widgets/payment_method_selection_card.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class LocationScreen extends GetView<LocationController> {
-  const LocationScreen({Key? key}) : super(key: key);
+  const LocationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class LocationScreen extends GetView<LocationController> {
                                                 .isLocationSelectionButtonVisible
                                                 .value
                                             ? Material(
-                                                color: PaletteTheme.primary,
+                                                color: BaseColor.primary,
                                                 clipBehavior: Clip.hardEdge,
                                                 elevation: 5,
                                                 borderRadius:
@@ -93,7 +93,7 @@ class LocationScreen extends GetView<LocationController> {
                                       SizedBox(height: Insets.small.h),
                                       Icon(
                                         Icons.location_on,
-                                        color: PaletteTheme.primary,
+                                        color: BaseColor.primary,
                                         size: 40.sp,
                                       ),
                                     ],
@@ -182,7 +182,7 @@ class LocationScreen extends GetView<LocationController> {
         margin: EdgeInsets.symmetric(horizontal: Insets.medium.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9.sp),
-          color: PaletteTheme.cardForeground,
+          color: BaseColor.cardForeground,
         ),
         child: AnimatedSwitcher(
           duration: const Duration(milliseconds: 400),
@@ -190,7 +190,7 @@ class LocationScreen extends GetView<LocationController> {
               ? Padding(
                   padding: EdgeInsets.symmetric(vertical: Insets.large.h),
                   child: const CircularProgressIndicator(
-                    color: PaletteTheme.primary,
+                    color: BaseColor.primary,
                   ),
                 )
               : Column(
@@ -247,7 +247,7 @@ class LocationScreen extends GetView<LocationController> {
                                               height: 15.sp,
                                               colorFilter:
                                                   const ColorFilter.mode(
-                                                PaletteTheme.accent,
+                                                BaseColor.accent,
                                                 BlendMode.srcIn,
                                               ),
                                             ),
@@ -276,7 +276,7 @@ class LocationScreen extends GetView<LocationController> {
                                         'Ubah Lokasi',
                                         style: TextStyle(
                                           fontSize: 10.sp,
-                                          color: PaletteTheme.primary,
+                                          color: BaseColor.primary,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -331,7 +331,7 @@ class LocationScreen extends GetView<LocationController> {
                                                           colorFilter:
                                                               const ColorFilter
                                                                   .mode(
-                                                            PaletteTheme.accent,
+                                                            BaseColor.accent,
                                                             BlendMode.srcIn,
                                                           ),
                                                         ),
@@ -370,7 +370,7 @@ class LocationScreen extends GetView<LocationController> {
                                         'Ubah Pembayaran',
                                         style: TextStyle(
                                           fontSize: 10.sp,
-                                          color: PaletteTheme.primary,
+                                          color: BaseColor.primary,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -398,8 +398,8 @@ class LocationScreen extends GetView<LocationController> {
                     ),
                     Material(
                       color: controller.paymentMethodSubTittle.isEmpty
-                          ? PaletteTheme.accent.withAlpha(50)
-                          : PaletteTheme.primary,
+                          ? BaseColor.accent.withAlpha(50)
+                          : BaseColor.primary,
                       clipBehavior: Clip.hardEdge,
                       borderRadius: BorderRadius.circular(9.sp),
                       child: InkWell(
@@ -454,12 +454,11 @@ class LocationScreen extends GetView<LocationController> {
 
 class _BuildPaymentMethodBottomSheet extends StatefulWidget {
   const _BuildPaymentMethodBottomSheet({
-    Key? key,
     required this.onPressedPaymentMethodButton,
     required this.totalPrice,
     this.selectedPaymentIndex,
     this.moneyAmount,
-  }) : super(key: key);
+  });
 
   final void Function(
     int selectedPaymentIndex,
@@ -577,7 +576,7 @@ class _BuildPaymentMethodBottomSheetState
                   widget.totalPrice.formatNumberToCurrency(),
                   style: TextStyle(
                     fontSize: 14.sp,
-                    color: PaletteTheme.textPrimary,
+                    color: BaseColor.textPrimary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -608,7 +607,7 @@ class _BuildPaymentMethodBottomSheetState
                               vertical: Insets.small.h * .5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6),
-                            color: PaletteTheme.primary.withOpacity(.25),
+                            color: BaseColor.primary.withOpacity(.25),
                           ),
                           child: RichText(
                             text: TextSpan(
@@ -623,7 +622,7 @@ class _BuildPaymentMethodBottomSheetState
                                   text: " jumlah uang ",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: PaletteTheme.textPrimary,
+                                    color: BaseColor.textPrimary,
                                   ),
                                 ),
                                 TextSpan(
@@ -636,7 +635,7 @@ class _BuildPaymentMethodBottomSheetState
                         SizedBox(height: Insets.small.h * .5),
                         Container(
                           decoration: BoxDecoration(
-                            color: PaletteTheme.editable,
+                            color: BaseColor.editable,
                             borderRadius: BorderRadius.circular(9.sp),
                           ),
                           child: SizedBox(
@@ -649,11 +648,11 @@ class _BuildPaymentMethodBottomSheetState
                               autocorrect: false,
                               keyboardType: TextInputType.number,
                               style: TextStyle(
-                                color: PaletteTheme.textPrimary,
+                                color: BaseColor.textPrimary,
                                 fontFamily: fontFamily,
                                 fontSize: 10.sp,
                               ),
-                              cursorColor: PaletteTheme.primary,
+                              cursorColor: BaseColor.primary,
                               textInputAction: TextInputAction.done,
                               decoration: InputDecoration(
                                 hintStyle: TextStyle(
@@ -663,19 +662,19 @@ class _BuildPaymentMethodBottomSheetState
                                 labelStyle: TextStyle(
                                   fontSize: 10.sp,
                                   fontWeight: FontWeight.w300,
-                                  color: PaletteTheme.textPrimary,
+                                  color: BaseColor.textPrimary,
                                 ),
                                 isDense: true,
                                 border: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     width: .25,
-                                    color: PaletteTheme.accent,
+                                    color: BaseColor.accent,
                                   ),
                                 ),
                                 focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     width: .25,
-                                    color: PaletteTheme.accent,
+                                    color: BaseColor.accent,
                                   ),
                                 ),
                                 labelText: "Jumlah uang",
@@ -698,7 +697,7 @@ class _BuildPaymentMethodBottomSheetState
                                       moneyAmountErrorText,
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                        color: PaletteTheme.negative,
+                                        color: BaseColor.negative,
                                         fontSize: 10.sp,
                                         fontWeight: FontWeight.w300,
                                       ),
@@ -795,7 +794,7 @@ class _BuildPaymentMethodBottomSheetState
             ),
             Material(
               borderRadius: BorderRadius.circular(Insets.small.w),
-              color: PaletteTheme.primary,
+              color: BaseColor.primary,
               child: InkWell(
                 onTap: onSubmitPaymentBottomSheetSelectionCard,
                 child: Padding(
@@ -813,12 +812,11 @@ class _BuildPaymentMethodBottomSheetState
 
 class _BuildDeliveryFeeSelector extends StatefulWidget {
   const _BuildDeliveryFeeSelector({
-    Key? key,
     required this.deliveries,
     required this.distance,
     required this.weight,
     required this.onPressedDeliveryTime,
-  }) : super(key: key);
+  });
 
   final List<DeliveryInfo> deliveries;
   final double distance;
@@ -865,7 +863,7 @@ class _BuildDeliveryFeeSelectorState extends State<_BuildDeliveryFeeSelector> {
       padding: EdgeInsets.all(Insets.small.sp),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(9.sp),
-        color: PaletteTheme.cardForeground,
+        color: BaseColor.cardForeground,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -956,9 +954,8 @@ class _BuildDeliveryFeeSelectorState extends State<_BuildDeliveryFeeSelector> {
 
 class _BuildOrderInfo extends StatelessWidget {
   const _BuildOrderInfo({
-    Key? key,
     required this.orderInfo,
-  }) : super(key: key);
+  });
 
   final OrderInfo orderInfo;
 
@@ -1047,16 +1044,15 @@ class _BuildOrderInfo extends StatelessWidget {
 
 class _BuildCurrentLocationErrorNote extends StatelessWidget {
   const _BuildCurrentLocationErrorNote({
-    Key? key,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: PaletteTheme.accent.withOpacity(.75),
+      color: BaseColor.accent.withOpacity(.75),
       borderRadius: BorderRadius.circular(Insets.medium),
       elevation: 3,
       child: InkWell(
@@ -1070,13 +1066,13 @@ class _BuildCurrentLocationErrorNote extends StatelessWidget {
             children: [
               const Icon(
                 Icons.info_outline_rounded,
-                color: PaletteTheme.primary,
+                color: BaseColor.primary,
               ),
               SizedBox(width: 3.w),
               Text(
                 "Lokasi Tidak diaktifkan",
                 style: TextStyle(
-                  color: PaletteTheme.primary,
+                  color: BaseColor.primary,
                   fontSize: 12.sp,
                 ),
               ),

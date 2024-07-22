@@ -3,9 +3,9 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class BadgeNotification extends StatelessWidget {
   const BadgeNotification({
-    Key? key,
+    super.key,
     required this.text,
-  }) : super(key: key);
+  });
 
   final String text;
 
@@ -15,7 +15,7 @@ class BadgeNotification extends StatelessWidget {
       height: 21.sp,
       width: 21.sp,
       decoration: const BoxDecoration(
-        color: PaletteTheme.notification,
+        color: BaseColor.notification,
         shape: BoxShape.circle,
       ),
       child: Center(
@@ -23,7 +23,7 @@ class BadgeNotification extends StatelessWidget {
           text,
           style:TextStyle(
                 fontSize: 11.sp,
-                color: PaletteTheme.cardForeground,
+                color: BaseColor.cardForeground,
               ),
         ),
       ),

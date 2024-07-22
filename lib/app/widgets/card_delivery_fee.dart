@@ -4,12 +4,12 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class CardDeliveryFee extends StatelessWidget {
   const CardDeliveryFee({
-    Key? key,
+    super.key,
     this.isActive = false,
     required this.deliveryInfo,
     required this.onPressed,
     required this.price,
-  }) : super(key: key);
+  });
 
   final DeliveryInfo deliveryInfo;
   final String price;
@@ -24,7 +24,7 @@ class CardDeliveryFee extends StatelessWidget {
               borderRadius: BorderRadius.circular(9.sp),
               side: BorderSide(
                 width: 1.5,
-                color: isActive ? PaletteTheme.primary : Colors.transparent,
+                color: isActive ? BaseColor.primary : Colors.transparent,
               ),
             ),
             color: Colors.grey.shade200,
@@ -45,7 +45,7 @@ class CardDeliveryFee extends StatelessWidget {
                               width: 24.sp,
                               height: 24.sp,
                               colorFilter: const ColorFilter.mode(
-                                PaletteTheme.accent,
+                                BaseColor.accent,
                                 BlendMode.srcIn,
                               ),
                             ),
@@ -62,14 +62,14 @@ class CardDeliveryFee extends StatelessWidget {
                                 deliveryInfo.title,
                                 style: TextStyle(
                                       fontSize: 12.sp,
-                                      color: PaletteTheme.textPrimary,
+                                      color: BaseColor.textPrimary,
                                     ),
                               ),
                               deliveryInfo.isTomorrow
                                   ? Text(
                                       ' BESOK ( ${deliveryInfo.startDate.add(days: 1).format(pattern:"EEEE dd MMM")} )',
                                       style: TextStyle(
-                                            color: PaletteTheme.textPrimary,
+                                            color: BaseColor.textPrimary,
                                             fontSize: 12.sp,
                                           ),
                                     )
@@ -116,7 +116,7 @@ class CardDeliveryFee extends StatelessWidget {
                 'Waktu pengantaran sedang tidak tersedia',
                 style: TextStyle(
                       fontSize: 14.sp,
-                      color: PaletteTheme.cardForeground,
+                      color: BaseColor.cardForeground,
                     ),
               ),
             ),
@@ -148,7 +148,7 @@ class CardDeliveryFee extends StatelessWidget {
                           message,
                           style:
                           TextStyle(
-                                    color: PaletteTheme.textPrimary,
+                                    color: BaseColor.textPrimary,
                                     fontSize: 12.sp,
                                   ),
                         )

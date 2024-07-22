@@ -8,7 +8,7 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus/shared/routes.dart';
 
 class OrdersScreen extends GetView<OrdersController> {
-  const OrdersScreen({Key? key}) : super(key: key);
+  const OrdersScreen({super.key});
 
   //TODO improve this shitty list implementation with infinite scrolling
 
@@ -27,7 +27,7 @@ class OrdersScreen extends GetView<OrdersController> {
                 child: controller.isLoading.value
                     ? const Center(
                         child: CircularProgressIndicator(
-                          color: PaletteTheme.primary,
+                          color: BaseColor.primary,
                         ),
                       )
                     : Column(
@@ -75,7 +75,7 @@ class OrdersScreen extends GetView<OrdersController> {
       child: Text(
         "Tidak ada pesanan -_-'",
         style: TextStyle(
-              color: PaletteTheme.accent,
+              color: BaseColor.accent,
               fontSize: 14.sp,
             ),
       ),
@@ -85,9 +85,8 @@ class OrdersScreen extends GetView<OrdersController> {
 
 class _BuildOrderStateChipsLayout extends StatefulWidget {
   const _BuildOrderStateChipsLayout({
-    Key? key,
     required this.onChangedActiveIndex,
-  }) : super(key: key);
+  });
 
   final Function(OrderStatus?) onChangedActiveIndex;
 
@@ -171,11 +170,11 @@ class _BuildOrderStateChipsLayoutState
 
 class CustomChip extends StatelessWidget {
   const CustomChip({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.text,
     this.active = false,
-  }) : super(key: key);
+  });
 
   final String text;
   final VoidCallback onPressed;
@@ -185,11 +184,11 @@ class CustomChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       clipBehavior: Clip.antiAlias,
-      color: active ? PaletteTheme.primary : PaletteTheme.cardForeground,
+      color: active ? BaseColor.primary : BaseColor.cardForeground,
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.circular(20),
         side: const BorderSide(
-          color: PaletteTheme.primary,
+          color: BaseColor.primary,
         ),
       ),
       child: InkWell(
@@ -203,7 +202,7 @@ class CustomChip extends StatelessWidget {
             child: Text(
               text,
               style: TextStyle(
-                color: active ? PaletteTheme.cardForeground : PaletteTheme.primary,
+                color: active ? BaseColor.cardForeground : BaseColor.primary,
                 fontSize: 10.sp,
               ),
             ),

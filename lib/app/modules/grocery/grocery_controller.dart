@@ -6,7 +6,7 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'dart:developer' as dev;
 
-class HomeController extends GetxController {
+class GroceryController extends GetxController {
   UserRepo userRepo = Get.find<UserRepo>();
   OrderRepo orderRepo = Get.find<OrderRepo>();
   ProductRepo productRepo = Get.find<ProductRepo>();

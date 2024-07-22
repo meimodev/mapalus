@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mapalus/app/modules/home/home_controller.dart';
+import 'package:mapalus/app/modules/modules.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class SigningController extends GetxController {
-  HomeController homeController = Get.find();
+  GroceryController homeController = Get.find();
   UserRepo userRepo = Get.find();
 
   TextEditingController tecSigning = TextEditingController();
