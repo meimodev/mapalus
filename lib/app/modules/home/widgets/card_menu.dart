@@ -23,7 +23,10 @@ class CardMenu extends StatelessWidget {
         onTap: onPressed,
         child: Container(
           width: BaseSize.customWidth(90),
-          padding: const EdgeInsets.all(Insets.small),
+          padding: EdgeInsets.symmetric(
+            horizontal: BaseSize.w12,
+            vertical: BaseSize.h12,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

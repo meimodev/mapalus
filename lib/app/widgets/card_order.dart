@@ -15,14 +15,14 @@ class CardOrder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       borderRadius: BorderRadius.circular(9.sp),
-      color: BaseColor.cardForeground,
+      color: BaseColor.cardBackground1,
       clipBehavior: Clip.hardEdge,
       child: InkWell(
         onTap: onPressed,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Insets.medium,
-            vertical: Insets.small,
+          padding:  EdgeInsets.symmetric(
+            horizontal: BaseSize.w24,
+            vertical: BaseSize.h24,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -59,7 +59,7 @@ class CardOrder extends StatelessWidget {
                             order.orderTimeStamp.isSame(Jiffy.now(),unit: Unit.day)
                                 ? FontWeight.w600
                                 : FontWeight.w300,
-                        color: BaseColor.textPrimary,
+                        color: BaseColor.primaryText,
                       ),
                     ),
                   ],
@@ -108,7 +108,7 @@ class CardOrder extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Container(
               height: 1.h,
-              color: BaseColor.primary,
+              color: BaseColor.primary3,
             ),
           ),
         ],

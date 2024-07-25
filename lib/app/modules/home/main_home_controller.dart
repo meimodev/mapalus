@@ -8,16 +8,18 @@ class MainHomeController extends GetxController {
   ProductRepo productRepo = Get.find<ProductRepo>();
   AppRepo appRepo = Get.find<AppRepo>();
 
+  DateTime? currentBackPressTime;
+
   PageController pageController = PageController(
     initialPage: 0,
     keepPage: true,
   );
 
   void navigateTo(int index) {
-    pageController.animateToPage(
+    pageController.jumpToPage(
       index,
-      duration:const Duration(milliseconds: 400),
-      curve: Curves.easeIn,
+      // duration:const Duration(milliseconds: 400),
+      // curve: Curves.easeIn,
     );
   }
 }

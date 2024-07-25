@@ -50,18 +50,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     children: [
                       Icon(
                         active ? e.activeIconData ?? e.iconData : e.iconData,
-                        size: BaseSize.customRadius(30),
+                        size: BaseSize.customRadius(25),
                         color: active
-                            ? BaseColor.primary
-                            : BaseColor.cardForeground,
+                            ? BaseColor.primary3
+                            : BaseColor.cardBackground1,
                       ),
                       Gap.h4,
                       Text(
                         e.title,
                         style: BaseTypography.bodySmall.copyWith(
                           color: active
-                              ? BaseColor.primary
-                              : BaseColor.cardForeground,
+                              ? BaseColor.primary3
+                              : BaseColor.cardBackground1,
                         ),
                       ),
                     ],

@@ -11,7 +11,7 @@ class UpdateAppScreen extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        color: BaseColor.cardForeground,
+        color: BaseColor.cardBackground1,
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -25,8 +25,8 @@ class UpdateAppScreen extends StatelessWidget {
                   BlendMode.srcIn,
                 ),
               ),
-              SizedBox(height: Insets.small.h * .5),
-              SizedBox(height: Insets.large.h),
+              SizedBox(height: BaseSize.h12 * .5),
+              SizedBox(height: BaseSize.h48),
               Text(
                 'Silahkan update aplikasi\nuntuk menggunakan fitur terbaru mapalus ☺',
                 textAlign: TextAlign.center,
@@ -35,7 +35,7 @@ class UpdateAppScreen extends StatelessWidget {
                       fontWeight: FontWeight.w300,
                     ),
               ),
-              SizedBox(height: Insets.small.h),
+              SizedBox(height: BaseSize.h12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -81,14 +81,14 @@ class UpdateAppScreen extends StatelessWidget {
     required IconData icon,
   }) {
     return Material(
-      color: BaseColor.primary,
+      color: BaseColor.primary3,
       borderRadius: BorderRadius.circular(12.w),
       child: InkWell(
         onTap: onPressed,
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: Insets.small.w,
-            vertical: Insets.small.h,
+            horizontal: BaseSize.w12,
+            vertical: BaseSize.h12,
           ),
           child: Row(
             children: [

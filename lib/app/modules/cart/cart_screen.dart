@@ -43,9 +43,9 @@ class CartScreen extends GetView<CartController> {
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                  left: Insets.medium.w,
-                  right: Insets.medium.w,
-                  top: Insets.medium.h,
+                  left: BaseSize.w24,
+                  right: BaseSize.w24,
+                  top: BaseSize.h24,
                 ),
                 child: Obx(
                   () => _BuildNoteCard(
@@ -56,9 +56,9 @@ class CartScreen extends GetView<CartController> {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: Insets.medium.h * 2,
-                  right: Insets.medium.h * 2,
-                  top: Insets.small.h,
+                  left: BaseSize.h12,
+                  right: BaseSize.h12,
+                  top: BaseSize.h12,
                 ),
                 child: Obx(
                   () => Column(
@@ -84,20 +84,20 @@ class CartScreen extends GetView<CartController> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: Insets.medium.w,
-                  vertical: Insets.small.h,
+                  horizontal: BaseSize.w24,
+                  vertical: BaseSize.h12,
                 ),
                 child: Material(
                   borderRadius: BorderRadius.circular(9.sp),
                   clipBehavior: Clip.hardEdge,
-                  color: BaseColor.primary,
+                  color: BaseColor.primary3,
                   elevation: 4,
                   child: InkWell(
                     onTap: controller.onPressedSetDelivery,
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal: Insets.medium.w,
-                        vertical: Insets.small.h,
+                        horizontal: BaseSize.w24,
+                        vertical: BaseSize.h12,
                       ),
                       child: Center(
                         child: Text(
@@ -201,8 +201,8 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
         },
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: Insets.small.w,
-            vertical: Insets.small.h,
+            horizontal: BaseSize.w12,
+            vertical: BaseSize.h12,
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -240,7 +240,7 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
             fontFamily: fontFamily,
             fontWeight: FontWeight.w300,
             fontSize: 12.sp,
-            color: BaseColor.primary),
+            color: BaseColor.primary3),
         children: [
           TextSpan(
             text: hints[Random().nextInt(hints.length)],
@@ -268,11 +268,14 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
   }
 
   _buildBottomSheet() => Dialog(
-        shape:
-            ContinuousRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: ContinuousRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
         child: Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: Insets.medium.sp, vertical: Insets.medium.sp),
+            horizontal: BaseSize.w24,
+            vertical: BaseSize.w24,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
@@ -284,11 +287,11 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
                   fontSize: 12.sp,
                 ),
               ),
-              SizedBox(height: Insets.small.h),
+              Gap.h12,
               Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: Insets.small.w,
-                  vertical: 2.w,
+                  horizontal: BaseSize.w12,
+                  vertical: BaseSize.customWidth(2),
                 ),
                 decoration: BoxDecoration(
                   color: BaseColor.editable,
@@ -308,9 +311,9 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
                       autofocus: true,
                       style: TextStyle(
                         fontSize: 12.sp,
-                        color: BaseColor.textPrimary,
+                        color: BaseColor.primaryText,
                       ),
-                      cursorColor: BaseColor.primary,
+                      cursorColor: BaseColor.primary3,
                       decoration: InputDecoration(
                         hintStyle: TextStyle(
                           fontFamily: fontFamily,
@@ -324,7 +327,7 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
                   ],
                 ),
               ),
-              SizedBox(height: Insets.small.h),
+              Gap.h12,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -341,13 +344,13 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
                       },
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: Insets.medium.w,
-                          vertical: Insets.small.h,
+                          horizontal: BaseSize.w24,
+                          vertical: BaseSize.h12,
                         ),
                         child: Icon(
                           Icons.delete_outline,
                           size: 21.sp,
-                          color: BaseColor.cardForeground,
+                          color: BaseColor.cardBackground1,
                         ),
                       ),
                     ),
@@ -360,13 +363,13 @@ class _BuildNoteCardState extends State<_BuildNoteCard> {
                       onTap: onSubmitNote,
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: Insets.medium.w,
-                          vertical: Insets.small.h,
+                          horizontal: BaseSize.w24,
+                          vertical: BaseSize.h12,
                         ),
                         child: Icon(
                           Icons.check,
                           size: 21.sp,
-                          color: BaseColor.cardForeground,
+                          color: BaseColor.cardBackground1,
                         ),
                       ),
                     ),

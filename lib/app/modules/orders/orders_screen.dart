@@ -19,15 +19,15 @@ class OrdersScreen extends GetView<OrdersController> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const CardNavigation(title: 'Riwayat Pesanan'),
-          const SizedBox(height: Insets.small),
+           SizedBox(height: BaseSize.h12),
           Expanded(
             child: Obx(
               () => AnimatedSwitcher(
                 duration: const Duration(milliseconds: 400),
                 child: controller.isLoading.value
-                    ? const Center(
+                    ?  const Center(
                         child: CircularProgressIndicator(
-                          color: BaseColor.primary,
+                          color: BaseColor.primary3,
                         ),
                       )
                     : Column(
@@ -103,7 +103,7 @@ class _BuildOrderStateChipsLayoutState
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const SizedBox(width: Insets.medium),
+         SizedBox(width: BaseSize.w24),
         CustomChip(
           text: "diterima",
           active: activeIndex == 1,
@@ -184,25 +184,25 @@ class CustomChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       clipBehavior: Clip.antiAlias,
-      color: active ? BaseColor.primary : BaseColor.cardForeground,
+      color: active ? BaseColor.primary3 : BaseColor.cardBackground1,
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.circular(20),
         side: const BorderSide(
-          color: BaseColor.primary,
+          color: BaseColor.primary3,
         ),
       ),
       child: InkWell(
         onTap: onPressed,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Insets.small * .75,
-            vertical: Insets.small * .5,
+          padding:  EdgeInsets.symmetric(
+            horizontal: BaseSize.w12 * .75,
+            vertical: BaseSize.h12 * .5,
           ),
           child: Center(
             child: Text(
               text,
               style: TextStyle(
-                color: active ? BaseColor.cardForeground : BaseColor.primary,
+                color: active ? BaseColor.cardBackground1 : BaseColor.primary3,
                 fontSize: 10.sp,
               ),
             ),

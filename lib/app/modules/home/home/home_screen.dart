@@ -13,9 +13,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenWrapper(
       child: SingleChildScrollView(
-        padding: const EdgeInsets.only(
-          left: Insets.medium,
-          right: Insets.medium,
+        padding: EdgeInsets.symmetric(
+          horizontal: BaseSize.w24,
         ),
         child: Column(
           children: [
@@ -26,7 +25,7 @@ class HomeScreen extends StatelessWidget {
             Gap.h24,
             CardDeliveryAddress(
               address: 'Jln Gunung Agung, Rinegetan. Jakarta pusat',
-              onPressed: () {},
+              onPressed: () => Get.toNamed(Routes.location),
             ),
             Gap.h24,
             Row(

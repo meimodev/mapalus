@@ -27,7 +27,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
             left: 0,
             right: 0,
             top: 0,
-            bottom: Insets.medium.h,
+            bottom: BaseSize.h24,
             child: Column(
               children: [
                 Obx(
@@ -61,7 +61,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
         Expanded(
           child: Container(
             margin: EdgeInsets.symmetric(
-              horizontal: Insets.medium.w * .5,
+              horizontal: BaseSize.w12,
             ),
             child: Obx(
               () => ListView.builder(
@@ -83,21 +83,21 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
         ),
         Container(
           margin: EdgeInsets.symmetric(
-            horizontal: Insets.medium.w * .5,
+            horizontal: BaseSize.w12,
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(9.sp),
-            color: BaseColor.cardForeground,
+            color: BaseColor.cardBackground1,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                  top: Insets.small.sp,
-                  bottom: Insets.small.sp,
-                  left: Insets.medium.w,
-                  right: Insets.medium.w,
+                  top: BaseSize.h12,
+                  bottom: BaseSize.h12,
+                  left: BaseSize.w24,
+                  right: BaseSize.w24,
                 ),
                 child: Column(
                   children: [
@@ -108,7 +108,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                             context: context,
                             title: 'Dipesan',
                             timeStamp: controller.order.value.orderTimeStamp
-                                .format(pattern:'EEE, dd MMMM HH:mm'),
+                                .format(pattern: 'EEE, dd MMMM HH:mm'),
                           ),
                         ),
                         const Expanded(
@@ -127,10 +127,10 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                         // ),
                       ],
                     ),
-                    SizedBox(height: Insets.medium.h),
+                    SizedBox(height: BaseSize.h24),
                     Container(
                       padding: EdgeInsets.symmetric(
-                        vertical: Insets.small.h * .5,
+                        vertical: BaseSize.h12 * .5,
                       ),
                       decoration: const BoxDecoration(
                           border: Border(
@@ -142,11 +142,11 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                         context,
                       ),
                     ),
-                    SizedBox(height: Insets.small.h * .5),
+                    SizedBox(height: BaseSize.h6),
                     controller.order.value.paymentMethod.isNotEmpty
                         ? Container(
                             padding: EdgeInsets.symmetric(
-                              vertical: Insets.small.h * .5,
+                              vertical: BaseSize.h6,
                             ),
                             decoration: const BoxDecoration(
                                 border: Border(
@@ -157,11 +157,11 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                             child: _buildPaymentInfoLayout(context),
                           )
                         : const SizedBox(),
-                    SizedBox(height: Insets.small.h),
+                    SizedBox(height: BaseSize.h12),
                     controller.order.value.note.isNotEmpty
                         ? _BuildNoteCard(note: controller.order.value.note)
                         : const SizedBox(),
-                    SizedBox(height: Insets.small.h),
+                    SizedBox(height: BaseSize.h12),
                     Obx(
                       () => _buildRowItem(
                         context,
@@ -215,9 +215,9 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
   }
 
   _buildLoadingLayout(BuildContext context) {
-    return const Center(
+    return Center(
       child: CircularProgressIndicator(
-        color: BaseColor.primary,
+        color: BaseColor.primary3,
       ),
     );
   }
@@ -247,7 +247,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
           ],
         ),
         Material(
-          color: BaseColor.primary,
+          color: BaseColor.primary3,
           clipBehavior: Clip.hardEdge,
           elevation: 2,
           borderRadius: BorderRadius.circular(6.sp),
@@ -255,8 +255,8 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
             onTap: controller.onPressedViewMaps,
             child: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: Insets.small.w * .75,
-                vertical: Insets.small.h * .75,
+                horizontal: BaseSize.w12 * .75,
+                vertical: BaseSize.h12 * .75,
               ),
               child: Center(
                 child: Icon(
@@ -302,13 +302,13 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                         "Konfirmasi dengan admin untuk transfer manual",
                         style: TextStyle(
                           fontSize: 7.sp,
-                          color: BaseColor.textPrimary,
+                          color: BaseColor.primaryText,
                         ),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: Insets.small.h * .5),
+                          SizedBox(height: BaseSize.h6),
                           Text(
                             "BRI (Della Geovana Rey)",
                             style: TextStyle(
@@ -322,7 +322,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                               fontSize: 12.sp,
                             ),
                           ),
-                          SizedBox(height: Insets.small.h * .5),
+                          SizedBox(height: BaseSize.h6),
                           Text(
                             "Dana (Della Geovana Rey)",
                             style: TextStyle(
@@ -356,8 +356,8 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
       case OrderStatus.placed:
         return Padding(
           padding: EdgeInsets.symmetric(
-            vertical: Insets.small.h,
-            horizontal: Insets.medium.w,
+            vertical: BaseSize.h12,
+            horizontal: BaseSize.w24,
           ),
           child: const Center(
             child: Text(
@@ -368,8 +368,8 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
       case OrderStatus.accepted:
         return Padding(
           padding: EdgeInsets.symmetric(
-            vertical: Insets.small.sp,
-            horizontal: Insets.medium.w,
+            vertical: BaseSize.h12,
+            horizontal: BaseSize.w24,
           ),
           child: Column(
             children: [
@@ -390,7 +390,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
 
       case OrderStatus.delivered:
         return Material(
-          color: BaseColor.primary,
+          color: BaseColor.primary3,
           clipBehavior: Clip.hardEdge,
           borderRadius: BorderRadius.circular(9.sp),
           child: InkWell(
@@ -408,8 +408,8 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
             },
             child: Padding(
               padding: EdgeInsets.symmetric(
-                vertical: Insets.small.h,
-                horizontal: Insets.medium.w,
+                vertical: BaseSize.h12,
+                horizontal: BaseSize.w24,
               ),
               child: const Center(
                 child: Text(
@@ -481,8 +481,8 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
   }) =>
       Container(
         padding: EdgeInsets.symmetric(
-          horizontal: Insets.small.w,
-          vertical: 6.h,
+          horizontal: BaseSize.w12,
+          vertical: BaseSize.h6,
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6.sp),
@@ -515,9 +515,9 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
   ) {
     return Padding(
       padding: EdgeInsets.only(
-        left: Insets.medium.sp * 4,
-        right: Insets.medium.sp * 4,
-        bottom: Insets.small.sp,
+        left: BaseSize.w24 * 4,
+        right: BaseSize.w24 * 4,
+        bottom: BaseSize.h12,
       ),
       child: Material(
         borderRadius: BorderRadius.circular(15),
@@ -525,7 +525,10 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
         child: InkWell(
           onTap: onPressed,
           child: Padding(
-            padding: const EdgeInsets.all(Insets.small),
+            padding: EdgeInsets.symmetric(
+              horizontal: BaseSize.w12,
+              vertical: BaseSize.h12,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -557,7 +560,7 @@ class _BuildRejectedLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(
-        vertical: Insets.medium.h,
+        vertical: BaseSize.h24,
       ),
       child: Column(
         children: [
@@ -570,7 +573,7 @@ class _BuildRejectedLayout extends StatelessWidget {
             ),
           ),
           Text(
-            order.confirmTimeStamp?.format(pattern:"EEE, dd MMMM yyyy") ?? '-',
+            order.confirmTimeStamp?.format(pattern: "EEE, dd MMMM yyyy") ?? '-',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 12.sp,
@@ -595,8 +598,8 @@ class _BuildRatedLayout extends StatelessWidget {
     final rating = order.rating ?? Rating.zero();
     return Container(
       margin: EdgeInsets.only(
-        bottom: Insets.medium.h,
-        top: Insets.small.h * .5,
+        bottom: BaseSize.h24,
+        top: BaseSize.h6,
       ),
       child: Column(
         children: [
@@ -613,7 +616,7 @@ class _BuildRatedLayout extends StatelessWidget {
             itemBuilder: (_, int index) => SvgPicture.asset(
               'assets/vectors/star.svg',
               colorFilter: const ColorFilter.mode(
-                BaseColor.primary,
+                BaseColor.primary3,
                 BlendMode.srcIn,
               ),
             ),
@@ -621,15 +624,15 @@ class _BuildRatedLayout extends StatelessWidget {
             ignoreGestures: true,
             unratedColor: BaseColor.accent,
           ),
-          SizedBox(height: Insets.small.h * .5),
+          SizedBox(height: BaseSize.h6),
           Text(
-            'Dinilai ${order.finishTimeStamp?.format(pattern:"dd MMMM yyyy") ?? '-'}',
+            'Dinilai ${order.finishTimeStamp?.format(pattern: "dd MMMM yyyy") ?? '-'}',
             style: TextStyle(
               fontSize: 12.sp,
               fontWeight: FontWeight.w300,
             ),
           ),
-          SizedBox(height: Insets.small.h * .5),
+          SizedBox(height: BaseSize.h6),
           Text(
             " \"${rating.message}\" ",
             style: TextStyle(
@@ -659,8 +662,8 @@ class _BuildNoteCard extends StatelessWidget {
         color: BaseColor.editable,
       ),
       padding: EdgeInsets.symmetric(
-        horizontal: Insets.small.sp,
-        vertical: Insets.small.sp,
+        horizontal: BaseSize.w12,
+        vertical: BaseSize.h12,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -671,7 +674,7 @@ class _BuildNoteCard extends StatelessWidget {
             child: ReadMoreText(
               '$note  ',
               trimLines: 1,
-              colorClickableText: BaseColor.primary,
+              colorClickableText: BaseColor.primary3,
               trimMode: TrimMode.Line,
               style: TextStyle(
                 fontWeight: FontWeight.w300,

@@ -18,14 +18,14 @@ class CardNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: isInverted ? BaseColor.accent : BaseColor.cardForeground,
+      color: isInverted ? BaseColor.accent : BaseColor.cardBackground1,
       elevation: isInverted ? 0 : 6,
       shadowColor: isInverted ? null : Colors.grey.withOpacity(.125),
       shape: isCircular ? const CircleBorder() : null,
       child: InkWell(
         onTap: onPressedBack ?? () => Navigator.pop(context),
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: Insets.medium.w),
+          padding: EdgeInsets.symmetric(horizontal: BaseSize.w24),
           height: 60.h,
           child: Stack(
             children: [
@@ -36,7 +36,7 @@ class CardNavigation extends StatelessWidget {
                   height: 24.sp,
                   width: 24.sp,
                   colorFilter:  ColorFilter.mode(
-                    isInverted ? BaseColor.editable : BaseColor.textPrimary,
+                    isInverted ? BaseColor.editable : BaseColor.primaryText,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -46,7 +46,7 @@ class CardNavigation extends StatelessWidget {
                   title,
                   style: TextStyle(
                         color:
-                            isInverted ? BaseColor.editable : BaseColor.textPrimary,
+                            isInverted ? BaseColor.editable : BaseColor.primaryText,
                       ),
                 ),
               ),

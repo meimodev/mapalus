@@ -14,183 +14,179 @@ class LocationScreen extends GetView<LocationController> {
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
-      child: WillPopScope(
-        onWillPop: controller.onPressedBackButton,
-        child: Stack(
-          children: [
-            Positioned(
-              right: 0,
-              bottom: 0,
-              top: 0,
-              left: 0,
-              child: GoogleMapWrapper(
-                onCameraIdle: controller.onCameraIdle,
-                onMapCreated: controller.onMapCreated,
-                defaultPosition: controller.defaultPosition,
-              ),
+      // child: WillPopScope(
+      //   onWillPop: controller.onPressedBackButton,
+      child: Stack(
+        children: [
+          Positioned(
+            right: 0,
+            bottom: 0,
+            top: 0,
+            left: 0,
+            child: GoogleMapWrapper(
+              onCameraIdle: controller.onCameraIdle,
+              onMapCreated: controller.onMapCreated,
+              defaultPosition: controller.defaultPosition,
             ),
-            // Center(
-            //   child: Container(
-            //     width: 3,
-            //     height: 3,
-            //     color: Colors.red,
-            //   ),
-            // ),
-            Positioned(
-              left: 0,
-              right: 0,
-              top: 0,
-              bottom: 0,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        // const Expanded(child: SizedBox()),
-                        Obx(
-                          () => AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 400),
-                            child: controller.isLocationSelectionVisible.value
-                                ? Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      AnimatedSwitcher(
-                                        duration: 200.milliseconds,
-                                        child: controller
-                                                .isLocationSelectionButtonVisible
-                                                .value
-                                            ? Material(
-                                                color: BaseColor.primary,
-                                                clipBehavior: Clip.hardEdge,
-                                                elevation: 5,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        16.sp),
-                                                child: InkWell(
-                                                  onTap: controller
-                                                      .onPressedSelectLocation,
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                      horizontal:
-                                                          Insets.medium.w,
-                                                      vertical: Insets.small.h,
-                                                    ),
-                                                    child: Text(
-                                                      'Pilih Lokasi',
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 14.sp,
-                                                      ),
+          ),
+          // Center(
+          //   child: Container(
+          //     width: 3,
+          //     height: 3,
+          //     color: Colors.red,
+          //   ),
+          // ),
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            child: Column(
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      // const Expanded(child: SizedBox()),
+                      Obx(
+                        () => AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 400),
+                          child: controller.isLocationSelectionVisible.value
+                              ? Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    AnimatedSwitcher(
+                                      duration: 200.milliseconds,
+                                      child: controller
+                                              .isLocationSelectionButtonVisible
+                                              .value
+                                          ? Material(
+                                              color: BaseColor.primary3,
+                                              clipBehavior: Clip.hardEdge,
+                                              elevation: 5,
+                                              borderRadius:
+                                                  BorderRadius.circular(16.sp),
+                                              child: InkWell(
+                                                onTap: controller
+                                                    .onPressedSelectLocation,
+                                                child: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: BaseSize.w24,
+                                                    vertical: BaseSize.h12,
+                                                  ),
+                                                  child: Text(
+                                                    'Pilih Lokasi',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 14.sp,
                                                     ),
                                                   ),
                                                 ),
-                                              )
-                                            : const SizedBox(),
-                                      ),
-                                      SizedBox(height: Insets.small.h),
-                                      Icon(
-                                        Icons.location_on,
-                                        color: BaseColor.primary,
-                                        size: 40.sp,
-                                      ),
-                                    ],
-                                  )
-                                : const SizedBox(),
-                          ),
+                                              ),
+                                            )
+                                          : const SizedBox(),
+                                    ),
+                                    Gap.h12,
+                                    Icon(
+                                      Icons.location_on,
+                                      color: BaseColor.primary3,
+                                      size: 40.sp,
+                                    ),
+                                  ],
+                                )
+                              : const SizedBox(),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  const Expanded(child: SizedBox()),
-                ],
-              ),
+                ),
+                const Expanded(child: SizedBox()),
+              ],
             ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              top: 0,
-              child: Obx(
-                () => AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 200),
-                  child: controller.isLocationSelectionVisible.value
-                      ? const SizedBox()
-                      : Stack(
-                          children: [
-                            Positioned(
-                                top: 0,
-                                left: 0,
-                                right: 0,
-                                bottom: 0,
-                                child: Container(
-                                  color: Colors.black.withOpacity(.80),
-                                )),
-                            Positioned(
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            top: 0,
+            child: Obx(
+              () => AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                child: controller.isLocationSelectionVisible.value
+                    ? const SizedBox()
+                    : Stack(
+                        children: [
+                          Positioned(
+                              top: 0,
                               left: 0,
                               right: 0,
-                              bottom: Insets.medium.h,
-                              child: _buildBody(context),
-                            ),
-                          ],
-                        ),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 0,
-              top: Insets.small.h,
-              child: CardNavigation(
-                title: '',
-                onPressedBack: () async {
-                  if (await controller.onPressedBackButton()) {
-                    // ignore: use_build_context_synchronously
-                    Navigator.pop(context);
-                  }
-                },
-                isInverted: true,
-                isCircular: true,
-              ),
-            ),
-            Positioned(
-              top: 28.h,
-              left: 8.w,
-              right: 8.w,
-              child: Obx(
-                () => AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 400),
-                  child: controller.isLocationNoteEnabled.isTrue
-                      ? SizedBox(
-                          width: 180.w,
-                          child: _BuildCurrentLocationErrorNote(
-                            onTap: controller.onPressedLocationErrorNote,
+                              bottom: 0,
+                              child: Container(
+                                color: Colors.black.withOpacity(.80),
+                              )),
+                          Positioned(
+                            left: 0,
+                            right: 0,
+                            bottom: BaseSize.h24,
+                            child: _buildBody(context),
                           ),
-                        )
-                      : const SizedBox(),
-                ),
+                        ],
+                      ),
               ),
             ),
-          ],
-        ),
+          ),
+          Positioned(
+            left: 0,
+            top: BaseSize.h12,
+            child: CardNavigation(
+              title: '',
+              onPressedBack: () async {
+                if (await controller.onPressedBackButton()) {
+                  // ignore: use_build_context_synchronously
+                  Navigator.pop(context);
+                }
+              },
+              isInverted: true,
+              isCircular: true,
+            ),
+          ),
+          Positioned(
+            top: 28.h,
+            left: 8.w,
+            right: 8.w,
+            child: Obx(
+              () => AnimatedSwitcher(
+                duration: const Duration(milliseconds: 400),
+                child: controller.isLocationNoteEnabled.isTrue
+                    ? SizedBox(
+                        width: 180.w,
+                        child: _BuildCurrentLocationErrorNote(
+                          onTap: controller.onPressedLocationErrorNote,
+                        ),
+                      )
+                    : const SizedBox(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
   _buildBody(BuildContext context) => Container(
-        margin: EdgeInsets.symmetric(horizontal: Insets.medium.w),
+        margin: EdgeInsets.symmetric(horizontal: BaseSize.w24),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9.sp),
-          color: BaseColor.cardForeground,
+          color: BaseColor.cardBackground1,
         ),
         child: AnimatedSwitcher(
           duration: const Duration(milliseconds: 400),
           child: controller.isLoading.value
               ? Padding(
-                  padding: EdgeInsets.symmetric(vertical: Insets.large.h),
+                  padding: EdgeInsets.symmetric(vertical: BaseSize.h48),
                   child: const CircularProgressIndicator(
-                    color: BaseColor.primary,
+                    color: BaseColor.primary3,
                   ),
                 )
               : Column(
@@ -212,7 +208,7 @@ class LocationScreen extends GetView<LocationController> {
                           ),
                           Container(
                             margin: EdgeInsets.symmetric(
-                              horizontal: Insets.small.w,
+                              horizontal: BaseSize.w12,
                             ),
                             decoration: BoxDecoration(
                               border: Border.symmetric(
@@ -228,8 +224,8 @@ class LocationScreen extends GetView<LocationController> {
                                 Expanded(
                                   child: Padding(
                                     padding: EdgeInsets.only(
-                                      left: Insets.small.w,
-                                      right: Insets.small.w * .5,
+                                      left: BaseSize.w12,
+                                      right: BaseSize.w12 * .5,
                                     ),
                                     child: Column(
                                       crossAxisAlignment:
@@ -269,14 +265,14 @@ class LocationScreen extends GetView<LocationController> {
                                     onTap: controller.onPressedChangeLocation,
                                     child: Padding(
                                       padding: EdgeInsets.symmetric(
-                                        vertical: Insets.small.h,
-                                        horizontal: Insets.small.w,
+                                        vertical: BaseSize.h12,
+                                        horizontal: BaseSize.w12,
                                       ),
                                       child: Text(
                                         'Ubah Lokasi',
                                         style: TextStyle(
                                           fontSize: 10.sp,
-                                          color: BaseColor.primary,
+                                          color: BaseColor.primary3,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -286,10 +282,10 @@ class LocationScreen extends GetView<LocationController> {
                               ],
                             ),
                           ),
-                          SizedBox(height: Insets.small.h),
+                          Gap.h12,
                           Container(
                             margin: EdgeInsets.symmetric(
-                              horizontal: Insets.small.w,
+                              horizontal: BaseSize.w12,
                             ),
                             decoration: BoxDecoration(
                               border: Border.symmetric(
@@ -305,8 +301,8 @@ class LocationScreen extends GetView<LocationController> {
                                 Expanded(
                                   child: Padding(
                                     padding: EdgeInsets.only(
-                                      left: Insets.small.w,
-                                      right: Insets.small.w * .5,
+                                      left: BaseSize.w12,
+                                      right: BaseSize.w12 * .5,
                                     ),
                                     child: Column(
                                       crossAxisAlignment:
@@ -363,14 +359,14 @@ class LocationScreen extends GetView<LocationController> {
                                         _showPaymentMethodBottomSheet(context),
                                     child: Padding(
                                       padding: EdgeInsets.symmetric(
-                                        vertical: Insets.small.h,
-                                        horizontal: Insets.small.w,
+                                        vertical: BaseSize.h12,
+                                        horizontal: BaseSize.w12,
                                       ),
                                       child: Text(
                                         'Ubah Pembayaran',
                                         style: TextStyle(
                                           fontSize: 10.sp,
-                                          color: BaseColor.primary,
+                                          color: BaseColor.primary3,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -380,12 +376,12 @@ class LocationScreen extends GetView<LocationController> {
                               ],
                             ),
                           ),
-                          SizedBox(height: Insets.small.h),
+                          Gap.h12,
                           Padding(
                             padding: EdgeInsets.only(
-                              bottom: Insets.small.h,
-                              left: Insets.medium.w,
-                              right: Insets.medium.w,
+                              bottom: BaseSize.h12,
+                              left: BaseSize.h24,
+                              right: BaseSize.h24,
                             ),
                             child: Obx(
                               () => _BuildOrderInfo(
@@ -399,7 +395,7 @@ class LocationScreen extends GetView<LocationController> {
                     Material(
                       color: controller.paymentMethodSubTittle.isEmpty
                           ? BaseColor.accent.withAlpha(50)
-                          : BaseColor.primary,
+                          : BaseColor.primary3,
                       clipBehavior: Clip.hardEdge,
                       borderRadius: BorderRadius.circular(9.sp),
                       child: InkWell(
@@ -412,8 +408,8 @@ class LocationScreen extends GetView<LocationController> {
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                            vertical: Insets.small.h,
-                            horizontal: Insets.medium.w,
+                            vertical: BaseSize.h12,
+                            horizontal: BaseSize.w24,
                           ),
                           child: Obx(
                             () => Center(
@@ -560,7 +556,7 @@ class _BuildPaymentMethodBottomSheetState
       enableDrag: false,
       onClosing: () {},
       builder: (context) => Padding(
-        padding: EdgeInsets.all(Insets.medium.w),
+        padding: EdgeInsets.all(BaseSize.w24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -576,11 +572,11 @@ class _BuildPaymentMethodBottomSheetState
                   widget.totalPrice.formatNumberToCurrency(),
                   style: TextStyle(
                     fontSize: 14.sp,
-                    color: BaseColor.textPrimary,
+                    color: BaseColor.primary3,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: Insets.small.h),
+                Gap.h12,
               ],
             ),
             Expanded(
@@ -600,14 +596,14 @@ class _BuildPaymentMethodBottomSheetState
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        SizedBox(height: Insets.small.h),
+                        Gap.h12,
                         Container(
                           padding: EdgeInsets.symmetric(
-                              horizontal: Insets.small.w,
-                              vertical: Insets.small.h * .5),
+                              horizontal: BaseSize.w12,
+                              vertical: BaseSize.h12 * .5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6),
-                            color: BaseColor.primary.withOpacity(.25),
+                            color: BaseColor.primary3.withOpacity(.25),
                           ),
                           child: RichText(
                             text: TextSpan(
@@ -622,7 +618,7 @@ class _BuildPaymentMethodBottomSheetState
                                   text: " jumlah uang ",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: BaseColor.textPrimary,
+                                    color: BaseColor.primary3,
                                   ),
                                 ),
                                 TextSpan(
@@ -632,7 +628,7 @@ class _BuildPaymentMethodBottomSheetState
                             ),
                           ),
                         ),
-                        SizedBox(height: Insets.small.h * .5),
+                        SizedBox(height: BaseSize.h12 * .5),
                         Container(
                           decoration: BoxDecoration(
                             color: BaseColor.editable,
@@ -648,11 +644,11 @@ class _BuildPaymentMethodBottomSheetState
                               autocorrect: false,
                               keyboardType: TextInputType.number,
                               style: TextStyle(
-                                color: BaseColor.textPrimary,
+                                color: BaseColor.primary3,
                                 fontFamily: fontFamily,
                                 fontSize: 10.sp,
                               ),
-                              cursorColor: BaseColor.primary,
+                              cursorColor: BaseColor.primary3,
                               textInputAction: TextInputAction.done,
                               decoration: InputDecoration(
                                 hintStyle: TextStyle(
@@ -662,7 +658,7 @@ class _BuildPaymentMethodBottomSheetState
                                 labelStyle: TextStyle(
                                   fontSize: 10.sp,
                                   fontWeight: FontWeight.w300,
-                                  color: BaseColor.textPrimary,
+                                  color: BaseColor.primary3,
                                 ),
                                 isDense: true,
                                 border: const OutlineInputBorder(
@@ -687,9 +683,9 @@ class _BuildPaymentMethodBottomSheetState
                           child: moneyAmountErrorText.isNotEmpty
                               ? Padding(
                                   padding: EdgeInsets.only(
-                                    left: Insets.small.w,
-                                    right: Insets.small.w,
-                                    top: Insets.small.h * .25,
+                                    left: BaseSize.w12,
+                                    right: BaseSize.w12,
+                                    top: BaseSize.h12 * .25,
                                   ),
                                   child: Align(
                                     alignment: Alignment.centerLeft,
@@ -722,7 +718,7 @@ class _BuildPaymentMethodBottomSheetState
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: Insets.small.h * .5),
+                        SizedBox(height: BaseSize.h12 * .5),
                         Text(
                           "BRI (Della Geovana Rey)",
                           style: TextStyle(
@@ -736,7 +732,7 @@ class _BuildPaymentMethodBottomSheetState
                             fontSize: 10.sp,
                           ),
                         ),
-                        SizedBox(height: Insets.small.h * .5),
+                        SizedBox(height: BaseSize.h12 * .5),
                         Text(
                           "Dana (Della Geovana Rey)",
                           style: TextStyle(
@@ -793,12 +789,12 @@ class _BuildPaymentMethodBottomSheetState
               ),
             ),
             Material(
-              borderRadius: BorderRadius.circular(Insets.small.w),
-              color: BaseColor.primary,
+              borderRadius: BorderRadius.circular(BaseSize.w12),
+              color: BaseColor.primary3,
               child: InkWell(
                 onTap: onSubmitPaymentBottomSheetSelectionCard,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: Insets.small.h),
+                  padding: EdgeInsets.symmetric(vertical: BaseSize.h12),
                   child: const Center(child: Text("Pilih Pembayaran")),
                 ),
               ),
@@ -860,10 +856,13 @@ class _BuildDeliveryFeeSelectorState extends State<_BuildDeliveryFeeSelector> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(Insets.small.sp),
+      padding: EdgeInsets.symmetric(
+        horizontal: BaseSize.w12,
+        vertical: BaseSize.h12,
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(9.sp),
-        color: BaseColor.cardForeground,
+        color: BaseColor.cardBackground1,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -876,7 +875,7 @@ class _BuildDeliveryFeeSelectorState extends State<_BuildDeliveryFeeSelector> {
             ),
           ),
           for (DeliveryInfo delivery in widget.deliveries) ...[
-            SizedBox(height: Insets.small.h),
+            Gap.h12,
             CardDeliveryFee(
               deliveryInfo: delivery,
               isActive: activeIndex == delivery.id,
@@ -901,7 +900,7 @@ class _BuildDeliveryFeeSelectorState extends State<_BuildDeliveryFeeSelector> {
               },
             ),
           ]
-          // SizedBox(height: Insets.small.h),
+          // Gap.h12,
           // CardDeliveryFee(
           //   deliveryTime: 'Sekarang',
           //   price: 'Rp. 100.000',
@@ -912,7 +911,7 @@ class _BuildDeliveryFeeSelectorState extends State<_BuildDeliveryFeeSelector> {
           //     });
           //   },
           // ),
-          // SizedBox(height: Insets.small.h),
+          // Gap.h12,
           // CardDeliveryFee(
           //   deliveryTime: 'Jam 7 - 8 Pagi',
           //   price: 'Rp. 100.000',
@@ -923,7 +922,7 @@ class _BuildDeliveryFeeSelectorState extends State<_BuildDeliveryFeeSelector> {
           //     });
           //   },
           // ),
-          // SizedBox(height: Insets.small.h),
+          // Gap.h12,
           // CardDeliveryFee(
           //   deliveryTime: 'Jam 10 - 11 Siang',
           //   price: 'Rp. 100.000',
@@ -934,7 +933,7 @@ class _BuildDeliveryFeeSelectorState extends State<_BuildDeliveryFeeSelector> {
           //     });
           //   },
           // ),
-          // SizedBox(height: Insets.small.h),
+          // Gap.h12,
           // CardDeliveryFee(
           //   deliveryTime: 'Jam 2 - 3 Sore',
           //   price: 'Rp. 100.000',
@@ -1053,26 +1052,26 @@ class _BuildCurrentLocationErrorNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: BaseColor.accent.withOpacity(.75),
-      borderRadius: BorderRadius.circular(Insets.medium),
+      borderRadius: BorderRadius.circular(BaseSize.radiusMd),
       elevation: 3,
       child: InkWell(
         onTap: onTap,
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: Insets.medium.w * .5,
-            vertical: Insets.small.h * .5,
+            horizontal: BaseSize.w24 * .5,
+            vertical: BaseSize.h12 * .5,
           ),
           child: Row(
             children: [
               const Icon(
                 Icons.info_outline_rounded,
-                color: BaseColor.primary,
+                color: BaseColor.primary3,
               ),
               SizedBox(width: 3.w),
               Text(
                 "Lokasi Tidak diaktifkan",
                 style: TextStyle(
-                  color: BaseColor.primary,
+                  color: BaseColor.primary3,
                   fontSize: 12.sp,
                 ),
               ),

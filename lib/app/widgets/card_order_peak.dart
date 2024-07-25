@@ -12,7 +12,7 @@ class CardOrdersPeak extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: BaseColor.primary,
+      color: BaseColor.primary3,
       borderRadius: BorderRadius.only(
         bottomLeft: Radius.circular(18.sp),
         topLeft: Radius.circular(18.sp),
@@ -22,24 +22,24 @@ class CardOrdersPeak extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         child: Padding(
-          padding: EdgeInsets.all(Insets.small.sp),
+          padding: EdgeInsets.all(BaseSize.w12),
           child: Row(
             children: [
               SizedBox(width: 3.w),
               SvgPicture.asset(
                 "assets/vectors/bag.svg",
                 colorFilter: const ColorFilter.mode(
-                  BaseColor.textPrimary,
+                  BaseColor.primaryText,
                   BlendMode.srcIn,
                 ),
                 height: 18.sp,
                 width: 18.sp,
               ),
-              SizedBox(width: Insets.small.w * .75),
+              SizedBox(width: BaseSize.w12 * .75),
               Text(
                 'Pesanan anda',
                 style: TextStyle(
-                      color: BaseColor.textPrimary,
+                      color: BaseColor.primaryText,
                       fontWeight: FontWeight.w400,
                       fontSize: 12.sp,
                     ),

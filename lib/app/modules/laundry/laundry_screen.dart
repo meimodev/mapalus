@@ -14,9 +14,33 @@ class LaundryScreen extends GetView<LaundryController> {
           horizontal: BaseSize.w12,
         ),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
           children: [
-            Text("Laundry Screen")
+            Text(
+              "MAPALUS",
+              style: BaseTypography.displayLarge.bold.toPrimary,
+            ),
+            Gap.h12,
+            Text(
+              "Karena laundry punya orang, makanya tim mapalus perlu waktu untuk belajar dlu ya bro",
+              textAlign: TextAlign.center,
+              style: BaseTypography.displaySmall,
+            ),
+            Gap.h24,
+            Text(
+              "Tunggu layanan antar jemput laundry langsung dari aplikasi ya guys yaaaaa",
+              textAlign: TextAlign.center,
+              style: BaseTypography.displaySmall,
+            ),
+            Gap.h48,
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Back"),
+            )
           ],
         ),
       ),

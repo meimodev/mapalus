@@ -22,13 +22,13 @@ class PaymentMethodSelectionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: Insets.small.h * .5),
+      padding: EdgeInsets.symmetric(vertical: BaseSize.h12 * .5),
       child: Material(
         color: available ? Colors.grey.shade200 : Colors.grey.shade300,
         clipBehavior: Clip.hardEdge,
         shape: ContinuousRectangleBorder(
           side: activate
-              ? const BorderSide(color: BaseColor.primary, width: 1.5)
+              ? const BorderSide(color: BaseColor.primary3, width: 1.5)
               : BorderSide.none,
           borderRadius: BorderRadius.circular(12.w),
         ),
@@ -36,8 +36,8 @@ class PaymentMethodSelectionCard extends StatelessWidget {
           onTap: available ? onPressed : null,
           child: Padding(
             padding: EdgeInsets.symmetric(
-              vertical: Insets.small.h,
-              horizontal: Insets.small.w,
+              vertical: BaseSize.h12,
+              horizontal: BaseSize.w12,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +45,7 @@ class PaymentMethodSelectionCard extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                        color: available ? BaseColor.textPrimary : Colors.grey.shade400,
+                        color: available ? BaseColor.primaryText : Colors.grey.shade400,
                         fontSize: 12.sp,
                       ),
                 ),

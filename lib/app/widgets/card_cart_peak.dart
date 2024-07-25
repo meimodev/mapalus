@@ -49,8 +49,8 @@ class CardCartPeak extends StatelessWidget {
           width: 210.w,
           child: Padding(
             padding: EdgeInsets.symmetric(
-              vertical: Insets.small.w,
-              horizontal: Insets.small.w,
+              vertical: BaseSize.w12,
+              horizontal: BaseSize.w12,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -68,7 +68,7 @@ class CardCartPeak extends StatelessWidget {
                   padding: EdgeInsets.all(9.sp),
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: BaseColor.primary,
+                    color: BaseColor.primary3,
                   ),
                   child: SvgPicture.asset(
                     "assets/vectors/cart.svg",
@@ -76,7 +76,7 @@ class CardCartPeak extends StatelessWidget {
                     height: 24.w,
                   ),
                 ),
-                SizedBox(width: Insets.small.w),
+                SizedBox(width: BaseSize.w12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
@@ -87,7 +87,7 @@ class CardCartPeak extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.fade,
                       style: TextStyle(
-                            color: BaseColor.cardForeground,
+                            color: BaseColor.cardBackground1,
                             fontWeight: FontWeight.w400,
                             fontSize: 14.sp,
                           ),

@@ -18,15 +18,15 @@ class CardCartItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(
-        horizontal: Insets.medium.w * .5,
-        vertical: Insets.small.h * .5,
+        horizontal: BaseSize.w24 * .5,
+        vertical: BaseSize.h12 * .5,
       ),
       padding: EdgeInsets.symmetric(
-        horizontal: Insets.medium.w * .5,
-        vertical: Insets.small.h,
+        horizontal: BaseSize.w24 * .5,
+        vertical: BaseSize.h12,
       ),
       decoration: BoxDecoration(
-          color: BaseColor.cardForeground,
+          color: BaseColor.cardBackground1,
           borderRadius: BorderRadius.circular(9.sp)),
       child: Row(
         children: [
@@ -41,7 +41,7 @@ class CardCartItem extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(width: Insets.small.w),
+          SizedBox(width: BaseSize.w12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +66,7 @@ class CardCartItem extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(width: Insets.small.w),
+          SizedBox(width: BaseSize.w12),
           Material(
             color: Colors.transparent,
             child: InkWell(

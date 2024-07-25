@@ -13,7 +13,7 @@ class DeleteAccountButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       shape: ContinuousRectangleBorder(
-        borderRadius: BorderRadius.circular(Insets.small.w * 1.5),
+        borderRadius: BorderRadius.circular(BaseSize.w12 * 1.5),
         side: const BorderSide(
           width: .5,
           color: BaseColor.negative,
@@ -29,7 +29,7 @@ class DeleteAccountButton extends StatelessWidget {
           ));
         },
         child: Padding(
-          padding: EdgeInsets.all(Insets.small.w),
+          padding: EdgeInsets.all(BaseSize.w12),
           child: Text(
             'Hapus Akun',
             style: TextStyle(
@@ -85,12 +85,12 @@ class _BuildBottomSheetDeleteAccountState
       clipBehavior: Clip.hardEdge,
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.vertical(
-          top: Radius.circular(Insets.large.w),
+          top: Radius.circular(BaseSize.w48),
         ),
       ),
       onClosing: () {},
       builder: (BuildContext context) => Container(
-        padding: EdgeInsets.all(Insets.medium.w),
+        padding: EdgeInsets.all(BaseSize.w24),
         // height: 270.h,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -99,7 +99,7 @@ class _BuildBottomSheetDeleteAccountState
               'Perhatian!',
               style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
             ),
-            SizedBox(width: Insets.small.h),
+            SizedBox(width: BaseSize.h12),
             RichText(
               textAlign: TextAlign.justify,
               text: TextSpan(
@@ -121,10 +121,10 @@ class _BuildBottomSheetDeleteAccountState
                 ],
               ),
             ),
-            SizedBox(height: Insets.medium.h),
+            SizedBox(height: BaseSize.h24),
             Container(
               padding: EdgeInsets.symmetric(
-                horizontal: Insets.small.w,
+                horizontal: BaseSize.w12,
                 vertical: 2.w,
               ),
               decoration: BoxDecoration(
@@ -146,7 +146,7 @@ class _BuildBottomSheetDeleteAccountState
                       fontFamily: fontFamily,
                       fontSize: 14.sp,
                     ),
-                    cursorColor: BaseColor.primary,
+                    cursorColor: BaseColor.primary3,
                     decoration: InputDecoration(
                       hintStyle: TextStyle(
                         fontFamily: fontFamily,
@@ -160,7 +160,7 @@ class _BuildBottomSheetDeleteAccountState
                 ],
               ),
             ),
-            SizedBox(height: Insets.small.h),
+            SizedBox(height: BaseSize.h12),
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 400),
               child: isDeleteButtonEnabled
@@ -168,12 +168,12 @@ class _BuildBottomSheetDeleteAccountState
                       color: BaseColor.negative,
                       elevation: 5,
                       shape: ContinuousRectangleBorder(
-                        borderRadius: BorderRadius.circular(Insets.small.w),
+                        borderRadius: BorderRadius.circular(BaseSize.w12),
                       ),
                       child: InkWell(
                         onTap: widget.onPressedPositive,
                         child: Padding(
-                          padding: EdgeInsets.all(Insets.small.w),
+                          padding: EdgeInsets.all(BaseSize.w12),
                           child: Text(
                             'HAPUS AKUN',
                             style:

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mapalus/app/modules/home/widgets/widgets.dart';
 import 'package:mapalus/app/modules/modules.dart';
 import 'package:mapalus/shared/model/screen.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class MainHomeScreen extends GetView<MainHomeController> {
   const MainHomeScreen({super.key});
@@ -33,22 +35,40 @@ class MainHomeScreen extends GetView<MainHomeController> {
 
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-            Expanded(
-              child: PageView(
-                allowImplicitScrolling: false,
-                physics: const NeverScrollableScrollPhysics(),
-                controller: controller.pageController,
-                children: screens.map((e) => e.widget).toList(),
+        body: PopScope(
+          onPopInvoked: (_) {
+            DateTime now = DateTime.now();
+            if (controller.currentBackPressTime == null ||
+                now.difference(controller.currentBackPressTime!) >
+                    const Duration(seconds: 2)) {
+              controller.currentBackPressTime = now;
+              Fluttertoast.showToast(
+                backgroundColor: BaseColor.primary3,
+                textColor: BaseColor.accent,
+                msg: "Press again to exit",
+              );
+              return;
+            }
+            Navigator.pop(context);
+          },
+          canPop: false,
+          child: Column(
+            children: [
+              Expanded(
+                child: PageView(
+                  allowImplicitScrolling: false,
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: controller.pageController,
+                  children: screens.map((e) => e.widget).toList(),
+                ),
               ),
-            ),
-            BottomNavBar(
-              activeIndex: 0,
-              onPressed: controller.navigateTo,
-              screens: screens,
-            ),
-          ],
+              BottomNavBar(
+                activeIndex: 0,
+                onPressed: controller.navigateTo,
+                screens: screens,
+              ),
+            ],
+          ),
         ),
       ),
     );

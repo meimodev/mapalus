@@ -16,10 +16,10 @@ class DialogAnnouncement extends StatelessWidget {
     return Dialog(
       child: Container(
         padding: EdgeInsets.only(
-          top: Insets.medium.h,
-          left: Insets.medium.w,
-          right: Insets.medium.w,
-          bottom: Insets.small.h,
+          top: BaseSize.h24,
+          left: BaseSize.w24,
+          right: BaseSize.w24,
+          bottom: BaseSize.h12,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -31,7 +31,7 @@ class DialogAnnouncement extends StatelessWidget {
                 fontSize: 20.sp,
               ),
             ),
-            SizedBox(height: Insets.small.h),
+            SizedBox(height: BaseSize.h12),
             announcement.imageUrl.isNotEmpty
                 ? SizedBox(
                     height: 150,
@@ -41,7 +41,7 @@ class DialogAnnouncement extends StatelessWidget {
                   )
                 : const SizedBox(),
             announcement.imageUrl.isNotEmpty
-                ? SizedBox(height: Insets.small.h)
+                ? SizedBox(height: BaseSize.h12)
                 : const SizedBox(),
             Text(
               announcement.description,
@@ -50,23 +50,23 @@ class DialogAnnouncement extends StatelessWidget {
                 fontWeight: FontWeight.w300,
               ),
             ),
-            SizedBox(height: Insets.small.h),
+            SizedBox(height: BaseSize.h12),
             Material(
               borderRadius: BorderRadius.circular(12),
               color: BaseColor.accent,
               child: InkWell(
                 onTap: () => Navigator.pop(context),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Insets.small * 1.5,
-                    vertical: Insets.small,
+                  padding:  EdgeInsets.symmetric(
+                    horizontal: BaseSize.w12 * 1.5,
+                    vertical: BaseSize.h12,
                   ),
                   child: Text(
                     "OK",
                     style: TextStyle(
                       fontSize: 10.sp,
                       fontWeight: FontWeight.bold,
-                      color: BaseColor.primary,
+                      color: BaseColor.primary3,
                     ),
                   ),
                 ),

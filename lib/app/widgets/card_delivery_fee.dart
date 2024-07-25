@@ -24,7 +24,7 @@ class CardDeliveryFee extends StatelessWidget {
               borderRadius: BorderRadius.circular(9.sp),
               side: BorderSide(
                 width: 1.5,
-                color: isActive ? BaseColor.primary : Colors.transparent,
+                color: isActive ? BaseColor.primary3 : Colors.transparent,
               ),
             ),
             color: Colors.grey.shade200,
@@ -33,8 +33,8 @@ class CardDeliveryFee extends StatelessWidget {
               onTap: onPressed,
               child: Container(
                 padding: EdgeInsets.symmetric(
-                  vertical: Insets.small.h * .5,
-                  horizontal: Insets.medium.w * .5,
+                  vertical: BaseSize.h12 * .5,
+                  horizontal: BaseSize.w24 * .5,
                 ),
                 child: Row(
                   children: [
@@ -49,7 +49,7 @@ class CardDeliveryFee extends StatelessWidget {
                                 BlendMode.srcIn,
                               ),
                             ),
-                            SizedBox(width: Insets.small.w * .85),
+                            Gap.h12,
                           ]
                         : [const SizedBox()],
                     Expanded(
@@ -62,14 +62,14 @@ class CardDeliveryFee extends StatelessWidget {
                                 deliveryInfo.title,
                                 style: TextStyle(
                                       fontSize: 12.sp,
-                                      color: BaseColor.textPrimary,
+                                      color: BaseColor.primaryText,
                                     ),
                               ),
                               deliveryInfo.isTomorrow
                                   ? Text(
                                       ' BESOK ( ${deliveryInfo.startDate.add(days: 1).format(pattern:"EEEE dd MMM")} )',
                                       style: TextStyle(
-                                            color: BaseColor.textPrimary,
+                                            color: BaseColor.primaryText,
                                             fontSize: 12.sp,
                                           ),
                                     )
@@ -116,7 +116,7 @@ class CardDeliveryFee extends StatelessWidget {
                 'Waktu pengantaran sedang tidak tersedia',
                 style: TextStyle(
                       fontSize: 14.sp,
-                      color: BaseColor.cardForeground,
+                      color: BaseColor.cardBackground1,
                     ),
               ),
             ),
@@ -124,8 +124,8 @@ class CardDeliveryFee extends StatelessWidget {
         },
         child: Container(
           padding: EdgeInsets.symmetric(
-            vertical: Insets.small.h * .5,
-            horizontal: Insets.medium.w * .5,
+            vertical: BaseSize.h12 * .5,
+            horizontal: BaseSize.w24 * .5,
           ),
           child: Row(
             children: [
@@ -148,7 +148,7 @@ class CardDeliveryFee extends StatelessWidget {
                           message,
                           style:
                           TextStyle(
-                                    color: BaseColor.textPrimary,
+                                    color: BaseColor.primaryText,
                                     fontSize: 12.sp,
                                   ),
                         )

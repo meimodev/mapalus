@@ -35,7 +35,7 @@ class _DialogRatingState extends State<DialogRating> {
         clipBehavior: Clip.hardEdge,
         padding: EdgeInsets.all(12.sp),
         decoration: BoxDecoration(
-          color: BaseColor.cardForeground,
+          color: BaseColor.cardBackground1,
           borderRadius: BorderRadius.circular(9.sp),
         ),
         child: Column(
@@ -48,10 +48,10 @@ class _DialogRatingState extends State<DialogRating> {
                     fontSize: 14.sp,
                   ),
             ),
-            SizedBox(height: Insets.medium.h),
+            SizedBox(height: BaseSize.h24),
             Container(
               height: 210.h,
-              margin: EdgeInsets.symmetric(horizontal: Insets.small.w),
+              margin: EdgeInsets.symmetric(horizontal: BaseSize.w12),
               padding: EdgeInsets.symmetric(
                 horizontal: 9.w,
               ),
@@ -71,7 +71,7 @@ class _DialogRatingState extends State<DialogRating> {
                   fontFamily: fontFamily,
                   fontSize: 14.sp,
                 ),
-                cursorColor: BaseColor.primary,
+                cursorColor: BaseColor.primary3,
                 decoration: InputDecoration(
                   hintStyle: TextStyle(
                     fontFamily: fontFamily,
@@ -83,7 +83,7 @@ class _DialogRatingState extends State<DialogRating> {
                 ),
               ),
             ),
-            SizedBox(height: Insets.small.h),
+            SizedBox(height: BaseSize.h12),
             SizedBox(
               width: 50.w,
               height: 50.h,
@@ -103,7 +103,7 @@ class _DialogRatingState extends State<DialogRating> {
                       SvgPicture.asset(
                     'assets/vectors/star.svg',
                     colorFilter: const ColorFilter.mode(
-                      BaseColor.primary,
+                      BaseColor.primary3,
                       BlendMode.srcIn,
                     ),
                   ),
@@ -112,9 +112,9 @@ class _DialogRatingState extends State<DialogRating> {
                 ),
               ),
             ),
-            SizedBox(height: Insets.small.h),
+            SizedBox(height: BaseSize.h12),
             Material(
-              color: BaseColor.primary,
+              color: BaseColor.primary3,
               borderRadius: BorderRadius.circular(9.sp),
               child: InkWell(
                 onTap: () {
@@ -122,8 +122,8 @@ class _DialogRatingState extends State<DialogRating> {
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: Insets.small.w,
-                    vertical: Insets.small.h,
+                    horizontal: BaseSize.w12,
+                    vertical: BaseSize.h12,
                   ),
                   child: const Center(
                     child: Text(

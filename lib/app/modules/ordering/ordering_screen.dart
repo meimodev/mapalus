@@ -9,10 +9,10 @@ class OrderingScreen extends GetView<OrderingController> {
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
-      child: WillPopScope(
-        onWillPop: () {
+      child: PopScope(
+        canPop: false,
+        onPopInvoked: (_) {
           controller.onPressedBack();
-          return Future.value(false);
         },
         child: Stack(
           children: [
@@ -30,21 +30,21 @@ class OrderingScreen extends GetView<OrderingController> {
                           children: [
                             Padding(
                               padding:
-                                  EdgeInsets.only(left: Insets.small.w * 2.4),
+                                  EdgeInsets.only(left: BaseSize.w12 * 2.4),
                               child: SvgPicture.asset(
                                 'assets/vectors/order-received.svg',
                                 height: 120.sp,
                                 width: 120.sp,
                               ),
                             ),
-                            SizedBox(height: Insets.medium.h),
+                            SizedBox(height: BaseSize.h24),
                             Text(
                               'Pesanan Diterima',
                               style: TextStyle(
                                     fontSize: 14.sp,
                                   ),
                             ),
-                            SizedBox(height: Insets.small.h),
+                            SizedBox(height: BaseSize.h12),
                             Text(
                               'Anda akan segera dihubungi \nsaat waktu pengantaran nanti',
                               style: TextStyle(
@@ -52,7 +52,7 @@ class OrderingScreen extends GetView<OrderingController> {
                                     fontWeight: FontWeight.w300,
                                   ),
                             ),
-                            SizedBox(height: Insets.medium.h * 1.5),
+                            SizedBox(height: BaseSize.h24 * 1.5),
                           ],
                         ),
                 ),
@@ -61,7 +61,7 @@ class OrderingScreen extends GetView<OrderingController> {
             Positioned(
               left: 0,
               right: 0,
-              bottom: Insets.medium.h,
+              bottom: BaseSize.h24,
               child: Obx(
                 () => AnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
@@ -69,7 +69,7 @@ class OrderingScreen extends GetView<OrderingController> {
                       ? const SizedBox()
                       : Padding(
                           padding: EdgeInsets.symmetric(
-                            horizontal: Insets.medium.w,
+                            horizontal: BaseSize.w24,
                           ),
                           child: Column(
                             children: [
@@ -77,7 +77,7 @@ class OrderingScreen extends GetView<OrderingController> {
                                 text: "Lihat Pesanan",
                                 onPressed: controller.onPressedSeeOrder,
                               ),
-                              SizedBox(height: Insets.small.h),
+                              SizedBox(height: BaseSize.h12),
                               _buildButton(
                                 text: "Kembali",
                                 isSecondary: true,
@@ -105,13 +105,13 @@ class OrderingScreen extends GetView<OrderingController> {
       child: Material(
         elevation: 2,
         borderRadius: BorderRadius.circular(9.sp),
-        color: isSecondary ? Colors.grey : BaseColor.primary,
+        color: isSecondary ? Colors.grey : BaseColor.primary3,
         clipBehavior: Clip.hardEdge,
         child: InkWell(
           onTap: onPressed,
           child: Padding(
             padding: EdgeInsets.symmetric(
-              vertical: isSecondary ? Insets.small.w * .75 : Insets.small.w,
+              vertical: isSecondary ? BaseSize.w12 * .75 : BaseSize.w12,
             ),
             child: Center(
               child: Text(
@@ -139,8 +139,8 @@ class OrderingScreen extends GetView<OrderingController> {
                   fontSize: 14.sp,
                 ),
           ),
-          SizedBox(height: Insets.medium.h),
-          const CircularProgressIndicator(color: BaseColor.primary),
+          SizedBox(height: BaseSize.h24),
+          const CircularProgressIndicator(color: BaseColor.primary3),
         ],
       ),
     );

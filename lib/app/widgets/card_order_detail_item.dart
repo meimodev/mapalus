@@ -19,13 +19,13 @@ class CardOrderDetailItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 6.w,
-        vertical: Insets.small.h,
+        horizontal: BaseSize.w6,
+        vertical: BaseSize.h12,
       ),
       margin: EdgeInsets.symmetric(vertical: 6.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(9.sp),
-        color: BaseColor.cardForeground,
+        color: BaseColor.cardBackground1,
       ),
       child: Row(
         children: [

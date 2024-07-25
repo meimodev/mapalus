@@ -36,7 +36,7 @@ class CardCategory extends StatelessWidget {
                   width: 45.w,
                   height: 45.w,
                   decoration: BoxDecoration(
-                    color: isSelected ? BaseColor.accent : BaseColor.cardForeground,
+                    color: isSelected ? BaseColor.accent : BaseColor.cardBackground1,
                     borderRadius: BorderRadius.all(
                       Radius.circular(12.sp),
                     ),
@@ -48,7 +48,7 @@ class CardCategory extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: Insets.small.h * .5),
+              SizedBox(height: BaseSize.h12 * .5),
               SizedBox(
                 child: Text(
                   name,
@@ -56,7 +56,7 @@ class CardCategory extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                         fontSize: 12.sp,
-                        color: isSelected ? BaseColor.textPrimary : Colors.grey,
+                        color: isSelected ? BaseColor.primaryText : Colors.grey,
                       ),
                 ),
               ),

@@ -85,7 +85,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                 clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(9.sp)),
-                  color: BaseColor.cardForeground,
+                  color: BaseColor.cardBackground1,
                 ),
                 height: 500.h,
                 child: Column(
@@ -97,7 +97,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                     Expanded(
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: Insets.medium.w,
+                          horizontal: BaseSize.w24,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -116,7 +116,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                                 ),
                                 isKeyboardVisible
                                     ? const SizedBox()
-                                    : SizedBox(height: Insets.small.h),
+                                    : SizedBox(height: BaseSize.h12),
                                 Text(
                                   '${widget.product.priceF} / ${widget.product.unit}',
                                   textAlign: TextAlign.center,
@@ -127,7 +127,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                                 ),
                                 isKeyboardVisible
                                     ? const SizedBox()
-                                    : SizedBox(height: Insets.medium.h),
+                                    : SizedBox(height: BaseSize.h24),
                                 isKeyboardVisible
                                     ? const SizedBox()
                                     : Text(
@@ -144,8 +144,8 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                             ),
                             Padding(
                               padding: EdgeInsets.only(
-                                top: isKeyboardVisible ? 0 : Insets.medium.h,
-                                bottom: Insets.medium.h,
+                                top: isKeyboardVisible ? 0 : BaseSize.h24,
+                                bottom: BaseSize.h24,
                               ),
                               child: widget.product.isAvailable
                                   ? _buildAvailableWidgets(context)
@@ -158,7 +158,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                     Material(
                       color: widget.product.isAvailable
                           ? errorMessagePrice.isEmpty
-                              ? BaseColor.primary
+                              ? BaseColor.primary3
                               : Colors.grey
                           : BaseColor.editable,
                       borderRadius: BorderRadius.all(Radius.circular(9.sp)),
@@ -181,7 +181,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                         },
                         child: Container(
                           padding:
-                              EdgeInsets.symmetric(vertical: Insets.small.h),
+                              EdgeInsets.symmetric(vertical: BaseSize.h12),
                           child: Center(
                             child: Text(
                               widget.product.isAvailable
@@ -190,7 +190,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                               style: TextStyle(
                                     fontWeight: FontWeight.w400,
                                     color: widget.product.isAvailable
-                                        ? BaseColor.textPrimary
+                                        ? BaseColor.primaryText
                                         : Colors.grey,
                                   ),
                             ),
@@ -417,7 +417,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                       fontWeight: FontWeight.w300,
                     ),
               ),
-              SizedBox(width: Insets.small.w),
+              SizedBox(width: BaseSize.w12),
             ],
           ),
         ),
@@ -489,13 +489,13 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
 
     return Padding(
       padding: EdgeInsets.only(
-        bottom: Insets.small.h * 1,
-        left: Insets.small.w * .25,
-        right: Insets.small.w * .25,
+        bottom: BaseSize.h12 * 1,
+        left: BaseSize.w12 * .25,
+        right: BaseSize.w12 * .25,
       ),
       child: Material(
         clipBehavior: Clip.hardEdge,
-        color: BaseColor.primary,
+        color: BaseColor.primary3,
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
@@ -512,8 +512,8 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
           },
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: Insets.small.w * .75,
-              vertical: Insets.small.h * .25,
+              horizontal: BaseSize.w12 * .75,
+              vertical: BaseSize.h12 * .25,
             ),
             child: Text(
               text,
@@ -540,7 +540,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
               fontWeight: FontWeight.w300,
             ),
           ),
-          SizedBox(height: Insets.small.h * .5),
+          SizedBox(height: BaseSize.h12 * .5),
         ],
       );
     }
@@ -550,7 +550,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
 
   _buildErrorMinimumPriceRow() {
     if (errorMessagePrice.isEmpty) {
-      return SizedBox(height: Insets.small.h);
+      return SizedBox(height: BaseSize.h12);
     }
 
     return Column(

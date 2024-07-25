@@ -16,13 +16,16 @@ class CardDeliveryAddress extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       shape: ContinuousRectangleBorder(
-        borderRadius: BorderRadius.circular(Roundness.small),
+        borderRadius: BorderRadius.circular(BaseSize.roundnessSmall),
         side: const BorderSide(color: BaseColor.accent),
       ),
       child: InkWell(
         onTap: onPressed,
         child: Padding(
-          padding: const EdgeInsets.all(Insets.small),
+          padding: EdgeInsets.symmetric(
+            horizontal: BaseSize.w12,
+            vertical: BaseSize.h12,
+          ),
           child: Row(
             children: [
               Expanded(
@@ -37,7 +40,7 @@ class CardDeliveryAddress extends StatelessWidget {
                       address,
                       overflow: TextOverflow.ellipsis,
                       style: BaseTypography.titleLarge.copyWith(
-                        color: BaseColor.textSecondary,
+                        color: BaseColor.secondaryText,
                       ),
                     ),
                   ],
@@ -46,7 +49,7 @@ class CardDeliveryAddress extends StatelessWidget {
               Gap.w12,
               const Icon(
                 Ionicons.map_outline,
-                color: BaseColor.primary,
+                color: BaseColor.primary3,
               ),
             ],
           ),

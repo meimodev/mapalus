@@ -26,8 +26,8 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 //         },
 //         child: Padding(
 //           padding: EdgeInsets.symmetric(
-//             horizontal: Insets.small.w,
-//             vertical: Insets.small.w,
+//             horizontal: BaseSize.w12,
+//             vertical: BaseSize.w12,
 //           ),
 //           child: Column(
 //             crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +37,7 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 //                 children: [
 //                   product.isAvailable
 //                       ? SizedBox(
-//                           height: Insets.small.h,
+//                           height: BaseSize.h12,
 //                         )
 //                       : Row(
 //                           children: [
@@ -47,7 +47,7 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 //                               width: 12.sp,
 //                               color: Colors.grey,
 //                             ),
-//                             SizedBox(width: Insets.small.w * .5),
+//                             SizedBox(width: BaseSize.w12 * .5),
 //                             Text(
 //                               "Sedang tidak tersedia",
 //                               style: Theme.of(context)
@@ -75,7 +75,7 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 //                       : const SizedBox(),
 //                 ],
 //               ),
-//               SizedBox(height: Insets.small.h),
+//               SizedBox(height: BaseSize.h12),
 //               Container(
 //                 height: 120.h,
 //                 clipBehavior: Clip.hardEdge,
@@ -101,7 +101,7 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 //                   ),
 //                 ),
 //               ),
-//               SizedBox(height: Insets.small.h),
+//               SizedBox(height: BaseSize.h12),
 //               Column(
 //                 crossAxisAlignment: CrossAxisAlignment.start,
 //                 children: [
@@ -159,15 +159,15 @@ class CardProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       clipBehavior: Clip.hardEdge,
-      color: BaseColor.cardForeground,
+      color: BaseColor.cardBackground1,
       child: InkWell(
         onTap: () {
           onPressed(product);
         },
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: Insets.small.w,
-            vertical: Insets.small.h * .5,
+            horizontal: BaseSize.w12,
+            vertical: BaseSize.h12 * .5,
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -177,7 +177,7 @@ class CardProduct extends StatelessWidget {
                 width: 60.w,
                 clipBehavior: Clip.hardEdge,
                 decoration: const BoxDecoration(
-                  color: BaseColor.primary,
+                  color: BaseColor.primary3,
                   backgroundBlendMode: BlendMode.clear,
                   shape: BoxShape.circle,
                 ),
@@ -185,7 +185,7 @@ class CardProduct extends StatelessWidget {
                   imageUrl: product.imageUrl,
                 ),
               ),
-              SizedBox(width: Insets.small.w),
+              Gap.h12,
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,7 +230,7 @@ class CardProduct extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(width: Insets.small.w),
+              Gap.h12,
               _buildStatusIcons(
                 isAvailable: product.isAvailable,
                 isCustomPrice: product.isCustomPrice,
@@ -279,7 +279,7 @@ class CardProduct extends StatelessWidget {
             style: TextStyle(
               fontSize: 11.sp,
               fontWeight: FontWeight.bold,
-              color: BaseColor.primary,
+              color: BaseColor.primary3,
             ),
           ),
         )
@@ -310,14 +310,14 @@ class CardProduct extends StatelessWidget {
             child: Center(
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: Insets.small.w * .5,
-                  vertical: Insets.small.h * .25,
+                  horizontal: BaseSize.w12 * .5,
+                  vertical: BaseSize.h12 * .25,
                 ),
                 child: Text(
                   c,
                   style: TextStyle(
                     fontFamily: 'Roboto',
-                    color: BaseColor.primary,
+                    color: BaseColor.primary3,
                     fontSize: 8.sp,
                   ),
                 ),

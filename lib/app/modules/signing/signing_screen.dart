@@ -85,8 +85,8 @@ class SigningScreen extends GetView<SigningController> {
               children: [
                 Container(
                   padding: EdgeInsets.symmetric(
-                    horizontal: Insets.small.w,
-                    vertical: Insets.small.h,
+                    horizontal: BaseSize.w12,
+                    vertical: BaseSize.h12,
                   ),
                   child: SvgPicture.asset(
                     assetName,
@@ -130,33 +130,36 @@ class CardSigning extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: Insets.medium.w,
-        vertical: Insets.small.w,
+        horizontal: BaseSize.w24,
+        vertical: BaseSize.w12,
       ),
       decoration: BoxDecoration(
-        color: BaseColor.cardForeground,
+        color: BaseColor.cardBackground1,
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(30.sp),
         ),
       ),
-      child: WillPopScope(
-        onWillPop: controller.onPressedBack,
+      child: PopScope(
+        onPopInvoked: (_){
+          controller.onPressedBack();
+        },
+        canPop: false,
         child: Obx(
           () => AnimatedSwitcher(
             duration: const Duration(milliseconds: 400),
             child: controller.isLoading.value
                 ? Padding(
-                    padding: EdgeInsets.symmetric(vertical: Insets.small.h),
+                    padding: EdgeInsets.symmetric(vertical: BaseSize.h12),
                     child:
-                        const CircularProgressIndicator(color: BaseColor.primary),
+                        const CircularProgressIndicator(color: BaseColor.primary3),
                   )
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       ...generateSigningHeader(context),
-                      SizedBox(height: Insets.small.h * .5),
+                      SizedBox(height: BaseSize.h12 * .5),
                       generateSigningTextField(context),
-                      SizedBox(height: Insets.small.h),
+                      SizedBox(height: BaseSize.h12),
                       generateSigningButton(),
                     ],
                   ),
@@ -194,14 +197,14 @@ class CardSigning extends StatelessWidget {
     }
 
     return Material(
-      color: BaseColor.primary,
+      color: BaseColor.primary3,
       clipBehavior: Clip.hardEdge,
       elevation: 2,
       borderRadius: BorderRadius.circular(9.sp),
       child: InkWell(
         onTap: onPressed,
         child: Padding(
-          padding: EdgeInsets.all(Insets.small.sp),
+          padding: EdgeInsets.all(BaseSize.w12),
           child: Center(
             child: Text(buttonText),
           ),
@@ -234,7 +237,7 @@ class CardSigning extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: Insets.small.w,
+        horizontal: BaseSize.w12,
         vertical: 2.w,
       ),
       decoration: BoxDecoration(
@@ -255,7 +258,7 @@ class CardSigning extends StatelessWidget {
               fontFamily: fontFamily,
               fontSize: 14.sp,
             ),
-            cursorColor: BaseColor.primary,
+            cursorColor: BaseColor.primary3,
             keyboardType: textInputType,
             decoration: InputDecoration(
               hintStyle: TextStyle(

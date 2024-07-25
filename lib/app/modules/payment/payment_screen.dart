@@ -21,7 +21,7 @@ class PaymentScreen extends GetView<PaymentController> {
           ),
           Expanded(
             child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: Insets.medium.w),
+              padding: EdgeInsets.symmetric(horizontal: BaseSize.w24),
               shrinkWrap: true,
               children: [
                 const Text("Bayar di tempat"),
@@ -31,20 +31,20 @@ class PaymentScreen extends GetView<PaymentController> {
                 const Text("BCA Virtual Account"),
                 const Text("Transfer bank BRI"),
                 const Text("Transfer bank BNI"),
-                SizedBox(width: Insets.small.h),
+                SizedBox(width: BaseSize.w12),
                 const Text("Money Amount to prepare for changes"),
               ],
             ),
           ),
           Padding(
-            padding: EdgeInsets.all( Insets.medium.w),
+            padding: EdgeInsets.all( BaseSize.w24),
             child: Material(
-              borderRadius: BorderRadius.circular(Insets.small.w),
-              color: BaseColor.primary,
+              borderRadius: BorderRadius.circular(BaseSize.w12),
+              color: BaseColor.primary3,
               child: InkWell(
                 onTap: (){},
                 child: Center(child: Padding(
-                  padding: EdgeInsets.all(Insets.small.w),
+                  padding: EdgeInsets.all(BaseSize.w12),
                   child: const Text("PESAN"),
                 )),
               ),

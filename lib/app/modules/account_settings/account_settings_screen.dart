@@ -46,7 +46,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: Insets.medium.h),
+            Gap.h24,
             Container(
               width: 120.w,
               height: 120.h,
@@ -61,14 +61,14 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
                   width: 60.w,
                   height: 60.h,
                   colorFilter: const ColorFilter.mode(
-                    BaseColor.primary,
+                    BaseColor.primary3,
                     BlendMode.srcIn,
                   ),
                   // color: BaseColor.primary,
                 ),
               ),
             ),
-            SizedBox(height: Insets.small.h),
+            Gap.h12,
             Text(
               controller.userName.value,
               style: TextStyle(
@@ -85,17 +85,18 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
             ),
           ],
         ),
-        SizedBox(height: Insets.medium.h),
+        Gap.h24,
         Container(
           height: .5,
           margin: EdgeInsets.symmetric(
-            horizontal: Insets.large.w,
+            horizontal: BaseSize.w48,
           ),
           color: BaseColor.accent,
         ),
-        SizedBox(height: Insets.small.h),
+        Gap.h12,
+
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: Insets.medium.w),
+          padding: EdgeInsets.symmetric(horizontal: BaseSize.w24),
           child: Column(
             children: [
               Badge(
@@ -122,9 +123,9 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
             ],
           ),
         ),
-        SizedBox(height: Insets.large.h),
+        Gap.h48,
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: Insets.medium.w),
+          padding: EdgeInsets.symmetric(horizontal: BaseSize.w24),
           child: DeleteAccountButton(
             onPressedDelete: controller.onPressedDeleteAccount,
             userPhone: controller.userRepo.signedUser!.phone,
@@ -139,25 +140,25 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(height: Insets.medium.h),
+        Gap.h24,
         Text(
           'Silahkan masuk untuk melanjutkan',
           style: TextStyle(
             fontSize: 14.sp,
           ),
         ),
-        SizedBox(height: Insets.small.h),
+        Gap.h12,
         Material(
           clipBehavior: Clip.hardEdge,
-          color: BaseColor.primary,
+          color: BaseColor.primary3,
           borderRadius: BorderRadius.circular(9.sp),
           elevation: 2,
           child: InkWell(
             onTap: controller.onPressedSignIn,
             child: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: Insets.medium.w,
-                vertical: Insets.medium.w * .5,
+                horizontal: BaseSize.w24,
+                vertical: BaseSize.w12,
               ),
               child: const Text(
                 'Masuk',
@@ -168,7 +169,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
             ),
           ),
         ),
-        SizedBox(height: Insets.medium.h),
+        Gap.h24,
       ],
     );
   }
@@ -176,8 +177,8 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
   Widget _buildDevNote(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: Insets.medium.w,
-        vertical: Insets.medium.h,
+        horizontal: BaseSize.w24,
+        vertical: BaseSize.w24,
       ),
       color: Colors.grey.shade200,
       child: Column(
@@ -236,7 +237,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
                   height: 18.sp,
                 ),
               ),
-              SizedBox(width: Insets.small.w * .5),
+              Gap.h6,
               Text(
                 text,
                 style: TextStyle(

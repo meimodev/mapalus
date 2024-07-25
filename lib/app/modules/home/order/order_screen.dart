@@ -9,9 +9,9 @@ class OrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenWrapper(
       child: SingleChildScrollView(
-        padding: const EdgeInsets.only(
-          left: Insets.medium,
-          right: Insets.medium,
+        padding: EdgeInsets.only(
+          left: BaseSize.w24,
+          right: BaseSize.w24,
         ),
         child: Column(
           children: [

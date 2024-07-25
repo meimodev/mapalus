@@ -15,7 +15,7 @@ class BadgeNotification extends StatelessWidget {
       height: 21.sp,
       width: 21.sp,
       decoration: const BoxDecoration(
-        color: BaseColor.notification,
+        color: BaseColor.primary3,
         shape: BoxShape.circle,
       ),
       child: Center(
@@ -23,7 +23,7 @@ class BadgeNotification extends StatelessWidget {
           text,
           style:TextStyle(
                 fontSize: 11.sp,
-                color: BaseColor.cardForeground,
+                color: BaseColor.cardBackground1,
               ),
         ),
       ),

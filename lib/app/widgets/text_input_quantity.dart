@@ -29,7 +29,7 @@ class TextInputQuantity extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(width: Insets.small.w),
+          SizedBox(width: BaseSize.w12),
           icon != null
               ? SizedBox(
                   height: 45.h,
@@ -37,7 +37,7 @@ class TextInputQuantity extends StatelessWidget {
                   child: icon,
                 )
               : const SizedBox(),
-          SizedBox(width: Insets.small.w * .5),
+          SizedBox(width: BaseSize.w12 * .5),
           Expanded(
             child: TextField(
               controller: textEditingController,
@@ -51,7 +51,7 @@ class TextInputQuantity extends StatelessWidget {
                 fontFamily: fontFamily,
                 fontSize: 14.sp,
               ),
-              cursorColor: BaseColor.primary,
+              cursorColor: BaseColor.primary3,
               decoration: InputDecoration(
                 hintStyle: TextStyle(
                   fontFamily: fontFamily,

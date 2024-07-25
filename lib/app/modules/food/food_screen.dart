@@ -16,7 +16,7 @@ class FoodScreen extends GetView<FoodController> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("Food Screen")
+            Text("Food Screen"),
           ],
         ),
       ),
