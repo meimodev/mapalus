@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class CardCartPeak extends StatelessWidget {
@@ -7,98 +8,62 @@ class CardCartPeak extends StatelessWidget {
     required this.onPressed,
     // required this.productOrders,
     required this.totalPrice,
-    required this.cartOverview,
+    required this.totalProduct,
   });
 
   final VoidCallback onPressed;
-  // final List<ProductOrder> productOrders;
-  final String totalPrice;
-  final String cartOverview;
+  final double totalPrice;
+  final int totalProduct;
 
   @override
   Widget build(BuildContext context) {
-    // print('cart card');
-    // String _calculateTotalPrice() {
-    //   double total = 0;
-    //   for (var element in productOrders) {
-    //     total += element.totalPrice;
-    //   }
-    //   return Utils.formatNumberToCurrency(total);
-    // }
-    //
-    // String _calculateProductTotalUnitAndWeight() {
-    //   int tProduct = 0;
-    //   double tWeight = 0;
-    //   for (var element in productOrders) {
-    //     tProduct++;
-    //     tWeight += element.quantity;
-    //   }
-    //
-    //   return "$tProduct produk, ${tWeight.toStringAsFixed(2)} kilogram"
-    //       .replaceFirst(".00", '');
-    // }
-
     return Material(
       clipBehavior: Clip.hardEdge,
-      elevation: 9,
       color: BaseColor.accent,
-      borderRadius: BorderRadius.circular(30.sp),
+      borderRadius: BorderRadius.circular(BaseSize.radiusLg),
       child: InkWell(
         onTap: onPressed,
-        child: SizedBox(
-          width: 210.w,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: BaseSize.w12,
-              horizontal: BaseSize.w12,
-            ),
+        child: Container(
+          padding: EdgeInsets.only(
+            right: BaseSize.w24,
+            left: BaseSize.w24,
+            top: BaseSize.w12,
+            bottom: BaseSize.w12,
+          ),
+          child: IntrinsicHeight(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // CircleAvatar(
-                //   backgroundColor: BaseColor.primary,
-                //   child: Padding(
-                //     padding: EdgeInsets.all(9.sp),
-                //     child: SvgPicture.asset(
-                //       "assets/vectors/cart.svg",
-                //     ),
-                //   ),
-                // ),
-                Container(
-                  padding: EdgeInsets.all(9.sp),
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: BaseColor.primary3,
-                  ),
-                  child: SvgPicture.asset(
-                    "assets/vectors/cart.svg",
-                    width: 24.w,
-                    height: 24.w,
+                const Icon(
+                  Ionicons.cart_outline,
+                  color: BaseColor.primary3,
+                  size: 20,
+                ),
+                Gap.w12,
+                Expanded(
+                  child: Text(
+                    totalPrice.formatNumberToCurrency(),
+                    style: BaseTypography.bodyMedium.toBold.toWhite,
                   ),
                 ),
-                SizedBox(width: BaseSize.w12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Gap.w12,
+                Container(
+                  color: BaseColor.primary3,
+                  width: 2,
+                ),
+                Gap.w12,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      totalPrice,
-                      maxLines: 1,
-                      overflow: TextOverflow.fade,
-                      style: TextStyle(
-                            color: BaseColor.cardBackground1,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14.sp,
-                          ),
+                      "$totalProduct",
+                      style: BaseTypography.bodyMedium.toWhite,
                     ),
-                    Text(
-                      cartOverview,
-                      style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w300,
-                            fontSize: 10.sp,
-                          ),
+                    Gap.w12,
+                    const Icon(
+                      Ionicons.file_tray_stacked_outline,
+                      color: BaseColor.white,
+                      size: 20,
                     ),
                   ],
                 ),

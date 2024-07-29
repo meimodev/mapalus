@@ -44,7 +44,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
     super.initState();
     initAmount = 1;
     additionAmountUnit = 1;
-    additionAmountPrice = widget.product.price;
+    additionAmountPrice = widget.product.price.toInt();
 
     tecUnit.text = initAmount.toString();
     tecPrice.text = widget.product.price.toString();
@@ -118,7 +118,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                                     ? const SizedBox()
                                     : SizedBox(height: BaseSize.h12),
                                 Text(
-                                  '${widget.product.priceF} / ${widget.product.unit}',
+                                  '${widget.product.price} / ${widget.product.unit}',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                         fontWeight: FontWeight.w600,
@@ -147,7 +147,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                                 top: isKeyboardVisible ? 0 : BaseSize.h24,
                                 bottom: BaseSize.h24,
                               ),
-                              child: widget.product.isAvailable
+                              child: widget.product.status.available
                                   ? _buildAvailableWidgets(context)
                                   : _buildUnavailableWidgets(context),
                             ),
@@ -156,7 +156,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                       ),
                     ),
                     Material(
-                      color: widget.product.isAvailable
+                      color: widget.product.status.available
                           ? errorMessagePrice.isEmpty
                               ? BaseColor.primary3
                               : Colors.grey
@@ -168,7 +168,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                             return;
                           }
 
-                          if (widget.product.isAvailable) {
+                          if (widget.product.status.available) {
                             widget.onPressedAddToCart(
                               ProductOrder(
                                 product: widget.product,
@@ -184,12 +184,12 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                               EdgeInsets.symmetric(vertical: BaseSize.h12),
                           child: Center(
                             child: Text(
-                              widget.product.isAvailable
+                              widget.product.status.available
                                   ? "Masukkan Keranjang"
                                   : "Kembali",
                               style: TextStyle(
                                     fontWeight: FontWeight.w400,
-                                    color: widget.product.isAvailable
+                                    color: widget.product.status.available
                                         ? BaseColor.primaryText
                                         : Colors.grey,
                                   ),
@@ -210,7 +210,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                 clipBehavior: Clip.hardEdge,
                 height: 210.h,
                 width: 210.w,
-                foregroundDecoration: !widget.product.isAvailable
+                foregroundDecoration: !widget.product.status.available
                     ? BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.grey.withOpacity(.5),
@@ -228,7 +228,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                     ),
                   ],
                 ),
-                child: CustomImage(imageUrl: widget.product.imageUrl),
+                child: CustomImage(imageUrl: widget.product.image),
               ),
             ),
           ],
@@ -338,7 +338,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
           context: context,
           valueLabel: widget.product.unit,
           isCustomPrice: true,
-          isReadOnly: !widget.product.isCustomPrice,
+          isReadOnly: !widget.product.customPrice,
           icon: SvgPicture.asset(
             'assets/vectors/gram.svg',
             width: 15.sp,
@@ -363,8 +363,8 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
         _buildQuantityRow(
           context: context,
           valueLabel: 'Rp',
-          isCustomPrice: widget.product.isCustomPrice,
-          isReadOnly: !widget.product.isCustomPrice,
+          isCustomPrice: widget.product.customPrice,
+          isReadOnly: !widget.product.customPrice,
           icon: SvgPicture.asset(
             'assets/vectors/money.svg',
             width: 15.sp,
@@ -478,7 +478,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
               ? decimalKilosDesc
               : [],
           ...widget.product.unit.toLowerCase() == "gram" ? decimalKilosAsc : [],
-          ...widget.product.isCustomPrice ? multiplePrices : [],
+          ...widget.product.customPrice ? multiplePrices : [],
         ],
       ),
     );
@@ -529,7 +529,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
   }
 
   _buildQuantityCustomizableInfoRow() {
-    if (widget.product.isCustomPrice) {
+    if (widget.product.customPrice) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

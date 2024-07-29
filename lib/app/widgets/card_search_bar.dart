@@ -1,123 +1,66 @@
-import 'package:flutter/material.dart'hide Badge;
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart' ;
-
+import 'package:flutter/material.dart' hide Badge;
+import 'package:ionicons/ionicons.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class CardSearchBar extends StatelessWidget {
   const CardSearchBar({
     super.key,
-    required this.onSubmitted,
-    required this.onLogoPressed,
-    required this.notificationBadgeCount,
-    this.onTap,
-    required this.onChanged,
+    this.onSubmitted,
+    this.onChanged,
     this.controller,
+    this.onPressed,
+    this.autoFocus = false,
   });
 
-  final Function(String value) onSubmitted;
-  final Function(String value) onChanged;
-  final VoidCallback onLogoPressed;
-  final int notificationBadgeCount;
+  final void Function(String value)? onSubmitted;
+  final void Function(String value)? onChanged;
   final TextEditingController? controller;
 
-  final VoidCallback? onTap;
+  final VoidCallback? onPressed;
+
+  final bool autoFocus;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: BaseColor.editable,
-        borderRadius: BorderRadius.circular(BaseSize.roundnessMedium),
+        borderRadius: BorderRadius.circular(
+          BaseSize.roundnessMedium,
+        ),
       ),
       padding: EdgeInsets.symmetric(
-        vertical: BaseSize.h12 * .5,
-        horizontal: BaseSize.h12 * .5,
+        vertical: BaseSize.h12,
+        horizontal: BaseSize.w12,
       ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: BaseSize.w12 * .25,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SizedBox(width: BaseSize.w12 * .5),
-                  SvgPicture.asset(
-                    'assets/vectors/search.svg',
-                    height: 15.sp,
-                    width: 15.sp,
-                    colorFilter: const ColorFilter.mode(
-                      Colors.grey,
-                      BlendMode.srcIn,
-                    ),                  ),
-                  SizedBox(width: BaseSize.w12 * 1),
-                  Flexible(
-                    child: TextField(
-                      controller: controller,
-                      onSubmitted: onSubmitted,
-                      onTap: onTap,
-                      onChanged: onChanged,
-                      maxLines: 1,
-                      autocorrect: false,
-                      style: TextStyle(
-                        color: BaseColor.accent,
-                        fontFamily: fontFamily,
-                        fontSize: 12.sp,
-                      ),
-                      cursorColor: BaseColor.primary3,
-                      decoration: InputDecoration(
-                        hintStyle: TextStyle(
-                          fontFamily: fontFamily,
-                          fontSize: 12.sp,
-                        ),
-                        isDense: true,
-                        border: InputBorder.none,
-                        hintText: 'Cari Produk ...',
-                      ),
-                    ),
-                  ),
-                ],
+      child: Row(
+        children: [
+         const Icon(
+            Ionicons.search,
+            color: BaseColor.secondaryText,
+          ),
+          Gap.w12,
+          Expanded(
+            child: TextField(
+              controller: controller,
+              onSubmitted: onSubmitted,
+              autofocus: autoFocus,
+              readOnly: onPressed != null,
+              onTap: onPressed,
+              onChanged: onChanged,
+              maxLines: 1,
+              autocorrect: false,
+              style: BaseTypography.caption.toSecondary,
+              cursorColor: BaseColor.primary3,
+              decoration: InputDecoration(
+                hintStyle: BaseTypography.titleLarge.toSecondary.w400,
+                isDense: true,
+                border: InputBorder.none,
+                hintText: 'Cari Produk',
               ),
             ),
-            SizedBox(width: BaseSize.w12 * .5),
-            Badge(
-              // elevation: 0,
-              showBadge: notificationBadgeCount > 0,
-              badgeContent: Center(
-                child: Text(
-                  notificationBadgeCount.toString(),
-                  style: TextStyle(
-                        fontSize: 10.sp,
-                        color: BaseColor.editable,
-                      ),
-                ),
-              ),
-              // padding: EdgeInsets.all(6.sp),
-              child: Material(
-                shape: const CircleBorder(),
-                color: BaseColor.accent,
-                child: InkWell(
-                  onTap: onLogoPressed,
-                  child: Container(
-                    padding: EdgeInsets.all(6.sp),
-                    height: 33.sp,
-                    width: 33.sp,
-                    child: SvgPicture.asset(
-                      'assets/images/mapalus_logo.svg',
-                      height: 12.sp,
-                      width: 12.sp,
-                      colorFilter: const ColorFilter.mode(
-                        BaseColor.primary3,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

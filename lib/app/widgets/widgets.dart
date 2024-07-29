@@ -16,3 +16,12 @@ export 'dialog_item_detail.dart';
 export 'dialog_rating.dart';
 export 'google_map_wrapper.dart';
 export 'text_input_quantity.dart';
+export 'button_mapalus.dart';
+
+export 'card_partner.dart';
+
+export 'icon_product_status.dart';
+export 'chip_category.dart';
+
+export 'logo_mapalus.dart';
+export 'logo_meimo.dart';

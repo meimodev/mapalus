@@ -50,6 +50,9 @@ export 'payment/payment_screen.dart';
 export 'payment/payment_controller.dart';
 export 'payment/payment_binding.dart';
 
+export 'search/search_screen.dart';
+export 'search/search_controller.dart';
+export 'search/search_binding.dart';
 
 export 'signing/signing_controller.dart';
 export 'signing/signing_screen.dart';

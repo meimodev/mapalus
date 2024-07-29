@@ -421,6 +421,8 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
         );
       case OrderStatus.finished:
         return _BuildRatedLayout(order: controller.order.value);
+      case OrderStatus.canceled:
+        // TODO: Handle this case.
     }
   }
 

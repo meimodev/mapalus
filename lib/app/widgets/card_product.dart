@@ -1,339 +1,105 @@
 import 'package:flutter/material.dart';
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
-
-
-// class CardProduct extends StatelessWidget {
-//   const CardProduct({
-//     Key? key,
-//     required this.onPressed,
-//     required this.product,
-//   }) : super(key: key);
-//
-//   final Product product;
-//   final Function(Product product) onPressed;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Material(
-//       borderRadius: BorderRadius.all(
-//         Radius.circular(12.sp),
-//       ),
-//       clipBehavior: Clip.hardEdge,
-//       color: BaseColor.cardForeground,
-//       child: InkWell(
-//         onTap: () {
-//           onPressed(product);
-//         },
-//         child: Padding(
-//           padding: EdgeInsets.symmetric(
-//             horizontal: BaseSize.w12,
-//             vertical: BaseSize.w12,
-//           ),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   product.isAvailable
-//                       ? SizedBox(
-//                           height: BaseSize.h12,
-//                         )
-//                       : Row(
-//                           children: [
-//                             SvgPicture.asset(
-//                               'assets/vectors/min.svg',
-//                               height: 12.sp,
-//                               width: 12.sp,
-//                               color: Colors.grey,
-//                             ),
-//                             SizedBox(width: BaseSize.w12 * .5),
-//                             Text(
-//                               "Sedang tidak tersedia",
-//                               style: Theme.of(context)
-//                                   .textTheme
-//                                   .bodyText1!
-//                                   .copyWith(
-//                                     fontWeight: FontWeight.w300,
-//                                     color: BaseColor.accent,
-//                                     fontSize: 9.sp,
-//                                   ),
-//                             ),
-//                           ],
-//                         ),
-//                   product.isCustomPrice
-//                       ? Row(
-//                           children: [
-//                             SvgPicture.asset(
-//                               'assets/vectors/money.svg',
-//                               height: 12.sp,
-//                               width: 12.sp,
-//                               color: BaseColor.accent,
-//                             ),
-//                           ],
-//                         )
-//                       : const SizedBox(),
-//                 ],
-//               ),
-//               SizedBox(height: BaseSize.h12),
-//               Container(
-//                 height: 120.h,
-//                 clipBehavior: Clip.hardEdge,
-//                 decoration: BoxDecoration(
-//                   shape: BoxShape.circle,
-//                   color: product.isAvailable
-//                       ? BaseColor.accent.withOpacity(.85)
-//                       : BaseColor.accent.withOpacity(.5),
-//                   boxShadow: [
-//                     BoxShadow(
-//                       spreadRadius: .25,
-//                       blurRadius: 10,
-//                       color: product.isAvailable
-//                           ? BaseColor.primary.withOpacity(.125)
-//                           : Colors.grey.withOpacity(.125),
-//                       offset: const Offset(3, 3),
-//                     ),
-//                   ],
-//                 ),
-//                 child: Center(
-//                   child: CustomImage(
-//                     imageUrl: product.imageUrl,
-//                   ),
-//                 ),
-//               ),
-//               SizedBox(height: BaseSize.h12),
-//               Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   Text(
-//                     product.name,
-//                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
-//                           fontWeight: FontWeight.w500,
-//                           fontSize: _calculateFontSize(),
-//                           color: product.isAvailable
-//                               ? BaseColor.textPrimary
-//                               : Colors.grey,
-//                         ),
-//                   ),
-//                   SizedBox(height: 3.h),
-//                   Text(
-//                     '${product.priceF} / ${product.unit}',
-//                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
-//                           fontWeight: FontWeight.w300,
-//                           fontSize: 11.sp,
-//                           color: product.isAvailable
-//                               ? BaseColor.textPrimary
-//                               : Colors.grey,
-//                         ),
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-//
-//   _calculateFontSize() {
-//     if (product.name.length > 30) {
-//       return 10.sp;
-//     }
-//     if (product.name.length > 24) {
-//       return 12.sp;
-//     }
-//   }
-// }
+import 'package:mapalus/app/widgets/widgets.dart';
+import 'package:mapalus_flutter_commons/models/models.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class CardProduct extends StatelessWidget {
   const CardProduct({
     super.key,
     required this.onPressed,
     required this.product,
+    this.width,
   });
 
   final Product product;
   final Function(Product product) onPressed;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
     return Material(
       clipBehavior: Clip.hardEdge,
-      color: BaseColor.cardBackground1,
+      color: BaseColor.white,
+      borderRadius: BorderRadius.circular(BaseSize.radiusSm),
       child: InkWell(
-        onTap: () {
-          onPressed(product);
-        },
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: BaseSize.w12,
-            vertical: BaseSize.h12 * .5,
+        onTap: () => onPressed(product),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: BaseSize.customWidth(200),
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                height: 60.w,
-                width: 60.w,
-                clipBehavior: Clip.hardEdge,
-                decoration: const BoxDecoration(
-                  color: BaseColor.primary3,
-                  backgroundBlendMode: BlendMode.clear,
-                  shape: BoxShape.circle,
-                ),
-                child: CustomImage(
-                  imageUrl: product.imageUrl,
-                ),
-              ),
-              Gap.h12,
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      product.name,
-                      style: TextStyle(
-                        fontSize: _calculateFontSize(),
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          '${product.priceF} / ${product.unit}',
-                          style:
-                          TextStyle(
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w300,
-                          ),
+          child: IntrinsicWidth(
+            child: Column(
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: BaseColor.secondaryText,
+                    borderRadius: BorderRadius.circular(BaseSize.radiusSm),
+                  ),
+                  height: BaseSize.customWidth(120),
+                  // width: BaseSize.customWidth(160),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        bottom: BaseSize.h4,
+                        left: BaseSize.w4,
+                        right: BaseSize.w4,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  product.customPrice
+                                      ? const IconProductStatus(text: "\$")
+                                      : const SizedBox(),
+                                  Gap.w4,
+                                  product.status.available
+                                      ? const IconProductStatus(
+                                          text: "!",
+                                          textColor: BaseColor.negative,
+                                        )
+                                      : const SizedBox(),
+                                  Gap.w4,
+                                ],
+                              ),
+                            ),
+                            product.category.isNotEmpty
+                                ? ChipCategory(title: product.category)
+                                : const SizedBox(),
+                          ],
                         ),
-                        // product.unit.trim().toLowerCase() == 'kilogram'
-                        //     ? const SizedBox()
-                        //     : Row(
-                        //   children: [
-                        //     const Text(" | "),
-                        //     Text(
-                        //       product.weightF,
-                        //       style: Theme.of(context)
-                        //           .textTheme
-                        //           .bodyText1
-                        //           ?.copyWith(
-                        //         fontSize: 10.sp,
-                        //         fontWeight: FontWeight.w500,
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                      ],
-                    ),
-                     SizedBox(height: 3.h),
-                    _buildCategoriesChip(),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Gap.h12,
-              _buildStatusIcons(
-                isAvailable: product.isAvailable,
-                isCustomPrice: product.isCustomPrice,
-              ),
-            ],
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: BaseSize.w12,
+                    vertical: BaseSize.h12,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        product.name,
+                        style: BaseTypography.bodyMedium,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        "${product.price.formatNumberToCurrency()} / ${product.unit}",
+                        style: BaseTypography.bodyMedium.w300,
+                        overflow: TextOverflow.ellipsis,
+
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
-  }
-
-  _buildStatusIcons({
-    required bool isAvailable,
-    required bool isCustomPrice,
-  }) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        isAvailable
-            ? const SizedBox()
-            : Container(
-          padding: EdgeInsets.all(9.sp),
-          decoration: const BoxDecoration(
-            color: BaseColor.accent,
-            shape: BoxShape.circle,
-          ),
-          child: Text(
-            "!",
-            style: TextStyle(
-              fontSize: 15.sp,
-              fontWeight: FontWeight.bold,
-              color: BaseColor.negative,
-            ),
-          ),
-        ),
-        SizedBox(width: 3.w),
-        isCustomPrice
-            ? Container(
-          padding: EdgeInsets.all(9.sp),
-          decoration: const BoxDecoration(
-            color: BaseColor.accent,
-            shape: BoxShape.circle,
-          ),
-          child: Text(
-            "\$",
-            style: TextStyle(
-              fontSize: 11.sp,
-              fontWeight: FontWeight.bold,
-              color: BaseColor.primary3,
-            ),
-          ),
-        )
-            : const SizedBox(),
-      ],
-    );
-  }
-
-  _buildCategoriesChip() {
-    var categoryList = [];
-    if (product.category.contains(',')) {
-      var temp = product.category.split(',');
-      for (String t in temp) {
-        categoryList.add(t);
-      }
-    } else {
-      categoryList.add(product.category);
-    }
-
-    return Row(
-      children: [
-        for (var c in categoryList)
-          Container(
-            decoration: BoxDecoration(
-              color: BaseColor.accent,
-              borderRadius: BorderRadius.circular(30.sp),
-            ),
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: BaseSize.w12 * .5,
-                  vertical: BaseSize.h12 * .25,
-                ),
-                child: Text(
-                  c,
-                  style: TextStyle(
-                    fontFamily: 'Roboto',
-                    color: BaseColor.primary3,
-                    fontSize: 8.sp,
-                  ),
-                ),
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-
-  _calculateFontSize() {
-    if (product.name.length > 45) {
-      return 11.sp;
-    }
-    if (product.name.length > 35) {
-      return 13.sp;
-    }
   }
 }

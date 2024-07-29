@@ -18,6 +18,8 @@ class Routes {
   static const String food = '/food';
   static const String laundry = '/laundry';
 
+  static const String search = '/search';
+
   // static Route<dynamic> generateRoute(RouteSettings settings) {
   //   switch (settings.name) {
   //     case splash:
@@ -122,6 +124,12 @@ class Routes {
         page: () => const LaundryScreen(),
         binding: LaundryBinding(),
         transition: Transition.rightToLeftWithFade,
+      ),
+      GetPage(
+        name: search,
+        page: () => const SearchScreen(),
+        binding: SearchBinding(),
+        transition: Transition.rightToLeft,
       ),
 
     ];

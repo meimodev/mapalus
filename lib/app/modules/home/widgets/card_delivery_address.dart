@@ -28,6 +28,11 @@ class CardDeliveryAddress extends StatelessWidget {
           ),
           child: Row(
             children: [
+              const Icon(
+                Ionicons.map_outline,
+                color: BaseColor.primary3,
+              ),
+              Gap.w12,
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -46,11 +51,7 @@ class CardDeliveryAddress extends StatelessWidget {
                   ],
                 ),
               ),
-              Gap.w12,
-              const Icon(
-                Ionicons.map_outline,
-                color: BaseColor.primary3,
-              ),
+
             ],
           ),
         ),

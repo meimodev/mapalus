@@ -53,7 +53,7 @@ class CardCartItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "${productOrder.product.priceF} / ${productOrder.product.unit}",
+                  "${productOrder.product.price} / ${productOrder.product.unit}",
                   style: TextStyle(
                     fontWeight: FontWeight.w300,
                     fontSize: 12.sp,
