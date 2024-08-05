@@ -172,7 +172,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                             widget.onPressedAddToCart(
                               ProductOrder(
                                 product: widget.product,
-                                quantity: double.parse(tecUnit.text),
+                                quantity: int.parse(tecUnit.text),
                                 totalPrice: double.parse(tecPrice.text),
                               ),
                             );

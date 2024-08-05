@@ -87,7 +87,7 @@ class GroceryController extends GetxController {
     }
     await Future.delayed(Duration.zero);
     await checkAnnouncement();
-    await checkNewlyCreatedOrder();
+    // await checkNewlyCreatedOrder();
 
     _initNotificationHandler();
   }
@@ -127,9 +127,9 @@ class GroceryController extends GetxController {
         .firstWhereOrNull((element) => element.product == productOrder.product);
     if (exist != null) {
       int index = productOrders.value.indexOf(exist);
-      productOrders.value[index].quantity += productOrder.quantity;
-      productOrders.value[index].totalPrice +=
-          productOrder.quantity * productOrder.product.price;
+      // productOrders.value[index].quantity += productOrder.quantity;
+      // productOrders.value[index].totalPrice +=
+      //     productOrder.quantity * productOrder.product.price;
 
       var quantity = productOrder.quantity.toString().contains(".00")
           ? productOrder.quantity.toString().replaceFirst('.00', '')
@@ -220,35 +220,35 @@ class GroceryController extends GetxController {
     productOrders.clear();
     isCardCartVisible.value = false;
 
-    await checkNewlyCreatedOrder();
+    // await checkNewlyCreatedOrder();
   }
 
-  Future<void> checkNewlyCreatedOrder() async {
-    if (userRepo.signedUser == null) {
-      isCardOrderVisible.value = false;
-      return;
-    }
-    if (userRepo.signedUser!.orders.isEmpty) {
-      return;
-    }
-
-    final oo = userRepo.signedUser!.orders;
-    final latestOrderId = oo.elementAt(oo.length - 1);
-
-    //get the unfinished order count
-    unfinishedOrderCount.value = oo.length;
-
-    // get the latest order
-    final o = await orderRepo.readOrder(latestOrderId);
-    if (o == null) {
-      return;
-    }
-    // check if order is not finish, then display it
-    if (o.status != OrderStatus.finished) {
-      latestOrder = o;
-      isCardOrderVisible.value = true;
-    }
-  }
+  // Future<void> checkNewlyCreatedOrder() async {
+  //   if (userRepo.signedUser == null) {
+  //     isCardOrderVisible.value = false;
+  //     return;
+  //   }
+  //   if (userRepo.signedUser!.orders.isEmpty) {
+  //     return;
+  //   }
+  //
+  //   final oo = userRepo.signedUser!.orders;
+  //   final latestOrderId = oo.elementAt(oo.length - 1);
+  //
+  //   //get the unfinished order count
+  //   unfinishedOrderCount.value = oo.length;
+  //
+  //   // get the latest order
+  //   final o = await orderRepo.readOrder(latestOrderId);
+  //   if (o == null) {
+  //     return;
+  //   }
+  //   // check if order is not finish, then display it
+  //   if (o.status != OrderStatus.finished) {
+  //     latestOrder = o;
+  //     isCardOrderVisible.value = true;
+  //   }
+  // }
 
   _initNotificationHandler() async {
     const androidChannel = AndroidNotificationChannel(

@@ -20,6 +20,16 @@ class OrderDetailController extends GetxController {
 
   late StreamSubscription orderListener;
 
+  //DUMMY DATA
+  Rating? rating =Rating(
+    id: "kjasdkjf",
+    orderId: 'orderId',
+    userId: 'userId',
+    rate: 0,
+    message: '',
+    createdAt: DateTime.now(),
+  ) ;
+
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -28,17 +38,17 @@ class OrderDetailController extends GetxController {
     OrderApp o = Get.arguments as OrderApp;
     order = o.obs;
 
-    orderListener =
-        orderRepo.firestore.getOrderStream(o.id!).listen((snapshot) {
-      isLoading.value = true;
-
-      final t = OrderApp.fromMap(snapshot.data() as Map<String, dynamic>);
-      order = t.obs;
-
-      if (isLoading.isTrue) {
-        isLoading.value = false;
-      }
-    });
+    // orderListener =
+    //     orderRepo.firestore.getOrderStream(o.id!).listen((snapshot) {
+    //   isLoading.value = true;
+    //
+    //   final t = OrderApp.fromMap(snapshot.data() as Map<String, dynamic>);
+    //   order = t.obs;
+    //
+    //   if (isLoading.isTrue) {
+    //     isLoading.value = false;
+    //   }
+    // });
 
     isLoading.value = false;
   }
@@ -51,7 +61,7 @@ class OrderDetailController extends GetxController {
 
   @override
   void onClose() {
-    homeController.checkNewlyCreatedOrder();
+    // homeController.checkNewlyCreatedOrder();
     super.onClose();
   }
 
@@ -59,10 +69,14 @@ class OrderDetailController extends GetxController {
     isLoading.value = true;
     Future.delayed(800.milliseconds);
     var rating = Rating(
-      rate.ceil(),
-      message,
+      id: "kjasdkjf",
+      orderId: 'orderId',
+      userId: 'userId',
+      rate: rate.ceil(),
+      message: message,
+      createdAt: DateTime.now(),
     );
-    await orderRepo.rateOrder(order.value, rating);
+    // await orderRepo.rateOrder(order.value, rating);
 
     isLoading.value = false;
   }

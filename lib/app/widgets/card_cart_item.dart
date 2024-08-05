@@ -263,13 +263,13 @@ class _BuildAlterQuantity extends StatelessWidget {
         SizedBox(height: 6.h),
         _buildAlterRowItem(
           context: context,
-          value: productOrder.quantityString,
+          value: productOrder.quantity.toString(),
           unit: productOrder.product.unit,
         ),
         SizedBox(height: 6.h),
         _buildAlterRowItem(
           context: context,
-          value: productOrder.totalPriceString,
+          value: productOrder.totalPrice.formatNumberToCurrency(),
           unit: 'Rupiah',
         ),
       ],

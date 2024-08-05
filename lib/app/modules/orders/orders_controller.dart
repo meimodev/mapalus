@@ -18,8 +18,8 @@ class OrdersController extends GetxController {
 
   _populateOrders() async {
     isLoading.value = true;
-    final userOrders = await orderRepo.readUserOrders(userRepo.signedUser!);
-    orders.value = userOrders.reversed.toList();
+    // final userOrders = await orderRepo.readUserOrders(userRepo.signedUser!);
+    // orders.value = userOrders.reversed.toList();
     tempOrders.addAll(orders);
 
     isLoading.value = false;

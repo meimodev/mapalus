@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/modules.dart';
 import 'package:mapalus/app/widgets/widgets.dart';
+import 'package:mapalus/shared/shared.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 import 'widgets/widgets.dart';
@@ -35,13 +36,8 @@ class FoodScreen extends GetView<FoodController> {
         children: [
           CustomScrollView(
             physics: const BouncingScrollPhysics(),
-            // controller: controller.scrollControllerMain,
-
             slivers: [
-              const FoodScreenAppBar(
-                  // searching: false,
-                  // isSearching: controller.isSearchingProduct.value,
-                  ),
+              const FoodScreenAppBar(),
               SliverPadding(
                 padding: EdgeInsets.symmetric(
                   vertical: BaseSize.h12,
@@ -83,8 +79,8 @@ class FoodScreen extends GetView<FoodController> {
             left: BaseSize.w24,
             right: BaseSize.w24,
             child: CardCartPeak(
-              onPressed: (){
-                print("cart peak");
+              onPressed: () {
+                Get.toNamed(Routes.cart);
               },
               totalPrice: 524123450,
               totalProduct: 10,

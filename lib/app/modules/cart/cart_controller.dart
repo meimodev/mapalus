@@ -5,10 +5,10 @@ import 'package:mapalus/shared/routes.dart';
 import 'dart:developer' as dev;
 
 class CartController extends GetxController {
-  GroceryController homeController = Get.find<GroceryController>();
+  // GroceryController homeController = Get.find<GroceryController>();
 
-  late RxList<ProductOrder> productOrders;
-  late RxBool isCardCartVisible;
+   RxList<ProductOrder> productOrders = <ProductOrder>[].obs;
+   RxBool isCardCartVisible = false.obs;
   var count = "".obs;
   var weight = "".obs;
   var price = "".obs;
@@ -22,10 +22,10 @@ class CartController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    productOrders = RxList.of(homeController.productOrders);
-    isCardCartVisible = homeController.isCardCartVisible;
+    // productOrders = RxList.of(homeController.productOrders);
+    // isCardCartVisible = homeController.isCardCartVisible;
     _calculateInfo();
-    await homeController.checkAnnouncement();
+    // await homeController.checkAnnouncement();
   }
 
   void onPressedSetDelivery() {
@@ -53,7 +53,7 @@ class CartController extends GetxController {
 
   void onPressedItemDelete(ProductOrder productOrder) {
     productOrders.remove(productOrder);
-    homeController.onPressedDeleteItemFromCart(productOrder);
+    // homeController.onPressedDeleteItemFromCart(productOrder);
 
     if (productOrders.isEmpty) {
       Get.back();

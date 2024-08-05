@@ -72,9 +72,9 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                       controller.order.value.products.elementAt(index);
                   return CardOrderDetailItem(
                     productName: po.product.name,
-                    productPrice: po.totalPriceString,
+                    productPrice: po.totalPrice.formatNumberToCurrency(),
                     index: (index + 1).toString(),
-                    productWeight: '${po.quantityString} ${po.product.unit}',
+                    productWeight: '${po.quantity} ${po.product.unit}',
                   );
                 },
               ),
@@ -196,7 +196,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                 () => _buildRatingLayout(
                   context,
                   orderStatus: controller.order.value.status,
-                  rating: controller.order.value.rating,
+                  rating: controller.rating,
                 ),
               ),
               controller.order.value.status == OrderStatus.placed ||
@@ -215,7 +215,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
   }
 
   _buildLoadingLayout(BuildContext context) {
-    return Center(
+    return const Center(
       child: CircularProgressIndicator(
         color: BaseColor.primary3,
       ),
@@ -420,7 +420,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
           ),
         );
       case OrderStatus.finished:
-        return _BuildRatedLayout(order: controller.order.value);
+        return _BuildRatedLayout(rating: controller.rating!);
       case OrderStatus.canceled:
         // TODO: Handle this case.
     }
@@ -590,14 +590,13 @@ class _BuildRejectedLayout extends StatelessWidget {
 
 class _BuildRatedLayout extends StatelessWidget {
   const _BuildRatedLayout({
-    required this.order,
+    required this.rating,
   });
 
-  final OrderApp order;
+  final Rating rating;
 
   @override
   Widget build(BuildContext context) {
-    final rating = order.rating ?? Rating.zero();
     return Container(
       margin: EdgeInsets.only(
         bottom: BaseSize.h24,
@@ -606,9 +605,9 @@ class _BuildRatedLayout extends StatelessWidget {
       child: Column(
         children: [
           RatingBar.builder(
-            initialRating: rating.number.toDouble(),
-            minRating: rating.number.toDouble(),
-            maxRating: rating.number.toDouble(),
+            initialRating: rating.rate.toDouble(),
+            minRating: rating.rate.toDouble(),
+            maxRating: rating.rate.toDouble(),
             direction: Axis.horizontal,
             itemCount: 5,
             glowColor: BaseColor.editable.withOpacity(.25),
@@ -628,7 +627,7 @@ class _BuildRatedLayout extends StatelessWidget {
           ),
           SizedBox(height: BaseSize.h6),
           Text(
-            'Dinilai ${order.finishTimeStamp?.format(pattern: "dd MMMM yyyy") ?? '-'}',
+            'Dinilai ${rating.createdAt.toStringFormatted( "dd MMMM yyyy")}',
             style: TextStyle(
               fontSize: 12.sp,
               fontWeight: FontWeight.w300,

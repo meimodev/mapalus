@@ -30,25 +30,25 @@ class OrderingController extends GetxController {
 
     await Future.delayed(const Duration(milliseconds: 2000));
 
-    final order = await orderRepo.createOrder(
-      products: productOrders,
-      user: user!,
-      orderInfo: orderInfo,
-      paymentAmount: paymentAmount,
-      paymentMethod: paymentMethod,
-      note: note,
-    );
-
-    NotificationService.instance.sendNotification(
-      title: "Pesanan Baru ! on ${order.orderTimeStamp.format(pattern:"EEEE, dd MMM HH:mm")}",
-      message: "#${order.idMinified} | ${order.orderingUser.name} - ${order.orderingUser.phone} | "
-          "${order.orderInfo.productCountF}, "
-          "${order.orderInfo.totalPriceF}, "
-          "Antar ${order.orderInfo.deliveryTime}",
-    );
-    _orderToPush = order;
-
-    dev.log(order.toString());
+    // final order = await orderRepo.createOrder(
+    //   products: productOrders,
+    //   user: user!,
+    //   orderInfo: orderInfo,
+    //   paymentAmount: paymentAmount,
+    //   paymentMethod: paymentMethod,
+    //   note: note,
+    // );
+    //
+    // NotificationService.instance.sendNotification(
+    //   title: "Pesanan Baru ! on ${order.orderTimeStamp.format(pattern:"EEEE, dd MMM HH:mm")}",
+    //   message: "#${order.idMinified} | ${order.orderingUser.name} - ${order.orderingUser.phone} | "
+    //       "${order.orderInfo.productCountF}, "
+    //       "${order.orderInfo.totalPriceF}, "
+    //       "Antar ${order.orderInfo.deliveryTime}",
+    // );
+    // _orderToPush = order;
+    //
+    // dev.log(order.toString());
 
     isLoading.value = false;
   }
