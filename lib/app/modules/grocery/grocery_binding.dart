@@ -7,7 +7,7 @@ class GroceryBinding implements Bindings {
   void dependencies() {
     Get.put<AppRepo>(AppRepo());
     Get.put<UserRepo>(UserRepo());
-    Get.put<OrderRepo>(OrderRepoImpl());
+    // Get.put<OrderRepo>(OrderRepoImpl());
     Get.put<ProductRepo>(ProductRepo());
     Get.put<GroceryController>(GroceryController());
   }

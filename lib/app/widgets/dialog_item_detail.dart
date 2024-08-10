@@ -7,7 +7,7 @@ import 'package:mapalus/app/widgets/text_input_quantity.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 
-import 'button_alter_quantity.dart';
+import 'button_altering.dart';
 
 class DialogItemDetail extends StatefulWidget {
   const DialogItemDetail({
@@ -429,16 +429,16 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
         // ),
         SizedBox(width: 3.w),
 
-        ButtonAlterQuantity(
+        ButtonAltering(
           label: "-",
           onPressed: onSub,
-          isEnabled: isCustomPrice,
+          enabled: isCustomPrice,
         ),
         SizedBox(width: 3.w),
-        ButtonAlterQuantity(
+        ButtonAltering(
           label: "+",
           onPressed: onAdd,
-          isEnabled: isCustomPrice,
+          enabled: isCustomPrice,
         ),
       ],
     );

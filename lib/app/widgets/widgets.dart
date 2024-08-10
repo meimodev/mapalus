@@ -1,6 +1,6 @@
 export 'badge_notification.dart';
 export 'builder_switcher_order_status.dart';
-export 'button_alter_quantity.dart';
+export 'button_altering.dart';
 export 'button_delete_account.dart';
 export 'card_cart_item.dart';
 export 'card_cart_peak.dart';
@@ -25,3 +25,5 @@ export 'chip_category.dart';
 
 export 'logo_mapalus.dart';
 export 'logo_meimo.dart';
+
+export 'image_wrapper_widget.dart';

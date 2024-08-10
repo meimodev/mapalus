@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/modules.dart';
@@ -12,23 +14,6 @@ class FoodScreen extends GetView<FoodController> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Partner> partners = List.generate(
-      10,
-      (index) => Partner(
-        id: "id$index",
-        name: "Partner $index",
-        location: Location(place: "Location $index"),
-      ),
-    );
-
-    final List<Product> products = List.generate(
-      10,
-      (index) => Product(
-        name: "Product  $index",
-        unit: "Kilogram",
-        price: 5000,
-      ),
-    );
 
     return ScreenWrapper(
       padding: EdgeInsets.zero,
@@ -45,7 +30,7 @@ class FoodScreen extends GetView<FoodController> {
               ),
               SliverListViewSeparated<Partner>(
                 title: 'Best Partners in town',
-                list: partners,
+                list: controller.partners,
                 itemBuilder: (BuildContext context, item, int index) =>
                     CardPartner(
                   partner: item,
@@ -62,7 +47,7 @@ class FoodScreen extends GetView<FoodController> {
               ),
               SliverListViewSeparated<Product>(
                 title: 'Legendary Products',
-                list: products,
+                list: controller.products,
                 itemBuilder: (BuildContext context, item, int index) =>
                     CardProduct(
                   product: item,
@@ -78,12 +63,10 @@ class FoodScreen extends GetView<FoodController> {
             bottom: BaseSize.h24,
             left: BaseSize.w24,
             right: BaseSize.w24,
-            child: CardCartPeak(
-              onPressed: () {
-                Get.toNamed(Routes.cart);
-              },
-              totalPrice: 524123450,
-              totalProduct: 10,
+            child: Obx(
+              () => CardCartPeak(
+                productOrders: controller.productOrders.value,
+              ),
             ),
           ),
         ],

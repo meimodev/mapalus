@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class CardNavigation extends StatelessWidget {
@@ -8,12 +9,14 @@ class CardNavigation extends StatelessWidget {
     this.onPressedBack,
     this.isInverted = false,
     this.isCircular = false,
+    this.padding,
   });
 
   final String title;
   final bool isInverted;
   final bool isCircular;
   final VoidCallback? onPressedBack;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -25,29 +28,26 @@ class CardNavigation extends StatelessWidget {
       child: InkWell(
         onTap: onPressedBack ?? () => Navigator.pop(context),
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: BaseSize.w24),
-          height: 60.h,
+          padding: padding ?? EdgeInsets.symmetric(horizontal: BaseSize.w24),
+          height: BaseSize.customHeight(60),
           child: Stack(
             children: [
               Align(
                 alignment: Alignment.centerLeft,
-                child: SvgPicture.asset(
-                  'assets/vectors/back.svg',
-                  height: 24.sp,
-                  width: 24.sp,
-                  colorFilter:  ColorFilter.mode(
-                    isInverted ? BaseColor.editable : BaseColor.primaryText,
-                    BlendMode.srcIn,
-                  ),
+                child: Icon(
+                  Ionicons.chevron_back_circle_outline,
+                  weight: 2,
+                  size: BaseSize.customRadius(30),
+                  color: isInverted ? BaseColor.white : BaseColor.primaryText,
                 ),
               ),
               Center(
                 child: Text(
                   title,
                   style: TextStyle(
-                        color:
-                            isInverted ? BaseColor.editable : BaseColor.primaryText,
-                      ),
+                    color:
+                        isInverted ? BaseColor.editable : BaseColor.primaryText,
+                  ),
                 ),
               ),
             ],

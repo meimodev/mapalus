@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide SearchController;
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/modules.dart';
 import 'package:mapalus/app/widgets/widgets.dart';
@@ -6,7 +6,7 @@ import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 import 'widgets/widgets.dart';
 
-class SearchScreen extends GetView<FoodController> {
+class SearchScreen extends GetView<SearchController> {
   const SearchScreen({super.key});
 
   @override
@@ -22,49 +22,63 @@ class SearchScreen extends GetView<FoodController> {
 
     return ScreenWrapper(
       padding: EdgeInsets.zero,
-      child: Column(
+      child: Stack(
         children: [
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: BaseSize.w12,
-              vertical: BaseSize.h12,
-            ),
-            color: BaseColor.white,
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: const BackButtonIcon(),
+          Column(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: BaseSize.w12,
+                  vertical: BaseSize.h12,
                 ),
-                Gap.w12,
-                const Expanded(
-                  child: CardSearchBar(
-                    onChanged: print,
-                    onSubmitted: print,
-                    autoFocus: true,
+                color: BaseColor.white,
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: const BackButtonIcon(),
+                    ),
+                    Gap.w12,
+                    const Expanded(
+                      child: CardSearchBar(
+                        onChanged: print,
+                        onSubmitted: print,
+                        autoFocus: true,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Gap.h12,
+              Expanded(
+                child: GridView.builder(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: BaseSize.w12,
+                  ),
+                  scrollDirection: Axis.vertical,
+                  itemCount: result.length,
+                  physics: const BouncingScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisExtent: BaseSize.customHeight(245),
+                    crossAxisSpacing: BaseSize.w12,
+                    mainAxisSpacing: BaseSize.h12,
+                  ),
+                  itemBuilder: (context, index) => CardProduct(
+                    onPressed: print,
+                    product: result[index],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          Gap.h12,
-          Expanded(
-            child: GridView.builder(
-              padding: EdgeInsets.symmetric(
-                horizontal: BaseSize.w12,
-              ),
-              scrollDirection: Axis.vertical,
-              itemCount: result.length,
-              physics: const BouncingScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisExtent: BaseSize.customHeight(230),
-                crossAxisSpacing: BaseSize.w12,
-                mainAxisSpacing: BaseSize.h12,
-              ),
-              itemBuilder: (context, index) => CardProduct(
-                onPressed: print,
-                product: result[index],
+          Positioned(
+            bottom: BaseSize.h24,
+            left: BaseSize.w24,
+            right: BaseSize.w24,
+            child: Obx(
+              () => CardCartPeak(
+                productOrders: controller.productOrders.value,
               ),
             ),
           ),

@@ -77,13 +77,14 @@ class Routes {
         name: cart,
         page: () => const CartScreen(),
         binding: CartBinding(),
-        transition: Transition.fade,
+        transition: Transition.leftToRight,
+        maintainState: false,
       ),
       GetPage(
         name: location,
         page: () => const LocationScreen(),
         binding: LocationBinding(),
-        transition: Transition.fade,
+        transition: Transition.leftToRight,
       ),
       GetPage(
         name: ordering,
@@ -134,4 +135,15 @@ class Routes {
 
     ];
   }
+}
+
+class RouteParamArgs {
+  final Map<String, dynamic> passingData;
+
+  const RouteParamArgs({required this.passingData});
+
+}
+
+class RouteParamArgsKey {
+  static const String productOrders ="productOrders";
 }

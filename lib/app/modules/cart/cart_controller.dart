@@ -1,68 +1,105 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
-import 'package:mapalus/app/modules/modules.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'dart:developer' as dev;
 
 class CartController extends GetxController {
-  // GroceryController homeController = Get.find<GroceryController>();
+  OrderRepo orderRepo = Get.find<OrderRepo>();
 
-   RxList<ProductOrder> productOrders = <ProductOrder>[].obs;
-   RxBool isCardCartVisible = false.obs;
+  RxList<ProductOrder> productOrders = <ProductOrder>[].obs;
+  RxBool isCardCartVisible = false.obs;
   var count = "".obs;
   var weight = "".obs;
   var price = "".obs;
 
   var note = "".obs;
 
-  int _count = 0;
-  double _weight = 0;
-  double _price = 0;
+  StreamSubscription<List<ProductOrder>?>? streamLocalProductOrders;
+
+  bool forceRebuild = false;
 
   @override
-  Future<void> onInit() async {
+  void onInit() async {
     super.onInit();
-    // productOrders = RxList.of(homeController.productOrders);
-    // isCardCartVisible = homeController.isCardCartVisible;
-    _calculateInfo();
-    // await homeController.checkAnnouncement();
+
+    final stream = orderRepo.exposeLocalProductOrders();
+    streamLocalProductOrders ??= stream.listen((data) async {
+      if (data != null) {
+        // FOR SOME REASON THE UI FAILED TO REBUILT WHEN data is assigned to productOrders
+        if (forceRebuild) {
+          productOrders.value = [];
+          await Future.delayed(const Duration(milliseconds: 400));
+          forceRebuild = false;
+        }
+        productOrders.value = data;
+        _calculateInfo();
+      }
+    });
+
+    //init data
+    orderRepo.updateLocalProductOrders(
+      await orderRepo.readLocalProductOrders(),
+    );
+  }
+
+  @override
+  void dispose() async {
+    // debounce.dispose();
+    if (streamLocalProductOrders != null) {
+      await streamLocalProductOrders!.cancel();
+      streamLocalProductOrders = null;
+    }
+    super.dispose();
   }
 
   void onPressedSetDelivery() {
-    final data = {
-      'products_count': _count,
-      'products_price': _price,
-      'products_weight': _weight,
-      'product_orders': productOrders,
-      'note': note.value,
-    };
-    dev.log(data.toString());
-    Get.toNamed(Routes.location, arguments: data);
-  }
-
-  _calculateInfo() {
-    for (var element in productOrders) {
-      _count++;
-      _weight += element.quantity * element.product.weight;
-      _price += element.totalPrice;
-    }
-    count.value = "$_count Produk";
-    weight.value = "± ${(_weight / 1000).ceil()} Kg";
-    price.value = _price.formatNumberToCurrency();
+    // final data = {
+    //   'products_count': _count,
+    //   'products_price': _price,
+    //   'products_weight': _weight,
+    //   'product_orders': productOrders,
+    //   'note': note.value,
+    // };
+    // dev.log(data.toString());
+    Get.toNamed(Routes.location);
   }
 
   void onPressedItemDelete(ProductOrder productOrder) {
-    productOrders.remove(productOrder);
-    // homeController.onPressedDeleteItemFromCart(productOrder);
-
-    if (productOrders.isEmpty) {
-      Get.back();
-      return;
-    }
+    forceRebuild = true;
+    final newOrders = List.of(productOrders);
+    newOrders.remove(productOrder);
+    orderRepo.updateLocalProductOrders(newOrders);
     _calculateInfo();
   }
 
   onChangedNote(String note) {
     this.note.value = note;
+  }
+
+  void onChangedQuantity(ProductOrder altered) {
+    orderRepo.updateLocalProductOrders(productOrders.map((element) {
+      if (element.product.id == altered.product.id) {
+        return altered;
+      }
+      return element;
+    }).toList());
+    _calculateInfo();
+  }
+
+  _calculateInfo() {
+    int count = 0;
+    double weight = 0;
+    double price = 0;
+
+    for (var element in productOrders) {
+      count++;
+      weight += element.quantity * element.product.weight;
+      price += element.quantity * element.product.price;
+    }
+    this.count.value = "$count Produk ";
+    this.weight.value = weight > 0 ? weight.toKilogram() : "-";
+    this.price.value = price.formatNumberToCurrency();
   }
 }
