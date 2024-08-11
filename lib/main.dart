@@ -13,14 +13,15 @@ Future<void> _handleBackgroundMessage(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await HiveService().init();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) => runApp(const MyApp()));
-
-  await Hive.initFlutter();
 
   await FirebaseAppCheck.instance.activate();
   FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);

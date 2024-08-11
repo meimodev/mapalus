@@ -30,7 +30,7 @@ class CartController extends GetxController {
         // FOR SOME REASON THE UI FAILED TO REBUILT WHEN data is assigned to productOrders
         if (forceRebuild) {
           productOrders.value = [];
-          await Future.delayed(const Duration(milliseconds: 400));
+          await Future.delayed(const Duration(milliseconds: 300));
           forceRebuild = false;
         }
         productOrders.value = data;
@@ -42,6 +42,8 @@ class CartController extends GetxController {
     orderRepo.updateLocalProductOrders(
       await orderRepo.readLocalProductOrders(),
     );
+
+    note.value = await orderRepo.readLocalNote();
   }
 
   @override
@@ -55,14 +57,6 @@ class CartController extends GetxController {
   }
 
   void onPressedSetDelivery() {
-    // final data = {
-    //   'products_count': _count,
-    //   'products_price': _price,
-    //   'products_weight': _weight,
-    //   'product_orders': productOrders,
-    //   'note': note.value,
-    // };
-    // dev.log(data.toString());
     Get.toNamed(Routes.location);
   }
 
@@ -75,6 +69,7 @@ class CartController extends GetxController {
   }
 
   onChangedNote(String note) {
+    orderRepo.updateLocalNote(note);
     this.note.value = note;
   }
 

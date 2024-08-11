@@ -1,10 +1,7 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/modules.dart';
 import 'package:mapalus/app/widgets/widgets.dart';
-import 'package:mapalus/shared/shared.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 import 'widgets/widgets.dart';

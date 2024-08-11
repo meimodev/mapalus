@@ -55,9 +55,11 @@ class CartScreen extends GetView<CartController> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Gap.h12,
-                CardNoteWidget(
-                  note: controller.note.value,
-                  onChangedNote: controller.onChangedNote,
+                Obx(
+                  () => CardNoteWidget(
+                    note: controller.note.value,
+                    onChangedNote: controller.onChangedNote,
+                  ),
                 ),
                 Gap.h12,
                 Obx(

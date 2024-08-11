@@ -5,37 +5,15 @@ import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mapalus_flutter_commons/shared/shared.dart';
 
-class CardNoteWidget extends StatefulWidget {
+class CardNoteWidget extends StatelessWidget {
   const CardNoteWidget({
     super.key,
     required this.onChangedNote,
     required this.note,
   });
 
-  final Function(String) onChangedNote;
+  final void Function(String) onChangedNote;
   final String note;
-
-  @override
-  State<CardNoteWidget> createState() => _CardNoteWidgetState();
-}
-
-class _CardNoteWidgetState extends State<CardNoteWidget> {
-  String note = "";
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.note.isNotEmpty) {
-      setState(() {
-        note = widget.note;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,26 +23,20 @@ class _CardNoteWidgetState extends State<CardNoteWidget> {
       color: BaseColor.editable,
       elevation: .5,
       child: InkWell(
-        onTap: () {
+        onTap: () async {
           showDialog(
             context: context,
             builder: (_) => _BuildBottomSheet(
               note: note,
-              onSubmitNote: () {
+              onSubmitNote: (value) {
                 Navigator.pop(context);
-                setState(() {});
+                onChangedNote(value);
               },
               onDeleteNote: () {
-                if (note.isNotEmpty) {
-                  setState(() {
-                    note = "";
-                  });
-                }
+                onChangedNote("");
                 Navigator.pop(context);
               },
-              onChangedNote: (value) {
-                note = value;
-              },
+
             ),
           );
         },
@@ -81,7 +53,7 @@ class _CardNoteWidgetState extends State<CardNoteWidget> {
                   Icons.edit_note_rounded,
                   size: BaseSize.customRadius(20),
                 ),
-                Gap.w12,
+                Gap.w4,
                 Expanded(
                   child: note.isEmpty
                       ? _buildNoteHint(context)
@@ -111,12 +83,12 @@ class _CardNoteWidgetState extends State<CardNoteWidget> {
       overflow: TextOverflow.ellipsis,
       maxLines: 1,
       text: TextSpan(
-        text: "Catatan ",
-        style: BaseTypography.caption.toPrimary,
+        text: "Catatan: ",
+        style: BaseTypography.caption,
         children: [
           TextSpan(
             text: hints[Random().nextInt(hints.length)],
-            style: BaseTypography.caption.toSecondary,
+            style: BaseTypography.caption.copyWith(color: BaseColor.secondaryText.withOpacity(.75)),
           ),
         ],
       ),
@@ -124,19 +96,37 @@ class _CardNoteWidgetState extends State<CardNoteWidget> {
   }
 }
 
-class _BuildBottomSheet extends StatelessWidget {
+class _BuildBottomSheet extends StatefulWidget {
   const _BuildBottomSheet({
-    super.key,
     required this.onSubmitNote,
     required this.onDeleteNote,
-    required this.onChangedNote,
+    // required this.onChangedNote,
     required this.note,
   });
 
-  final VoidCallback onSubmitNote;
+  final void Function(String) onSubmitNote;
   final VoidCallback onDeleteNote;
-  final void Function(String) onChangedNote;
+  // final void Function(String) onChangedNote;
   final String note;
+
+  @override
+  State<_BuildBottomSheet> createState() => _BuildBottomSheetState();
+}
+
+class _BuildBottomSheetState extends State<_BuildBottomSheet> {
+  final tecNote = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    tecNote.text = widget.note;
+  }
+
+  @override
+  void dispose() {
+    tecNote.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +145,7 @@ class _BuildBottomSheet extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Catatan",
+              "Catatan:",
               style: BaseTypography.caption,
             ),
             Gap.h12,
@@ -173,14 +163,12 @@ class _BuildBottomSheet extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextField(
-                    controller: note.isNotEmpty
-                        ? (TextEditingController()..text = note)
-                        : null,
+                    controller: tecNote,
                     maxLines: 4,
                     maxLength: 300,
                     maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                    onSubmitted: (value) => onSubmitNote(),
-                    onChanged: onChangedNote,
+                    onSubmitted: (value) => widget.onSubmitNote(value),
+                    // onChanged: widget.onChangedNote,
                     autocorrect: false,
                     autofocus: true,
                     style: BaseTypography.caption,
@@ -205,7 +193,10 @@ class _BuildBottomSheet extends StatelessWidget {
                   shape: const CircleBorder(),
                   elevation: 1,
                   child: InkWell(
-                    onTap: onDeleteNote,
+                    onTap: () {
+                      tecNote.text= "";
+                      widget.onDeleteNote();
+                    },
                     child: SizedBox(
                       height: BaseSize.w36,
                       width: BaseSize.w36,
@@ -225,7 +216,7 @@ class _BuildBottomSheet extends StatelessWidget {
                   shape: const CircleBorder(),
                   elevation: 1,
                   child: InkWell(
-                    onTap: onSubmitNote,
+                    onTap: () => widget.onSubmitNote(tecNote.text),
                     child: SizedBox(
                       height: BaseSize.w36,
                       width: BaseSize.w36,
