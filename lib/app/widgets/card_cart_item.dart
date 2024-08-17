@@ -23,7 +23,7 @@ class CardCartItem extends StatefulWidget {
 }
 
 class _CardCartItemState extends State<CardCartItem> {
-  int value = 0;
+  double value = 0;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _CardCartItemState extends State<CardCartItem> {
       print(
           "${widget.productOrder.product.name} changed quantity $value current ${widget.productOrder.quantity}");
       widget.onChangedQuantity!(
-        widget.productOrder.copyWith(quantity: value),
+        widget.productOrder.copyWith(quantity: 0),
       );
     }
   }
@@ -81,15 +81,15 @@ class _CardCartItemState extends State<CardCartItem> {
                   ),
                   Gap.h6,
                   _BuildAlterQuantityLayout(
-                    onPressedAdd: (int value) {
+                    onPressedAdd: (_) {
                       setState(() {
-                        this.value++;
+                        value++;
                       });
                       onChangedValue();
                     },
-                    onPressedSub: (int value) {
+                    onPressedSub: (_) {
                       setState(() {
-                        this.value--;
+                        value--;
                       });
                       onChangedValue();
                     },
@@ -122,9 +122,9 @@ class _BuildAlterQuantityLayout extends StatelessWidget {
     required this.value,
   });
 
-  final void Function(int value) onPressedAdd;
-  final void Function(int value) onPressedSub;
-  final int value;
+  final void Function(double value) onPressedAdd;
+  final void Function(double value) onPressedSub;
+  final double value;
 
   @override
   Widget build(BuildContext context) {

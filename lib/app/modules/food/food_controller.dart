@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:mapalus/shared/shared.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:uuid/uuid.dart';
 

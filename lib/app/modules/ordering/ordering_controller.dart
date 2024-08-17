@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:mapalus/app/modules/modules.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus/shared/routes.dart';
-import 'dart:developer' as dev;
 
 class OrderingController extends GetxController {
   OrderRepo orderRepo = Get.find<OrderRepo>();
@@ -23,7 +22,7 @@ class OrderingController extends GetxController {
 
     final args = Get.arguments as Map<String, dynamic>;
     final productOrders = args['product_orders'] as List<ProductOrder>;
-    final orderInfo = args['order_info'] as OrderInfo;
+    // final orderInfo = args['order_info'] as OrderInfo;
     final paymentMethod = args['payment_method'] as String;
     final paymentAmount = args['payment_amount'] as int;
     final note = args['note'].toString();

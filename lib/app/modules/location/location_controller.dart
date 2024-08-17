@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
-import 'package:mapalus/shared/routes.dart';
-import 'dart:developer' as dev;
 
 class LocationController extends GetxController {
   AppRepo appRepo = Get.find();
@@ -11,22 +9,22 @@ class LocationController extends GetxController {
 
   LocationRepoContract locationRepo = LocationRepo.instance;
 
-  Rx<OrderInfo> orderInfo = OrderInfo(
-    productCount: 0,
-    productPrice: 0,
-    deliveryWeight: 0,
-    deliveryPrice: 0,
-    deliveryDistance: 0,
-    deliveryCoordinateLatitude: 0,
-    deliveryCoordinateLongitude: 0,
-  ).obs;
+  // Rx<OrderInfo> orderInfo = OrderInfo(
+  //   productCount: 0,
+  //   productPrice: 0,
+  //   deliveryWeight: 0,
+  //   deliveryPrice: 0,
+  //   deliveryDistance: 0,
+  //   deliveryCoordinateLatitude: 0,
+  //   deliveryCoordinateLongitude: 0,
+  // ).obs;
 
   RxDouble distance = 0.0.obs;
   RxDouble weight = 2.0.obs;
 
-  DeliveryInfo? _selectedDeliveryInfo;
+  // DeliveryInfo? _selectedDeliveryInfo;
 
-  RxList<DeliveryInfo> deliveries = <DeliveryInfo>[].obs;
+  // RxList<DeliveryInfo> deliveries = <DeliveryInfo>[].obs;
 
   OrderRepo orderRepo = Get.find<OrderRepo>();
 
@@ -59,7 +57,7 @@ class LocationController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    initPricingModifiers();
+    // initPricingModifiers();
   }
 
   void initPricingModifiers() async {
@@ -69,40 +67,40 @@ class LocationController extends GetxController {
     PricingModifier pricingModifier = PricingModifier.fromJson(pm);
     var d = await appRepo.getDeliveryTimes();
     //set the pricing modifier to each dDeliveryInfo object
-    deliveries = d
-        .map((e) {
-          e.addAll(pricingModifier.toMap);
-          dev.log("Delivery info => $e");
-          return DeliveryInfo.fromJSON(e);
-        })
-        .toList()
-        .obs;
+    // deliveries = d
+    //     .map((e) {
+    //       e.addAll(pricingModifier.toMap);
+    //       dev.log("Delivery info => $e");
+    //       return DeliveryInfo.fromJSON(e);
+    //     })
+    //     .toList()
+    //     .obs;
 
     isLoading.value = false;
 
     //fetch delivery fees
     var args = Get.arguments;
     double w = double.parse(args['products_weight'].toString());
-    orderInfo.value = orderInfo.value.copyWith(
-      productCount: int.parse(args['products_count'].toString()),
-      productPrice: double.parse(args['products_price'].toString()),
-      deliveryWeight: w,
-    );
+    // orderInfo.value = orderInfo.value.copyWith(
+    //   productCount: int.parse(args['products_count'].toString()),
+    //   productPrice: double.parse(args['products_price'].toString()),
+    //   deliveryWeight: w,
+    // );
     weight.value = w;
     note = args['note'] ?? '';
     _calculateOrderInfo();
   }
 
   onPressedChangeDeliveryTime(
-    DeliveryInfo deliveryInfo,
+    // DeliveryInfo deliveryInfo,
     double price,
   ) {
-    _selectedDeliveryInfo = deliveryInfo;
-    orderInfo.value = orderInfo.value.copyWith(
-      deliveryPrice: price,
-      deliveryWeight: weight.value / 1000,
-      deliveryDistance: distance.value,
-    );
+    // _selectedDeliveryInfo = deliveryInfo;
+    // orderInfo.value = orderInfo.value.copyWith(
+    //   deliveryPrice: price,
+    //   deliveryWeight: weight.value / 1000,
+    //   deliveryDistance: distance.value,
+    // );
   }
 
   onPressedSelectLocation() async {
@@ -130,20 +128,20 @@ class LocationController extends GetxController {
   }
 
   onPressedMakeOrder() async {
-    if (_selectedDeliveryInfo == null) {
-      Get.rawSnackbar(
-          title: "Perhatian !", message: "Waktu pengataran belum dipilih");
-      return;
-    }
+    // if (_selectedDeliveryInfo == null) {
+    //   Get.rawSnackbar(
+    //       title: "Perhatian !", message: "Waktu pengataran belum dipilih");
+    //   return;
+    // }
 
-    var deliveryTime = _selectedDeliveryInfo!.title;
-    if (_selectedDeliveryInfo!.isTomorrow) {
-      final tomorrowDate =
-          Jiffy.now().add(days: 1).format(pattern: "EEEE, dd MMM");
-      orderInfo.value.deliveryTime = "$deliveryTime ($tomorrowDate)";
-    } else {
-      orderInfo.value.deliveryTime = deliveryTime;
-    }
+    // var deliveryTime = _selectedDeliveryInfo!.title;
+    // if (_selectedDeliveryInfo!.isTomorrow) {
+    //   final tomorrowDate =
+    //       Jiffy.now().add(days: 1).format(pattern: "EEEE, dd MMM");
+    //   orderInfo.value.deliveryTime = "$deliveryTime ($tomorrowDate)";
+    // } else {
+    //   orderInfo.value.deliveryTime = deliveryTime;
+    // }
 
     List<ProductOrder> productOrders = (Get.arguments
         as Map<String, dynamic>)['product_orders'] as List<ProductOrder>;
@@ -151,23 +149,23 @@ class LocationController extends GetxController {
     ///TODO replace with more appropriate implementation next iteration, use enums instead of 'index'
     final paymentMethodString = paymentSelectedIndex == 0 ? 'CASH' : 'CASHLESS';
 
-    Get.toNamed(
-      Routes.ordering,
-      arguments: <String, dynamic>{
-        'delivery_info': _selectedDeliveryInfo,
-        'product_orders': productOrders,
-        'order_info': orderInfo.value,
-        'payment_method': paymentMethodString,
-        'payment_amount': paymentMoneyAmount ?? 0,
-        'note': note,
-      },
-    );
+    // Get.toNamed(
+    //   Routes.ordering,
+    //   arguments: <String, dynamic>{
+    //     'delivery_info': _selectedDeliveryInfo,
+    //     'product_orders': productOrders,
+    //     'order_info': orderInfo.value,
+    //     'payment_method': paymentMethodString,
+    //     'payment_amount': paymentMoneyAmount ?? 0,
+    //     'note': note,
+    //   },
+    // );
   }
 
   onPressedChangeLocation() async {
     isLocationSelectionVisible.toggle();
     isLocationNoteEnabled.toggle();
-    _selectedDeliveryInfo = null;
+    // _selectedDeliveryInfo = null;
   }
 
   onCameraIdle(LatLng? pos) {
@@ -182,19 +180,19 @@ class LocationController extends GetxController {
   Future<bool> onPressedBackButton() {
     if (isLocationSelectionVisible.isFalse) {
       isLocationSelectionVisible.toggle();
-      _selectedDeliveryInfo = null;
+      // _selectedDeliveryInfo = null;
       return Future.value(false);
     }
     return Future.value(true);
   }
 
   _calculateOrderInfo() {
-    orderInfo.value = orderInfo.value.copyWith(
-      deliveryWeight: weight.value,
-      deliveryDistance: distance.value,
-      deliveryCoordinateLatitude: deliveryCoordinate?.latitude,
-      deliveryCoordinateLongitude: deliveryCoordinate?.longitude,
-    );
+    // orderInfo.value = orderInfo.value.copyWith(
+    //   deliveryWeight: weight.value,
+    //   deliveryDistance: distance.value,
+    //   deliveryCoordinateLatitude: deliveryCoordinate?.latitude,
+    //   deliveryCoordinateLongitude: deliveryCoordinate?.longitude,
+    // );
   }
 
   onMapCreated(GoogleMapController controller) async {

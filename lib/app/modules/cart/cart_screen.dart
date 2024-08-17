@@ -1,10 +1,9 @@
 // ignore_for_file: invalid_use_of_protected_member
 
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:mapalus/app/widgets/button_main.dart';
 import 'package:mapalus/app/widgets/card_cart_item.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
@@ -84,28 +83,9 @@ class CartScreen extends GetView<CartController> {
                   ),
                 ),
                 Gap.h12,
-                Material(
-                  borderRadius: BorderRadius.circular(9.sp),
-                  clipBehavior: Clip.hardEdge,
-                  color: BaseColor.primary3,
-                  elevation: 4,
-                  child: InkWell(
-                    onTap: controller.onPressedSetDelivery,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: BaseSize.w24,
-                        vertical: BaseSize.h12,
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Atur Pengantaran',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                ButtonMain(
+                  title: "Pengantaran & Pembayaran",
+                  onPressed: controller.onPressedSetDelivery,
                 ),
                 Gap.h24,
               ],

@@ -6,19 +6,20 @@ class CardDeliveryFee extends StatelessWidget {
   const CardDeliveryFee({
     super.key,
     this.isActive = false,
-    required this.deliveryInfo,
+    // required this.deliveryInfo,
     required this.onPressed,
     required this.price,
+    required this.deliveryTime,
   });
 
-  final DeliveryInfo deliveryInfo;
+  final DeliveryTime deliveryTime;
   final String price;
   final bool isActive;
   final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return deliveryInfo.isAvailable
+    return deliveryTime.available
         ? Material(
             shape: ContinuousRectangleBorder(
               borderRadius: BorderRadius.circular(9.sp),
@@ -59,31 +60,30 @@ class CardDeliveryFee extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                deliveryInfo.title,
+                                deliveryTime.toString(),
                                 style: TextStyle(
-                                      fontSize: 12.sp,
-                                      color: BaseColor.primaryText,
-                                    ),
+                                  fontSize: 12.sp,
+                                  color: BaseColor.primaryText,
+                                ),
                               ),
-                              deliveryInfo.isTomorrow
-                                  ? Text(
-                                      ' BESOK ( ${deliveryInfo.startDate.add(days: 1).format(pattern:"EEEE dd MMM")} )',
-                                      style: TextStyle(
-                                            color: BaseColor.primaryText,
-                                            fontSize: 12.sp,
-                                          ),
-                                    )
-                                  : const SizedBox(),
+                              // deliveryTime.isTomorrow
+                              //     ? Text(
+                              //         ' BESOK ( ${deliveryTime.startDate.add(days: 1).format(pattern:"EEEE dd MMM")} )',
+                              //         style: TextStyle(
+                              //               color: BaseColor.primaryText,
+                              //               fontSize: 12.sp,
+                              //             ),
+                              //       )
+                              //     : const SizedBox(),
                             ],
                           ),
                           Text(
                             price,
-                            style:
-                            TextStyle(
-                                      fontSize: 10.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.grey,
-                                    ),
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey,
+                            ),
                           ),
                         ],
                       ),
@@ -115,9 +115,9 @@ class CardDeliveryFee extends StatelessWidget {
               content: Text(
                 'Waktu pengantaran sedang tidak tersedia',
                 style: TextStyle(
-                      fontSize: 14.sp,
-                      color: BaseColor.cardBackground1,
-                    ),
+                  fontSize: 14.sp,
+                  color: BaseColor.cardBackground1,
+                ),
               ),
             ),
           );
@@ -136,31 +136,29 @@ class CardDeliveryFee extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          deliveryInfo.title,
-                          style:
-                          TextStyle(
-                                    fontSize: 12.sp,
-                                    color: Colors.grey,
-                                  ),
+                          deliveryTime.toString(),
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            color: Colors.grey,
+                          ),
                         ),
                         SizedBox(width: 2.w),
                         Text(
                           message,
-                          style:
-                          TextStyle(
-                                    color: BaseColor.primaryText,
-                                    fontSize: 12.sp,
-                                  ),
+                          style: TextStyle(
+                            color: BaseColor.primaryText,
+                            fontSize: 12.sp,
+                          ),
                         )
                       ],
                     ),
                     Text(
                       "Waktu pengantaran sedang tidak tersedia",
                       style: TextStyle(
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey,
-                          ),
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey,
+                      ),
                     ),
                   ],
                 ),

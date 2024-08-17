@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus/shared/routes.dart';
-import 'dart:developer' as dev;
 
 class CartController extends GetxController {
   OrderRepo orderRepo = Get.find<OrderRepo>();
@@ -57,7 +56,7 @@ class CartController extends GetxController {
   }
 
   void onPressedSetDelivery() {
-    Get.toNamed(Routes.location);
+    Get.toNamed(Routes.orderSummary);
   }
 
   void onPressedItemDelete(ProductOrder productOrder) {

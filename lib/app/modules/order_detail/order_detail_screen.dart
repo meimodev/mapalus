@@ -33,7 +33,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                 Obx(
                   () => CardNavigation(
                     title:
-                        'Rincian Pesanan #${controller.order.value.idMinified}',
+                        'Rincian Pesanan #${controller.order.value.id}',
                     isInverted: true,
                   ),
                 ),
@@ -107,8 +107,8 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                           () => _buildDeliveryStateCard(
                             context: context,
                             title: 'Dipesan',
-                            timeStamp: controller.order.value.orderTimeStamp
-                                .format(pattern: 'EEE, dd MMMM HH:mm'),
+                            timeStamp: controller.order.value.lastUpdate.toString()
+                                // .format(pattern: 'EEE, dd MMMM HH:mm'),
                           ),
                         ),
                         const Expanded(
@@ -143,7 +143,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                       ),
                     ),
                     SizedBox(height: BaseSize.h6),
-                    controller.order.value.paymentMethod.isNotEmpty
+                    controller.order.value.payment.id.isNotEmpty
                         ? Container(
                             padding: EdgeInsets.symmetric(
                               vertical: BaseSize.h6,
@@ -166,8 +166,8 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                       () => _buildRowItem(
                         context,
                         "Produk",
-                        controller.order.value.orderInfo.productCountF,
-                        controller.order.value.orderInfo.productPriceF,
+                        "controller.order.value.orderInfo.productCountF",
+                        "controller.order.value.orderInfo.productPriceF",
                       ),
                     ),
                     SizedBox(height: 6.h),
@@ -176,7 +176,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                         context,
                         "Pengantaran",
                         null,
-                        controller.order.value.orderInfo.deliveryPriceF,
+                        "controller.order.value.orderInfo.deliveryPriceF",
                       ),
                     ),
                     SizedBox(height: 6.h),
@@ -185,7 +185,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                         context,
                         "Total Pembayaran",
                         null,
-                        controller.order.value.orderInfo.totalPriceF,
+                        "controller.order.value.orderInfo.totalPriceF",
                         highLight: true,
                       ),
                     ),
@@ -239,7 +239,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
               ),
             ),
             Text(
-              controller.order.value.orderInfo.deliveryTime,
+              "controller.order.value.orderInfo.deliveryTime",
               style: TextStyle(
                 fontSize: 12.sp,
               ),
@@ -289,12 +289,12 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
               ),
             ),
             Text(
-              controller.order.value.paymentMethodF,
+              "controller.order.value.paymentMethodF",
               style: TextStyle(
                 fontSize: 12.sp,
               ),
             ),
-            controller.order.value.paymentMethodF == "CASHLESS"
+            controller.order.value.payment.id == "CASHLESS"
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -575,7 +575,7 @@ class _BuildRejectedLayout extends StatelessWidget {
             ),
           ),
           Text(
-            order.confirmTimeStamp?.format(pattern: "EEE, dd MMMM yyyy") ?? '-',
+            order.lastUpdate.EEEEddMMMyyyy,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 12.sp,

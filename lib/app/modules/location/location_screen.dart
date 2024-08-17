@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/location/location_controller.dart';
-import 'package:mapalus/app/widgets/card_delivery_fee.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
 import 'package:mapalus/app/widgets/google_map_wrapper.dart';
 import 'package:mapalus/app/widgets/payment_method_selection_card.dart';
@@ -29,13 +28,6 @@ class LocationScreen extends GetView<LocationController> {
               defaultPosition: controller.defaultPosition,
             ),
           ),
-          // Center(
-          //   child: Container(
-          //     width: 3,
-          //     height: 3,
-          //     color: Colors.red,
-          //   ),
-          // ),
           Positioned(
             left: 0,
             right: 0,
@@ -105,37 +97,37 @@ class LocationScreen extends GetView<LocationController> {
               ],
             ),
           ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            top: 0,
-            child: Obx(
-              () => AnimatedSwitcher(
-                duration: const Duration(milliseconds: 200),
-                child: controller.isLocationSelectionVisible.value
-                    ? const SizedBox()
-                    : Stack(
-                        children: [
-                          Positioned(
-                              top: 0,
-                              left: 0,
-                              right: 0,
-                              bottom: 0,
-                              child: Container(
-                                color: Colors.black.withOpacity(.80),
-                              )),
-                          Positioned(
-                            left: 0,
-                            right: 0,
-                            bottom: BaseSize.h24,
-                            child: _buildBody(context),
-                          ),
-                        ],
-                      ),
-              ),
-            ),
-          ),
+          // Positioned(
+          //   left: 0,
+          //   right: 0,
+          //   bottom: 0,
+          //   top: 0,
+          //   child: Obx(
+          //     () => AnimatedSwitcher(
+          //       duration: const Duration(milliseconds: 200),
+          //       child: controller.isLocationSelectionVisible.value
+          //           ? const SizedBox()
+          //           : Stack(
+          //               children: [
+          //                 Positioned(
+          //                     top: 0,
+          //                     left: 0,
+          //                     right: 0,
+          //                     bottom: 0,
+          //                     child: Container(
+          //                       color: Colors.black.withOpacity(.80),
+          //                     )),
+          //                 Positioned(
+          //                   left: 0,
+          //                   right: 0,
+          //                   bottom: BaseSize.h24,
+          //                   child: _buildBody(context),
+          //                 ),
+          //               ],
+          //             ),
+          //     ),
+          //   ),
+          // ),
           Positioned(
             left: 0,
             top: BaseSize.h12,
@@ -143,7 +135,6 @@ class LocationScreen extends GetView<LocationController> {
               title: '',
               onPressedBack: () async {
                 if (await controller.onPressedBackButton()) {
-                  // ignore: use_build_context_synchronously
                   Navigator.pop(context);
                 }
               },
@@ -151,24 +142,24 @@ class LocationScreen extends GetView<LocationController> {
               isCircular: true,
             ),
           ),
-          Positioned(
-            top: 28.h,
-            left: 8.w,
-            right: 8.w,
-            child: Obx(
-              () => AnimatedSwitcher(
-                duration: const Duration(milliseconds: 400),
-                child: controller.isLocationNoteEnabled.isTrue
-                    ? SizedBox(
-                        width: 180.w,
-                        child: _BuildCurrentLocationErrorNote(
-                          onTap: controller.onPressedLocationErrorNote,
-                        ),
-                      )
-                    : const SizedBox(),
-              ),
-            ),
-          ),
+          // Positioned(
+          //   top: 28.h,
+          //   left: 8.w,
+          //   right: 8.w,
+          //   child: Obx(
+          //     () => AnimatedSwitcher(
+          //       duration: const Duration(milliseconds: 400),
+          //       child: controller.isLocationNoteEnabled.isTrue
+          //           ? SizedBox(
+          //               width: 180.w,
+          //               child: _BuildCurrentLocationErrorNote(
+          //                 onTap: controller.onPressedLocationErrorNote,
+          //               ),
+          //             )
+          //           : const SizedBox(),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -197,15 +188,15 @@ class LocationScreen extends GetView<LocationController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Obx(
-                            () => _BuildDeliveryFeeSelector(
-                              deliveries: controller.deliveries,
-                              weight: controller.weight.value,
-                              distance: controller.distance.value,
-                              onPressedDeliveryTime:
-                                  controller.onPressedChangeDeliveryTime,
-                            ),
-                          ),
+                          // Obx(
+                          //   () => _BuildDeliveryFeeSelector(
+                          //     // deliveries: controller.deliveries,
+                          //     weight: controller.weight.value,
+                          //     distance: controller.distance.value,
+                          //     onPressedDeliveryTime:
+                          //         controller.onPressedChangeDeliveryTime,
+                          //   ),
+                          // ),
                           Container(
                             margin: EdgeInsets.symmetric(
                               horizontal: BaseSize.w12,
@@ -383,11 +374,11 @@ class LocationScreen extends GetView<LocationController> {
                               left: BaseSize.h24,
                               right: BaseSize.h24,
                             ),
-                            child: Obx(
-                              () => _BuildOrderInfo(
-                                orderInfo: controller.orderInfo.value,
-                              ),
-                            ),
+                            // child: Obx(
+                            //   () => _BuildOrderInfo(
+                            //     orderInfo: controller.orderInfo.value,
+                            //   ),
+                            // ),
                           ),
                         ],
                       ),
@@ -430,7 +421,8 @@ class LocationScreen extends GetView<LocationController> {
     showModalBottomSheet(
       context: context,
       builder: (context) => _BuildPaymentMethodBottomSheet(
-        totalPrice: controller.orderInfo.value.totalPrice.toInt(),
+        // totalPrice: controller.orderInfo.value.totalPrice.toInt(),
+        totalPrice: 0,
         moneyAmount: controller.paymentMoneyAmount,
         selectedPaymentIndex: controller.paymentSelectedIndex,
         onPressedPaymentMethodButton: (
@@ -806,279 +798,279 @@ class _BuildPaymentMethodBottomSheetState
   }
 }
 
-class _BuildDeliveryFeeSelector extends StatefulWidget {
-  const _BuildDeliveryFeeSelector({
-    required this.deliveries,
-    required this.distance,
-    required this.weight,
-    required this.onPressedDeliveryTime,
-  });
-
-  final List<DeliveryInfo> deliveries;
-  final double distance;
-  final double weight;
-  final Function(DeliveryInfo deliveryInfo, double price) onPressedDeliveryTime;
-
-  @override
-  State<_BuildDeliveryFeeSelector> createState() =>
-      _BuildDeliveryFeeSelectorState();
-}
-
-class _BuildDeliveryFeeSelectorState extends State<_BuildDeliveryFeeSelector> {
-  String activeIndex = "NOW";
-
-  @override
-  void initState() {
-    super.initState();
-
-    //select the initial selection for delivery time
-    for (int i = 0; i < widget.deliveries.length; i++) {
-      DeliveryInfo deliveryInfo = widget.deliveries[i];
-      if (deliveryInfo.isAvailable) {
-        widget.onPressedDeliveryTime(
-          deliveryInfo,
-          deliveryInfo
-              .price(
-                distance: widget.distance,
-                weight: widget.weight,
-              )
-              .formatCurrencyToNumber()
-              .toDouble(),
-        );
-        setState(() {
-          activeIndex = deliveryInfo.id;
-        });
-        break;
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: BaseSize.w12,
-        vertical: BaseSize.h12,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(9.sp),
-        color: BaseColor.cardBackground1,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'Waktu Pengantaran',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 12.sp,
-            ),
-          ),
-          for (DeliveryInfo delivery in widget.deliveries) ...[
-            Gap.h12,
-            CardDeliveryFee(
-              deliveryInfo: delivery,
-              isActive: activeIndex == delivery.id,
-              price: delivery.price(
-                distance: widget.distance,
-                weight: widget.weight,
-              ),
-              onPressed: () {
-                setState(() {
-                  activeIndex = delivery.id;
-                });
-                widget.onPressedDeliveryTime(
-                  delivery,
-                  delivery
-                      .price(
-                        distance: widget.distance,
-                        weight: widget.weight,
-                      )
-                      .formatCurrencyToNumber()
-                      .toDouble(),
-                );
-              },
-            ),
-          ]
-          // Gap.h12,
-          // CardDeliveryFee(
-          //   deliveryTime: 'Sekarang',
-          //   price: 'Rp. 100.000',
-          //   isActive: activeIndex == 0,
-          //   onPressed: () {
-          //     setState(() {
-          //       activeIndex = 0;
-          //     });
-          //   },
-          // ),
-          // Gap.h12,
-          // CardDeliveryFee(
-          //   deliveryTime: 'Jam 7 - 8 Pagi',
-          //   price: 'Rp. 100.000',
-          //   isActive: activeIndex == 1,
-          //   onPressed: () {
-          //     setState(() {
-          //       activeIndex = 1;
-          //     });
-          //   },
-          // ),
-          // Gap.h12,
-          // CardDeliveryFee(
-          //   deliveryTime: 'Jam 10 - 11 Siang',
-          //   price: 'Rp. 100.000',
-          //   isActive: activeIndex == 2,
-          //   onPressed: () {
-          //     setState(() {
-          //       activeIndex = 2;
-          //     });
-          //   },
-          // ),
-          // Gap.h12,
-          // CardDeliveryFee(
-          //   deliveryTime: 'Jam 2 - 3 Sore',
-          //   price: 'Rp. 100.000',
-          //   isActive: activeIndex == 3,
-          //   isTomorrow: true,
-          //   onPressed: () {
-          //     setState(() {
-          //       activeIndex = 3;
-          //     });
-          //   },
-          // ),
-        ],
-      ),
-    );
-  }
-}
-
-class _BuildOrderInfo extends StatelessWidget {
-  const _BuildOrderInfo({
-    required this.orderInfo,
-  });
-
-  final OrderInfo orderInfo;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        _buildOrderInfoRowItem(
-          context: context,
-          title: "Produk",
-          sub: orderInfo.productCountF,
-          value: orderInfo.productPriceF,
-        ),
-        SizedBox(height: 3.h),
-        _buildOrderInfoRowItem(
-          context: context,
-          title: "Pengantaran",
-          // sub: orderInfo.deliveryWeightF,
-          sub: '',
-          value: orderInfo.deliveryPriceF,
-        ),
-        SizedBox(height: 3.h),
-        _buildOrderInfoRowItem(
-          context: context,
-          title: "Total Pembayaran",
-          sub: '',
-          value: orderInfo.totalPriceF,
-          highLight: true,
-        ),
-      ],
-    );
-  }
-
-  _buildOrderInfoRowItem({
-    required context,
-    required title,
-    required String sub,
-    required value,
-    highLight = false,
-  }) {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              highLight
-                  ? const SizedBox()
-                  : sub.isEmpty
-                      ? const SizedBox()
-                      : Text(
-                          sub,
-                          style: TextStyle(
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey,
-                          ),
-                        ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Text(
-            value,
-            textAlign: TextAlign.end,
-            style: TextStyle(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _BuildCurrentLocationErrorNote extends StatelessWidget {
-  const _BuildCurrentLocationErrorNote({
-    required this.onTap,
-  });
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: BaseColor.accent.withOpacity(.75),
-      borderRadius: BorderRadius.circular(BaseSize.radiusMd),
-      elevation: 3,
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: BaseSize.w24 * .5,
-            vertical: BaseSize.h12 * .5,
-          ),
-          child: Row(
-            children: [
-              const Icon(
-                Icons.info_outline_rounded,
-                color: BaseColor.primary3,
-              ),
-              SizedBox(width: 3.w),
-              Text(
-                "Lokasi Tidak diaktifkan",
-                style: TextStyle(
-                  color: BaseColor.primary3,
-                  fontSize: 12.sp,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+// class _BuildDeliveryFeeSelector extends StatefulWidget {
+//   const _BuildDeliveryFeeSelector({
+//     required this.deliveries,
+//     required this.distance,
+//     required this.weight,
+//     required this.onPressedDeliveryTime,
+//   });
+//
+//   final List<DeliveryInfo> deliveries;
+//   final double distance;
+//   final double weight;
+//   final Function(DeliveryInfo deliveryInfo, double price) onPressedDeliveryTime;
+//
+//   @override
+//   State<_BuildDeliveryFeeSelector> createState() =>
+//       _BuildDeliveryFeeSelectorState();
+// }
+//
+// class _BuildDeliveryFeeSelectorState extends State<_BuildDeliveryFeeSelector> {
+//   String activeIndex = "NOW";
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//
+//     //select the initial selection for delivery time
+//     for (int i = 0; i < widget.deliveries.length; i++) {
+//       DeliveryInfo deliveryInfo = widget.deliveries[i];
+//       if (deliveryInfo.isAvailable) {
+//         widget.onPressedDeliveryTime(
+//           deliveryInfo,
+//           deliveryInfo
+//               .price(
+//                 distance: widget.distance,
+//                 weight: widget.weight,
+//               )
+//               .formatCurrencyToNumber()
+//               .toDouble(),
+//         );
+//         setState(() {
+//           activeIndex = deliveryInfo.id;
+//         });
+//         break;
+//       }
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: EdgeInsets.symmetric(
+//         horizontal: BaseSize.w12,
+//         vertical: BaseSize.h12,
+//       ),
+//       decoration: BoxDecoration(
+//         borderRadius: BorderRadius.circular(9.sp),
+//         color: BaseColor.cardBackground1,
+//       ),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.stretch,
+//         children: [
+//           Text(
+//             'Waktu Pengantaran',
+//             textAlign: TextAlign.center,
+//             style: TextStyle(
+//               fontSize: 12.sp,
+//             ),
+//           ),
+//           for (DeliveryInfo delivery in widget.deliveries) ...[
+//             Gap.h12,
+//             CardDeliveryFee(
+//               deliveryInfo: delivery,
+//               isActive: activeIndex == delivery.id,
+//               price: delivery.price(
+//                 distance: widget.distance,
+//                 weight: widget.weight,
+//               ),
+//               onPressed: () {
+//                 setState(() {
+//                   activeIndex = delivery.id;
+//                 });
+//                 widget.onPressedDeliveryTime(
+//                   delivery,
+//                   delivery
+//                       .price(
+//                         distance: widget.distance,
+//                         weight: widget.weight,
+//                       )
+//                       .formatCurrencyToNumber()
+//                       .toDouble(),
+//                 );
+//               },
+//             ),
+//           ]
+//           // Gap.h12,
+//           // CardDeliveryFee(
+//           //   deliveryTime: 'Sekarang',
+//           //   price: 'Rp. 100.000',
+//           //   isActive: activeIndex == 0,
+//           //   onPressed: () {
+//           //     setState(() {
+//           //       activeIndex = 0;
+//           //     });
+//           //   },
+//           // ),
+//           // Gap.h12,
+//           // CardDeliveryFee(
+//           //   deliveryTime: 'Jam 7 - 8 Pagi',
+//           //   price: 'Rp. 100.000',
+//           //   isActive: activeIndex == 1,
+//           //   onPressed: () {
+//           //     setState(() {
+//           //       activeIndex = 1;
+//           //     });
+//           //   },
+//           // ),
+//           // Gap.h12,
+//           // CardDeliveryFee(
+//           //   deliveryTime: 'Jam 10 - 11 Siang',
+//           //   price: 'Rp. 100.000',
+//           //   isActive: activeIndex == 2,
+//           //   onPressed: () {
+//           //     setState(() {
+//           //       activeIndex = 2;
+//           //     });
+//           //   },
+//           // ),
+//           // Gap.h12,
+//           // CardDeliveryFee(
+//           //   deliveryTime: 'Jam 2 - 3 Sore',
+//           //   price: 'Rp. 100.000',
+//           //   isActive: activeIndex == 3,
+//           //   isTomorrow: true,
+//           //   onPressed: () {
+//           //     setState(() {
+//           //       activeIndex = 3;
+//           //     });
+//           //   },
+//           // ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+//
+// class _BuildOrderInfo extends StatelessWidget {
+//   const _BuildOrderInfo({
+//     required this.orderInfo,
+//   });
+//
+//   final OrderInfo orderInfo;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.center,
+//       children: [
+//         _buildOrderInfoRowItem(
+//           context: context,
+//           title: "Produk",
+//           sub: orderInfo.productCountF,
+//           value: orderInfo.productPriceF,
+//         ),
+//         SizedBox(height: 3.h),
+//         _buildOrderInfoRowItem(
+//           context: context,
+//           title: "Pengantaran",
+//           // sub: orderInfo.deliveryWeightF,
+//           sub: '',
+//           value: orderInfo.deliveryPriceF,
+//         ),
+//         SizedBox(height: 3.h),
+//         _buildOrderInfoRowItem(
+//           context: context,
+//           title: "Total Pembayaran",
+//           sub: '',
+//           value: orderInfo.totalPriceF,
+//           highLight: true,
+//         ),
+//       ],
+//     );
+//   }
+//
+//   _buildOrderInfoRowItem({
+//     required context,
+//     required title,
+//     required String sub,
+//     required value,
+//     highLight = false,
+//   }) {
+//     return Row(
+//       mainAxisSize: MainAxisSize.max,
+//       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//       children: [
+//         Expanded(
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.stretch,
+//             children: [
+//               Text(
+//                 title,
+//                 style: TextStyle(
+//                   fontSize: 14.sp,
+//                   fontWeight: FontWeight.w400,
+//                 ),
+//               ),
+//               highLight
+//                   ? const SizedBox()
+//                   : sub.isEmpty
+//                       ? const SizedBox()
+//                       : Text(
+//                           sub,
+//                           style: TextStyle(
+//                             fontSize: 10.sp,
+//                             fontWeight: FontWeight.w500,
+//                             color: Colors.grey,
+//                           ),
+//                         ),
+//             ],
+//           ),
+//         ),
+//         Expanded(
+//           child: Text(
+//             value,
+//             textAlign: TextAlign.end,
+//             style: TextStyle(
+//               fontSize: 14.sp,
+//               fontWeight: FontWeight.w400,
+//             ),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
+//
+// class _BuildCurrentLocationErrorNote extends StatelessWidget {
+//   const _BuildCurrentLocationErrorNote({
+//     required this.onTap,
+//   });
+//
+//   final VoidCallback onTap;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Material(
+//       color: BaseColor.accent.withOpacity(.75),
+//       borderRadius: BorderRadius.circular(BaseSize.radiusMd),
+//       elevation: 3,
+//       child: InkWell(
+//         onTap: onTap,
+//         child: Padding(
+//           padding: EdgeInsets.symmetric(
+//             horizontal: BaseSize.w24 * .5,
+//             vertical: BaseSize.h12 * .5,
+//           ),
+//           child: Row(
+//             children: [
+//               const Icon(
+//                 Icons.info_outline_rounded,
+//                 color: BaseColor.primary3,
+//               ),
+//               SizedBox(width: 3.w),
+//               Text(
+//                 "Lokasi Tidak diaktifkan",
+//                 style: TextStyle(
+//                   color: BaseColor.primary3,
+//                   fontSize: 12.sp,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

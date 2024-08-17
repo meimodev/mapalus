@@ -10,6 +10,7 @@ class Routes {
   static const String cart = '/cart';
   static const String location = '/location';
   static const String ordering = '/ordering';
+  static const String orderSummary = '/order_summary';
   static const String signing = '/signing';
   static const String updateApp = '/update-app';
   static const String payment = '/payment';
@@ -131,6 +132,11 @@ class Routes {
         page: () => const SearchScreen(),
         binding: SearchBinding(),
         transition: Transition.rightToLeft,
+      ),
+      GetPage(
+        name: orderSummary,
+        page: () => const OrderSummaryScreen(),
+        binding: OrderSummaryBinding(),
       ),
 
     ];

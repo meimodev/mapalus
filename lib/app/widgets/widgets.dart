@@ -19,6 +19,7 @@ export 'text_input_quantity.dart';
 export 'button_mapalus.dart';
 
 export 'card_partner.dart';
+export 'button_main.dart';
 
 export 'icon_product_status.dart';
 export 'chip_category.dart';

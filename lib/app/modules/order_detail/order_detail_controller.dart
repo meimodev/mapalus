@@ -90,12 +90,12 @@ class OrderDetailController extends GetxController {
   }
 
   onPressedViewMaps() {
-    var latitude = order.value.orderInfo.deliveryCoordinateLatitude;
-    var longitude = order.value.orderInfo.deliveryCoordinateLongitude;
-    var url =
-        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    // var latitude = order.value.orderInfo.deliveryCoordinateLatitude;
+    // var longitude = order.value.orderInfo.deliveryCoordinateLongitude;
+    // var url =
+    //     'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
 
     // ignore: deprecated_member_use
-    launch(url);
+    // launch(url);
   }
 }

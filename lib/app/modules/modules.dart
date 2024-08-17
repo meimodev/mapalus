@@ -46,6 +46,10 @@ export 'orders/orders_screen.dart';
 export 'orders/orders_controller.dart';
 export 'orders/orders_binding.dart';
 
+export 'order_summary/order_summary_screen.dart';
+export 'order_summary/order_summary_controller.dart';
+export 'order_summary/order_summary_binding.dart';
+
 export 'payment/payment_screen.dart';
 export 'payment/payment_controller.dart';
 export 'payment/payment_binding.dart';
