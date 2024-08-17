@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mapalus/app/widgets/dialog_confirm.dart';
 import 'package:mapalus/app/widgets/widgets.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 

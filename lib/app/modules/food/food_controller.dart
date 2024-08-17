@@ -50,6 +50,7 @@ class FoodController extends GetxController {
             name: "Product ${(index + 1)}",
             price: 5000,
             weight: 1000,
+            partnerId: "ssTneIKTUTtnb8L4dGWA",
             unit: "Porsi",
           ),
         ),

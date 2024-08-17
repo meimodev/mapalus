@@ -21,7 +21,7 @@ class ButtonMain extends StatelessWidget {
       color: enable ? BaseColor.primary3 : BaseColor.disabled,
       elevation: 4,
       child: InkWell(
-        onTap: onPressed,
+        onTap: enable ? onPressed : null,
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: BaseSize.w24,
@@ -30,7 +30,10 @@ class ButtonMain extends StatelessWidget {
           child: Center(
             child: Text(
               title,
-              style: BaseTypography.bodyMedium,
+              style: BaseTypography.bodyMedium.copyWith(
+                  color: enable
+                      ? BaseColor.primaryText
+                      : BaseColor.primaryText.withOpacity(.5)),
             ),
           ),
         ),

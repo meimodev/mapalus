@@ -4,8 +4,6 @@ import 'package:mapalus_flutter_commons/models/models.dart';
 import 'package:mapalus_flutter_commons/shared/shared.dart';
 import 'package:mapalus_flutter_commons/widgets/widgets.dart';
 
-import 'widgets.dart';
-
 typedef OnValueSelectedCallbackVoucherTypeDef = void Function(Voucher value);
 
 Future<T?> showDialogVoucherWidget<T>({
@@ -21,7 +19,10 @@ Future<T?> showDialogVoucherWidget<T>({
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
       child: DialogSelectVoucherWidget(
-        onValueSelected: onValueSelected,
+        onValueSelected: (value) {
+          onValueSelected(value);
+          Navigator.pop(context);
+        },
       ),
     ),
   );
@@ -41,21 +42,6 @@ class DialogSelectVoucherWidget extends StatefulWidget {
 }
 
 class _DialogSelectVoucherWidget extends State<DialogSelectVoucherWidget> {
-  List<Voucher> times = <Voucher>[];
-
-  @override
-  void initState() {
-    super.initState();
-    times = List.generate(
-      3,
-      (index) => Voucher(
-        id: 'id$index',
-        discount: index.toDouble(),
-        code: '$index-$index',
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return BottomSheet(
@@ -84,7 +70,15 @@ class _DialogSelectVoucherWidget extends State<DialogSelectVoucherWidget> {
             Gap.h24,
             ButtonMain(
               title: "Pakai Voucher",
-              onPressed: (){},
+              onPressed: () {
+                widget.onValueSelected(
+                  const Voucher(
+                    id: "123456",
+                    code: "123456",
+                    discount: 0.5,
+                  ),
+                );
+              },
             ),
             Gap.h12,
           ],

@@ -11,7 +11,7 @@ Future<T?> showDialogDeliveryTimeWidget<T>({
   required BuildContext context,
   required OnValueSelectedCallbackDeliveryTimeTypeDef onValueSelected,
 }) async {
-  return showDialog<T>(
+  return showModalBottomSheet<T>(
     context: context,
     builder: (context) => DialogSelectDeliveryTimeWidget(
       onValueSelected: onValueSelected,
@@ -73,12 +73,22 @@ class _DialogSelectDeliveryTimeWidgetState
               style: BaseTypography.bodyMedium,
             ),
             Gap.h12,
-            ...times.map(
-              (e) => CardItemSelectDeliveryTimeWidget(
+            // ...times.map(
+            //   (e) => CardItemSelectDeliveryTimeWidget(
+            //     onPressed: widget.onValueSelected,
+            //     deliveryTime: e,
+            //   ),
+            // ),
+            ListView.separated(
+              shrinkWrap: true,
+              itemCount: times.length,
+              separatorBuilder: (context, index) => Gap.h12,
+              itemBuilder: (context, index) => CardItemSelectDeliveryTimeWidget(
                 onPressed: widget.onValueSelected,
-                deliveryTime: e,
+                deliveryTime: times[index],
               ),
             ),
+            Gap.h12,
           ],
         ),
       ),

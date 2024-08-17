@@ -63,8 +63,8 @@ class LocationController extends GetxController {
   void initPricingModifiers() async {
     isLoading.value = true;
     //fetch pricing modifier then fetch delivery times
-    final pm = await appRepo.getPricingModifier();
-    PricingModifier pricingModifier = PricingModifier.fromJson(pm);
+    // final pm = await appRepo.getDeliveryModifiers();
+    // PricingModifier pricingModifier = PricingModifier.fromJson(pm);
     var d = await appRepo.getDeliveryTimes();
     //set the pricing modifier to each dDeliveryInfo object
     // deliveries = d

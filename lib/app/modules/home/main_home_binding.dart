@@ -9,6 +9,7 @@ class MainHomeBinding implements Bindings {
     Get.put<UserRepo>(UserRepo());
     Get.put<OrderRepo>(OrderRepoImpl());
     Get.put<ProductRepo>(ProductRepo());
+    Get.put<PartnerRepo>(PartnerRepo());
     Get.put<MainHomeController>(MainHomeController());
   }
 }

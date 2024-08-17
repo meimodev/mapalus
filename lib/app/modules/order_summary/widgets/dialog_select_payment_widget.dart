@@ -10,8 +10,9 @@ Future<T?> showDialogPaymentWidget<T>({
   required BuildContext context,
   required OnValueSelectedCallbackPaymentTypeDef onValueSelected,
 }) async {
-  return showDialog<T>(
+  return showModalBottomSheet<T>(
     context: context,
+    isScrollControlled: true,
     builder: (context) =>
         DialogSelectPaymentWidget(onValueSelected: onValueSelected),
   );
