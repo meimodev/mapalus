@@ -15,15 +15,19 @@ class CardItemSelectDeliveryTimeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool available = deliveryTime.available && !deliveryTime.end.isPassed;
-    final String title =
-        "Jam ${deliveryTime.start.hour} - ${deliveryTime.end.hour}";
-    final String description;
-    if (deliveryTime.end.isPassed) {
-      description = "Jam Pengantaran Sudah Lewat";
-    } else if (!deliveryTime.available) {
+    final bool now = deliveryTime.id == "NOW";
+    final String title = now
+        ? "Diantar Sekarang"
+        : "Jam ${deliveryTime.start.hour} - ${deliveryTime.end.hour}";
+    String description;
+    if (!deliveryTime.available) {
       description = "Jam Pengantaran Sedang Tidak Tersedia";
+    } else if (deliveryTime.end.isPassed) {
+      description = "Jam Pengantaran Sudah Lewat";
     } else {
-      description = "Perkiraan tiba di tempat anda";
+      description = now
+          ? "Langsung diantar saat pesanan selesai"
+          : "Perkiraan tiba di tempat anda";
     }
 
     return Material(
@@ -31,10 +35,12 @@ class CardItemSelectDeliveryTimeWidget extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       borderRadius: BorderRadius.circular(BaseSize.radiusSm),
       child: InkWell(
-        onTap: available ? () {
-          onPressed(deliveryTime, title);
-          Navigator.pop(context);
-        } : null,
+        onTap: available
+            ? () {
+                onPressed(deliveryTime, title);
+                Navigator.pop(context);
+              }
+            : null,
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: BaseSize.w12,

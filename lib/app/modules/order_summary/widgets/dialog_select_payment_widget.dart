@@ -4,7 +4,7 @@ import 'package:mapalus_flutter_commons/shared/shared.dart';
 import 'widgets.dart';
 
 typedef OnValueSelectedCallbackPaymentTypeDef = void Function(
-    PaymentMethod value);
+    PaymentMethod value, String title);
 
 Future<T?> showDialogPaymentWidget<T>({
   required BuildContext context,
@@ -48,7 +48,7 @@ class DialogSelectPaymentWidget extends StatelessWidget {
             Gap.h12,
             CardItemSelectPaymentWidget(
               onPressed: () {
-                onValueSelected(PaymentMethod.cash);
+                onValueSelected(PaymentMethod.cash, "Bayar di tempat (Tunai)");
                 Navigator.pop(context);
               },
               title: 'Bayar di tempat (Tunai)',
@@ -60,12 +60,12 @@ class DialogSelectPaymentWidget extends StatelessWidget {
             Gap.h12,
             CardItemSelectPaymentWidget(
               onPressed: () {
-                onValueSelected(PaymentMethod.transfer);
+                onValueSelected(PaymentMethod.transfer, "Transfer Manual");
                 Navigator.pop(context);
               },
               title: 'Transfer Manual',
-              description: "Silahkan Lakukan Transfer di rekening berikut",
-              note: "Karena Prosesnya manual tunggu admin kami kontak yaa ",
+              description: "Transfernya sesuai instruksi admin ya",
+              note: "Transfernya akan dikonfirmasi admin kami ya",
               iconData: Icons.payment_outlined,
             ),
             Gap.h12,

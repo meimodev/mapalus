@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
@@ -103,10 +104,10 @@ class OrderSummaryController extends GetxController {
     calculateOutputs();
   }
 
-  void onSelectedPayment(PaymentMethod value) {
+  void onSelectedPayment(PaymentMethod value, String title) {
     selectionLoading.value = true;
     paymentMethod = value;
-    paymentMethodText = value.name.capitalizeFirst;
+    paymentMethodText = title;
     selectionLoading.value = false;
     calculateOutputs();
   }
@@ -128,6 +129,7 @@ class OrderSummaryController extends GetxController {
   }
 
   void onPressedMakeOrder() {
+    Get.until(ModalRoute.withName(Routes.home));
     Get.toNamed(Routes.ordering);
   }
 }

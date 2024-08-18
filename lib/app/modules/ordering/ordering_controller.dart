@@ -1,5 +1,3 @@
-
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/modules.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
@@ -9,10 +7,10 @@ class OrderingController extends GetxController {
   // OrderRepo orderRepo = Get.find<OrderRepo>();
   // UserRepo userRepo = Get.find<UserRepo>();
   // GroceryController homeController = Get.find<GroceryController>();
-  //
+
   RxBool isLoading = true.obs;
 
-  OrderApp? _orderToPush;
+  // OrderApp? _orderToPush;
 
   @override
   void onInit() async {
@@ -28,6 +26,8 @@ class OrderingController extends GetxController {
     // final note = args['note'].toString();
 
     await Future.delayed(const Duration(milliseconds: 2000));
+
+    // TODO CREATE THE ORDER REQUEST HERE!
 
     // final order = await orderRepo.createOrder(
     //   products: productOrders,
@@ -52,24 +52,8 @@ class OrderingController extends GetxController {
     isLoading.value = false;
   }
 
-  onPressedBack() {
-    if (isLoading.isFalse) {
-      _backToHome();
-    } else {
-      Get.back();
-    }
-  }
-
-  onPressedReturn() {
-    _backToHome();
-  }
-
-  _backToHome() {
-    Get.until(ModalRoute.withName(Routes.home));
-  }
 
   void onPressedSeeOrder() {
-    Get.until(ModalRoute.withName(Routes.home));
-    Get.toNamed(Routes.orderDetail, arguments: _orderToPush);
+    Get.back();
   }
 }
