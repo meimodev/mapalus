@@ -65,7 +65,7 @@ class LocationController extends GetxController {
     //fetch pricing modifier then fetch delivery times
     // final pm = await appRepo.getDeliveryModifiers();
     // PricingModifier pricingModifier = PricingModifier.fromJson(pm);
-    var d = await appRepo.getDeliveryTimes();
+    // var d = await appRepo.getDeliveryTimes();
     //set the pricing modifier to each dDeliveryInfo object
     // deliveries = d
     //     .map((e) {
@@ -143,11 +143,11 @@ class LocationController extends GetxController {
     //   orderInfo.value.deliveryTime = deliveryTime;
     // }
 
-    List<ProductOrder> productOrders = (Get.arguments
-        as Map<String, dynamic>)['product_orders'] as List<ProductOrder>;
+    // List<ProductOrder> productOrders = (Get.arguments
+    //     as Map<String, dynamic>)['product_orders'] as List<ProductOrder>;
 
     ///TODO replace with more appropriate implementation next iteration, use enums instead of 'index'
-    final paymentMethodString = paymentSelectedIndex == 0 ? 'CASH' : 'CASHLESS';
+    // final paymentMethodString = paymentSelectedIndex == 0 ? 'CASH' : 'CASHLESS';
 
     // Get.toNamed(
     //   Routes.ordering,

@@ -1,4 +1,6 @@
 
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/widgets/dialog_announcement.dart';
@@ -126,7 +128,7 @@ class GroceryController extends GetxController {
     ProductOrder? exist = productOrders
         .firstWhereOrNull((element) => element.product == productOrder.product);
     if (exist != null) {
-      int index = productOrders.value.indexOf(exist);
+      // int index = productOrders.value.indexOf(exist);
       // productOrders.value[index].quantity += productOrder.quantity;
       // productOrders.value[index].totalPrice +=
       //     productOrder.quantity * productOrder.product.price;

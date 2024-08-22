@@ -1,10 +1,12 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:flutter/material.dart' hide SearchController;
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/modules.dart';
 import 'package:mapalus/app/widgets/widgets.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
-import 'widgets/widgets.dart';
+// import 'widgets/widgets.dart';
 
 class SearchScreen extends GetView<SearchController> {
   const SearchScreen({super.key});
@@ -15,7 +17,7 @@ class SearchScreen extends GetView<SearchController> {
       11,
       (index) => Product(
         name: "Product  $index",
-        unit: "Kilogram",
+        unit: ProductUnit.kilogram,
         price: 5000,
       ),
     );

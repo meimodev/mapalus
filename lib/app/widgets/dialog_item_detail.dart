@@ -336,7 +336,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
         _buildQuantitySuggestionRow(),
         _buildQuantityRow(
           context: context,
-          valueLabel: widget.product.unit,
+          valueLabel: widget.product.unit.name,
           isCustomPrice: true,
           isReadOnly: !widget.product.customPrice,
           icon: SvgPicture.asset(
@@ -474,10 +474,10 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          ...widget.product.unit.toLowerCase().contains("kg")
+          ...widget.product.unit.name.toLowerCase().contains("kg")
               ? decimalKilosDesc
               : [],
-          ...widget.product.unit.toLowerCase() == "gram" ? decimalKilosAsc : [],
+          ...widget.product.unit.name.toLowerCase() == "gram" ? decimalKilosAsc : [],
           ...widget.product.customPrice ? multiplePrices : [],
         ],
       ),

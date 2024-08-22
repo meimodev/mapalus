@@ -68,14 +68,14 @@ class OrderDetailController extends GetxController {
   Future<void> onPressedRate(String message, double rate) async {
     isLoading.value = true;
     Future.delayed(800.milliseconds);
-    var rating = Rating(
-      id: "kjasdkjf",
-      orderId: 'orderId',
-      userId: 'userId',
-      rate: rate.ceil(),
-      message: message,
-      createdAt: DateTime.now(),
-    );
+    // var rating = Rating(
+    //   id: "kjasdkjf",
+    //   orderId: 'orderId',
+    //   userId: 'userId',
+    //   rate: rate.ceil(),
+    //   message: message,
+    //   createdAt: DateTime.now(),
+    // );
     // await orderRepo.rateOrder(order.value, rating);
 
     isLoading.value = false;
@@ -83,7 +83,7 @@ class OrderDetailController extends GetxController {
 
   void onPressedCancel() {
     const waNumber = '+62895355578090';
-    final orderId = order.value.id!;
+    final orderId = order.value.id;
     final waUri = Uri.parse('whatsapp://send?phone=$waNumber&text='
         'Halo admin MAPALUS, tolong batalkan pesanan $orderId karena: ');
     launchUrl(waUri);

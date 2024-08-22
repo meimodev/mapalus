@@ -24,7 +24,7 @@ class FoodController extends GetxController {
         (index) => Product(
           id: uuid.v4(),
           name: "Product  $index",
-          unit: "Kilogram",
+          unit: ProductUnit.kilogram,
           price: 5000,
         ),
       );
@@ -39,22 +39,9 @@ class FoodController extends GetxController {
       }
     });
 
-    orderRepo.updateLocalProductOrders(
-      List.generate(
-        5,
-        (index) => ProductOrder(
-          quantity: (index + 1),
-          totalPrice: (index + 1) * 5000,
-          product: Product(
-            id: uuid.v4(),
-            name: "Product ${(index + 1)}",
-            price: 5000,
-            weight: 1000,
-            partnerId: "ssTneIKTUTtnb8L4dGWA",
-            unit: "Porsi",
-          ),
-        ),
-      ),
-    );
+    final initProducts = await orderRepo.readLocalProductOrders();
+    if (initProducts.isNotEmpty) {
+      productOrders.value = initProducts;
+    }
   }
 }

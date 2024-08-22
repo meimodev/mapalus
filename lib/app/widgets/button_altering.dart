@@ -6,12 +6,17 @@ class ButtonAltering extends StatelessWidget {
     super.key,
     required this.onPressed,
     required this.label,
+    this.height,
+    this.width,
     this.enabled = true,
   });
 
   final VoidCallback onPressed;
   final String label;
   final bool enabled;
+
+  final double? height;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +31,8 @@ class ButtonAltering extends StatelessWidget {
       child: InkWell(
         onTap: enabled ? onPressed : null,
         child: SizedBox(
-          width: BaseSize.customWidth(22),
-          height: BaseSize.customWidth(22),
+          width: width ?? BaseSize.customWidth(22),
+          height: height ?? BaseSize.customWidth(22),
           child: Center(
             child: Text(
               label,

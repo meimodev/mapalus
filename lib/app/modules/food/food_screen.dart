@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/modules.dart';
@@ -11,7 +13,6 @@ class FoodScreen extends GetView<FoodController> {
 
   @override
   Widget build(BuildContext context) {
-
     return ScreenWrapper(
       padding: EdgeInsets.zero,
       child: Stack(
@@ -49,10 +50,21 @@ class FoodScreen extends GetView<FoodController> {
                     CardProduct(
                   product: item,
                   onPressed: (Product product) {
-                    print(product.toString());
+                    showBottomSheetProductDetailWidget(
+                      context,
+                      product.id,
+                      (value) {
+                        print(value.toString());
+                      },
+                    );
                   },
                 ),
                 separatorBuilder: (BuildContext context, int index) => Gap.w8,
+              ),
+              SliverPadding(
+                padding: EdgeInsets.symmetric(
+                  vertical: BaseSize.h36,
+                ),
               ),
             ],
           ),

@@ -6,19 +6,26 @@ class LoadingWrapper extends StatelessWidget {
     super.key,
     required this.loading,
     required this.child,
+    this.size,
   });
 
   final bool loading;
   final Widget child;
+
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 400),
       child: loading
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: BaseColor.primary3,
+          ? Center(
+              child: SizedBox(
+                width: size,
+                height: size,
+                child: const CircularProgressIndicator(
+                  color: BaseColor.primary3,
+                ),
               ),
             )
           : child,

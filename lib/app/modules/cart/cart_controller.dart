@@ -34,6 +34,11 @@ class CartController extends GetxController {
         }
         productOrders.value = data;
         _calculateInfo();
+
+        if (productOrders.isEmpty) {
+          orderRepo.updateLocalNote('');
+          Get.back();
+        }
       }
     });
 

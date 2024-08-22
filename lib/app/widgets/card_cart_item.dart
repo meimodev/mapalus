@@ -34,8 +34,6 @@ class _CardCartItemState extends State<CardCartItem> {
 
   void onChangedValue() {
     if (widget.onChangedQuantity != null) {
-      print(
-          "${widget.productOrder.product.name} changed quantity $value current ${widget.productOrder.quantity}");
       widget.onChangedQuantity!(
         widget.productOrder.copyWith(quantity: 0),
       );
@@ -75,7 +73,7 @@ class _CardCartItemState extends State<CardCartItem> {
                   ),
                   Text(
                     "${widget.productOrder.product.price.formatNumberToCurrency()}"
-                    "${widget.productOrder.product.unit.isNotEmpty ? " / ${widget.productOrder.product.unit}" : ""}",
+                    "${widget.productOrder.product.unit.name.isNotEmpty ? " / ${widget.productOrder.product.unit.name}" : ""}",
                     style: BaseTypography.caption.w500,
                   ),
                   Gap.h6,
