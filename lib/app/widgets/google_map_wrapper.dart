@@ -9,10 +9,12 @@ class GoogleMapWrapper extends StatefulWidget {
     required this.onCameraIdle,
     required this.onMapCreated,
     required this.defaultPosition,
+    this.onMoveCamera,
   }) : super(key: key);
 
   final void Function(LatLng?) onCameraIdle;
   final void Function(GoogleMapController controller) onMapCreated;
+  final void Function(double latitude, double longitude)? onMoveCamera;
   final LatLng defaultPosition;
 
   @override
@@ -49,6 +51,8 @@ class _GoogleMapWrapperState extends State<GoogleMapWrapper> {
       },
       onCameraMove: (pos) {
         pickedPosition = pos.target;
+        if (widget.onMoveCamera != null)
+          widget.onMoveCamera!(pos.target.latitude, pos.target.latitude);
         if (isCameraIdle) {
           widget.onCameraIdle(null);
         }

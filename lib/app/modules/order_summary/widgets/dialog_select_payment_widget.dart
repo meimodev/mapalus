@@ -41,7 +41,7 @@ class DialogSelectPaymentWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Choose Payment',
+              'Pilih Pembayaran',
               textAlign: TextAlign.center,
               style: BaseTypography.bodyMedium,
             ),

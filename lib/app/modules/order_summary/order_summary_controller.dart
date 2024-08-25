@@ -7,9 +7,10 @@ class OrderSummaryController extends GetxController {
   OrderRepo orderRepo = Get.find<OrderRepo>();
   AppRepo appRepo = Get.find<AppRepo>();
   PartnerRepo partnerRepo = Get.find<PartnerRepo>();
+  UserRepo userRepo = Get.find<UserRepo>();
 
   List<ProductOrder> products = [];
-  Partner? partner ;
+  Partner? partner;
 
   RxBool selectionLoading = false.obs;
 
@@ -61,7 +62,6 @@ class OrderSummaryController extends GetxController {
         .totalPrice;
   }
 
-  //check discount from voucher
   double get getDiscountedValue {
     if (voucher == null) {
       return 0;
@@ -73,7 +73,7 @@ class OrderSummaryController extends GetxController {
     if (deliveryLocation == null ||
         modifiers == null ||
         partner == null ||
-        getProductWeight == 0 ) {
+        getProductWeight == 0) {
       return 0;
     }
 
@@ -88,11 +88,9 @@ class OrderSummaryController extends GetxController {
   double get getTotal =>
       (getProductPrices + getDeliveryFee) - getDiscountedValue;
 
-
-
-  void onSelectedDeliveryLocation() {
+  void onSelectedDeliveryLocation(Location location) {
     selectionLoading.value = true;
-    deliveryLocation = const Location(place: "Test Place", );
+    deliveryLocation = location;
     selectionLoading.value = false;
     calculateOutputs();
   }

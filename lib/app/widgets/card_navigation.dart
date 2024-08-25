@@ -20,11 +20,12 @@ class CardNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Material(
       color: isInverted ? BaseColor.accent : BaseColor.white,
       elevation: isInverted ? 0 : 6,
       shadowColor: isInverted ? null : Colors.grey.withOpacity(.125),
-      shape: isCircular ? const CircleBorder() : null,
+      // shape: isCircular ? const CircleBorder() : null,
       child: InkWell(
         onTap: onPressedBack ?? () => Navigator.pop(context),
         child: Container(

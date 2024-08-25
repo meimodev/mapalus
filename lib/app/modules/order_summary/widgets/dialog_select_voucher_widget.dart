@@ -42,6 +42,13 @@ class DialogSelectVoucherWidget extends StatefulWidget {
 }
 
 class _DialogSelectVoucherWidget extends State<DialogSelectVoucherWidget> {
+  String errorText = "";
+  String voucher = '';
+
+  void onPressedCheckVoucher() {
+    // validate voucher in backend
+  }
+
   @override
   Widget build(BuildContext context) {
     return BottomSheet(
@@ -56,29 +63,16 @@ class _DialogSelectVoucherWidget extends State<DialogSelectVoucherWidget> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'Voucher',
-              textAlign: TextAlign.center,
-              style: BaseTypography.bodyMedium,
-            ),
-            Gap.h12,
             InputWidget.text(
               hint: "Kode Voucher",
-              errorText: "Invalid Code",
-              onChanged: (_) {},
+              errorText: errorText,
+              maxLines: 1,
+              onChanged: (String value) => voucher = value,
             ),
             Gap.h24,
             ButtonMain(
-              title: "Pakai Voucher",
-              onPressed: () {
-                widget.onValueSelected(
-                  const Voucher(
-                    id: "123456",
-                    code: "123456",
-                    discount: 0.5,
-                  ),
-                );
-              },
+              title: "Gunakan Voucher",
+              onPressed: onPressedCheckVoucher,
             ),
             Gap.h12,
           ],

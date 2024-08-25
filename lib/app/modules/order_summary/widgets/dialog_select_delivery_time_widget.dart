@@ -76,7 +76,7 @@ class _DialogSelectDeliveryTimeWidgetState
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Delivery Time',
+                'Waktu Pengantaran',
                 textAlign: TextAlign.center,
                 style: BaseTypography.bodyMedium,
               ),

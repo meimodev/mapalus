@@ -2,201 +2,58 @@ import 'package:get/get.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class LocationController extends GetxController {
-  AppRepo appRepo = Get.find();
-
-  RxBool isLocationSelectionVisible = true.obs;
-  RxBool isLocationSelectionButtonVisible = true.obs;
-
   LocationRepoContract locationRepo = LocationRepo.instance;
-
-  // Rx<OrderInfo> orderInfo = OrderInfo(
-  //   productCount: 0,
-  //   productPrice: 0,
-  //   deliveryWeight: 0,
-  //   deliveryPrice: 0,
-  //   deliveryDistance: 0,
-  //   deliveryCoordinateLatitude: 0,
-  //   deliveryCoordinateLongitude: 0,
-  // ).obs;
-
-  RxDouble distance = 0.0.obs;
-  RxDouble weight = 2.0.obs;
-
-  // DeliveryInfo? _selectedDeliveryInfo;
-
-  // RxList<DeliveryInfo> deliveries = <DeliveryInfo>[].obs;
-
-  OrderRepo orderRepo = Get.find<OrderRepo>();
-
-  LatLng? deliveryCoordinate;
-
-  // LatLng? currentLocation;
-
-  RxBool isLocationNoteEnabled = false.obs;
   GoogleMapController? googleMapController;
 
-  RxBool isLoading = true.obs;
+  RxBool isLocationNoteEnabled = false.obs;
+  RxBool dragging = false.obs;
+  RxBool loading = true.obs;
 
-  var paymentMethodSubTittle = "".obs;
+  LatLng? origin;
 
-  int? paymentMoneyAmount;
+  LatLng? destination;
 
-  int paymentSelectedIndex = 0;
-
-  String note = "";
-
-  LatLng defaultPosition = const LatLng(
-    // TOMOHON
-    // 1.3269405034419788,
-    // 124.84469252463695,
-    //TONDANO
-      1.3034800122609265,
-    124.91036967002547,
+  Location fallbackLocation = const Location(
+    place: "Tondano",
+    latitude: 1.3020014,
+    longitude: 124.9030992,
   );
 
   @override
   void onInit() {
     super.onInit();
-    // initPricingModifiers();
-  }
 
-  void initPricingModifiers() async {
-    isLoading.value = true;
-    //fetch pricing modifier then fetch delivery times
-    // final pm = await appRepo.getDeliveryModifiers();
-    // PricingModifier pricingModifier = PricingModifier.fromJson(pm);
-    // var d = await appRepo.getDeliveryTimes();
-    //set the pricing modifier to each dDeliveryInfo object
-    // deliveries = d
-    //     .map((e) {
-    //       e.addAll(pricingModifier.toMap);
-    //       dev.log("Delivery info => $e");
-    //       return DeliveryInfo.fromJSON(e);
-    //     })
-    //     .toList()
-    //     .obs;
-
-    isLoading.value = false;
-
-    //fetch delivery fees
-    var args = Get.arguments;
-    double w = double.parse(args['products_weight'].toString());
-    // orderInfo.value = orderInfo.value.copyWith(
-    //   productCount: int.parse(args['products_count'].toString()),
-    //   productPrice: double.parse(args['products_price'].toString()),
-    //   deliveryWeight: w,
-    // );
-    weight.value = w;
-    note = args['note'] ?? '';
-    _calculateOrderInfo();
-  }
-
-  onPressedChangeDeliveryTime(
-    // DeliveryInfo deliveryInfo,
-    double price,
-  ) {
-    // _selectedDeliveryInfo = deliveryInfo;
-    // orderInfo.value = orderInfo.value.copyWith(
-    //   deliveryPrice: price,
-    //   deliveryWeight: weight.value / 1000,
-    //   deliveryDistance: distance.value,
-    // );
-  }
-
-  onPressedSelectLocation() async {
-    isLocationSelectionVisible.toggle();
-    if (isLocationNoteEnabled.isTrue) {
-      isLocationNoteEnabled.toggle();
+    final args = Get.arguments;
+    if (args == null) {
+      return;
     }
+    final initLocation = Location.fromJson(args as Map<String, dynamic>);
 
-    //calculate the prices
-    if (isLocationSelectionVisible.isFalse) {
-      ///Pasar Tondano
-      LatLng origin = const LatLng(1.3019081307317848, 124.9068409438052);
-      ///Pasar Tomohon
-      // LatLng origin = const LatLng(1.3269405034419788, 124.84469252463695);
+    //origin set with partner location
+    origin = LatLng(initLocation.latitude, initLocation.longitude);
+  }
 
-      double dis = Utils.calculateDistance(
-        originLatitude: origin.latitude,
-        originLongitude: origin.longitude,
-        destinationLatitude: deliveryCoordinate!.latitude,
-        destinationLongitude: deliveryCoordinate!.longitude,
-      );
-      distance.value = Utils.roundDouble(dis, 2);
-      _calculateOrderInfo();
+  void onPressedSelectLocation() async {
+    final res = Location(
+      place: 'Lokasi terpilih',
+      latitude: destination!.latitude,
+      longitude: destination!.longitude,
+    );
+    Get.back(result: res);
+  }
+
+  void onCameraIdle(LatLng? pos) {
+    if (pos != null) {
+      destination = pos;
+      dragging.value = false;
+      return;
     }
+    dragging.value = true;
   }
 
-  onPressedMakeOrder() async {
-    // if (_selectedDeliveryInfo == null) {
-    //   Get.rawSnackbar(
-    //       title: "Perhatian !", message: "Waktu pengataran belum dipilih");
-    //   return;
-    // }
-
-    // var deliveryTime = _selectedDeliveryInfo!.title;
-    // if (_selectedDeliveryInfo!.isTomorrow) {
-    //   final tomorrowDate =
-    //       Jiffy.now().add(days: 1).format(pattern: "EEEE, dd MMM");
-    //   orderInfo.value.deliveryTime = "$deliveryTime ($tomorrowDate)";
-    // } else {
-    //   orderInfo.value.deliveryTime = deliveryTime;
-    // }
-
-    // List<ProductOrder> productOrders = (Get.arguments
-    //     as Map<String, dynamic>)['product_orders'] as List<ProductOrder>;
-
-    ///TODO replace with more appropriate implementation next iteration, use enums instead of 'index'
-    // final paymentMethodString = paymentSelectedIndex == 0 ? 'CASH' : 'CASHLESS';
-
-    // Get.toNamed(
-    //   Routes.ordering,
-    //   arguments: <String, dynamic>{
-    //     'delivery_info': _selectedDeliveryInfo,
-    //     'product_orders': productOrders,
-    //     'order_info': orderInfo.value,
-    //     'payment_method': paymentMethodString,
-    //     'payment_amount': paymentMoneyAmount ?? 0,
-    //     'note': note,
-    //   },
-    // );
-  }
-
-  onPressedChangeLocation() async {
-    isLocationSelectionVisible.toggle();
-    isLocationNoteEnabled.toggle();
-    // _selectedDeliveryInfo = null;
-  }
-
-  onCameraIdle(LatLng? pos) {
-    deliveryCoordinate = pos;
-    if (pos == null) {
-      isLocationSelectionButtonVisible.value = false;
-    } else {
-      isLocationSelectionButtonVisible.value = true;
-    }
-  }
-
-  Future<bool> onPressedBackButton() {
-    if (isLocationSelectionVisible.isFalse) {
-      isLocationSelectionVisible.toggle();
-      // _selectedDeliveryInfo = null;
-      return Future.value(false);
-    }
-    return Future.value(true);
-  }
-
-  _calculateOrderInfo() {
-    // orderInfo.value = orderInfo.value.copyWith(
-    //   deliveryWeight: weight.value,
-    //   deliveryDistance: distance.value,
-    //   deliveryCoordinateLatitude: deliveryCoordinate?.latitude,
-    //   deliveryCoordinateLongitude: deliveryCoordinate?.longitude,
-    // );
-  }
-
-  onMapCreated(GoogleMapController controller) async {
+  void onMapCreated(GoogleMapController controller) async {
     googleMapController = controller;
+    loading.value = false;
     initLocation();
   }
 
@@ -204,6 +61,16 @@ class LocationController extends GetxController {
     var locationEnabled = await locationRepo.isLocationServicesEnabled();
     if (!locationEnabled) {
       isLocationNoteEnabled.value = true;
+      if (origin == null) {
+        googleMapController!.animateCamera(
+          CameraUpdate.newLatLng(
+            LatLng(
+              fallbackLocation.latitude,
+              fallbackLocation.longitude,
+            ),
+          ),
+        );
+      }
       return;
     }
     var locationPermissionGranted =
@@ -217,8 +84,19 @@ class LocationController extends GetxController {
       initLocation();
       return;
     }
-    // try {
-    await Future.delayed(1.seconds);
+
+    if (origin != null) {
+      googleMapController!.animateCamera(
+        CameraUpdate.newLatLng(
+          LatLng(
+            origin!.latitude,
+            origin!.longitude,
+          ),
+        ),
+      );
+      return;
+    }
+
     LatLng currLocation = LatLng(
       await locationRepo.getDeviceLatitude(),
       await locationRepo.getDeviceLongitude(),
@@ -228,12 +106,5 @@ class LocationController extends GetxController {
     if (isLocationNoteEnabled.isTrue) {
       isLocationNoteEnabled.toggle();
     }
-    // } catch (e) {
-    //   debugPrint('Error While getting current location ${e.toString()}');
-    // }
-  }
-
-  onPressedLocationErrorNote() async {
-    initLocation();
   }
 }

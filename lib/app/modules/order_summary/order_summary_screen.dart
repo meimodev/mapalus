@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mapalus/app/modules/modules.dart';
 import 'package:mapalus/app/widgets/loading_wrapper.dart';
 import 'package:mapalus/app/widgets/widgets.dart';
+import 'package:mapalus/shared/shared.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 import 'widgets/widgets.dart';
@@ -24,7 +25,7 @@ class OrderSummaryScreen extends GetView<OrderSummaryController> {
           ),
           Expanded(
             child: Obx(
-              ()=> LoadingWrapper(
+              () => LoadingWrapper(
                 loading: controller.selectionLoading.value,
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -36,14 +37,39 @@ class OrderSummaryScreen extends GetView<OrderSummaryController> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Column(
+                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Gap.h24,
                           CardOrderSummaryItemWidget(
                             title: "Lokasi Pengantaran",
                             value: controller.deliveryLocation?.place ?? '',
                             onPressed: () async {
-                              // await Get.toNamed(Routes.location);
-                              controller.onSelectedDeliveryLocation();
+                              //pass the currently selected location if that is not available fallback to partner.location
+
+                              Location? args;
+                              if (controller.userRepo.signedUser?.partnerId !=
+                                  null) {
+                                final String partnerId =
+                                    controller.userRepo.signedUser!.partnerId;
+                                final Partner partner = await controller
+                                    .partnerRepo
+                                    .readPartner(partnerId);
+                                args = partner.location;
+                              }
+
+                              if (controller.deliveryLocation != null) {
+                                args = controller.deliveryLocation!;
+                              }
+
+                              final location = await Get.toNamed(
+                                Routes.location,
+                                arguments: args?.toJson(),
+                              );
+
+                              if (location != null) {
+                                controller.onSelectedDeliveryLocation(
+                                    location as Location);
+                              }
                             },
                           ),
                           Gap.h12,
@@ -72,13 +98,13 @@ class OrderSummaryScreen extends GetView<OrderSummaryController> {
                           Gap.h12,
                           CardOrderSummaryItemWidget(
                             title: "Voucher",
+                            value: controller.voucher?.code ?? "",
                             onPressed: () async {
                               await showDialogVoucherWidget(
                                 context: context,
                                 onValueSelected: controller.onSelectedVoucher,
                               );
                             },
-                            value: controller.voucher?.code ?? "",
                           ),
                           Gap.h24,
                           OrderSummaryCounterItemWidget(
