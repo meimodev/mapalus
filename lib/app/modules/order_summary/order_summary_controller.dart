@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:uuid/uuid.dart';
 
 class OrderSummaryController extends GetxController {
   OrderRepo orderRepo = Get.find<OrderRepo>();
@@ -28,6 +29,8 @@ class OrderSummaryController extends GetxController {
 
   DeliveryModifiers? modifiers;
 
+  double? distance;
+
   @override
   void onInit() async {
     super.onInit();
@@ -36,9 +39,13 @@ class OrderSummaryController extends GetxController {
     products = await orderRepo.readLocalProductOrders();
     partner = await partnerRepo.readPartner(products.first.product.partnerId);
     modifiers = await appRepo.getDeliveryModifiers();
+
+    UserApp? user = userRepo.signedUser;
+    print("user $user");
     selectionLoading.value = false;
   }
 
+  ///[INFO] Result in gram
   double get getProductWeight {
     if (products.isEmpty) return 0;
     return products
@@ -76,10 +83,17 @@ class OrderSummaryController extends GetxController {
         getProductWeight == 0) {
       return 0;
     }
+    final origin = partner!.location!;
+    final destination = deliveryLocation!;
+    distance = Utils.calculateDistance(
+      originLatitude: origin.latitude,
+      originLongitude: origin.longitude,
+      destinationLatitude: destination.latitude,
+      destinationLongitude: destination.longitude,
+    );
 
     return orderRepo.calculateDeliveryFee(
-      partner!.location!,
-      deliveryLocation!,
+      distance!,
       modifiers!,
       getProductWeight,
     );
@@ -126,8 +140,45 @@ class OrderSummaryController extends GetxController {
     }
   }
 
-  void onPressedMakeOrder() {
+  void onPressedMakeOrder() async {
+    selectionLoading.value = true;
+    const uuid = Uuid();
+    final orderId = uuid.v4();
+   final order = OrderApp(
+      id: orderId,
+      status: OrderStatus.placed,
+      lastUpdate: DateTime.now(),
+      createdAt: DateTime.now(),
+      orderBy: userRepo.signedUser!,
+      payment: Payment(
+        id: uuid.v4(),
+        orderId: orderId,
+        method: paymentMethod!,
+        status: PaymentStatus.placed,
+        lastUpdate: DateTime.now(),
+        amount: getTotal,
+        createdAt: DateTime.now(),
+      ),
+      note: await orderRepo.readLocalNote(),
+      products: products,
+      delivery: OrderDelivery(
+        id: uuid.v4(),
+        orderId: orderId,
+        weight: getProductWeight,
+        price: getDeliveryFee,
+        distance: distance!,
+        status: DeliveryStatus.placed,
+        selectedTime: deliveryTime!,
+        lastUpdate: DateTime.now(),
+        destination: deliveryLocation!,
+        deliverBy: null,
+      ),
+     voucher: voucher,
+    );
+
+    selectionLoading.value = false;
+
     Get.until(ModalRoute.withName(Routes.home));
-    Get.toNamed(Routes.ordering);
+    Get.toNamed(Routes.ordering, arguments: order.toJson());
   }
 }

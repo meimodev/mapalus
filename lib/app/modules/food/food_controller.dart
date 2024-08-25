@@ -15,7 +15,7 @@ class FoodController extends GetxController {
         (index) => Partner(
           id: uuid.v4(),
           name: "Partner $index",
-          location: Location(place: "Location $index"),
+          location: Location(place: "Location $index"), lastActiveTimeStamp: DateTime.now(),
         ),
       );
 

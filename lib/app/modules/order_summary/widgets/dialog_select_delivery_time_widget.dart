@@ -49,7 +49,7 @@ class _DialogSelectDeliveryTimeWidgetState
     populateTimes();
   }
 
-  void populateTimes()async{
+  void populateTimes() async {
     setState(() {
       loading = true;
     });
@@ -81,12 +81,12 @@ class _DialogSelectDeliveryTimeWidgetState
                 style: BaseTypography.bodyMedium,
               ),
               Gap.h12,
-
               ListView.separated(
                 shrinkWrap: true,
                 itemCount: times.length,
                 separatorBuilder: (context, index) => Gap.h12,
-                itemBuilder: (context, index) => CardItemSelectDeliveryTimeWidget(
+                itemBuilder: (context, index) =>
+                    CardItemSelectDeliveryTimeWidget(
                   onPressed: widget.onValueSelected,
                   deliveryTime: times[index],
                 ),
