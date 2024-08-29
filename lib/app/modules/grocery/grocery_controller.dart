@@ -182,8 +182,8 @@ class GroceryController extends GetxController {
 
     // canLoadingProducts.value = true;
 
-    tempProducts = await productRepo.readProducts();
-    tempProducts.shuffle();
+    // tempProducts = await productRepo.readProducts();
+    // tempProducts.shuffle();
     tempSearchedProducts = List.from(tempProducts);
     displayProducts.value = tempProducts.sublist(0, _pageSize);
     _currentIndex += _pageSize;

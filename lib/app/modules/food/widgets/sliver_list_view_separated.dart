@@ -24,11 +24,13 @@ class SliverListViewSeparated<T> extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              title,
-              textAlign: TextAlign.left,
-              style: BaseTypography.bodyLarge,
-            ),
+            list.isEmpty
+                ? const SizedBox()
+                : Text(
+                    title,
+                    textAlign: TextAlign.left,
+                    style: BaseTypography.bodyLarge,
+                  ),
             Gap.h12,
             SingleChildScrollView(
               physics: const BouncingScrollPhysics(),

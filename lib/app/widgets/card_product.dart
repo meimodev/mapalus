@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mapalus/app/modules/food/widgets/widgets.dart';
 import 'package:mapalus/app/widgets/widgets.dart';
 import 'package:mapalus_flutter_commons/models/models.dart';
 import 'package:mapalus_flutter_commons/shared/shared.dart';
@@ -6,13 +7,13 @@ import 'package:mapalus_flutter_commons/shared/shared.dart';
 class CardProduct extends StatelessWidget {
   const CardProduct({
     super.key,
-    required this.onPressed,
     required this.product,
     this.width,
+    this.onPressed,
   });
 
   final Product product;
-  final Function(Product product) onPressed;
+  final Function(Product product)? onPressed;
   final double? width;
 
   @override
@@ -22,7 +23,18 @@ class CardProduct extends StatelessWidget {
       color: BaseColor.white,
       borderRadius: BorderRadius.circular(BaseSize.radiusSm),
       child: InkWell(
-        onTap: () => onPressed(product),
+        onTap: () {
+          if (onPressed != null) {
+            onPressed!(product);
+          }
+          showBottomSheetProductDetailWidget(
+            context,
+            product.id,
+            (value) {
+              print(value.toString());
+            },
+          );
+        },
         child: ConstrainedBox(
           constraints: BoxConstraints(
             maxWidth: BaseSize.customWidth(200),
@@ -37,13 +49,12 @@ class CardProduct extends StatelessWidget {
                     borderRadius: BorderRadius.circular(BaseSize.radiusSm),
                   ),
                   height: BaseSize.customWidth(120),
-                  // width: BaseSize.customWidth(160),
                   child: Stack(
                     children: [
                       Positioned(
-                        bottom: BaseSize.h4,
-                        left: BaseSize.w4,
-                        right: BaseSize.w4,
+                        bottom: BaseSize.h8,
+                        left: BaseSize.w8,
+                        right: BaseSize.w8,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -55,11 +66,11 @@ class CardProduct extends StatelessWidget {
                                       : const SizedBox(),
                                   Gap.w4,
                                   product.status.available
-                                      ? const IconProductStatus(
+                                      ? const SizedBox()
+                                      : const IconProductStatus(
                                           text: "!",
                                           textColor: BaseColor.negative,
-                                        )
-                                      : const SizedBox(),
+                                        ),
                                   Gap.w4,
                                 ],
                               ),
@@ -87,10 +98,9 @@ class CardProduct extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        "${product.price.formatNumberToCurrency()} / ${product.unit}",
+                        "${product.price.formatNumberToCurrency()} / ${product.unit.name}",
                         style: BaseTypography.bodyMedium.w300,
                         overflow: TextOverflow.ellipsis,
-
                       ),
                     ],
                   ),

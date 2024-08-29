@@ -1,33 +1,17 @@
 import 'package:get/get.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
-import 'package:uuid/uuid.dart';
 
 class FoodController extends GetxController {
-  UserRepo userRepo = Get.find<UserRepo>();
-  OrderRepo orderRepo = Get.find<OrderRepo>();
+  final orderRepo = Get.find<OrderRepo>();
+  final productRepo = Get.find<ProductRepo>();
+  final partnerRepo = Get.find<PartnerRepo>();
 
   RxList<ProductOrder> productOrders = <ProductOrder>[].obs;
 
-  final uuid = const Uuid();
+  List<Partner> partners = [];
+  List<Product> products = [];
 
-  List<Partner> get partners => List.generate(
-        10,
-        (index) => Partner(
-          id: uuid.v4(),
-          name: "Partner $index",
-          location: Location(place: "Location $index"), lastActiveTimeStamp: DateTime.now(),
-        ),
-      );
-
-  List<Product> get products => List.generate(
-        10,
-        (index) => Product(
-          id: uuid.v4(),
-          name: "Product  $index",
-          unit: ProductUnit.kilogram,
-          price: 5000,
-        ),
-      );
+  RxBool loading = true.obs;
 
   @override
   void onInit() async {
@@ -43,5 +27,14 @@ class FoodController extends GetxController {
     if (initProducts.isNotEmpty) {
       productOrders.value = initProducts;
     }
+
+    //fetch partners, later only fetch the one nearest to user
+   final partners = await partnerRepo.readPartnersForHome();
+    this.partners = partners;
+    //fetch products, later only fetch the one nearest to user
+   final products = await productRepo.readProductsForHome();
+    this.products = products;
+
+    loading.value = false;
   }
 }
