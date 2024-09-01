@@ -72,22 +72,17 @@ class _BottomSheetProductDetailWidgetState
 
   void onAddProductOrder(ProductOrder value) async {
     widget.onAddProductOrder(value);
-    bool exist = false;
-    final productOrders = await orderRepo.readLocalProductOrders()
-      ..map((e) {
-        if (e.product.id == value.product.id) {
-          exist = true;
-          final newQuantity = quantity + value.quantity;
+    int existIndex = -1;
+    final productOrders = await orderRepo.readLocalProductOrders();
+    existIndex = productOrders.indexWhere(
+      (element) => element.product.id == value.product.id,
+    );
 
-          return e.copyWith(
-            quantity: newQuantity,
-            totalPrice: newQuantity * value.product.price,
-          );
-        }
-        return e;
-      });
+    if (existIndex > -1) {
+      print("exist index $existIndex");
 
-    if (exist) {
+
+
       orderRepo.updateLocalProductOrders(productOrders);
       return;
     }
