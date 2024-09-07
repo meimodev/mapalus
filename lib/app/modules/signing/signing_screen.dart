@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/signing/signing_controller.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
-
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class SigningScreen extends GetView<SigningController> {
@@ -22,38 +21,38 @@ class SigningScreen extends GetView<SigningController> {
           Expanded(
             child: Container(
               color: BaseColor.accent,
-              child: CarouselSlider(
-                items: [
-                  _buildGraphicHolderCard(
-                    context: context,
-                    assetName: 'assets/vectors/phone.svg',
-                    text: 'Pesan dirumah, harga pasar',
-                  ),
-                  _buildGraphicHolderCard(
-                    context: context,
-                    assetName: 'assets/vectors/bike.svg',
-                    text: 'Tinggal tunggu, kami antar',
-                  ),
-                  _buildGraphicHolderCard(
-                    context: context,
-                    assetName: 'assets/vectors/packet.svg',
-                    text: 'Tidak sesuai, kami ganti',
-                  ),
-                ],
-                options: CarouselOptions(
-                  pauseAutoPlayOnTouch: true,
-                  viewportFraction: 1,
-                  height: double.infinity,
-                  initialPage: 0,
-                  reverse: false,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 4),
-                  autoPlayAnimationDuration: const Duration(milliseconds: 500),
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  enlargeCenterPage: false,
-                  scrollDirection: Axis.horizontal,
-                ),
-              ),
+              // child: CarouselSlider(
+              //   items: [
+              //     _buildGraphicHolderCard(
+              //       context: context,
+              //       assetName: 'assets/vectors/phone.svg',
+              //       text: 'Pesan dirumah, harga pasar',
+              //     ),
+              //     _buildGraphicHolderCard(
+              //       context: context,
+              //       assetName: 'assets/vectors/bike.svg',
+              //       text: 'Tinggal tunggu, kami antar',
+              //     ),
+              //     _buildGraphicHolderCard(
+              //       context: context,
+              //       assetName: 'assets/vectors/packet.svg',
+              //       text: 'Tidak sesuai, kami ganti',
+              //     ),
+              //   ],
+              //   options: CarouselOptions(
+              //     pauseAutoPlayOnTouch: true,
+              //     viewportFraction: 1,
+              //     height: double.infinity,
+              //     initialPage: 0,
+              //     reverse: false,
+              //     autoPlay: true,
+              //     autoPlayInterval: const Duration(seconds: 4),
+              //     autoPlayAnimationDuration: const Duration(milliseconds: 500),
+              //     autoPlayCurve: Curves.fastOutSlowIn,
+              //     enlargeCenterPage: false,
+              //     scrollDirection: Axis.horizontal,
+              //   ),
+              // ),
             ),
           ),
           Obx(
@@ -70,42 +69,42 @@ class SigningScreen extends GetView<SigningController> {
     );
   }
 
-  _buildGraphicHolderCard({
-    required BuildContext context,
-    required String assetName,
-    required String text,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Expanded(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: BaseSize.w12,
-                    vertical: BaseSize.h12,
-                  ),
-                  child: SvgPicture.asset(
-                    assetName,
-                    height: 200.h,
-                  ),
-                ),
-                Text(
-                  text,
-                  style: const TextStyle(
-                        color: BaseColor.editable,
-                      ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  // _buildGraphicHolderCard({
+  //   required BuildContext context,
+  //   required String assetName,
+  //   required String text,
+  // }) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.stretch,
+  //     children: [
+  //       Expanded(
+  //         child: Center(
+  //           child: Column(
+  //             mainAxisAlignment: MainAxisAlignment.center,
+  //             children: [
+  //               Container(
+  //                 padding: EdgeInsets.symmetric(
+  //                   horizontal: BaseSize.w12,
+  //                   vertical: BaseSize.h12,
+  //                 ),
+  //                 child: SvgPicture.asset(
+  //                   assetName,
+  //                   height: 200.h,
+  //                 ),
+  //               ),
+  //               Text(
+  //                 text,
+  //                 style: const TextStyle(
+  //                       color: BaseColor.editable,
+  //                     ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 }
 
 class CardSigning extends StatelessWidget {
@@ -140,7 +139,7 @@ class CardSigning extends StatelessWidget {
         ),
       ),
       child: PopScope(
-        onPopInvoked: (_){
+        onPopInvoked: (_) {
           controller.onPressedBack();
         },
         canPop: false,
@@ -150,8 +149,8 @@ class CardSigning extends StatelessWidget {
             child: controller.isLoading.value
                 ? Padding(
                     padding: EdgeInsets.symmetric(vertical: BaseSize.h12),
-                    child:
-                        const CircularProgressIndicator(color: BaseColor.primary3),
+                    child: const CircularProgressIndicator(
+                        color: BaseColor.primary3),
                   )
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -277,10 +276,10 @@ class CardSigning extends StatelessWidget {
                   ? Text(
                       controller.errorText.value,
                       style: TextStyle(
-                            color: BaseColor.negative,
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w300,
-                          ),
+                        color: BaseColor.negative,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w300,
+                      ),
                     )
                   : const SizedBox(),
             ),
@@ -315,16 +314,16 @@ class CardSigning extends StatelessWidget {
       Text(
         'Nomor Handphone',
         style: TextStyle(
-              fontSize: 12.sp,
-              color: isTitleHeadVisible ? Colors.grey : Colors.transparent,
-            ),
+          fontSize: 12.sp,
+          color: isTitleHeadVisible ? Colors.grey : Colors.transparent,
+        ),
       ),
       Text(
         message ?? phone,
         textAlign: isAlignMiddle ? TextAlign.center : TextAlign.start,
         style: TextStyle(
-              fontSize: 14.sp,
-            ),
+          fontSize: 14.sp,
+        ),
       ),
     ];
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
-import 'package:uuid/uuid.dart';
 
 class MainHomeController extends GetxController {
   UserRepo userRepo = Get.find<UserRepo>();
@@ -17,7 +16,7 @@ class MainHomeController extends GetxController {
   );
 
   @override
-  void onInit() async{
+  void onInit() async {
     super.onInit();
 
     //TODO dummy for signing

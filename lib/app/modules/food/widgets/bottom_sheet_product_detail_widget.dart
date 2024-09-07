@@ -79,11 +79,26 @@ class _BottomSheetProductDetailWidgetState
     );
 
     if (existIndex > -1) {
-      print("exist index $existIndex");
-
-
-
-      orderRepo.updateLocalProductOrders(productOrders);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text("produk sudah ada, menambahkan jumlah"),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.symmetric(
+              horizontal: BaseSize.w12,
+              vertical: BaseSize.h24,
+            ),
+          ),
+        );
+      }
+      final existProduct = productOrders.elementAt(existIndex).product;
+      orderRepo.updateLocalProductOrders(productOrders
+          .map(
+            (e) => e.product.id == existProduct.id
+                ? e.copyWith(quantity: e.quantity + value.quantity)
+                : e,
+          )
+          .toList());
       return;
     }
     productOrders.add(value);

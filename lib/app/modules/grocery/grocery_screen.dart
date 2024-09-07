@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/modules.dart';
-import 'package:mapalus/app/widgets/widgets.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
 class GroceryScreen extends GetView<GroceryController> {
@@ -46,7 +45,7 @@ class GroceryScreen extends GetView<GroceryController> {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text("Back"),
+            child: const Text("Back"),
           )
         ],
       ),
@@ -324,34 +323,34 @@ class GroceryScreen extends GetView<GroceryController> {
 // }
 }
 
-class _BuildCardCategories extends StatelessWidget {
-  const _BuildCardCategories({
-    required this.onPressedCategories,
-    required this.categories,
-  });
-
-  final Function(Category) onPressedCategories;
-  final List<Category> categories;
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          for (var category in categories)
-            CardCategory(
-              imageUrl: category.imageUrl,
-              asset: category.asset,
-              name: category.name,
-              onPressed: () {
-                onPressedCategories(category);
-              },
-            ),
-        ],
-      ),
-    );
-  }
-}
+// class _BuildCardCategories extends StatelessWidget {
+//   const _BuildCardCategories({
+//     required this.onPressedCategories,
+//     required this.categories,
+//   });
+//
+//   final Function(Category) onPressedCategories;
+//   final List<Category> categories;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return SingleChildScrollView(
+//       physics: const BouncingScrollPhysics(),
+//       scrollDirection: Axis.horizontal,
+//       child: Row(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           for (var category in categories)
+//             CardCategory(
+//               imageUrl: category.imageUrl,
+//               asset: category.asset,
+//               name: category.name,
+//               onPressed: () {
+//                 onPressedCategories(category);
+//               },
+//             ),
+//         ],
+//       ),
+//     );
+//   }
+// }

@@ -20,198 +20,140 @@ class CardOrder extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         child: Padding(
-          padding:  EdgeInsets.symmetric(
-            horizontal: BaseSize.w24,
-            vertical: BaseSize.h24,
+          padding: EdgeInsets.symmetric(
+            horizontal: BaseSize.w6,
+            vertical: BaseSize.w6,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              SizedBox(
-                width: 30.w,
-                child: Text(
-                  '#${order.id}',
-                  style: TextStyle(
-                    fontSize: 9.sp,
-                    fontWeight: FontWeight.w300,
+          child: IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'dipesan',
+                        style: BaseTypography.captionSmall.toBold,
+                      ),
+                      Text(
+                        order.createdAt.EddMMMHHmm,
+                        style: BaseTypography.bodySmall,
+                      ),
+                    ],
                   ),
-                  textAlign: TextAlign.start,
                 ),
-              ),
-              SizedBox(width: 9.w),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'dipesan',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 9.sp,
+                Gap.w8,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${order.products.length} produk',
+                        style: BaseTypography.captionSmall,
                       ),
-                    ),
-                    Text(
-                      "order.createdAt.format(pattern:'E, dd MMMM')",
-                      style: TextStyle(
-                        fontSize: 9.sp,
-                        // fontWeight:
-                        //     order.orderTimeStamp.isSame(Jiffy.now(),unit: Unit.day)
-                        //         ? FontWeight.w600
-                        //         : FontWeight.w300,
-                        color: BaseColor.primaryText,
+                      Text(
+                        order.payment.amount.formatNumberToCurrency(),
+                        style: BaseTypography.bodySmall,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${order.products.length} produk',
-                      style: TextStyle(fontSize: 9.sp),
-                    ),
-                    Text(
-                      "order.orderInfo.totalPriceF",
-                      style: TextStyle(fontSize: 9.sp),
-                    ),
-                  ],
+                Gap.w3,
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: BaseSize.customWidth(100),
+                  ),
+                  child: _buildCardOrderStatus(),
                 ),
-              ),
-              SizedBox(width: 6.w),
-              SizedBox(
-                width: 100,
-                child: _buildCardOrderStatus(context),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  _buildCardOrderStatus(BuildContext context) {
-    if (order.status == OrderStatus.placed) {
-      return Column(
-        children: [
-          Text(
-            'Menunggu konfirmasi',
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 9.sp,
-            ),
-          ),
-          SizedBox(height: 3.h),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              height: 1.h,
-              color: BaseColor.primary3,
-            ),
-          ),
-        ],
-      );
+  _buildCardOrderStatus() {
+    switch (order.status) {
+      case OrderStatus.placed:
+        return const _BuildCardOrderStatus(
+          title: "Menunggu Konfirmasi",
+          textColor: BaseColor.primary3,
+          underlineColor: BaseColor.primary3,
+        );
+      case OrderStatus.accepted:
+        return _BuildCardOrderStatus(
+          title: "Sedang Diproses",
+          // subTitle: order.lastUpdate.EddMMMHHmm,
+          underlineColor: BaseColor.accent,
+        );
+      case OrderStatus.rejected:
+        return _BuildCardOrderStatus(
+          title: "Ditolak",
+          subTitle: order.lastUpdate.EddMMMHHmm,
+          textColor: BaseColor.negative,
+          underlineColor: BaseColor.negative,
+        );
+      case OrderStatus.delivered:
+        return _BuildCardOrderStatus(
+          title: "Diantar",
+          subTitle: order.lastUpdate.EddMMMHHmm,
+          textColor: BaseColor.positive,
+          underlineColor: BaseColor.positive,
+        );
+      case OrderStatus.finished:
+        return _BuildCardOrderStatus(
+          title: "Selesai",
+          subTitle: order.lastUpdate.EddMMMHHmm,
+          underlineColor: BaseColor.primaryText,
+        );
+      case OrderStatus.canceled:
+        return _BuildCardOrderStatus(
+          title: "Dibatalkan",
+          textColor: BaseColor.negative,
+          subTitle: order.lastUpdate.EddMMMHHmm,
+          underlineColor: BaseColor.negative,
+        );
     }
-    if (order.status == OrderStatus.accepted) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'antar',
-            style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 9.sp,
-            ),
+  }
+}
+
+class _BuildCardOrderStatus extends StatelessWidget {
+  const _BuildCardOrderStatus({
+    this.underlineColor,
+    this.textColor,
+    required this.title,
+    this.subTitle,
+  });
+
+  final Color? underlineColor;
+  final Color? textColor;
+  final String title;
+  final String? subTitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          title,
+          style: BaseTypography.captionSmall.toBold.copyWith(
+            color: textColor ?? BaseColor.primaryText,
           ),
-          Text(
-            "order.orderInfo.deliveryTime",
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 9.sp,
-            ),
-          ),
-          SizedBox(height: 3.h),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              height: 1.h,
-              color: BaseColor.accent,
-            ),
-          ),
-        ],
-      );
-    }
-    if (order.status == OrderStatus.rejected) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'batal',
-            style: TextStyle(
-              fontWeight: FontWeight.w300,
-              color: BaseColor.negative,
-              fontSize: 9.sp,
-            ),
-          ),
-          Text(
-            // order.confirmTimeStamp?.format(pattern:"E, dd MMMM") ?? '-',
-            "",
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: BaseColor.negative,
-              fontSize: 9.sp,
-            ),
-          ),
-        ],
-      );
-    }
-    if (order.status == OrderStatus.delivered) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'diantar',
-            style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 9.sp,
-              color: BaseColor.positive,
-            ),
-          ),
-          Text(
-            // order.deliverTimeStamp?.format(pattern:"E, dd MMM HH:mm:ss") ?? '-',
-            "",
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: BaseColor.positive,
-              fontSize: 9.sp,
-            ),
-          ),
-        ],
-      );
-    }
-    if (order.status == OrderStatus.finished) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'selesai',
-            style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 9.sp,
-            ),
-          ),
-          Text(
-            // order.finishTimeStamp!.format(pattern:"E, dd MMMM"),
-            "",
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 9.sp,
-            ),
-          ),
-        ],
-      );
-    }
+        ),
+        subTitle != null
+            ? Text(subTitle!, style: BaseTypography.bodySmall)
+            : const SizedBox(),
+        Gap.h4,
+        underlineColor != null
+            ? Container(
+                height: 1,
+                color: underlineColor!,
+              )
+            : const SizedBox(),
+      ],
+    );
   }
 }

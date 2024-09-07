@@ -144,12 +144,13 @@ class OrderSummaryController extends GetxController {
     selectionLoading.value = true;
     const uuid = Uuid();
     final orderId = uuid.v4();
-   final order = OrderApp(
+    final order = OrderApp(
       id: orderId,
       status: OrderStatus.placed,
       lastUpdate: DateTime.now(),
       createdAt: DateTime.now(),
       orderBy: userRepo.signedUser!,
+      partnerId: products.first.product.partnerId,
       payment: Payment(
         id: uuid.v4(),
         orderId: orderId,
@@ -173,7 +174,7 @@ class OrderSummaryController extends GetxController {
         destination: deliveryLocation!,
         deliverBy: null,
       ),
-     voucher: voucher,
+      voucher: voucher,
     );
 
     selectionLoading.value = false;

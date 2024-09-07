@@ -69,5 +69,7 @@
 		<string>$(PRODUCT_NAME) need current location as a default location for $(PRODUCT_NAME) to pinpoint deliveries services location</string>
 		<key>UIStatusBarHidden</key>
 		<false/>
-	</dict>
+		<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+</dict>
 </plist>

@@ -45,7 +45,7 @@ class MainHomeScreen extends GetView<MainHomeController> {
               Fluttertoast.showToast(
                 backgroundColor: BaseColor.primary3,
                 textColor: BaseColor.accent,
-                msg: "Press again to exit",
+                msg: "Tekan lagi untuk keluar",
               );
               return;
             }

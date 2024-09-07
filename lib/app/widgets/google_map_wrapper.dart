@@ -51,8 +51,9 @@ class _GoogleMapWrapperState extends State<GoogleMapWrapper> {
       },
       onCameraMove: (pos) {
         pickedPosition = pos.target;
-        if (widget.onMoveCamera != null)
+        if (widget.onMoveCamera != null) {
           widget.onMoveCamera!(pos.target.latitude, pos.target.latitude);
+        }
         if (isCameraIdle) {
           widget.onCameraIdle(null);
         }

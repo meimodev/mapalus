@@ -5,7 +5,6 @@ import 'package:mapalus/app/modules/home/widgets/widgets.dart';
 import 'package:mapalus/shared/shared.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -20,7 +19,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             Text(
               "Mapalus",
-              style: BaseTypography.bodyMedium,
+              style: BaseTypography.displayLarge.bold.toPrimary,
             ),
             Gap.h24,
             CardDeliveryAddress(
@@ -54,5 +53,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-

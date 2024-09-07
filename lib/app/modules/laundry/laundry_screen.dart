@@ -39,7 +39,7 @@ class LaundryScreen extends GetView<LaundryController> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text("Back"),
+              child: const Text("Back"),
             )
           ],
         ),
