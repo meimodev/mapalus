@@ -14,7 +14,6 @@ class SearchScreen extends GetView<SearchController> {
 
   @override
   Widget build(BuildContext context) {
-
     return ScreenWrapper(
       padding: EdgeInsets.zero,
       child: Stack(
@@ -34,10 +33,10 @@ class SearchScreen extends GetView<SearchController> {
                       child: const BackButtonIcon(),
                     ),
                     Gap.w12,
-                    const Expanded(
+                    Expanded(
                       child: CardSearchBar(
-                        onChanged: print,
-                        onSubmitted: print,
+                        onChanged: controller.onChangedSearchText,
+                        onSubmitted: controller.onSubmittedSearchText,
                         autoFocus: true,
                       ),
                     ),
@@ -47,7 +46,7 @@ class SearchScreen extends GetView<SearchController> {
               Gap.h12,
               Expanded(
                 child: Obx(
-                  ()=> LoadingWrapper(
+                  () => LoadingWrapper(
                     loading: controller.loading.value,
                     child: GridView.builder(
                       padding: EdgeInsets.symmetric(
