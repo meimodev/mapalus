@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/widgets/button_altering.dart';
 import 'package:mapalus/app/widgets/button_main.dart';
-import 'package:mapalus/app/widgets/loading_wrapper.dart';
 import 'package:mapalus_flutter_commons/models/models.dart';
 import 'package:mapalus_flutter_commons/repos/repos.dart';
 import 'package:mapalus_flutter_commons/shared/shared.dart';
+import 'package:mapalus_flutter_commons/widgets/widgets.dart';
 
 import 'widgets.dart';
 
@@ -140,7 +140,7 @@ class _BottomSheetProductDetailWidgetState
                   ),
                   Gap.h6,
                   Text(
-                    "${product?.price.formatNumberToCurrency()} / ${product?.unit.name}",
+                    "${product?.price.formatNumberToCurrency()} / ${product?.unit?.name}",
                     style: BaseTypography.bodyLarge.bold,
                   ),
                   Gap.h24,
@@ -175,7 +175,7 @@ class _BottomSheetProductDetailWidgetState
                   ),
                   Gap.w12,
                   Text(
-                    "$quantity ${product?.unit.name ?? ""}",
+                    "$quantity ${product?.unit?.name ?? ""}",
                     style: BaseTypography.bodyMedium,
                   ),
                   Gap.w12,

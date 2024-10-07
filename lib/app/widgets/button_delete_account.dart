@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
-import 'package:get/get.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class DeleteAccountButton extends StatelessWidget {
   const DeleteAccountButton(
@@ -12,32 +12,24 @@ class DeleteAccountButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      shape: ContinuousRectangleBorder(
-        borderRadius: BorderRadius.circular(BaseSize.w12 * 1.5),
-        side: const BorderSide(
-          width: .5,
-          color: BaseColor.negative,
-        ),
-      ),
+      borderRadius: BorderRadius.circular(BaseSize.radiusMd),
       child: InkWell(
         onTap: () {
-          Get.bottomSheet(_BuildBottomSheetDeleteAccount(
-            onPressedPositive: () {
-              onPressedDelete(userPhone);
-            },
-            userPhone: userPhone,
-          ));
+          showModalBottomSheet(
+            context: context,
+            builder: (context) => _BuildBottomSheetDeleteAccount(
+              onPressedPositive: () {
+                onPressedDelete(userPhone);
+              },
+              userPhone: userPhone,
+            ),
+          );
         },
         child: Padding(
           padding: EdgeInsets.all(BaseSize.w12),
           child: Text(
             'Hapus Akun',
-            style: TextStyle(
-                  fontSize: 14.sp,
-                  color: BaseColor.negative,
-                  fontWeight: FontWeight.bold,
-                ),
-            textAlign: TextAlign.center,
+            style: BaseTypography.bodySmall.toError,
           ),
         ),
       ),
@@ -85,43 +77,42 @@ class _BuildBottomSheetDeleteAccountState
       clipBehavior: Clip.hardEdge,
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.vertical(
-          top: Radius.circular(BaseSize.w48),
+          top: Radius.circular(BaseSize.radiusLg),
         ),
       ),
       onClosing: () {},
       builder: (BuildContext context) => Container(
         padding: EdgeInsets.all(BaseSize.w24),
-        // height: 270.h,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               'Perhatian!',
-              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+              style: BaseTypography.bodyMedium.toBold,
             ),
-            SizedBox(width: BaseSize.h12),
+            Gap.h12,
             RichText(
-              textAlign: TextAlign.justify,
+              textAlign: TextAlign.center,
               text: TextSpan(
-                style: TextStyle(fontSize: 12.sp),
-                children: const [
-                  TextSpan(
+                style: BaseTypography.bodySmall,
+                children: [
+                  const TextSpan(
                     text: 'Akun yang dihapus ',
                   ),
                   TextSpan(
                     text: 'tidak bisa dikembalikan lagi. ',
-                    style: TextStyle(
-                          color: BaseColor.negative,
-                        ),
+                    style: BaseTypography.bodySmall.toError,
                   ),
-                  TextSpan(
+                  const TextSpan(
                     text:
                         'Silahkan masukkan nomor telpon akun untuk konfirmasi.',
                   ),
                 ],
               ),
             ),
-            SizedBox(height: BaseSize.h24),
+            Gap.h12,
             Container(
               padding: EdgeInsets.symmetric(
                 horizontal: BaseSize.w12,
@@ -129,11 +120,11 @@ class _BuildBottomSheetDeleteAccountState
               ),
               decoration: BoxDecoration(
                 color: BaseColor.editable,
-                borderRadius: BorderRadius.circular(9.sp),
+                borderRadius: BorderRadius.circular(BaseSize.radiusMd),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   TextField(
                     onChanged: proceed,
@@ -160,15 +151,14 @@ class _BuildBottomSheetDeleteAccountState
                 ],
               ),
             ),
-            SizedBox(height: BaseSize.h12),
+            Gap.h12,
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 400),
               child: isDeleteButtonEnabled
                   ? Material(
                       color: BaseColor.negative,
-                      elevation: 5,
                       shape: ContinuousRectangleBorder(
-                        borderRadius: BorderRadius.circular(BaseSize.w12),
+                        borderRadius: BorderRadius.circular(BaseSize.radiusMd),
                       ),
                       child: InkWell(
                         onTap: widget.onPressedPositive,
@@ -176,18 +166,14 @@ class _BuildBottomSheetDeleteAccountState
                           padding: EdgeInsets.all(BaseSize.w12),
                           child: Text(
                             'HAPUS AKUN',
-                            style:
-                            TextStyle(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
+                            style: BaseTypography.button.toWhite,
                           ),
                         ),
                       ),
                     )
                   : const SizedBox(),
             ),
+            Gap.h24,
           ],
         ),
       ),

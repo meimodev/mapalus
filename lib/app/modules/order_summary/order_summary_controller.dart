@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/shared/routes.dart';
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/models/models.dart';
+import 'package:mapalus_flutter_commons/repos/repos.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 import 'package:uuid/uuid.dart';
 
 class OrderSummaryController extends GetxController {
@@ -173,6 +175,7 @@ class OrderSummaryController extends GetxController {
         lastUpdate: DateTime.now(),
         destination: deliveryLocation!,
         deliverBy: null,
+        selectedDate: DateTime.now(),
       ),
       voucher: voucher,
     );

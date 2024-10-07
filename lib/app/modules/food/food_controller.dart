@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/models/models.dart';
+import 'package:mapalus_flutter_commons/repos/repos.dart';
 
 class FoodController extends GetxController {
   final orderRepo = Get.find<OrderRepo>();
@@ -32,7 +33,7 @@ class FoodController extends GetxController {
     final partners = await partnerRepo.readPartnersForHome();
     this.partners = partners;
     //fetch products, later only fetch the one nearest to user
-    final products = await productRepo.readProductsForHome();
+    final products = await productRepo.readProducts(GetProductRequest());
     this.products = products;
 
     loading.value = false;

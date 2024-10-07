@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/modules.dart';
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/models/models.dart';
+import 'package:mapalus_flutter_commons/repos/repos.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class SigningController extends GetxController {
   GroceryController homeController = Get.find();

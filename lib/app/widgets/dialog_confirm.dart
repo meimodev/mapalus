@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class DialogConfirm extends StatelessWidget {
   const DialogConfirm({
@@ -33,16 +34,16 @@ class DialogConfirm extends StatelessWidget {
             Text(
               title ?? 'Perhatian !',
               style: TextStyle(
-                    fontSize: 16.sp,
-                  ),
+                fontSize: 16.sp,
+              ),
             ),
             SizedBox(height: BaseSize.h12),
             Text(
               description ?? '',
               style: TextStyle(
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.w300,
-                  ),
+                fontSize: 13.sp,
+                fontWeight: FontWeight.w300,
+              ),
             ),
             SizedBox(height: BaseSize.h24),
             Row(
@@ -65,10 +66,9 @@ class DialogConfirm extends StatelessWidget {
                       child: Center(
                         child: Text(
                           confirmText ?? 'HAPUS',
-                          style:
-                          const TextStyle(
-                                    color: BaseColor.primary3,
-                                  ),
+                          style: const TextStyle(
+                            color: BaseColor.primary3,
+                          ),
                         ),
                       ),
                     ),

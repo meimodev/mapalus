@@ -4,9 +4,9 @@ import 'package:mapalus/app/modules/location/location_controller.dart';
 import 'package:mapalus/app/widgets/button_main.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
 import 'package:mapalus/app/widgets/google_map_wrapper.dart';
-import 'package:mapalus/app/widgets/loading_wrapper.dart';
-
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
+import 'package:mapalus_flutter_commons/widgets/widgets.dart';
 
 class LocationScreen extends GetView<LocationController> {
   const LocationScreen({
@@ -52,8 +52,8 @@ class LocationScreen extends GetView<LocationController> {
                       child: controller.dragging.value
                           ? const SizedBox()
                           : LoadingWrapper(
-                            loading: controller.loading.value,
-                            child: Column(
+                              loading: controller.loading.value,
+                              child: Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -61,7 +61,8 @@ class LocationScreen extends GetView<LocationController> {
                                     width: BaseSize.customWidth(100),
                                     child: ButtonMain(
                                       title: "Pilih",
-                                      onPressed: controller.onPressedSelectLocation,
+                                      onPressed:
+                                          controller.onPressedSelectLocation,
                                     ),
                                   ),
                                   Gap.h12,
@@ -72,7 +73,7 @@ class LocationScreen extends GetView<LocationController> {
                                   ),
                                 ],
                               ),
-                          ),
+                            ),
                     ),
                   ),
                 ),

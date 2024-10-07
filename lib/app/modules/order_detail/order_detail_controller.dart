@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/modules.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/models/models.dart';
+import 'package:mapalus_flutter_commons/repos/repos.dart';
 
 class OrderDetailController extends GetxController {
   OrderRepo orderRepo = Get.find();
@@ -21,14 +23,14 @@ class OrderDetailController extends GetxController {
   late StreamSubscription orderListener;
 
   //DUMMY DATA
-  Rating? rating =Rating(
+  Rating? rating = Rating(
     id: "kjasdkjf",
     orderId: 'orderId',
     userId: 'userId',
     rate: 0,
     message: '',
     createdAt: DateTime.now(),
-  ) ;
+  );
 
   @override
   Future<void> onInit() async {

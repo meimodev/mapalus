@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class CardNoteWidget extends StatelessWidget {
@@ -36,7 +35,6 @@ class CardNoteWidget extends StatelessWidget {
                 onChangedNote("");
                 Navigator.pop(context);
               },
-
             ),
           );
         },
@@ -88,7 +86,8 @@ class CardNoteWidget extends StatelessWidget {
         children: [
           TextSpan(
             text: hints[Random().nextInt(hints.length)],
-            style: BaseTypography.caption.copyWith(color: BaseColor.secondaryText.withOpacity(.75)),
+            style: BaseTypography.caption
+                .copyWith(color: BaseColor.secondaryText.withOpacity(.75)),
           ),
         ],
       ),
@@ -194,7 +193,7 @@ class _BuildBottomSheetState extends State<_BuildBottomSheet> {
                   elevation: 1,
                   child: InkWell(
                     onTap: () {
-                      tecNote.text= "";
+                      tecNote.text = "";
                       widget.onDeleteNote();
                     },
                     child: SizedBox(
@@ -202,7 +201,7 @@ class _BuildBottomSheetState extends State<_BuildBottomSheet> {
                       width: BaseSize.w36,
                       child: Center(
                         child: Icon(
-                          Ionicons.close_outline,
+                          Icons.close,
                           color: BaseColor.cardBackground1,
                           size: BaseSize.w20,
                         ),
@@ -222,7 +221,7 @@ class _BuildBottomSheetState extends State<_BuildBottomSheet> {
                       width: BaseSize.w36,
                       child: Center(
                         child: Icon(
-                          Ionicons.checkmark_outline,
+                          Icons.check,
                           color: BaseColor.cardBackground1,
                           size: BaseSize.w20,
                         ),

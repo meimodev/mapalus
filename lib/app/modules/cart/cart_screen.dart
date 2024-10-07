@@ -1,12 +1,13 @@
 // ignore_for_file: invalid_use_of_protected_member
 
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/widgets/button_main.dart';
 import 'package:mapalus/app/widgets/card_cart_item.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
+import 'package:mapalus_flutter_commons/widgets/widgets.dart';
 
 import 'cart_controller.dart';
 import 'widgets/widgets.dart';

@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import 'package:mapalus/app/modules/modules.dart';
 
 class Routes {
@@ -60,18 +59,18 @@ class Routes {
         name: accountSetting,
         page: () => const AccountSettingsScreen(),
         binding: AccountSettingsBinding(),
-        transition: Transition.cupertino,
+        // transition: Transition.cupertino,
       ),
       GetPage(
         name: orders,
         page: () => const OrdersScreen(),
         binding: OrdersBinding(),
-        transition: Transition.cupertino,
+        // transition: Transition.cupertino,
       ),
       GetPage(
         name: orderDetail,
         page: () => const OrderDetailScreen(),
-        transition: Transition.cupertino,
+        // transition: Transition.cupertino,
         binding: OrderDetailBinding(),
       ),
       GetPage(
@@ -138,7 +137,6 @@ class Routes {
         page: () => const OrderSummaryScreen(),
         binding: OrderSummaryBinding(),
       ),
-
     ];
   }
 }
@@ -147,9 +145,8 @@ class RouteParamArgs {
   final Map<String, dynamic> passingData;
 
   const RouteParamArgs({required this.passingData});
-
 }
 
 class RouteParamArgsKey {
-  static const String productOrders ="productOrders";
+  static const String productOrders = "productOrders";
 }

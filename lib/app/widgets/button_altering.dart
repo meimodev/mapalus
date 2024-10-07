@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class ButtonAltering extends StatelessWidget {
   const ButtonAltering({
@@ -37,7 +37,7 @@ class ButtonAltering extends StatelessWidget {
             child: Text(
               label,
               style: BaseTypography.caption.copyWith(
-                color:  enabled ? BaseColor.primary3 : BaseColor.primaryText,
+                color: enabled ? BaseColor.primary3 : BaseColor.primaryText,
               ),
             ),
           ),

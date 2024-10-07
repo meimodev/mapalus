@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class TextInputQuantity extends StatelessWidget {
   const TextInputQuantity({

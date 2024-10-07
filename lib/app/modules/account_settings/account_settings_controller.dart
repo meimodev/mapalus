@@ -1,46 +1,28 @@
 import 'package:get/get.dart';
-import 'package:mapalus/app/modules/modules.dart';
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus/shared/routes.dart';
+import 'package:mapalus_flutter_commons/models/models.dart';
+import 'package:mapalus_flutter_commons/repos/repos.dart';
 
 class AccountSettingsController extends GetxController {
-  RxString userName = ''.obs;
-  RxString userPhone = ''.obs;
-  RxInt orderCount = 0.obs;
-  RxString currentVersion = ''.obs;
+  final appRepo = Get.find<AppRepo>();
+  final userRepo = Get.find<UserRepo>();
 
-  GroceryController homeController = Get.find();
+  String currentVersion = '';
+  UserApp? user;
 
-  AppRepo appRepo = Get.find();
-  UserRepo userRepo = Get.find();
+  RxBool loading = true.obs;
 
   @override
   Future<void> onInit() async {
     super.onInit();
 
-    if (userRepo.signedUser != null) {
-      userName.value = userRepo.signedUser!.name;
-      userPhone.value = userRepo.signedUser!.phone;
-    }
-
-    userRepo.onSignedUser = (user) {
-      userName.value = user.name;
-      userPhone.value = user.phone;
-    };
-    userRepo.onSigningOut = () {
-      userName.value = '';
-      userPhone.value = '';
-    };
-
-    final count = int.parse(Get.arguments.toString());
-    orderCount.value = count;
-
-    initVersion();
+    loading.value = true;
+    currentVersion = await appRepo.getCurrentVersion();
+    user = userRepo.signedUser;
+    loading.value = false;
   }
 
-  initVersion() async {
-    currentVersion.value = await appRepo.getCurrentVersion();
-  }
+  initVersion() async {}
 
   onPressedEditAccountInfo() {}
 
@@ -50,9 +32,9 @@ class AccountSettingsController extends GetxController {
 
   onPressedSignOut() async {
     await userRepo.signOut();
-    homeController.isCardCartVisible.value = false;
-    homeController.isCardOrderVisible.value = false;
-    homeController.unfinishedOrderCount.value = 0;
+    // homeController.isCardCartVisible.value = false;
+    // homeController.isCardOrderVisible.value = false;
+    // homeController.unfinishedOrderCount.value = 0;
   }
 
   onPressedSignIn() {

@@ -65,7 +65,7 @@ class CardProduct extends StatelessWidget {
                                       ? const IconProductStatus(text: "\$")
                                       : const SizedBox(),
                                   Gap.w4,
-                                  product.status.available
+                                  product.status!.isAvailable
                                       ? const SizedBox()
                                       : const IconProductStatus(
                                           text: "!",
@@ -98,7 +98,7 @@ class CardProduct extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        "${product.price.formatNumberToCurrency()} / ${product.unit.name}",
+                        "${product.price.formatNumberToCurrency()} / ${product.unit!.name}",
                         style: BaseTypography.bodyMedium.w300,
                         overflow: TextOverflow.ellipsis,
                       ),

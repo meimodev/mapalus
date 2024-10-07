@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/ordering/ordering_controller.dart';
 import 'package:mapalus/app/widgets/button_main.dart';
-import 'package:mapalus/app/widgets/loading_wrapper.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
+import 'package:mapalus_flutter_commons/widgets/widgets.dart';
 
 class OrderingScreen extends GetView<OrderingController> {
   const OrderingScreen({super.key});

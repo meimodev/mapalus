@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class CardOrdersPeak extends StatelessWidget {
   const CardOrdersPeak({
@@ -39,10 +40,10 @@ class CardOrdersPeak extends StatelessWidget {
               Text(
                 'Pesanan anda',
                 style: TextStyle(
-                      color: BaseColor.primaryText,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12.sp,
-                    ),
+                  color: BaseColor.primaryText,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12.sp,
+                ),
               ),
               SizedBox(width: 3.w),
             ],

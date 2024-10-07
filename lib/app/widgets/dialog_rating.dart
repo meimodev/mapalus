@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class DialogRating extends StatefulWidget {
   const DialogRating({
@@ -45,8 +46,8 @@ class _DialogRatingState extends State<DialogRating> {
               'Masukkan & Penilaian anda\nakan sangat membantu layanan ini',
               textAlign: TextAlign.center,
               style: TextStyle(
-                    fontSize: 14.sp,
-                  ),
+                fontSize: 14.sp,
+              ),
             ),
             SizedBox(height: BaseSize.h24),
             Container(

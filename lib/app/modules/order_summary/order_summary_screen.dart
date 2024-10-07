@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/modules.dart';
-import 'package:mapalus/app/widgets/loading_wrapper.dart';
 import 'package:mapalus/app/widgets/widgets.dart';
 import 'package:mapalus/shared/shared.dart';
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/models/models.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
+import 'package:mapalus_flutter_commons/widgets/widgets.dart';
 
 import 'widgets/widgets.dart';
 
@@ -37,7 +38,7 @@ class OrderSummaryScreen extends GetView<OrderSummaryController> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Column(
-                         mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Gap.h24,
                           CardOrderSummaryItemWidget(

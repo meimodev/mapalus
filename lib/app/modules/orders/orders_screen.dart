@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/orders/orders_controller.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
-import 'package:mapalus/app/widgets/card_order.dart';
+import 'package:mapalus/shared/routes.dart';
+// import 'package:mapalus/app/widgets/card_order.dart';
 
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
-import 'package:mapalus/shared/routes.dart';
+import 'package:mapalus_flutter_commons/models/models.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
+import 'package:mapalus_flutter_commons/widgets/widgets.dart';
 
 class OrdersScreen extends GetView<OrdersController> {
   const OrdersScreen({super.key});
@@ -19,13 +22,13 @@ class OrdersScreen extends GetView<OrdersController> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const CardNavigation(title: 'Riwayat Pesanan'),
-           SizedBox(height: BaseSize.h12),
+          SizedBox(height: BaseSize.h12),
           Expanded(
             child: Obx(
               () => AnimatedSwitcher(
                 duration: const Duration(milliseconds: 400),
                 child: controller.isLoading.value
-                    ?  const Center(
+                    ? const Center(
                         child: CircularProgressIndicator(
                           color: BaseColor.primary3,
                         ),
@@ -40,23 +43,27 @@ class OrdersScreen extends GetView<OrdersController> {
                             child: Obx(
                               () => AnimatedSwitcher(
                                 duration: const Duration(milliseconds: 400),
-                                child: controller.orders.isNotEmpty ? ListView.builder(
-                                  physics: const BouncingScrollPhysics(),
-                                  itemCount: controller.orders.length,
-                                  itemBuilder: (BuildContext context, int index) {
-                                    OrderApp order = controller.orders[index];
-                                    return CardOrder(
-                                      order: order,
-                                      onPressed: () {
-                                        Navigator.pushNamed(
-                                          context,
-                                          Routes.orderDetail,
-                                          arguments: order,
-                                        );
-                                      },
-                                    );
-                                  },
-                                ) : _buildNoOrderLayout(context),
+                                child: controller.orders.isNotEmpty
+                                    ? ListView.builder(
+                                        physics: const BouncingScrollPhysics(),
+                                        itemCount: controller.orders.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          OrderApp order =
+                                              controller.orders[index];
+                                          return CardOrder(
+                                            order: order,
+                                            onPressed: () {
+                                              Navigator.pushNamed(
+                                                context,
+                                                Routes.orderDetail,
+                                                arguments: order,
+                                              );
+                                            },
+                                          );
+                                        },
+                                      )
+                                    : _buildNoOrderLayout(context),
                               ),
                             ),
                           ),
@@ -75,9 +82,9 @@ class OrdersScreen extends GetView<OrdersController> {
       child: Text(
         "Tidak ada pesanan -_-'",
         style: TextStyle(
-              color: BaseColor.accent,
-              fontSize: 14.sp,
-            ),
+          color: BaseColor.accent,
+          fontSize: 14.sp,
+        ),
       ),
     );
   }
@@ -103,7 +110,7 @@ class _BuildOrderStateChipsLayoutState
   Widget build(BuildContext context) {
     return Row(
       children: [
-         SizedBox(width: BaseSize.w24),
+        SizedBox(width: BaseSize.w24),
         CustomChip(
           text: "diterima",
           active: activeIndex == 1,
@@ -194,7 +201,7 @@ class CustomChip extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         child: Padding(
-          padding:  EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
             horizontal: BaseSize.w12 * .75,
             vertical: BaseSize.h12 * .5,
           ),

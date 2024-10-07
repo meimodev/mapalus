@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:mapalus/app/modules/signing/signing_controller.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
+import 'package:mapalus_flutter_commons/widgets/widgets.dart';
 
 class SigningScreen extends GetView<SigningController> {
   const SigningScreen({super.key});

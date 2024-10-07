@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class CardOrderDetailItem extends StatelessWidget {
   const CardOrderDetailItem({
@@ -35,9 +36,9 @@ class CardOrderDetailItem extends StatelessWidget {
               child: Text(
                 index,
                 style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
           ),
@@ -49,9 +50,9 @@ class CardOrderDetailItem extends StatelessWidget {
                 Text(
                   productName,
                   style: TextStyle(
-                        fontSize: 11.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+                    fontSize: 11.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
                 SizedBox(height: 3.h),
                 Row(
@@ -86,9 +87,9 @@ class CardOrderDetailItem extends StatelessWidget {
           text,
           textAlign: TextAlign.center,
           style: TextStyle(
-                fontSize: 10.sp,
-                fontWeight: FontWeight.w300,
-              ),
+            fontSize: 10.sp,
+            fontWeight: FontWeight.w300,
+          ),
         ),
       );
 }

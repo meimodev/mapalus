@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/modules.dart';
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/repos/repos.dart';
 
 class MainHomeBinding implements Bindings {
   @override

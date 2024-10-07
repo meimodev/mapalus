@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mapalus/app/modules/order_detail/order_detail_controller.dart';
 import 'package:mapalus/app/widgets/card_navigation.dart';
 import 'package:mapalus/app/widgets/card_order_detail_item.dart';
 import 'package:mapalus/app/widgets/dialog_rating.dart';
-import 'package:get/get.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/models/models.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
+import 'package:mapalus_flutter_commons/widgets/widgets.dart';
 
 class OrderDetailScreen extends GetView<OrderDetailController> {
   const OrderDetailScreen({super.key});
@@ -32,8 +35,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
               children: [
                 Obx(
                   () => CardNavigation(
-                    title:
-                        'Rincian Pesanan #${controller.order.value.id}',
+                    title: 'Rincian Pesanan #${controller.order.value.id}',
                     isInverted: true,
                   ),
                 ),
@@ -105,11 +107,12 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                       children: [
                         Obx(
                           () => _buildDeliveryStateCard(
-                            context: context,
-                            title: 'Dipesan',
-                            timeStamp: controller.order.value.lastUpdate.toString()
-                                // .format(pattern: 'EEE, dd MMMM HH:mm'),
-                          ),
+                              context: context,
+                              title: 'Dipesan',
+                              timeStamp:
+                                  controller.order.value.lastUpdate.toString()
+                              // .format(pattern: 'EEE, dd MMMM HH:mm'),
+                              ),
                         ),
                         const Expanded(
                           flex: 3,
@@ -422,7 +425,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
       case OrderStatus.finished:
         return _BuildRatedLayout(rating: controller.rating!);
       case OrderStatus.canceled:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
     }
   }
 
@@ -627,7 +630,7 @@ class _BuildRatedLayout extends StatelessWidget {
           ),
           SizedBox(height: BaseSize.h6),
           Text(
-            'Dinilai ${rating.createdAt.toStringFormatted( "dd MMMM yyyy")}',
+            'Dinilai ${rating.createdAt.toStringFormatted("dd MMMM yyyy")}',
             style: TextStyle(
               fontSize: 12.sp,
               fontWeight: FontWeight.w300,

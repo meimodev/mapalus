@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart' hide Badge;
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart' ;
+import 'package:flutter/material.dart';
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class ButtonMapalus extends StatelessWidget {
   const ButtonMapalus({
@@ -15,8 +16,7 @@ class ButtonMapalus extends StatelessWidget {
   Widget build(BuildContext context) {
     return Badge(
       // elevation: 0,
-      showBadge: count > 0,
-      badgeContent: Center(
+      label: Center(
         child: Text(
           count.toString(),
           style: BaseTypography.bodySmall.toWhite,

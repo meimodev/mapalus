@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus/shared/routes.dart';
+import 'package:mapalus_flutter_commons/models/models.dart';
+import 'package:mapalus_flutter_commons/repos/repos.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class CartController extends GetxController {
   OrderRepo orderRepo = Get.find<OrderRepo>();

@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart' hide SearchController;
 import 'package:get/get.dart';
 import 'package:mapalus/app/modules/modules.dart';
-import 'package:mapalus/app/widgets/loading_wrapper.dart';
 import 'package:mapalus/app/widgets/widgets.dart';
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
+import 'package:mapalus_flutter_commons/widgets/widgets.dart';
 
 // import 'widgets/widgets.dart';
 

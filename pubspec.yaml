@@ -6,7 +6,7 @@ publish_to: 'none'
 version: 1.15.0+37
 
 environment:
-  sdk: '>=3.2.6 <4.0.0'
+  sdk: '^3.5.3'
 
 dependencies:
   flutter:
@@ -17,7 +17,7 @@ dependencies:
 #    git: "https://github.com/meimodev/mapalus_flutter_commons.git"
 
 
-  firebase_core: ^2.25.4
+  firebase_core: ^3.6.0
   flutter_native_splash: ^2.2.16
   get: ^4.6.6
   ionicons: ^0.2.2

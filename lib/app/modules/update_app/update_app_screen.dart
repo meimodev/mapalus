@@ -1,6 +1,9 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
-import 'dart:io' show Platform;
+import 'package:mapalus_flutter_commons/shared/shared.dart';
+import 'package:mapalus_flutter_commons/widgets/widgets.dart';
 
 class UpdateAppScreen extends StatelessWidget {
   const UpdateAppScreen({super.key});
@@ -31,9 +34,9 @@ class UpdateAppScreen extends StatelessWidget {
                 'Silahkan update aplikasi\nuntuk menggunakan fitur terbaru mapalus ☺',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w300,
-                    ),
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w300,
+                ),
               ),
               SizedBox(height: BaseSize.h12),
               Row(
@@ -100,10 +103,10 @@ class UpdateAppScreen extends StatelessWidget {
               SizedBox(width: 6.w),
               Text(
                 title,
-                style:TextStyle(
-                      fontSize: 12.sp,
-                      color: BaseColor.accent,
-                    ),
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  color: BaseColor.accent,
+                ),
               ),
             ],
           ),

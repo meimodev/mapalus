@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class PaymentMethodSelectionCard extends StatelessWidget {
   const PaymentMethodSelectionCard({
@@ -45,9 +46,11 @@ class PaymentMethodSelectionCard extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                        color: available ? BaseColor.primaryText : Colors.grey.shade400,
-                        fontSize: 12.sp,
-                      ),
+                    color: available
+                        ? BaseColor.primaryText
+                        : Colors.grey.shade400,
+                    fontSize: 12.sp,
+                  ),
                 ),
                 subTitle != null
                     ? Text(
@@ -56,7 +59,7 @@ class PaymentMethodSelectionCard extends StatelessWidget {
                           fontSize: 10.sp,
                           fontWeight: FontWeight.w500,
                           color: available ? Colors.grey : Colors.grey.shade400,
-                            ),
+                        ),
                       )
                     : const SizedBox(),
                 child ?? const SizedBox(),

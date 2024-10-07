@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mapalus/app/widgets/widgets.dart';
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/models/models.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class CardCartItem extends StatefulWidget {
   const CardCartItem({
@@ -73,7 +74,7 @@ class _CardCartItemState extends State<CardCartItem> {
                   ),
                   Text(
                     "${widget.productOrder.product.price.formatNumberToCurrency()}"
-                    "${widget.productOrder.product.unit.name.isNotEmpty ? " / ${widget.productOrder.product.unit.name}" : ""}",
+                    "${widget.productOrder.product.unit!.name.isNotEmpty ? " / ${widget.productOrder.product.unit!.name}" : ""}",
                     style: BaseTypography.caption.w500,
                   ),
                   Gap.h6,
@@ -143,7 +144,7 @@ class _BuildAlterQuantityLayout extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                 "x${value.toFormatThousand}",
+                "x${value.toFormatThousand}",
                 style: BaseTypography.caption,
               ),
             ),

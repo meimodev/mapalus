@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class BadgeNotification extends StatelessWidget {
   const BadgeNotification({
@@ -21,10 +22,10 @@ class BadgeNotification extends StatelessWidget {
       child: Center(
         child: Text(
           text,
-          style:TextStyle(
-                fontSize: 11.sp,
-                color: BaseColor.cardBackground1,
-              ),
+          style: TextStyle(
+            fontSize: 11.sp,
+            color: BaseColor.cardBackground1,
+          ),
         ),
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/repos/repos.dart';
 
 class HomeController extends GetxController {
   UserRepo userRepo = Get.find<UserRepo>();
@@ -16,7 +16,7 @@ class HomeController extends GetxController {
   void navigateTo(int index) {
     pageController.animateToPage(
       index,
-      duration:const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 400),
       curve: Curves.easeIn,
     );
   }

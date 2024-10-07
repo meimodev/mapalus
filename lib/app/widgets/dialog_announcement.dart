@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/models/models.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
+import 'package:mapalus_flutter_commons/widgets/widgets.dart';
 
 class DialogAnnouncement extends StatelessWidget {
   const DialogAnnouncement({
@@ -57,7 +60,7 @@ class DialogAnnouncement extends StatelessWidget {
               child: InkWell(
                 onTap: () => Navigator.pop(context),
                 child: Padding(
-                  padding:  EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: BaseSize.w12 * 1.5,
                     vertical: BaseSize.h12,
                   ),

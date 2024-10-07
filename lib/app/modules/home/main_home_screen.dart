@@ -5,7 +5,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mapalus/app/modules/home/widgets/widgets.dart';
 import 'package:mapalus/app/modules/modules.dart';
 import 'package:mapalus/shared/model/screen.dart';
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class MainHomeScreen extends GetView<MainHomeController> {
   const MainHomeScreen({super.key});

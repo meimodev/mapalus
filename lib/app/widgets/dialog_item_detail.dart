@@ -5,7 +5,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mapalus/app/widgets/text_input_quantity.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
-
+import 'package:mapalus_flutter_commons/models/models.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
+import 'package:mapalus_flutter_commons/widgets/widgets.dart';
 
 import 'button_altering.dart';
 
@@ -110,9 +112,9 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                                   widget.product.name,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.sp,
-                                      ),
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.sp,
+                                  ),
                                 ),
                                 isKeyboardVisible
                                     ? const SizedBox()
@@ -121,9 +123,9 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                                   '${widget.product.price} / ${widget.product.unit}',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12.sp,
-                                      ),
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12.sp,
+                                  ),
                                 ),
                                 isKeyboardVisible
                                     ? const SizedBox()
@@ -135,10 +137,10 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                                         maxLines: 4,
                                         textAlign: TextAlign.justify,
                                         style: TextStyle(
-                                              fontWeight: FontWeight.w300,
-                                              fontSize: 12.sp,
-                                              color: Colors.grey,
-                                            ),
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 12.sp,
+                                          color: Colors.grey,
+                                        ),
                                       ),
                               ],
                             ),
@@ -147,7 +149,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                                 top: isKeyboardVisible ? 0 : BaseSize.h24,
                                 bottom: BaseSize.h24,
                               ),
-                              child: widget.product.status.available
+                              child: widget.product.status!.isAvailable
                                   ? _buildAvailableWidgets(context)
                                   : _buildUnavailableWidgets(context),
                             ),
@@ -156,7 +158,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                       ),
                     ),
                     Material(
-                      color: widget.product.status.available
+                      color: widget.product.status!.isAvailable
                           ? errorMessagePrice.isEmpty
                               ? BaseColor.primary3
                               : Colors.grey
@@ -168,7 +170,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                             return;
                           }
 
-                          if (widget.product.status.available) {
+                          if (widget.product.status!.isAvailable) {
                             widget.onPressedAddToCart(
                               ProductOrder(
                                 product: widget.product,
@@ -180,19 +182,18 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                           Navigator.pop(context);
                         },
                         child: Container(
-                          padding:
-                              EdgeInsets.symmetric(vertical: BaseSize.h12),
+                          padding: EdgeInsets.symmetric(vertical: BaseSize.h12),
                           child: Center(
                             child: Text(
-                              widget.product.status.available
+                              widget.product.status!.isAvailable
                                   ? "Masukkan Keranjang"
                                   : "Kembali",
                               style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    color: widget.product.status.available
-                                        ? BaseColor.primaryText
-                                        : Colors.grey,
-                                  ),
+                                fontWeight: FontWeight.w400,
+                                color: widget.product.status!.isAvailable
+                                    ? BaseColor.primaryText
+                                    : Colors.grey,
+                              ),
                             ),
                           ),
                         ),
@@ -210,7 +211,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                 clipBehavior: Clip.hardEdge,
                 height: 210.h,
                 width: 210.w,
-                foregroundDecoration: !widget.product.status.available
+                foregroundDecoration: !widget.product.status!.isAvailable
                     ? BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.grey.withOpacity(.5),
@@ -244,8 +245,8 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
         const Text(
           "Produk sedang tidak tersedia",
           style: TextStyle(
-                fontWeight: FontWeight.w400,
-              ),
+            fontWeight: FontWeight.w400,
+          ),
         ),
         SizedBox(height: 15.h),
         SvgPicture.asset(
@@ -295,8 +296,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
       tecPrice.text = (gram * widget.product.price).floor().toString();
     }
 
-
-   final freshPrice =double.tryParse(tecPrice.text);
+    final freshPrice = double.tryParse(tecPrice.text);
     if (freshPrice == null) {
       setState(() {
         errorMessagePrice = "Gunakan angka 0 - 9 untuk mengisi";
@@ -336,7 +336,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
         _buildQuantitySuggestionRow(),
         _buildQuantityRow(
           context: context,
-          valueLabel: widget.product.unit.name,
+          valueLabel: widget.product.unit!.name,
           isCustomPrice: true,
           isReadOnly: !widget.product.customPrice,
           icon: SvgPicture.asset(
@@ -414,8 +414,8 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
               Text(
                 valueLabel,
                 style: const TextStyle(
-                      fontWeight: FontWeight.w300,
-                    ),
+                  fontWeight: FontWeight.w300,
+                ),
               ),
               SizedBox(width: BaseSize.w12),
             ],
@@ -474,10 +474,12 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          ...widget.product.unit.name.toLowerCase().contains("kg")
+          ...widget.product.unit!.name.toLowerCase().contains("kg")
               ? decimalKilosDesc
               : [],
-          ...widget.product.unit.name.toLowerCase() == "gram" ? decimalKilosAsc : [],
+          ...widget.product.unit!.name.toLowerCase() == "gram"
+              ? decimalKilosAsc
+              : [],
           ...widget.product.customPrice ? multiplePrices : [],
         ],
       ),
@@ -502,8 +504,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
         child: InkWell(
           onTap: () {
             if (isPrice) {
-              tecPrice.text =
-                  text.formatCurrencyToNumber().toInt().toString();
+              tecPrice.text = text.formatCurrencyToNumber().toInt().toString();
               _onChangeValue(isFromPrice: isPrice);
               return;
             }

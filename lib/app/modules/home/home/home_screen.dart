@@ -4,6 +4,8 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mapalus/app/modules/home/widgets/widgets.dart';
 import 'package:mapalus/shared/shared.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
+import 'package:mapalus_flutter_commons/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

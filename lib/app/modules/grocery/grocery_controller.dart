@@ -1,12 +1,13 @@
-
 // ignore_for_file: invalid_use_of_protected_member
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/app/widgets/dialog_announcement.dart';
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus/shared/routes.dart';
-import 'dart:developer' as dev;
+import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/models/models.dart';
+import 'package:mapalus_flutter_commons/repos/repos.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class GroceryController extends GetxController {
   UserRepo userRepo = Get.find<UserRepo>();
@@ -253,33 +254,33 @@ class GroceryController extends GetxController {
   // }
 
   _initNotificationHandler() async {
-    const androidChannel = AndroidNotificationChannel(
-      'order_channel', // id
-      'order channel',
-      description: 'used to handle order notification exclusively',
-      importance: Importance.high,
-      enableVibration: true,
-      enableLights: true,
-      playSound: true,
-      showBadge: true,
-    );
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
+    // const androidChannel = AndroidNotificationChannel(
+    //   'order_channel', // id
+    //   'order channel',
+    //   description: 'used to handle order notification exclusively',
+    //   importance: Importance.high,
+    //   enableVibration: true,
+    //   enableLights: true,
+    //   playSound: true,
+    //   showBadge: true,
+    // );
+    // final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    //     FlutterLocalNotificationsPlugin();
+    //
+    // const AndroidInitializationSettings initializationSettingsAndroid =
+    //     AndroidInitializationSettings('@mipmap/ic_launcher');
+    //
+    // const InitializationSettings initializationSettings =
+    //     InitializationSettings(
+    //   android: initializationSettingsAndroid,
+    // );
 
-    const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
-
-    const InitializationSettings initializationSettings =
-        InitializationSettings(
-      android: initializationSettingsAndroid,
-    );
-
-    await flutterLocalNotificationsPlugin.initialize(
-      initializationSettings,
-      onDidReceiveNotificationResponse: (NotificationResponse response) async {
-        dev.log("notification payload ${response.payload}");
-      },
-    );
+    // await flutterLocalNotificationsPlugin.initialize(
+    //   initializationSettings,
+    //   onDidReceiveNotificationResponse: (NotificationResponse response) async {
+    //     dev.log("notification payload ${response.payload}");
+    //   },
+    // );
 
     // await flutterLocalNotificationsPlugin
     //     .resolvePlatformSpecificImplementation<
@@ -295,13 +296,13 @@ class GroceryController extends GetxController {
     //   );
     // }
 
-    FirebaseMessaging.onMessage.listen((event) {
-      _handleMessage(
-        message: event,
-        flutterLocalNotificationsPlugin: flutterLocalNotificationsPlugin,
-        androidChannel: androidChannel,
-      );
-    });
+    // FirebaseMessaging.onMessage.listen((event) {
+    //   _handleMessage(
+    //     message: event,
+    //     flutterLocalNotificationsPlugin: flutterLocalNotificationsPlugin,
+    //     androidChannel: androidChannel,
+    //   );
+    // });
     // FirebaseMessaging.onMessageOpenedApp.listen((event) {
     //   _handleMessage(
     //     message: event,
@@ -311,43 +312,43 @@ class GroceryController extends GetxController {
     // });
   }
 
-  _handleMessage({
-    required RemoteMessage message,
-    required FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
-    AndroidNotificationChannel? androidChannel,
-  }) {
-    RemoteNotification? notification = message.notification;
-
-    if (notification != null) {
-      AndroidNotification? android = notification.android;
-      if (android != null) {
-        AndroidNotificationDetails androidNotificationDetails =
-            AndroidNotificationDetails(
-          androidChannel!.id,
-          androidChannel.name,
-          channelDescription: androidChannel.description,
-          importance: Importance.max,
-          priority: Priority.high,
-          ticker: 'ticker',
-          enableVibration: true,
-          enableLights: true,
-        );
-
-        NotificationDetails notificationDetails =
-            NotificationDetails(android: androidNotificationDetails);
-
-        //show
-
-        flutterLocalNotificationsPlugin.show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          notificationDetails,
-        );
-        return;
-      }
-    }
-  }
+  // _handleMessage({
+  //   required RemoteMessage message,
+  //   required FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
+  //   AndroidNotificationChannel? androidChannel,
+  // }) {
+  //   RemoteNotification? notification = message.notification;
+  //
+  //   if (notification != null) {
+  //     AndroidNotification? android = notification.android;
+  //     if (android != null) {
+  //       AndroidNotificationDetails androidNotificationDetails =
+  //           AndroidNotificationDetails(
+  //         androidChannel!.id,
+  //         androidChannel.name,
+  //         channelDescription: androidChannel.description,
+  //         importance: Importance.max,
+  //         priority: Priority.high,
+  //         ticker: 'ticker',
+  //         enableVibration: true,
+  //         enableLights: true,
+  //       );
+  //
+  //       NotificationDetails notificationDetails =
+  //           NotificationDetails(android: androidNotificationDetails);
+  //
+  //       //show
+  //
+  //       flutterLocalNotificationsPlugin.show(
+  //         notification.hashCode,
+  //         notification.title,
+  //         notification.body,
+  //         notificationDetails,
+  //       );
+  //       return;
+  //     }
+  //   }
+  // }
 
   void onTapSearchText() {
     scrollControllerMain.animateTo(

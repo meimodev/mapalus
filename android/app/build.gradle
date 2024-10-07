@@ -33,9 +33,10 @@ if (keystorePropertiesFile.exists()) {
 
 android {
 
-
+    namespace 'com.meimodev.mapalus'
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -80,6 +81,8 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

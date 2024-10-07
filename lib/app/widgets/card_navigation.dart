@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class CardNavigation extends StatelessWidget {
   const CardNavigation({
@@ -20,7 +20,6 @@ class CardNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Material(
       color: isInverted ? BaseColor.accent : BaseColor.white,
       elevation: isInverted ? 0 : 6,

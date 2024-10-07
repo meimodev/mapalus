@@ -21,7 +21,6 @@ class FoodScreenAppBar extends StatelessWidget {
       backgroundColor: BaseColor.white,
       elevation: 5,
       clipBehavior: Clip.hardEdge,
-
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.vertical(
           bottom: Radius.circular(BaseSize.roundnessBold),
@@ -55,7 +54,7 @@ class FoodScreenAppBar extends StatelessWidget {
                   ButtonMapalus(
                     count: 0,
                     onPressed: () {
-                      print("open settings");
+                      Get.toNamed(Routes.accountSetting);
                     },
                   ),
                 ],

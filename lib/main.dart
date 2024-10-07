@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/services/services.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 import 'firebase_options.dart';
 

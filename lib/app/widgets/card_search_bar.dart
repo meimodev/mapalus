@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' hide Badge;
 import 'package:ionicons/ionicons.dart';
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class CardSearchBar extends StatelessWidget {
   const CardSearchBar({
@@ -35,7 +35,7 @@ class CardSearchBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-         const Icon(
+          const Icon(
             Ionicons.search,
             color: BaseColor.secondaryText,
           ),

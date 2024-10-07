@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:mapalus_flutter_commons/shared/shared.dart';
+import 'package:mapalus_flutter_commons/widgets/widgets.dart';
 
 class CardCategory extends StatelessWidget {
   const CardCategory({
@@ -7,7 +9,8 @@ class CardCategory extends StatelessWidget {
     this.isSelected = false,
     required this.name,
     required this.onPressed,
-    required this.imageUrl,  this.asset,
+    required this.imageUrl,
+    this.asset,
   });
 
   final bool isSelected;
@@ -36,7 +39,9 @@ class CardCategory extends StatelessWidget {
                   width: 45.w,
                   height: 45.w,
                   decoration: BoxDecoration(
-                    color: isSelected ? BaseColor.accent : BaseColor.cardBackground1,
+                    color: isSelected
+                        ? BaseColor.accent
+                        : BaseColor.cardBackground1,
                     borderRadius: BorderRadius.all(
                       Radius.circular(12.sp),
                     ),
@@ -55,9 +60,9 @@ class CardCategory extends StatelessWidget {
                   softWrap: true,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                        fontSize: 12.sp,
-                        color: isSelected ? BaseColor.primaryText : Colors.grey,
-                      ),
+                    fontSize: 12.sp,
+                    color: isSelected ? BaseColor.primaryText : Colors.grey,
+                  ),
                 ),
               ),
             ],
