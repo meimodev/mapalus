@@ -1,7 +1,7 @@
 // ignore_for_file: use_super_parameters
 
 import 'package:flutter/material.dart';
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class GoogleMapWrapper extends StatefulWidget {
   const GoogleMapWrapper({
@@ -45,6 +45,9 @@ class _GoogleMapWrapperState extends State<GoogleMapWrapper> {
       zoomGesturesEnabled: true,
       myLocationEnabled: true,
       myLocationButtonEnabled: true,
+      compassEnabled: false,
+      buildingsEnabled: false,
+      rotateGesturesEnabled: false,
       onCameraIdle: () {
         widget.onCameraIdle(pickedPosition);
         isCameraIdle = true;
@@ -58,9 +61,6 @@ class _GoogleMapWrapperState extends State<GoogleMapWrapper> {
           widget.onCameraIdle(null);
         }
       },
-      compassEnabled: false,
-      buildingsEnabled: false,
-      rotateGesturesEnabled: false,
     );
   }
 }

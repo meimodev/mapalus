@@ -3,6 +3,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mapalus/app/widgets/widgets.dart';
 import 'package:mapalus_flutter_commons/models/models.dart';
 import 'package:mapalus_flutter_commons/shared/shared.dart';
+import 'package:mapalus_flutter_commons/widgets/custom_image.dart';
 
 class CardCartItem extends StatefulWidget {
   const CardCartItem({
@@ -58,8 +59,16 @@ class _CardCartItemState extends State<CardCartItem> {
         child: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
-            ImageWrapperWidget(
-              imageUrl: widget.productOrder.product.image,
+            Container(
+              width: BaseSize.customWidth(76),
+              height: BaseSize.customWidth(76),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(BaseSize.radiusMd),
+              ),
+              clipBehavior: Clip.hardEdge,
+              child: CustomImage(
+                imageUrl: widget.productOrder.product.image,
+              ),
             ),
             Gap.w12,
             Expanded(

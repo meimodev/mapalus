@@ -3,6 +3,7 @@ import 'package:mapalus/app/modules/food/widgets/widgets.dart';
 import 'package:mapalus/app/widgets/widgets.dart';
 import 'package:mapalus_flutter_commons/models/models.dart';
 import 'package:mapalus_flutter_commons/shared/shared.dart';
+import 'package:mapalus_flutter_commons/widgets/custom_image.dart';
 
 class CardProduct extends StatelessWidget {
   const CardProduct({
@@ -51,6 +52,7 @@ class CardProduct extends StatelessWidget {
                   height: BaseSize.customWidth(120),
                   child: Stack(
                     children: [
+                      CustomImage(imageUrl: product.image),
                       Positioned(
                         bottom: BaseSize.h8,
                         left: BaseSize.w8,
