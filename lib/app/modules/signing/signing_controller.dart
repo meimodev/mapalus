@@ -1,232 +1,134 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:mapalus/app/modules/modules.dart';
-import 'package:mapalus_flutter_commons/models/models.dart';
 import 'package:mapalus_flutter_commons/repos/repos.dart';
 import 'package:mapalus_flutter_commons/shared/shared.dart';
 
-class SigningController extends GetxController {
-  GroceryController homeController = Get.find();
-  UserRepo userRepo = Get.find();
+enum SigningState {
+  verifyNumber,
+  otp,
+  unregistered,
+}
 
-  TextEditingController tecSigning = TextEditingController();
-  Rx<String> errorText = "".obs;
-  String? message;
+class SigningController extends GetxController {
+  final appRepo = Get.find<AppRepo>();
+  final userRepo = Get.find<UserRepo>();
+  final partnerRepo = Get.find<PartnerRepo>();
+
+  String errorText = "";
 
   String phone = "";
-  String name = '';
 
-  Rx<CardSigningState> signingState = CardSigningState.oneTimePassword.obs;
-  RxBool isLoading = false.obs;
+  RxBool loading = true.obs;
 
-  Function(UserApp? signedUser)? onClosingSigning;
+  SigningState signingState = SigningState.verifyNumber;
+
+  final tecPin = TextEditingController();
+  final tecName = TextEditingController();
 
   @override
-  void onInit() {
-    var args = Get.arguments;
-    message = args.toString();
-
-    userRepo.onUnregisteredUser = (_) {
-      isLoading.value = true;
-      tecSigning.clear();
-      errorText.value = "";
-      signingState.value = CardSigningState.notRegistered;
-
-      isLoading.value = false;
-    };
-    super.onInit();
+  void dispose() {
+    tecPin.dispose();
+    tecName.dispose();
+    super.dispose();
   }
 
   @override
-  void onReady() {
-    userRepo.onSuccessSigning = (_) {
-      Get.rawSnackbar(title: "Berhasil Masuk");
-      Get.back();
-    };
+  Future<void> onReady() async {
     super.onReady();
+
+    await _loading(true);
+
+    initSigningCallback();
+
+    await _loading(false);
   }
 
-  @override
-  void onClose() {
-    // if (message!.isEmpty) {
-    //   return;
-    // }
-    if (userRepo.signedUser != null) {
-      homeController.onSignedInUser(userRepo.signedUser!);
-    }
+  initSigningCallback() {
+    userRepo.onSuccessSigning = (user) async {
+      Get.back(result: true);
+    };
 
-    tecSigning.dispose();
-    Get.back();
+    userRepo.onUnregisteredUser = (user) async {
+      await _loading(true);
+      signingState = SigningState.unregistered;
+      await _loading(false);
+    };
   }
 
-  onPressedRequestOTP() async {
-    String input = tecSigning.text.removeAllWhitespace;
-    if (input.isEmpty) {
-      errorText.value = "Tidak bisa kosong";
+  Future<void> onPressedSignIn() async {
+    await _loading(true);
+    Validator.resetErrorCounter();
+
+    errorText = Validator(
+      value: phone,
+      name: "Nomor Handphone",
+    ).notEmptyOrZero().mustStartsWith("0").validate();
+
+    if (Validator.hasError()) {
+      await _loading(false);
       return;
     }
 
-    if (input.startsWith("+62")) {
-      input = input.replaceFirst("+62", "0");
-      tecSigning.text = input;
-    }
-
-    if (!input.startsWith("0")) {
-      errorText.value = "Nomor handphone harus dimulai dengan 0";
-      return;
-    }
-
-    if (input.length < 11) {
-      errorText.value = "Nomor handphone tidak kurang dari 11 angka";
-      return;
-    }
-
-    if (input.length > 14) {
-      errorText.value = "Nomor handphone tidak lebih dari 14 angka";
-      return;
-    }
-
-    if (!input.isNumericOnly) {
-      errorText.value = "Nomor handphone tidak valid";
-      return;
-    }
-
-    isLoading.value = true;
-    phone = input;
-    userRepo.requestOTP(
+    await userRepo.requestOTP(
       phone,
-      (res) async {
-        // print('Result Message : ${res.message}');
-        switch (res.message) {
-          case "PROCEED":
-            tecSigning.clear();
-            errorText.value = "";
-            isLoading.value = true;
-            break;
-          case 'SENT':
-            isLoading.value = true;
-            tecSigning.clear();
-            errorText.value = "";
-            signingState.value = CardSigningState.confirmCode;
-            if (isLoading.isFalse) {
-              isLoading.value = true;
-            }
-            // print("[WAITING] 8 SECONDS FOR CODE AUTO RETRIEVAL");
-            await Future.delayed(const Duration(seconds: 8));
-            isLoading.value = false;
-            if (userRepo.signedUser != null) {
-              Get.back();
-            }
-            break;
-          case 'VERIFICATION_FAILED':
-            errorText.value =
-                "Koneksi ke internet bermasalah, cobalah sesaat lagi";
-            isLoading.value = false;
-            break;
+      (result) async {
+        if (result.error) {
+          errorText = result.message;
+          tecPin.text = "";
+          await _loading(false);
+          return;
+        }
+        if (result.message.contains("MANUAL_VERIFICATION")) {
+          signingState = SigningState.otp;
+          errorText = "";
+          await _loading(false);
         }
       },
     );
   }
 
-  onPressedConfirmCode() async {
-    String input = tecSigning.text.removeAllWhitespace;
-    if (input.isEmpty) {
-      errorText.value = "Tidak bisa kosong";
-      return;
-    }
-
-    if (input.length > 6 || input.length < 6) {
-      errorText.value = "Kode terdiri dari 6 angka";
-      return;
-    }
-
-    if (!input.isNum) {
-      errorText.value = "Kode tidak valid";
-      return;
-    }
-
-    isLoading.value = true;
-
-    userRepo.checkOTPCode(input, (res) async {
-      switch (res.message) {
-        case 'INVALID_CODE':
-          isLoading.value = false;
-
-          errorText.value = "Kode yang dimasukkan tidak tepat";
-
-          return;
-        case 'INVALID_ID':
-          break;
-        case 'EXPIRED':
-          isLoading.value = false;
-          tecSigning.clear();
-          errorText.value =
-              "Kode kadaluarsa, silahkan masukkan nomor HP kembali";
-          signingState.value = CardSigningState.oneTimePassword;
-          return;
-        case 'OK':
-          if (await userRepo.checkIfRegistered(phone)) {
-            Get.back();
-            return;
-          } else {
-            isLoading.value = false;
-            tecSigning.clear();
-            errorText.value = "";
-            signingState.value = CardSigningState.notRegistered;
-          }
-          return;
-      }
-    });
+  void onChangedPhone(String value) {
+    phone = value;
   }
 
-  onPressedCreateUser() async {
-    String input = tecSigning.text;
-    if (input.isEmpty) {
-      errorText.value = "Tidak bisa kosong";
-      return;
-    }
-
-    if (input.startsWith(" ")) {
-      errorText.value = "Harus dimulai dengan huruf";
-      return;
-    }
-
-    if (input.length < 3) {
-      errorText.value = "Nama tidak kurang dari 3 huruf";
-      return;
-    }
-
-    if (input.length > 30) {
-      errorText.value = "Nama tidak lebih dari 30 huruf";
-      return;
-    }
-
-    String mod = input.replaceAll(" ", "xxxxx");
-    if (!mod.isAlphabetOnly) {
-      errorText.value = "Nama hanya terdiri dari A - z";
-      return;
-    }
-
-    await Future.delayed(400.milliseconds);
-    isLoading.value = true;
-    name = input;
-    await userRepo.registerUser(phone, name);
-
-    // tecSigning.clear();
-    await Future.delayed(800.milliseconds);
-
-    errorText.value = "";
-    isLoading.value = false;
-    Get.back();
+  void onCompletedPin(String otp) async {
+    await _loading(true);
+    await userRepo.verifyOTP(
+      otp,
+      (result) async {
+        if (result.error) {
+          errorText = result.message;
+          tecPin.text = "";
+          await _loading(false);
+          return;
+        }
+      },
+    );
   }
 
-  Future<bool> onPressedBack() {
-    if (signingState.value == CardSigningState.confirmCode) {
-      signingState.value = CardSigningState.oneTimePassword;
-      tecSigning.clear();
-      errorText.value = "";
-      return Future.value(false);
+  void onPressedRegister() async {
+    await _loading(true);
+
+    Validator.resetErrorCounter();
+
+    final String name = tecName.text.trim();
+    errorText = Validator(
+      value: name,
+      name: "Nama",
+    ).notEmptyOrZero().notLessThan(3).validate();
+
+    if (Validator.hasError()) {
+      await _loading(false);
+      return;
     }
-    return Future.value(true);
+
+    await userRepo.registerUser(name: name.capitalizeByWord);
+    await _loading(false);
+  }
+
+  Future<void> _loading(bool value) async {
+    if (loading.value == value) return;
+    await Future.delayed(const Duration(milliseconds: 300));
+    loading.value = value;
   }
 }

@@ -33,17 +33,22 @@ class OrderSummaryController extends GetxController {
 
   double? distance;
 
+  UserApp? user;
+
   @override
   void onInit() async {
     super.onInit();
 
     selectionLoading.value = true;
     products = await orderRepo.readLocalProductOrders();
-    partner = await partnerRepo.readPartner(products.first.product.partnerId);
+    partner = await partnerRepo.getPartners(
+      GetPartnerRequest(
+        partnerId: products.first.product.partnerId,
+      ),
+    );
     modifiers = await appRepo.getDeliveryModifiers();
 
-    UserApp? user = userRepo.signedUser;
-    print("user $user");
+    user = await userRepo.getSignedUser();
     selectionLoading.value = false;
   }
 
@@ -151,7 +156,7 @@ class OrderSummaryController extends GetxController {
       status: OrderStatus.placed,
       lastUpdate: DateTime.now(),
       createdAt: DateTime.now(),
-      orderBy: userRepo.signedUser!,
+      orderBy: user!,
       partnerId: products.first.product.partnerId,
       payment: Payment(
         id: uuid.v4(),

@@ -19,6 +19,7 @@ class CardMenu extends StatelessWidget {
       borderRadius: BorderRadius.circular(BaseSize.radiusMd),
       clipBehavior: Clip.hardEdge,
       elevation: 3,
+      color: BaseColor.white,
       child: InkWell(
         onTap: onPressed,
         child: Container(

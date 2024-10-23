@@ -126,7 +126,7 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
         Gap.h12,
         DeleteAccountButton(
           onPressedDelete: controller.onPressedDeleteAccount,
-          userPhone: controller.userRepo.signedUser!.phone,
+          userPhone: controller.user!.phone,
         ),
       ],
     );

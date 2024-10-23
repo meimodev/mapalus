@@ -38,7 +38,7 @@ class CardDeliveryAddress extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      "Alamat Pengiriman",
+                      "Alamat Pengantaran",
                       style: BaseTypography.titleLarge,
                     ),
                     Text(
@@ -51,7 +51,6 @@ class CardDeliveryAddress extends StatelessWidget {
                   ],
                 ),
               ),
-
             ],
           ),
         ),

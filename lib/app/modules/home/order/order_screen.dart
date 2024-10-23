@@ -26,7 +26,7 @@ class _OrderScreenState extends State<OrderScreen> {
   }
 
   void fetchOrders() async {
-    final signedUser = userRepo.signedUser;
+    final signedUser =(await userRepo.getSignedUser())!;
     orders = await orderRepo.readOrders(
       GetOrdersRequest(userApp: signedUser),
     );

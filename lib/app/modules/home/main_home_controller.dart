@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:mapalus_flutter_commons/models/models.dart';
+import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus_flutter_commons/repos/repos.dart';
 
 class MainHomeController extends GetxController {
-  UserRepo userRepo = Get.find<UserRepo>();
-  OrderRepo orderRepo = Get.find<OrderRepo>();
-  ProductRepo productRepo = Get.find<ProductRepo>();
-  AppRepo appRepo = Get.find<AppRepo>();
+  final appRepo = Get.find<AppRepo>();
+  // final userRepo = Get.find<UserRepo>();
 
   DateTime? currentBackPressTime;
 
@@ -20,26 +18,16 @@ class MainHomeController extends GetxController {
   void onInit() async {
     super.onInit();
 
-    //TODO dummy for signing
-    await userRepo.signing(
-      UserApp(
-        uid: "From Firebase",
-        id: "0011IBzDCkBsWlrlR8cz",
-        phone: "081212341234",
-        name: "Jhon Manembo",
-        lastActiveTimeStamp: DateTime.now(),
-        partnerId: "ssTneIKTUTtnb8L4dGWA",
-        fcmToken: "1234",
-        deviceInfo: "TEST DEVICE",
-      ),
-    );
+    final latestVersion = await appRepo.checkIfLatestVersion(false);
+    if (!latestVersion) {
+      Get.offNamed(Routes.updateApp);
+      return;
+    }
   }
 
   void navigateTo(int index) {
     pageController.jumpToPage(
       index,
-      // duration:const Duration(milliseconds: 400),
-      // curve: Curves.easeIn,
     );
   }
 }

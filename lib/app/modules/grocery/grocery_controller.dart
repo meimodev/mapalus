@@ -114,7 +114,7 @@ class GroceryController extends GetxController {
   }
 
   void onPressedCart() async {
-    UserApp? user = await userRepo.readSignedInUser();
+    UserApp? user = await userRepo.getSignedUser();
     if (user == null) {
       Get.toNamed(
         Routes.signing,

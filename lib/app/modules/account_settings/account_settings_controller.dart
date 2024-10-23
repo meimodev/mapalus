@@ -18,7 +18,7 @@ class AccountSettingsController extends GetxController {
 
     loading.value = true;
     currentVersion = await appRepo.getCurrentVersion();
-    user = userRepo.signedUser;
+    user = await userRepo.getSignedUser();
     loading.value = false;
   }
 

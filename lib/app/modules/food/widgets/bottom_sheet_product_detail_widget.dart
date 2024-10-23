@@ -64,7 +64,11 @@ class _BottomSheetProductDetailWidgetState
       loading = true;
     });
     product = await productRepo.readProduct(widget.productId);
-    partner = await partnerRepo.readPartner(product!.partnerId);
+    partner = await partnerRepo.getPartners(
+      GetPartnerRequest(
+        partnerId: product!.partnerId,
+      ),
+    );
     setState(() {
       loading = false;
     });

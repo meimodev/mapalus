@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mapalus/app/modules/home/widgets/widgets.dart';
+import 'package:mapalus/app/modules/modules.dart';
 import 'package:mapalus/shared/shared.dart';
-import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus_flutter_commons/shared/shared.dart';
 import 'package:mapalus_flutter_commons/widgets/widgets.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends GetView<HomeController> {
   const HomeScreen({super.key});
 
   @override
@@ -24,9 +24,26 @@ class HomeScreen extends StatelessWidget {
               style: BaseTypography.displayLarge.bold.toPrimary,
             ),
             Gap.h24,
-            CardDeliveryAddress(
-              address: 'Jln Gunung Agung, Rinegetan. Jakarta pusat',
-              onPressed: () => Get.toNamed(Routes.location),
+            Obx(
+              () => LoadingWrapper(
+                loading: controller.loading.value,
+                child: CardUserInfoWidget(
+                  user: controller.user,
+                  onPressed: () async {
+                    if (controller.user == null) {
+                      await Get.toNamed(Routes.signing);
+                      controller.onSigningSuccess();
+                      return;
+                    }
+
+                    showSimpleConfirmationDialogWidget(
+                      context: context,
+                      action: "keluar dari akun ini",
+                      onPressedPositive: controller.onPressedSignOut,
+                    );
+                  },
+                ),
+              ),
             ),
             Gap.h24,
             Row(

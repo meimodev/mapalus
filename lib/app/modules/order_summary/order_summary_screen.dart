@@ -48,14 +48,15 @@ class OrderSummaryScreen extends GetView<OrderSummaryController> {
                               //pass the currently selected location if that is not available fallback to partner.location
 
                               Location? args;
-                              if (controller.userRepo.signedUser?.partnerId !=
-                                  null) {
-                                final String partnerId =
-                                    controller.userRepo.signedUser!.partnerId;
-                                final Partner partner = await controller
-                                    .partnerRepo
-                                    .readPartner(partnerId);
-                                args = partner.location;
+                              if (controller.user?.partnerId != null) {
+                                final partner =
+                                    await controller.partnerRepo.getPartners(
+                                  GetPartnerRequest(
+                                    partnerId: controller
+                                        .products.first.product.partnerId,
+                                  ),
+                                );
+                                args = partner!.location;
                               }
 
                               if (controller.deliveryLocation != null) {
