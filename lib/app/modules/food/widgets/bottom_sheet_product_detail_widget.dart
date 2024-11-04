@@ -49,9 +49,9 @@ class _BottomSheetProductDetailWidgetState
   Partner? partner;
   bool loading = true;
 
-  final ProductRepo productRepo = Get.find<ProductRepo>();
-  final PartnerRepo partnerRepo = Get.find<PartnerRepo>();
-  final OrderRepo orderRepo = Get.find<OrderRepo>();
+  final productRepo = Get.find<ProductRepo>();
+  final partnerRepo = Get.find<PartnerRepo>();
+  final orderRepo = Get.find<OrderRepo>();
 
   @override
   void initState() {
@@ -86,7 +86,11 @@ class _BottomSheetProductDetailWidgetState
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text("produk sudah ada, menambahkan jumlah"),
+            content: Text(
+              "Produk sudah ada, menambahkan jumlah",
+              style: BaseTypography.bodySmall.toPrimary,
+              textAlign: TextAlign.center,
+            ),
             behavior: SnackBarBehavior.floating,
             margin: EdgeInsets.symmetric(
               horizontal: BaseSize.w12,
@@ -99,7 +103,10 @@ class _BottomSheetProductDetailWidgetState
       orderRepo.updateLocalProductOrders(productOrders
           .map(
             (e) => e.product.id == existProduct.id
-                ? e.copyWith(quantity: e.quantity + value.quantity)
+                ? e.copyWith(
+                    quantity: e.quantity + value.quantity,
+                    totalPrice: (e.quantity + value.quantity) * e.product.price,
+                  )
                 : e,
           )
           .toList());
@@ -118,7 +125,7 @@ class _BottomSheetProductDetailWidgetState
       ),
       child: LoadingWrapper(
         loading: loading,
-        size: BaseSize.w36,
+        size: BaseSize.w48,
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -127,10 +134,16 @@ class _BottomSheetProductDetailWidgetState
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: BaseColor.secondaryText,
+                  color: BaseColor.accent,
                   borderRadius: BorderRadius.circular(BaseSize.radiusSm),
                 ),
-                height: BaseSize.customWidth(200),
+                height: BaseSize.customWidth(280),
+                child: product == null
+                    ? const SizedBox()
+                    : CustomImage(
+                        imageUrl: product!.image,
+                        fit: BoxFit.cover,
+                      ),
               ),
               Gap.h24,
               Column(

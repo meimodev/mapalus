@@ -1,20 +1,21 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:mapalus/app/modules/home/home/home_controller.dart';
 import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus_flutter_commons/models/models.dart';
 import 'package:mapalus_flutter_commons/repos/repos.dart';
 import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 class CartController extends GetxController {
-  OrderRepo orderRepo = Get.find<OrderRepo>();
+  final orderRepo = Get.find<OrderRepo>();
+  final userRepo = Get.find<UserRepo>();
 
   RxList<ProductOrder> productOrders = <ProductOrder>[].obs;
   RxBool isCardCartVisible = false.obs;
   var count = "".obs;
   var weight = "".obs;
   var price = "".obs;
-
   var note = "".obs;
 
   StreamSubscription<List<ProductOrder>?>? streamLocalProductOrders;
@@ -54,7 +55,6 @@ class CartController extends GetxController {
 
   @override
   void dispose() async {
-    // debounce.dispose();
     if (streamLocalProductOrders != null) {
       await streamLocalProductOrders!.cancel();
       streamLocalProductOrders = null;
@@ -62,7 +62,18 @@ class CartController extends GetxController {
     super.dispose();
   }
 
-  void onPressedSetDelivery() {
+  void onPressedSetDelivery() async {
+    final user = await userRepo.getSignedUser();
+    if (user == null) {
+      final result = await Get.toNamed(Routes.signing);
+      if (result == null || result == false) {
+        return;
+      }
+
+      final homeController = Get.find<HomeController>();
+      homeController.notifyUserHasChanged();
+    }
+
     Get.toNamed(Routes.orderSummary);
   }
 
@@ -94,6 +105,7 @@ class CartController extends GetxController {
     double weight = 0;
     double price = 0;
 
+    // maybe take from the local store instead?
     for (var element in productOrders) {
       count++;
       weight += element.quantity * element.product.weight;

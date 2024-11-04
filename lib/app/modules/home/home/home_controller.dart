@@ -14,24 +14,25 @@ class HomeController extends GetxController {
   void onInit() async {
     super.onInit();
 
+    userRepo.userAppStream.listen((event) async {
+      print("USER CONTROLLER userAppStream triggered $event");
+      _loading(true);
+      user = event;
+      await Future.delayed(const Duration(milliseconds: 400));
+      _loading(false);
+    });
+    _loading(false);
+  }
+
+  void notifyUserHasChanged() async {
     _loading(true);
     user = await userRepo.getSignedUser();
+    await Future.delayed(const Duration(milliseconds: 400));
     _loading(false);
   }
 
   void onPressedSignOut() async {
-    _loading(true);
-    user = null;
     await userRepo.signOut();
-    await Future.delayed(const Duration(milliseconds: 400));
-    _loading(false);
-  }
-
-  void onSigningSuccess() async {
-    _loading(true);
-    user = await userRepo.getSignedUser();
-    await Future.delayed(const Duration(milliseconds: 400));
-    _loading(false);
   }
 
   Future<void> _loading(bool value) async {

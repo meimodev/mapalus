@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mapalus_flutter_commons/models/models.dart';
 import 'package:mapalus_flutter_commons/shared/shared.dart';
+import 'package:mapalus_flutter_commons/widgets/custom_image.dart';
 
 class CardPartner extends StatelessWidget {
   const CardPartner({
@@ -17,20 +18,24 @@ class CardPartner extends StatelessWidget {
     return Material(
       clipBehavior: Clip.hardEdge,
       color: BaseColor.white,
-      borderRadius: BorderRadius.circular(BaseSize.radiusSm),
+      borderRadius: BorderRadius.circular(BaseSize.radiusMd),
       child: InkWell(
         onTap: () => onPressed(partner),
         child: SizedBox(
-          width: BaseSize.customWidth(120),
+          width: BaseSize.customWidth(145),
           child: Column(
             children: [
               Gap.h12,
               Container(
+                clipBehavior: Clip.hardEdge,
                 decoration: const BoxDecoration(
                   color: BaseColor.secondaryText,
                   shape: BoxShape.circle,
                 ),
                 height: BaseSize.customHeight(120),
+                child: CustomImage(
+                  imageUrl: partner.image,
+                ),
                 // width: BaseSize.customWidth(160),
               ),
               Padding(

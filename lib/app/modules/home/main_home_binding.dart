@@ -14,7 +14,7 @@ class MainHomeBinding implements Bindings {
         localStorageService: Get.find<LocalStorageService>(),
       ),
     );
-    Get.put<OrderRepo>(OrderRepoImpl());
+    Get.put<OrderRepo>(OrderRepo());
     Get.put<ProductRepo>(ProductRepo());
     Get.put<PartnerRepo>(PartnerRepo());
     Get.put<MainHomeController>(MainHomeController());

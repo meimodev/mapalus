@@ -18,6 +18,7 @@ class CardOrderSummaryItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       clipBehavior: Clip.hardEdge,
+      color: BaseColor.white,
       borderRadius: BorderRadius.circular(BaseSize.radiusSm),
       child: InkWell(
         onTap: onPressed,

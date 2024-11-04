@@ -15,6 +15,7 @@ class ButtonMapalus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Badge(
+      isLabelVisible: count != 0,
       // elevation: 0,
       label: Center(
         child: Text(

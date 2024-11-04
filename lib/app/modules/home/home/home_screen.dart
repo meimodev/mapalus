@@ -32,7 +32,6 @@ class HomeScreen extends GetView<HomeController> {
                   onPressed: () async {
                     if (controller.user == null) {
                       await Get.toNamed(Routes.signing);
-                      controller.onSigningSuccess();
                       return;
                     }
 

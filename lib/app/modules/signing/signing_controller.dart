@@ -18,7 +18,7 @@ class SigningController extends GetxController {
 
   String phone = "";
 
-  RxBool loading = true.obs;
+  RxBool loading = false.obs;
 
   SigningState signingState = SigningState.verifyNumber;
 
@@ -36,11 +36,11 @@ class SigningController extends GetxController {
   Future<void> onReady() async {
     super.onReady();
 
-    await _loading(true);
+    // await _loading(true);
 
     initSigningCallback();
 
-    await _loading(false);
+    // await _loading(false);
   }
 
   initSigningCallback() {

@@ -29,11 +29,12 @@ class FoodController extends GetxController {
       productOrders.value = initProducts;
     }
 
-    //fetch partners, later only fetch the one nearest to user
+    //TODO fetch partners, later only fetch the one nearest to user
     final partners = await partnerRepo.readPartnersForHome();
     this.partners = partners;
-    //fetch products, later only fetch the one nearest to user
-    final products = await productRepo.readProducts(GetProductRequest());
+
+    //TODO fetch products, later only fetch the one nearest to user
+    final products = await productRepo.readProducts(const GetProductRequest());
     this.products = products;
 
     loading.value = false;

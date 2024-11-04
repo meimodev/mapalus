@@ -17,8 +17,10 @@ class CardCartPeak extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<double> totalPrices =
-        productOrders.map<double>((e) => e.totalPrice).toList()..add(0);
+    final List<double> totalPrices = productOrders
+        .map<double>((e) => e.product.price * e.quantity)
+        .toList()
+      ..add(0);
 
     final double totalPrice =
         totalPrices.reduce((value, element) => value + element);

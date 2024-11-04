@@ -12,7 +12,7 @@ class FoodScreenAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      expandedHeight: BaseSize.customHeight(110),
+      expandedHeight: BaseSize.customHeight(80),
       forceElevated: true,
       toolbarHeight: 0,
       floating: true,
@@ -35,7 +35,7 @@ class FoodScreenAppBar extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Gap.h24,
+              Gap.h12,
               Row(
                 children: [
                   GestureDetector(

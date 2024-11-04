@@ -14,7 +14,7 @@ class CardProduct extends StatelessWidget {
   });
 
   final Product product;
-  final Function(Product product)? onPressed;
+  final void Function(ProductOrder productOrder)? onPressed;
   final double? width;
 
   @override
@@ -25,14 +25,13 @@ class CardProduct extends StatelessWidget {
       borderRadius: BorderRadius.circular(BaseSize.radiusSm),
       child: InkWell(
         onTap: () {
-          if (onPressed != null) {
-            onPressed!(product);
-          }
           showBottomSheetProductDetailWidget(
             context,
             product.id,
             (value) {
-              print(value.toString());
+              if (onPressed != null) {
+                onPressed!(value);
+              }
             },
           );
         },
