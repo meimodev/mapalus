@@ -19,7 +19,6 @@ class FoodController extends GetxController {
     super.onInit();
     final streamLocalProductOrders = orderRepo.exposeLocalProductOrders();
     streamLocalProductOrders.listen((data) {
-      print("FoodController $data");
       if (data != null) {
         productOrders.value = data;
       }

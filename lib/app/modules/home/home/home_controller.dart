@@ -15,7 +15,6 @@ class HomeController extends GetxController {
     super.onInit();
 
     userRepo.userAppStream.listen((event) async {
-      print("USER CONTROLLER userAppStream triggered $event");
       _loading(true);
       user = event;
       await Future.delayed(const Duration(milliseconds: 400));
