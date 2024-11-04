@@ -7,7 +7,7 @@ class FoodController extends GetxController {
   final productRepo = Get.find<ProductRepo>();
   final partnerRepo = Get.find<PartnerRepo>();
 
-  RxList<ProductOrder> productOrders = <ProductOrder>[].obs;
+  final productOrders = <ProductOrder>[].obs;
 
   List<Partner> partners = [];
   List<Product> products = [];
@@ -19,6 +19,7 @@ class FoodController extends GetxController {
     super.onInit();
     final streamLocalProductOrders = orderRepo.exposeLocalProductOrders();
     streamLocalProductOrders.listen((data) {
+      print("FoodController $data");
       if (data != null) {
         productOrders.value = data;
       }

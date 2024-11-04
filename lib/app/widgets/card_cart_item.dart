@@ -24,20 +24,20 @@ class CardCartItem extends StatefulWidget {
 }
 
 class _CardCartItemState extends State<CardCartItem> {
-  double value = 0;
+  double quantity = 0;
 
   @override
   void initState() {
     super.initState();
     setState(() {
-      value = widget.productOrder.quantity;
+      quantity = widget.productOrder.quantity;
     });
   }
 
   void onChangedValue() {
     if (widget.onChangedQuantity != null) {
       widget.onChangedQuantity!(
-        widget.productOrder.copyWith(quantity: 0),
+        widget.productOrder.copyWith(quantity: quantity),
       );
     }
   }
@@ -90,17 +90,17 @@ class _CardCartItemState extends State<CardCartItem> {
                   _BuildAlterQuantityLayout(
                     onPressedAdd: (_) {
                       setState(() {
-                        value++;
+                        quantity++;
                       });
                       onChangedValue();
                     },
                     onPressedSub: (_) {
                       setState(() {
-                        value--;
+                        quantity--;
                       });
                       onChangedValue();
                     },
-                    value: value,
+                    value: quantity,
                   ),
                 ],
               ),
