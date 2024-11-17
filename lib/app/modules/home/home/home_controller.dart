@@ -13,13 +13,18 @@ class HomeController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    _loading(true);
 
     userRepo.userAppStream.listen((event) async {
       _loading(true);
       user = event;
       await Future.delayed(const Duration(milliseconds: 400));
       _loading(false);
+      if (user != null) {
+        await userRepo.updateUserMetaData(user!);
+      }
     });
+    user = await userRepo.getSignedUser();
     _loading(false);
   }
 
@@ -28,6 +33,9 @@ class HomeController extends GetxController {
     user = await userRepo.getSignedUser();
     await Future.delayed(const Duration(milliseconds: 400));
     _loading(false);
+    if (user != null) {
+      await userRepo.updateUserMetaData(user!);
+    }
   }
 
   void onPressedSignOut() async {

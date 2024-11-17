@@ -36,7 +36,7 @@ class MainHomeScreen extends GetView<MainHomeController> {
     return SafeArea(
       child: Scaffold(
         body: PopScope(
-          onPopInvoked: (_) {
+          onPopInvokedWithResult: (_, __) {
             DateTime now = DateTime.now();
             if (controller.currentBackPressTime == null ||
                 now.difference(controller.currentBackPressTime!) >

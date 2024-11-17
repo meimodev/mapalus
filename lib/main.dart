@@ -10,9 +10,7 @@ import 'package:mapalus_flutter_commons/shared/shared.dart';
 
 import 'firebase_options.dart';
 
-Future<void> _handleBackgroundMessage(RemoteMessage message) async {
-  // print("Background message ${message.notification?.title}");
-}
+Future<void> _handleBackgroundMessage(RemoteMessage message) async {}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +33,7 @@ void main() async {
   // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
   await FirebaseMessaging.instance.setAutoInitEnabled(true);
+  await FirebaseMessaging.instance.subscribeToTopic("mapalus");
 }
 
 class MyApp extends StatelessWidget {

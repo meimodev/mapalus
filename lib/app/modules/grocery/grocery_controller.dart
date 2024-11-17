@@ -107,9 +107,9 @@ class GroceryController extends GetxController {
 
   void onPressedLatestOrder() {
     if (isCardOrderVisible.isTrue && latestOrder != null) {
-      Get.toNamed(Routes.orderDetail, arguments: latestOrder, parameters: {
-        'refresh': "true",
-      });
+      // Get.toNamed(Routes.orderDetail, arguments: latestOrder, parameters: {
+      //   'refresh': "true",
+      // });
     }
   }
 
@@ -420,7 +420,7 @@ class GroceryController extends GetxController {
 
   void seeRecentOrder() {
     if (isCardOrderVisible.isTrue && latestOrder != null) {
-      Get.toNamed(Routes.orderDetail, arguments: latestOrder);
+      // Get.toNamed(Routes.orderDetail, arguments: latestOrder);
     }
     orderCleanUp();
   }

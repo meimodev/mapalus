@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mapalus/shared/routes.dart';
 import 'package:mapalus_flutter_commons/models/models.dart';
 import 'package:mapalus_flutter_commons/repos/repos.dart';
 import 'package:mapalus_flutter_commons/shared/shared.dart';
@@ -26,7 +27,12 @@ class _OrderScreenState extends State<OrderScreen> {
   }
 
   void fetchOrders() async {
-    final signedUser =(await userRepo.getSignedUser())!;
+    if (!loading) {
+      setState(() {
+        loading = true;
+      });
+    }
+    final signedUser = (await userRepo.getSignedUser())!;
     orders = await orderRepo.readOrders(
       GetOrdersRequest(userApp: signedUser),
     );
@@ -49,36 +55,41 @@ class _OrderScreenState extends State<OrderScreen> {
             "Orders",
             style: BaseTypography.displayLarge.bold.toPrimary,
           ),
-          Gap.h12,
+          Gap.h24,
           LoadingWrapper(
             loading: loading,
-            child: LoadingWrapper(
-              loading: loading,
-              child: orders.isEmpty
-                  ? Text(
-                      "Tidak Ada Pesanan -_-",
-                      style: BaseTypography.bodyMedium,
-                      textAlign: TextAlign.center,
-                    )
-                  : ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: orders.length,
-                      separatorBuilder: (context, index) => Column(
-                        children: [
-                          Gap.h6,
-                          Container(
-                            color: BaseColor.black.withOpacity(.125),
-                            height: 1,
-                          ),
-                          Gap.h6,
-                        ],
-                      ),
-                      itemBuilder: (context, index) => CardOrder(
-                        order: orders[index],
-                        onPressed: () {},
-                      ),
+            child: orders.isEmpty
+                ? Text(
+                    "Tidak Ada Pesanan -_-",
+                    style: BaseTypography.bodyMedium,
+                    textAlign: TextAlign.center,
+                  )
+                : ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: orders.length,
+                    separatorBuilder: (context, index) => Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Gap.h6,
+                        Container(
+                          color: BaseColor.black.withOpacity(.125),
+                          height: 1,
+                        ),
+                        Gap.h6,
+                      ],
                     ),
-            ),
+                    itemBuilder: (context, index) => CardOrder(
+                      order: orders[index],
+                      onPressed: () async {
+                        await Get.toNamed(
+                          Routes.orderDetail,
+                          arguments: orders[index].toJson(),
+                        );
+                        await Future.delayed(const Duration(seconds: 1));
+                        fetchOrders();
+                      },
+                    ),
+                  ),
           ),
         ],
       ),

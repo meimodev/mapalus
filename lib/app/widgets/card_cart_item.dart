@@ -37,7 +37,10 @@ class _CardCartItemState extends State<CardCartItem> {
   void onChangedValue() {
     if (widget.onChangedQuantity != null) {
       widget.onChangedQuantity!(
-        widget.productOrder.copyWith(quantity: quantity),
+        widget.productOrder.copyWith(
+          quantity: quantity,
+          totalPrice: quantity * widget.productOrder.product.price,
+        ),
       );
     }
   }

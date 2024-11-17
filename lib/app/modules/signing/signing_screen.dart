@@ -27,6 +27,10 @@ class SigningScreen extends GetView<SigningController> {
             ),
             child: Obx(
               () => LoadingWrapper(
+                addedWidget: Text(
+                  "Tunggu sebentar yaa, Loading mungkin agak lama",
+                  style: BaseTypography.bodyMedium,
+                ),
                 loading: controller.loading.value,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

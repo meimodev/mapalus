@@ -36,11 +36,13 @@ class LaundryScreen extends GetView<LaundryController> {
               style: BaseTypography.displaySmall,
             ),
             Gap.h48,
-            ElevatedButton(
+            ButtonWidget(
+              text: "Kembali",
+              backgroundColor: BaseColor.accent,
+              textStyle: BaseTypography.bodyMedium.toPrimary,
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text("Back"),
             )
           ],
         ),

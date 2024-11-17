@@ -42,11 +42,11 @@ class GroceryScreen extends GetView<GroceryController> {
             style: BaseTypography.displaySmall.toCardBackground1.toBold,
           ),
           Gap.h48,
-          ElevatedButton(
+          ButtonWidget(
+            text: "Kembali",
             onPressed: () {
               Navigator.pop(context);
             },
-            child: const Text("Back"),
           )
         ],
       ),

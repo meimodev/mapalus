@@ -6,8 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-
-
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
@@ -47,6 +45,12 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="order_channel" />
+
+<!--        <service-->
+<!--                android:name="com.dexterous.flutterlocalnotifications.ForegroundService"-->
+<!--                android:exported="false"-->
+<!--                android:stopWithTask="false"-->
+<!--                android:foregroundServiceType="<foreground service types>"/>-->
 
 <!--        <service-->
 <!--            android:name=".java.MyFirebaseMessagingService"-->
