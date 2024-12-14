@@ -33,7 +33,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
 
-    namespace 'com.meimodev.mapalus'
+    namespace 'com.meimodev.revamp.mapalus'
 
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -50,7 +50,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.meimodev.mapalus"
+        applicationId "com.meimodev.revamp.mapalus"
         minSdkVersion 23
         compileSdkVersion 34
         targetSdkVersion 34
