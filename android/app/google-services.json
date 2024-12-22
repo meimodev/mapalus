@@ -75,26 +75,18 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:342086903599:android:babf5ecd424c6093fc63da",
+        "mobilesdk_app_id": "1:342086903599:android:1505a51895d15e20fc63da",
         "android_client_info": {
-          "package_name": "com.meimodev.mapalus_partner"
+          "package_name": "com.meimodev.mapaluspos2.mapalus_pos_2"
         }
       },
       "oauth_client": [
         {
-          "client_id": "342086903599-5d7ht8nn9vn6vgve24g9i0uvbnivf0l1.apps.googleusercontent.com",
+          "client_id": "342086903599-6g7f2oijqkhlc6o4k04gs4jf956mnip3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.meimodev.mapalus_partner",
-            "certificate_hash": "dc27d6b5322af991fa998b0bda00f8971e0a4fb3"
-          }
-        },
-        {
-          "client_id": "342086903599-5n7nql6q6lighqqn27koi4uc18282g8s.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.meimodev.mapalus_partner",
-            "certificate_hash": "534924913a41ad7adebaaaaf810ec80060569c4f"
+            "package_name": "com.meimodev.mapaluspos2.mapalus_pos_2",
+            "certificate_hash": "608bb11bb5ce6b4a9005bef8aea49ac670fc9279"
           }
         },
         {
@@ -127,20 +119,48 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:342086903599:android:1505a51895d15e20fc63da",
+        "mobilesdk_app_id": "1:342086903599:android:264d40408aefdb0afc63da",
         "android_client_info": {
-          "package_name": "com.meimodev.mapaluspos2.mapalus_pos_2"
+          "package_name": "com.meimodev.revamp.mapalus"
         }
       },
       "oauth_client": [
         {
-          "client_id": "342086903599-6g7f2oijqkhlc6o4k04gs4jf956mnip3.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.meimodev.mapaluspos2.mapalus_pos_2",
-            "certificate_hash": "608bb11bb5ce6b4a9005bef8aea49ac670fc9279"
-          }
-        },
+          "client_id": "342086903599-c6kr6f12l72duk60vcke0sfs15q42rrh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChe_02W038hgDONB_56zl_PO9WI58tH6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "342086903599-c6kr6f12l72duk60vcke0sfs15q42rrh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "342086903599-lcvmngkbd93uivgp6tqe2khd68adhflo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.meimodev."
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342086903599:android:1657b3391ee3cd7efc63da",
+        "android_client_info": {
+          "package_name": "com.meimodev.revamp.mapalus_partner"
+        }
+      },
+      "oauth_client": [
         {
           "client_id": "342086903599-c6kr6f12l72duk60vcke0sfs15q42rrh.apps.googleusercontent.com",
           "client_type": 3

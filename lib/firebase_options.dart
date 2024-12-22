@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyChe_02W038hgDONB_56zl_PO9WI58tH6w',
-    appId: '1:342086903599:android:3d6983ff8f870622fc63da',
+    appId: '1:342086903599:android:264d40408aefdb0afc63da',
     messagingSenderId: '342086903599',
     projectId: 'mapalus-a26af',
     storageBucket: 'mapalus-a26af.appspot.com',
@@ -67,4 +67,5 @@ class DefaultFirebaseOptions {
     iosClientId: '342086903599-slsvrmghsnosst242ekdg5mprbvrlhkr.apps.googleusercontent.com',
     iosBundleId: 'com.meimodev.mapalus',
   );
+
 }
