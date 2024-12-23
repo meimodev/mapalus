@@ -20,6 +20,8 @@ class _OrderScreenState extends State<OrderScreen> {
   List<OrderApp> orders = [];
   bool loading = true;
 
+  UserApp? signedUser;
+
   @override
   void initState() {
     super.initState();
@@ -32,10 +34,18 @@ class _OrderScreenState extends State<OrderScreen> {
         loading = true;
       });
     }
-    final signedUser = (await userRepo.getSignedUser())!;
+    signedUser = (await userRepo.getSignedUser());
+    if (signedUser == null) {
+      setState(() {
+        loading = false;
+      });
+      return;
+    }
     orders = await orderRepo.readOrders(
       GetOrdersRequest(userApp: signedUser),
     );
+    orders.sort((a, b) => b.createdAt.millisecondsSinceEpoch
+        .compareTo(a.createdAt.millisecondsSinceEpoch));
     setState(() {
       loading = false;
     });
@@ -50,20 +60,28 @@ class _OrderScreenState extends State<OrderScreen> {
         top: BaseSize.h24,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             "Orders",
+            textAlign: TextAlign.center,
             style: BaseTypography.displayLarge.bold.toPrimary,
           ),
           Gap.h24,
           LoadingWrapper(
             loading: loading,
             child: orders.isEmpty
-                ? Text(
-                    "Tidak Ada Pesanan -_-",
-                    style: BaseTypography.bodyMedium,
-                    textAlign: TextAlign.center,
-                  )
+                ? signedUser != null
+                    ? Text(
+                        "Tidak Ada Pesanan -_-",
+                        style: BaseTypography.bodyMedium,
+                        textAlign: TextAlign.center,
+                      )
+                    : Text(
+                        "Masuk ke akun untuk melihat pesanan",
+                        textAlign: TextAlign.center,
+                        style: BaseTypography.bodyMedium,
+                      )
                 : ListView.separated(
                     shrinkWrap: true,
                     itemCount: orders.length,

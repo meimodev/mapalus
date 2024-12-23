@@ -36,7 +36,7 @@ class _GoogleMapWrapperState extends State<GoogleMapWrapper> {
       onMapCreated: widget.onMapCreated,
       mapType: MapType.normal,
       initialCameraPosition: _startingPosition,
-      minMaxZoomPreference: const MinMaxZoomPreference(13, 19),
+      minMaxZoomPreference: const MinMaxZoomPreference(5, 19),
       mapToolbarEnabled: false,
       indoorViewEnabled: false,
       tiltGesturesEnabled: false,
