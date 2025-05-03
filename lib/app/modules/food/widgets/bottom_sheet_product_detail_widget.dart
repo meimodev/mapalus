@@ -48,6 +48,7 @@ class _BottomSheetProductDetailWidgetState
   Product? product;
   Partner? partner;
   bool loading = true;
+  bool productNotFound = false;
 
   final productRepo = Get.find<ProductRepo>();
   final partnerRepo = Get.find<PartnerRepo>();
@@ -64,6 +65,13 @@ class _BottomSheetProductDetailWidgetState
       loading = true;
     });
     product = await productRepo.readProduct(widget.productId);
+    if (product == null) {
+      setState(() {
+        loading = false;
+        productNotFound = true;
+      });
+      return;
+    }
     partner = await partnerRepo.getPartners(
       GetPartnerRequest(
         partnerId: product!.partnerId,
@@ -76,9 +84,38 @@ class _BottomSheetProductDetailWidgetState
 
   void onAddProductOrder(ProductOrder value) async {
     widget.onAddProductOrder(value);
-    int existIndex = -1;
     final productOrders = await orderRepo.readLocalProductOrders();
-    existIndex = productOrders.indexWhere(
+    // check if the product to be added from the same partner,
+    // if not the same then reject the adding process and show a message
+    final hadAnotherPartner = productOrders
+            .indexWhere((e) => e.product.partnerId != value.product.partnerId) >
+        -1;
+
+    if (hadAnotherPartner) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: BaseColor.primary3,
+            content: Text(
+              "Pesananan hanya bisa dari satu PARTNER",
+              style: BaseTypography.bodyMedium.toBlack,
+              textAlign: TextAlign.center,
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.symmetric(
+              horizontal: BaseSize.w12,
+              vertical: BaseSize.h24,
+            ),
+          ),
+        );
+      }
+      return;
+    }
+
+    // check if the product to be added from the same partner,
+    // if not the same then reject the adding process and show a message
+
+    final existIndex = productOrders.indexWhere(
       (element) => element.product.id == value.product.id,
     );
 
@@ -86,9 +123,10 @@ class _BottomSheetProductDetailWidgetState
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
+            backgroundColor: BaseColor.primary3,
             content: Text(
               "Produk sudah ada, menambahkan jumlah",
-              style: BaseTypography.bodySmall.toPrimary,
+              style: BaseTypography.bodyMedium.toBlack,
               textAlign: TextAlign.center,
             ),
             behavior: SnackBarBehavior.floating,
@@ -118,113 +156,131 @@ class _BottomSheetProductDetailWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: BaseSize.w24,
-        vertical: BaseSize.h24,
-      ),
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 400),
       child: LoadingWrapper(
         loading: loading,
         size: BaseSize.w48,
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: BaseColor.accent,
-                  borderRadius: BorderRadius.circular(BaseSize.radiusSm),
-                ),
-                height: BaseSize.customWidth(280),
-                child: product == null
-                    ? const SizedBox()
-                    : CustomImage(
-                        imageUrl: product!.image,
-                        fit: BoxFit.cover,
-                      ),
-              ),
-              Gap.h24,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    product?.name ?? "",
-                    style: BaseTypography.bodyLarge.w400,
+        child: productNotFound
+            ? SizedBox(
+                height: BaseSize.customHeight(200),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: BaseSize.w24,
+                    vertical: BaseSize.h24,
                   ),
-                  Gap.h6,
-                  Text(
-                    "${product?.price.formatNumberToCurrency()} / ${product?.unit?.name}",
-                    style: BaseTypography.bodyLarge.bold,
-                  ),
-                  Gap.h24,
-                  Text(
-                    product?.description ?? '',
-                    style: BaseTypography.titleLarge.w300.toSecondary,
-                  ),
-                ],
-              ),
-              Gap.h24,
-              partner == null
-                  ? const SizedBox()
-                  : CardPartnerWidget(
-                      partner: partner!,
-                      onPressed: () {},
+                  child: Center(
+                    child: Text(
+                      "Produk telah dihapus partner\n -_-",
+                      textAlign: TextAlign.center,
+                      style: BaseTypography.bodyLarge.w400,
                     ),
-              Gap.h24,
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ButtonAltering(
-                    onPressed: () {
-                      setState(() {
-                        quantity--;
-                      });
-                    },
-                    label: "-",
-                    enabled: quantity > 1,
-                    height: BaseSize.customWidth(30),
-                    width: BaseSize.customWidth(30),
                   ),
-                  Gap.w12,
-                  Text(
-                    "$quantity ${product?.unit?.name ?? ""}",
-                    style: BaseTypography.bodyMedium,
-                  ),
-                  Gap.w12,
-                  ButtonAltering(
-                    onPressed: () {
-                      setState(() {
-                        quantity++;
-                      });
-                    },
-                    label: "+",
-                    height: BaseSize.customWidth(30),
-                    width: BaseSize.customWidth(30),
-                  ),
-                ],
-              ),
-              Gap.h24,
-              ButtonMain(
-                title: "Tambah Pesanan",
-                onPressed: () {
-                  final res = ProductOrder(
-                    product: product!,
-                    quantity: quantity.toDouble(),
-                    totalPrice: product!.price * quantity,
-                  );
+                ),
+              )
+            : SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.symmetric(
+                  horizontal: BaseSize.w24,
+                  vertical: BaseSize.h24,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: BaseColor.accent,
+                        borderRadius: BorderRadius.circular(BaseSize.radiusSm),
+                      ),
+                      height: BaseSize.customWidth(280),
+                      child: product == null
+                          ? const SizedBox()
+                          : CustomImage(
+                              imageUrl: product!.image,
+                              fit: BoxFit.cover,
+                            ),
+                    ),
+                    Gap.h24,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          product?.name ?? "",
+                          style: BaseTypography.bodyLarge.w400,
+                        ),
+                        Gap.h6,
+                        Text(
+                          "${product?.price.formatNumberToCurrency()} / ${product?.unit?.name}",
+                          style: BaseTypography.bodyLarge.bold,
+                        ),
+                        Gap.h24,
+                        Text(
+                          product?.description ?? '',
+                          style: BaseTypography.titleLarge.w300.toSecondary,
+                        ),
+                      ],
+                    ),
+                    Gap.h24,
+                    partner == null
+                        ? const SizedBox()
+                        : CardPartnerWidget(
+                            partner: partner!,
+                            onPressed: () {},
+                          ),
+                    Gap.h24,
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ButtonAltering(
+                          onPressed: () {
+                            setState(() {
+                              quantity--;
+                            });
+                          },
+                          label: "-",
+                          enabled: quantity > 1,
+                          height: BaseSize.customWidth(30),
+                          width: BaseSize.customWidth(30),
+                        ),
+                        Gap.w12,
+                        Text(
+                          "$quantity ${product?.unit?.name ?? ""}",
+                          style: BaseTypography.bodyMedium,
+                        ),
+                        Gap.w12,
+                        ButtonAltering(
+                          onPressed: () {
+                            setState(() {
+                              quantity++;
+                            });
+                          },
+                          label: "+",
+                          height: BaseSize.customWidth(30),
+                          width: BaseSize.customWidth(30),
+                        ),
+                      ],
+                    ),
+                    Gap.h24,
+                    ButtonMain(
+                      title: "Tambah Pesanan",
+                      onPressed: () {
+                        final res = ProductOrder(
+                          product: product!,
+                          quantity: quantity.toDouble(),
+                          totalPrice: product!.price * quantity,
+                        );
 
-                  Navigator.pop(context);
-                  onAddProductOrder(res);
-                },
+                        Navigator.pop(context);
+                        onAddProductOrder(res);
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
       ),
     );
   }

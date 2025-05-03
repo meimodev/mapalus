@@ -76,9 +76,9 @@ class CardProduct extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            product.category.isNotEmpty
-                                ? ChipCategory(title: product.category)
-                                : const SizedBox(),
+                            // product.category.isNotEmpty
+                            //     ? ChipCategory(title: product.category)
+                            //     : const SizedBox(),
                           ],
                         ),
                       ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus_flutter_commons/models/models.dart';
@@ -81,5 +82,18 @@ class OrderDetailController extends GetxController {
       ),
     );
     loading.value = false;
+  }
+
+  void onPressedSeeTransferStatus(OrderApp order) {
+      // WA admin that this store want to confirm a transfer payment
+      // provide admin with order id, customer name, customer phone, order amount, request timestamp
+      final adminPhone = AppRepo.adminPhone.phoneCleanUseCountryCode;
+      final message = "*VERIFY TRANSFER*\n"
+          "${order.id}\n\n"
+          "${order.orderBy.name} - ${order.orderBy.phone.phoneCleanUseZero}\n"
+          "${order.payment.amount.formatNumberToCurrency()}\n\n"
+          "_${DateTime.now().EEEEddMMMyyyy} ${DateTime.now().HHmm}_\n";
+      final waUri = Uri.parse('whatsapp://send?phone=$adminPhone&text=$message');
+      launchUrl(waUri);
   }
 }

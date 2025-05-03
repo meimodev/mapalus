@@ -11,6 +11,8 @@ class OrderingScreen extends GetView<OrderingController> {
 
   @override
   Widget build(BuildContext context) {
+    final isTransfer =
+        controller.order.payment.method == PaymentMethod.transfer;
     return ScreenWrapper(
       padding: EdgeInsets.symmetric(
         horizontal: BaseSize.w24,
@@ -21,7 +23,6 @@ class OrderingScreen extends GetView<OrderingController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SvgPicture.asset(
                 'assets/vectors/order-received.svg',
@@ -30,26 +31,48 @@ class OrderingScreen extends GetView<OrderingController> {
               ),
               Gap.h24,
               Text(
-                'Pesanan Diterima',
+                'Yey! Pesanan anda sudah masuk',
                 style: BaseTypography.bodyLarge.toBold,
                 textAlign: TextAlign.center,
               ),
+              // if transaction using cashless then show payment instruction to confirm with admin WA
               Gap.h12,
-              Text(
-                'Tunggu sebentar yaaaaa',
-                style: BaseTypography.bodyLarge.w300,
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                'Admin kami akan segera menghubungi anda',
-                style: BaseTypography.bodyLarge.w300,
-                textAlign: TextAlign.center,
-              ),
-              Gap.h24,
-              ButtonMain(
-                title: "Lihat Pesanan",
-                onPressed: controller.onPressedSeeOrder,
-              ),
+              isTransfer
+                  ? Column(
+                      children: [
+                        Text(
+                          'Silahkan lakukan transfer sesuai arahan admin ya',
+                          style: BaseTypography.bodyMedium.w300,
+                          textAlign: TextAlign.center,
+                        ),
+                        Gap.h24,
+                        ButtonWidget(
+                          text: "Transfer",
+                          textStyle: BaseTypography.bodyLarge.bold,
+                          onPressed: controller.onPressedSeeOrder,
+                        ),
+
+                      ],
+                    )
+                  : Column(
+                      children: [
+                        Text(
+                          'Tunggu sebentar yaaaaa',
+                          style: BaseTypography.bodyLarge.w300,
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          'Andai akan segera dihubungi partner kami',
+                          style: BaseTypography.bodyLarge.w300,
+                          textAlign: TextAlign.center,
+                        ),
+                        Gap.h24,
+                        ButtonMain(
+                          title: "Lihat Pesanan",
+                          onPressed: controller.onPressedSeeOrder,
+                        ),
+                      ],
+                    ),
             ],
           ),
         ),

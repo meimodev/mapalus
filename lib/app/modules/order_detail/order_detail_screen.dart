@@ -55,6 +55,8 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                           controller.onRateOrder(result);
                         }
                       },
+                      onPressedSeeTransferStatus: () => controller
+                          .onPressedSeeTransferStatus(controller.order),
                     ),
                     Gap.h24,
                   ],

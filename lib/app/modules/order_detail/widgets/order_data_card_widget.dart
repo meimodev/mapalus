@@ -16,6 +16,7 @@ class OrderDataCardWidget extends StatelessWidget {
     required this.onPressedCancel,
     required this.onPressedConfirm,
     required this.onPressedViewMap,
+    required this.onPressedSeeTransferStatus,
   });
 
   final OrderApp orderApp;
@@ -24,6 +25,7 @@ class OrderDataCardWidget extends StatelessWidget {
 
   final VoidCallback onPressedCancel;
   final VoidCallback onPressedConfirm;
+  final VoidCallback onPressedSeeTransferStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,8 @@ class OrderDataCardWidget extends StatelessWidget {
                 onPressedViewMap: onPressedViewMap,
               ),
               PaymentInfoLayoutWidget(
-                paymentMethod: orderApp.payment.method.name.toUpperCase(),
+                paymentMethod: orderApp.payment.method,
+                onPressedSeeTransferStatus: onPressedSeeTransferStatus,
               ),
               Gap.h12,
               orderApp.note.isNotEmpty
