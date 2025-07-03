@@ -96,16 +96,23 @@ class _OrderScreenState extends State<OrderScreen> {
                         Gap.h6,
                       ],
                     ),
-                    itemBuilder: (context, index) => CardOrder(
-                      order: orders[index],
-                      onPressed: () async {
-                        await Get.toNamed(
-                          Routes.orderDetail,
-                          arguments: orders[index].toJson(),
-                        );
-                        await Future.delayed(const Duration(seconds: 1));
-                        fetchOrders();
-                      },
+                    itemBuilder: (context, index) => Container(
+                      padding: EdgeInsets.symmetric(horizontal: BaseSize.w4, vertical: BaseSize.w4,),
+                      decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(BaseSize.radiusSm)
+                      ),
+                      child: CardOrder(
+                        order: orders[index],
+                        onPressed: () async {
+                          await Get.toNamed(
+                            Routes.orderDetail,
+                            arguments: orders[index].toJson(),
+                          );
+                          await Future.delayed(const Duration(seconds: 1));
+                          fetchOrders();
+                        },
+                      ),
                     ),
                   ),
           ),
