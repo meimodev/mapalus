@@ -27,19 +27,19 @@ class MainActionLayoutWidget extends StatelessWidget {
         return CardOrderInfo(
           text:
               "Pesanan anda sudah masuk, silahkan tunggu konfirmasi partner kami ya",
-          backgroundColor: BaseColor.accent.withOpacity(.25),
+          backgroundColor: BaseColor.accent.withValues(alpha: .25),
           borderColor: BaseColor.accent,
         );
       case OrderStatus.accepted:
         return CardOrderInfo(
           text: "MANTAPP, Pesanan telah diterima, silahkan tunggu diantar yaaa",
-          backgroundColor: BaseColor.positive.withOpacity(.25),
+          backgroundColor: BaseColor.positive.withValues(alpha: .25),
           borderColor: BaseColor.positive,
         );
       case OrderStatus.rejected:
         return CardOrderInfo(
           text: "Maaf yaaa, Pesanan anda telah dibatalkan oleh partner",
-          backgroundColor: BaseColor.negative.withOpacity(.25),
+          backgroundColor: BaseColor.negative.withValues(alpha: .25),
           borderColor: BaseColor.negative,
         );
       case OrderStatus.delivered:
@@ -54,7 +54,7 @@ class MainActionLayoutWidget extends StatelessWidget {
       case OrderStatus.canceled:
         return CardOrderInfo(
           text: "OK, Pesanan anda telah berhasil dibatalkan",
-          backgroundColor: BaseColor.yellow.withOpacity(.25),
+          backgroundColor: BaseColor.yellow.withValues(alpha: .25),
           borderColor: BaseColor.yellow,
         );
     }
@@ -73,7 +73,7 @@ class _BuildDeliveredLayout extends StatelessWidget {
       children: [
         CardOrderInfo(
           text: "Pesanan telah diantar",
-          backgroundColor: BaseColor.positive.withOpacity(.25),
+          backgroundColor: BaseColor.positive.withValues(alpha: .25),
           borderColor: BaseColor.positive,
         ),
         Gap.h12,
@@ -102,7 +102,7 @@ class _BuildRatedLayout extends StatelessWidget {
     if (rating == null) {
       return CardOrderInfo(
         text: "Order telah selesai, belum ada penilaian",
-        backgroundColor: BaseColor.primary3.withOpacity(.25),
+        backgroundColor: BaseColor.primary3.withValues(alpha: .25),
         borderColor: BaseColor.primary3,
         child: Padding(
           padding: EdgeInsets.only(

@@ -162,7 +162,7 @@ class GroceryController extends GetxController {
     Get.toNamed(Routes.cart);
   }
 
-  _calculateCartData() {
+  void _calculateCartData() {
     double total = 0;
     int count = 0;
     double weight = 0;
@@ -219,7 +219,7 @@ class GroceryController extends GetxController {
     // canLoadingProducts.value = false;
   }
 
-  orderCleanUp() async {
+  void orderCleanUp() async {
     productOrders.clear();
     isCardCartVisible.value = false;
 
@@ -253,7 +253,7 @@ class GroceryController extends GetxController {
   //   }
   // }
 
-  _initNotificationHandler() async {
+  void _initNotificationHandler() async {
     // const androidChannel = AndroidNotificationChannel(
     //   'order_channel', // id
     //   'order channel',
@@ -358,9 +358,9 @@ class GroceryController extends GetxController {
     );
   }
 
-  onSubmittedSearchText(String value) {}
+  void onSubmittedSearchText(String value) {}
 
-  onChangedSearchText(String text) async {
+  void onChangedSearchText(String text) async {
     canLoadingMain.value = true;
     var pp = List<Product>.from(tempSearchedProducts);
     isNoMoreProductsToDisplay.value = false;
@@ -413,7 +413,7 @@ class GroceryController extends GetxController {
     canLoadingMain.value = false;
   }
 
-  onPressedCategories(Category category) {
+  void onPressedCategories(Category category) {
     tecSearch.text = category.name;
     onChangedSearchText(category.name);
   }

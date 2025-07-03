@@ -214,7 +214,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                 foregroundDecoration: !widget.product.status!.isAvailable
                     ? BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.grey.withOpacity(.5),
+                        color: Colors.grey.withValues(alpha: .5),
                       )
                     : null,
                 decoration: BoxDecoration(
@@ -224,7 +224,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
                     BoxShadow(
                       spreadRadius: .5,
                       blurRadius: 15,
-                      color: Colors.grey.withOpacity(.5),
+                      color: Colors.grey.withValues(alpha: .5),
                       offset: const Offset(3, 5),
                     ),
                   ],
@@ -262,7 +262,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
     );
   }
 
-  _onChangeValue({required bool isFromPrice}) {
+  void _onChangeValue({required bool isFromPrice}) {
     String t1 = tecUnit.text;
     String t2 = tecPrice.text;
 
@@ -314,7 +314,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
     }
   }
 
-  _adding(int amount, TextEditingController controller, bool isFromPrice) {
+  void _adding(int amount, TextEditingController controller, bool isFromPrice) {
     late int cur;
     try {
       cur = int.parse(controller.text);
@@ -444,7 +444,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
     );
   }
 
-  _buildQuantitySuggestionRow() {
+  Widget _buildQuantitySuggestionRow() {
     // if unit == kilogram then display the decimals kilos
     // if customPrice than show prices 1.5x, 2x, 2.5x,
 
@@ -486,7 +486,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
     );
   }
 
-  _buildQuantitySuggestionChip(String text) {
+  Widget _buildQuantitySuggestionChip(String text) {
     bool isPrice = text.contains("Rp.");
 
     return Padding(
@@ -529,7 +529,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
     );
   }
 
-  _buildQuantityCustomizableInfoRow() {
+  Widget _buildQuantityCustomizableInfoRow() {
     if (widget.product.customPrice) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -549,7 +549,7 @@ class _DialogItemDetailState extends State<DialogItemDetail> {
     return const SizedBox();
   }
 
-  _buildErrorMinimumPriceRow() {
+  Widget _buildErrorMinimumPriceRow() {
     if (errorMessagePrice.isEmpty) {
       return SizedBox(height: BaseSize.h12);
     }

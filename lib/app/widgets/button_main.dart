@@ -33,7 +33,7 @@ class ButtonMain extends StatelessWidget {
               style: BaseTypography.bodyMedium.copyWith(
                   color: enable
                       ? BaseColor.primaryText
-                      : BaseColor.primaryText.withOpacity(.5)),
+                      : BaseColor.primaryText.withValues(alpha: .5)),
             ),
           ),
         ),

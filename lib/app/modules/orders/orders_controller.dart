@@ -18,7 +18,7 @@ class OrdersController extends GetxController {
     super.onReady();
   }
 
-  _populateOrders() async {
+  void _populateOrders() async {
     isLoading.value = true;
     // final userOrders = await orderRepo.readUserOrders(userRepo.signedUser!);
     // orders.value = userOrders.reversed.toList();
@@ -27,7 +27,7 @@ class OrdersController extends GetxController {
     isLoading.value = false;
   }
 
-  onChangeFilterActiveIndex(OrderStatus? status) {
+  void onChangeFilterActiveIndex(OrderStatus? status) {
     if (status == null) {
       if (tempOrders.length != orders.length) {
         orders.value = tempOrders;

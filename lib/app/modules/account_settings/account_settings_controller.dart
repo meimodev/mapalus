@@ -22,29 +22,29 @@ class AccountSettingsController extends GetxController {
     loading.value = false;
   }
 
-  initVersion() async {}
+  void initVersion() async {}
 
-  onPressedEditAccountInfo() {}
+  void onPressedEditAccountInfo() {}
 
-  onPressedOrders() {
+  void onPressedOrders() {
     Get.toNamed(Routes.orders);
   }
 
-  onPressedSignOut() async {
+  void onPressedSignOut() async {
     await userRepo.signOut();
     // homeController.isCardCartVisible.value = false;
     // homeController.isCardOrderVisible.value = false;
     // homeController.unfinishedOrderCount.value = 0;
   }
 
-  onPressedSignIn() {
+  void onPressedSignIn() {
     Get.toNamed(
       Routes.signing,
       arguments: "",
     );
   }
 
-  onPressedDeleteAccount(String phone) async {
+  void onPressedDeleteAccount(String phone) async {
     try {
       var isDeleted = await userRepo.deleteUser(phone);
       if (isDeleted) {

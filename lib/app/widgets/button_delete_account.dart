@@ -54,7 +54,7 @@ class _BuildBottomSheetDeleteAccountState
   String phone = '';
   var isDeleteButtonEnabled = false;
 
-  proceed(String value) {
+  void proceed(String value) {
     phone = value.trim();
 
     bool phoneConfirmed = phone == widget.userPhone.trim();

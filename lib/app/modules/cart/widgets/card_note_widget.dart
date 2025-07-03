@@ -70,7 +70,7 @@ class CardNoteWidget extends StatelessWidget {
     );
   }
 
-  _buildNoteHint(BuildContext context) {
+  Widget _buildNoteHint(BuildContext context) {
     final List<String> hints = [
       "Rica yang pidis neh",
       "Nasi stenga jo",
@@ -87,7 +87,7 @@ class CardNoteWidget extends StatelessWidget {
           TextSpan(
             text: hints[Random().nextInt(hints.length)],
             style: BaseTypography.caption
-                .copyWith(color: BaseColor.secondaryText.withOpacity(.75)),
+                .copyWith(color: BaseColor.secondaryText.withValues(alpha: .75)),
           ),
         ],
       ),

@@ -85,7 +85,7 @@ class CartController extends GetxController {
     _calculateInfo();
   }
 
-  onChangedNote(String note) {
+  void onChangedNote(String note) {
     orderRepo.updateLocalNote(note);
     this.note.value = note;
   }
@@ -100,7 +100,7 @@ class CartController extends GetxController {
     _calculateInfo();
   }
 
-  _calculateInfo() {
+  void _calculateInfo() {
     int count = 0;
     double weight = 0;
     double price = 0;

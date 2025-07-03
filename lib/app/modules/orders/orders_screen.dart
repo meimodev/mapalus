@@ -77,7 +77,7 @@ class OrdersScreen extends GetView<OrdersController> {
     );
   }
 
-  _buildNoOrderLayout(BuildContext context) {
+  Widget _buildNoOrderLayout(BuildContext context) {
     return Center(
       child: Text(
         "Tidak ada pesanan -_-'",

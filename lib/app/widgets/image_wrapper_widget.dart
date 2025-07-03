@@ -16,7 +16,7 @@ class ImageWrapperWidget extends StatelessWidget {
       width: BaseSize.customWidth(76),
       height: BaseSize.customWidth(76),
       decoration: BoxDecoration(
-        color: BaseColor.secondaryText.withOpacity(.5),
+        color: BaseColor.secondaryText.withValues(alpha: .5),
         borderRadius: BorderRadius.circular(
           BaseSize.roundnessMedium,
         ),

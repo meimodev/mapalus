@@ -23,7 +23,7 @@ class CardOrderInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: backgroundColor ?? BaseColor.primary3.withOpacity(.25),
+      color: backgroundColor ?? BaseColor.primary3.withValues(alpha: .25),
       shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(BaseSize.radiusMd),
           side: BorderSide(

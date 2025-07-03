@@ -77,7 +77,7 @@ class UpdateAppScreen extends StatelessWidget {
     );
   }
 
-  _buildButton(
+  Widget _buildButton(
     BuildContext context, {
     required VoidCallback onPressed,
     required String title,

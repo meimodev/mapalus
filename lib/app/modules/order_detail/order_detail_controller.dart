@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:mapalus_flutter_commons/mapalus_flutter_commons.dart';
 import 'package:mapalus_flutter_commons/models/models.dart';
@@ -49,7 +48,7 @@ class OrderDetailController extends GetxController {
   //   launchUrl(phoneUri);
   // }
 
-  onPressedViewMaps() {
+  void onPressedViewMaps() {
     final latitude = order.delivery!.destination.latitude;
     final longitude = order.delivery!.destination.longitude;
     final url =

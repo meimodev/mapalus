@@ -97,7 +97,7 @@ class CardDeliveryFee extends StatelessWidget {
         : _buildUnavailableLayout(context, "");
   }
 
-  _buildUnavailableLayout(BuildContext context, String message) {
+  Widget _buildUnavailableLayout(BuildContext context, String message) {
     return Material(
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.circular(9.sp),

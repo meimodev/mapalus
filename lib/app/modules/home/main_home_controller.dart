@@ -56,9 +56,9 @@ class MainHomeController extends GetxController {
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
     final initializationSettingsIos = DarwinInitializationSettings(
-      onDidReceiveLocalNotification: (id, title, body, payload) {
-        log('[MAIN HOME CONTROLLER] IOS Local Notification $id $title $body $payload');
-      },
+      // onDidReceiveLocalNotification: (id, title, body, payload) {
+      //   log('[MAIN HOME CONTROLLER] IOS Local Notification $id $title $body $payload');
+      // },
     );
     final InitializationSettings initializationSettings =
         InitializationSettings(

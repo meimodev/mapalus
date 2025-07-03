@@ -94,7 +94,7 @@ class _DialogRatingState extends State<DialogRating> {
                   minRating: 1,
                   direction: Axis.horizontal,
                   itemCount: 5,
-                  glowColor: BaseColor.editable.withOpacity(.25),
+                  glowColor: BaseColor.editable.withValues(alpha: .25),
                   itemSize: 27.sp,
                   itemPadding: EdgeInsets.symmetric(horizontal: 6.w),
                   onRatingUpdate: (r) {

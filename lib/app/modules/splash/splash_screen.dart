@@ -12,7 +12,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  void wait(onProceed) async {
+  void wait(VoidCallback onProceed) async {
     await Future.delayed(const Duration(seconds: 2), () {});
     onProceed();
   }

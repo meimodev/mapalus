@@ -70,7 +70,7 @@ class CardOrderDetailItem extends StatelessWidget {
     );
   }
 
-  _buildWeightAndPriceCard(
+  Widget _buildWeightAndPriceCard(
     BuildContext context,
     String text,
   ) =>

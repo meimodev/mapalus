@@ -58,7 +58,7 @@ class _BottomSheetRateWidgetState extends State<BottomSheetRateWidget> {
               BlendMode.srcIn,
             ),
           ),
-          unratedColor: BaseColor.accent.withOpacity(.125),
+          unratedColor: BaseColor.accent.withValues(alpha: .125),
         ),
         Gap.h24,
         ButtonWidget(

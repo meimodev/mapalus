@@ -90,7 +90,7 @@ class _OrderScreenState extends State<OrderScreen> {
                       children: [
                         Gap.h6,
                         Container(
-                          color: BaseColor.black.withOpacity(.125),
+                          color: BaseColor.black.withValues(alpha: .125),
                           height: 1,
                         ),
                         Gap.h6,
