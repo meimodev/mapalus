@@ -1,5 +1,6 @@
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -17,12 +18,11 @@ void main() async {
 
   await HiveService().init();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) => runApp(const MyApp()));
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]).then((_) => runApp(const MyApp()));
 
   await FirebaseAppCheck.instance.activate(
     androidProvider: AndroidProvider.playIntegrity,
@@ -32,6 +32,9 @@ void main() async {
 
   // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
+  if (defaultTargetPlatform == TargetPlatform.iOS) {
+    await FirebaseMessaging.instance.getAPNSToken();
+  }
   await FirebaseMessaging.instance.setAutoInitEnabled(true);
   await FirebaseMessaging.instance.subscribeToTopic("mapalus");
 }
@@ -53,9 +56,9 @@ class MyApp extends StatelessWidget {
         getPages: Routes.getRoutes(),
         builder: (context, widget) {
           return MediaQuery(
-            data: MediaQuery.of(context).copyWith(
-              textScaler: const TextScaler.linear(1.0),
-            ),
+            data: MediaQuery.of(
+              context,
+            ).copyWith(textScaler: const TextScaler.linear(1.0)),
             child: widget!,
           );
         },
