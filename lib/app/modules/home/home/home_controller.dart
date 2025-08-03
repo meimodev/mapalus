@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:mapalus_flutter_commons/models/models.dart';
 import 'package:mapalus_flutter_commons/repos/repos.dart';
@@ -18,13 +20,14 @@ class HomeController extends GetxController {
     userRepo.userAppStream.listen((event) async {
       _loading(true);
       user = event;
-      await Future.delayed(const Duration(milliseconds: 400));
-      _loading(false);
       if (user != null) {
         await userRepo.updateUserMetaData(user!);
       }
+      await Future.delayed(const Duration(milliseconds: 400));
+      _loading(false);
+
     });
-    user = await userRepo.getSignedUser();
+    // user ??= await userRepo.getSignedUser();
     _loading(false);
   }
 
@@ -40,6 +43,7 @@ class HomeController extends GetxController {
 
   void onPressedSignOut() async {
     await userRepo.signOut();
+    notifyUserHasChanged();
   }
 
   Future<void> _loading(bool value) async {

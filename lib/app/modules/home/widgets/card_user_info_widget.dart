@@ -42,7 +42,7 @@ class CardUserInfoWidget extends StatelessWidget {
         children: [
           Expanded(
             child: Text(
-              "Klik disini untuk masuk menggunakan nomor hp",
+              "Klik disini untuk masuk ke akun",
               style: BaseTypography.bodySmall.toPrimary,
               textAlign: TextAlign.center,
             ),

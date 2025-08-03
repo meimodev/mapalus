@@ -28,7 +28,7 @@ class SigningScreen extends GetView<SigningController> {
             child: Obx(
               () => LoadingWrapper(
                 addedWidget: Text(
-                  "Tunggu sebentar yaa, Loading mungkin agak lama",
+                  "Tunggu sebentar yaa, sedang memuat ...",
                   style: BaseTypography.bodyMedium,
                 ),
                 loading: controller.loading.value,
