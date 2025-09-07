@@ -13,3 +13,7 @@ This repo is part of *mapalus project*
 
 Local "day-to-day" app specific for the region of northern sulawesi Operate with startup mindset on
 fixed operation scale
+
+## Documentation
+
+- API Reference: `docs/API_REFERENCE.md`
